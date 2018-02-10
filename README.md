@@ -6,10 +6,10 @@
  
  
  ### Developers:
-  * André Cruz - up@fe.up.pt
-  * Daniel Marques - up@fe.up.pt
-  * Edgar Carneiro - up@fe.up.pt
-  * João Carvalho  - up201504875@fe.up.pt
+  * André Cruz @AndreFCruz - up201503776@fe.up.pt
+  * Daniel Marques @rendoir - up201503822@fe.up.pt
+  * Edgar Carneiro @EdgarACarneiro - up201503784@fe.up.pt
+  * João Carvalho @jflcarvalho - up201504875@fe.up.pt
 
 
 ### Artefacts
