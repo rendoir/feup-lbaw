@@ -6,10 +6,10 @@
  
  
  ### Developers:
-  * André Cruz @AndreFCruz - up201503776@fe.up.pt
-  * Daniel Marques @rendoir - up201503822@fe.up.pt
-  * Edgar Carneiro @EdgarACarneiro - up201503784@fe.up.pt
-  * João Carvalho @jflcarvalho - up201504875@fe.up.pt
+  * André Cruz [@AndreFCruz](https://github.com/AndreFCruz) - up201503776@fe.up.pt
+  * Daniel Marques [@rendoir](https://github.com/rendoir) - up201503822@fe.up.pt
+  * Edgar Carneiro [@EdgarACarneiro](https://github.com/EdgarACarneiro) - up201503784@fe.up.pt
+  * João Carvalho [@jflcarvalho](https://github.com/jflcarvalho) - up201504875@fe.up.pt
 
 
 ### Artefacts
