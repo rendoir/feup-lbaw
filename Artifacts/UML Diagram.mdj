@@ -4492,7 +4492,7 @@
 									"model": {
 										"$ref": "AAAAAAFhezd8KRWXz80="
 									},
-									"visible": false,
+									"visible": true,
 									"enabled": true,
 									"lineColor": "#000000",
 									"fillColor": "#ffffff",
@@ -4501,9 +4501,9 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 548,
+									"left": 546,
 									"top": 142,
-									"width": 0,
+									"width": 5,
 									"height": 13,
 									"autoResize": false,
 									"alpha": -0.5235987755982988,
@@ -4513,6 +4513,7 @@
 									},
 									"edgePosition": 2,
 									"underline": false,
+									"text": "*",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5,
 									"wordWrap": false
@@ -4594,7 +4595,7 @@
 									"model": {
 										"$ref": "AAAAAAFhezd8KRWYoZs="
 									},
-									"visible": false,
+									"visible": true,
 									"enabled": true,
 									"lineColor": "#000000",
 									"fillColor": "#ffffff",
@@ -4603,9 +4604,9 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 682,
+									"left": 680,
 									"top": 142,
-									"width": 0,
+									"width": 5,
 									"height": 13,
 									"autoResize": false,
 									"alpha": 0.5235987755982988,
@@ -4615,6 +4616,7 @@
 									},
 									"edgePosition": 0,
 									"underline": false,
+									"text": "*",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5,
 									"wordWrap": false
@@ -8678,6 +8680,7 @@
 										"visibility": "public",
 										"navigable": true,
 										"aggregation": "none",
+										"multiplicity": "*",
 										"isReadOnly": false,
 										"isOrdered": false,
 										"isUnique": false,
@@ -8696,6 +8699,7 @@
 										"visibility": "public",
 										"navigable": true,
 										"aggregation": "none",
+										"multiplicity": "*",
 										"isReadOnly": false,
 										"isOrdered": false,
 										"isUnique": false,
