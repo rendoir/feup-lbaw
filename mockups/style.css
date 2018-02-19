@@ -1,0 +1,14 @@
+.dropdown-menu-right{
+    right: 0;
+    left: auto !important;
+}
+
+.ml-auto-sm{
+    width: 100%;
+}
+@media (min-width: 576px) {
+    .ml-auto-sm{
+        width: auto;
+        margin-left: auto !important;
+    }
+}
