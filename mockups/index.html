@@ -8,11 +8,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Styling  -->
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" type="text/css" media="screen" href="fontawesome/css/fa-svg-with-js.css" />
+    <script defer src="fontawesome/js/fontawesome-all.js"></script>
 
     <!-- Bootstrap v4 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Styling  -->
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="bootstrap-social.css" />
 </head>
 <body>
     <header>
@@ -35,14 +40,14 @@
 
                 <!-- Search Bar -->
                 <form class="form-inline">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control mx-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
 
             <div class="ml-auto-sm d-flex justify-content-between">
                 <!-- Sign In/Sign Up --> 
-                <div class="dropdown">
+                <div class="dropdown mx-sm-2">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                         Sign In <span class="caret"></span>
                     </button>
@@ -60,7 +65,11 @@
                                 <input type="checkbox" class="form-check-input" id="dropdownCheck">
                                 <label class="form-check-label" for="dropdownCheck">Remember me</label>
                             </div>
-                            <button type="submit" class="btn btn-primary">Sign in</button>
+                            <button type="submit" class="btn btn-primary btn-signin">Sign in</button>
+                            <a class="btn btn-social btn-github" href="#">
+                                <i class="fab fa-github"></i>
+                                <div>Sign in with Github</div>
+                            </a>
                         </form>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">New around here? Sign up</a>
@@ -69,10 +78,10 @@
                 </div>
                 
                 <!-- Help --> 
-                <div class="dropdown">
+                <div class="dropdown mx-sm-2">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Help
                     <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-right px-2">
                         <li><a href="#">About Me</a></li>
                         <li><a href="#">...</a></li>
                         <li><a href="#">...</a></li>
@@ -115,7 +124,7 @@
 
     </footer>
 
-    <!-- Optional JavaScript -->
+    <!-- Optional JavaScript -->    
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
