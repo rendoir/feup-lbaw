@@ -21,104 +21,213 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
-            <!-- Logo -->
-            <a class="navbar-brand" href="#">
-                <img src="images/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
-                SegFault
-            </a>
-
-            <!-- Collapse Menu -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Questions <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="#">Category</a>
+        <div class="bg-light">
+            <nav class="navbar navbar-expand-md navbar-light container">
+                <!-- Logo -->
+                <a class="navbar-brand" href="#">
+                    <img src="images/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+                    SegFault
+                </a>
+    
+                <!-- Collapse Menu -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link active" href="#">Questions <span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link" href="#">Category</a>
+                    </div>
+    
+                    <!-- Search Bar -->
+                    <form class="form-inline">
+                        <input class="form-control mx-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
                 </div>
-
-                <!-- Search Bar -->
-                <form class="form-inline">
-                    <input class="form-control mx-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
-
-            <div class="ml-auto-sm d-flex justify-content-between">
-                <!-- Sign In/Sign Up --> 
-                <div class="dropdown mx-sm-2">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                        Sign In <span class="caret"></span>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <form class="px-4 py-3">
-                            <div class="form-group">
-                                <label for="exampleDropdownFormEmail1">Email address</label>
-                                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleDropdownFormPassword1">Password</label>
-                                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
-                            </div>
-                                <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                                <label class="form-check-label" for="dropdownCheck">Remember me</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-signin">Sign in</button>
-                            <a class="btn btn-social btn-github" href="#">
-                                <i class="fab fa-github"></i>
-                                <div>Sign in with Github</div>
-                            </a>
-                        </form>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">New around here? Sign up</a>
-                        <a class="dropdown-item" href="#">Forgot password?</a>
+    
+                <div class="ml-auto-sm d-flex justify-content-between">
+                    <!-- Sign In/Sign Up --> 
+                    <div class="dropdown mx-sm-2">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            Sign In <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <form class="px-4 py-3">
+                                <div class="form-group">
+                                    <label for="exampleDropdownFormEmail1">Email address</label>
+                                    <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleDropdownFormPassword1">Password</label>
+                                    <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+                                </div>
+                                    <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                                    <label class="form-check-label" for="dropdownCheck">Remember me</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-signin">Sign in</button>
+                                <a class="btn btn-social btn-github" href="#">
+                                    <i class="fab fa-github"></i>
+                                    <div>Sign in with Github</div>
+                                </a>
+                            </form>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">New around here? Sign up</a>
+                            <a class="dropdown-item" href="#">Forgot password?</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Help --> 
+                    <div class="dropdown mx-sm-2">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Help
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right px-2">
+                            <li><a href="#">About Me</a></li>
+                            <li><a href="#">...</a></li>
+                            <li><a href="#">...</a></li>
+                        </ul>
                     </div>
                 </div>
-                
-                <!-- Help --> 
-                <div class="dropdown mx-sm-2">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Help
-                    <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right px-2">
-                        <li><a href="#">About Me</a></li>
-                        <li><a href="#">...</a></li>
-                        <li><a href="#">...</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
     </header>
     <main class="container">
         <!-- Nav With Separators -->
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <div class="row mt-3">
+            <div class="nav nav-tabs col-md-9" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="true">New</a>
                 <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab" aria-controls="nav-hot" aria-selected="false">Hot</a>
                 <a class="nav-item nav-link" id="nav-voted-tab" data-toggle="tab" href="#nav-voted" role="tab" aria-controls="nav-voted" aria-selected="false">Most Voted</a>
                 <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="false">Active</a>
             </div>
-        </nav>
+        </div>
 
         <!-- Separators Contents -->
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+        <div class="row">
+            <div class="tab-content col-md-9" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+                    <div class="card my-3">
+                        <div class="row mx-0">
+                            <div class="col-sm-2 py-3 border-right d-flex flex-column justify-content-around">
+                                <div>
+                                    <div>
+                                        <p class="text-center font-weight-bold mb-0 w-100">Answers</p>
+                                        <p class="text-center mb-0 w-100">25</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="row mx-0">
+                                        <p class="text-center font-weight-bold mb-2 w-100">Vote</p>
+                                    </div>
+                                    <div class="row mx-0">
+                                        <div class="col-6 border-right text-success">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </div>
+                                        <div class="col-6 text-danger">
+                                            <i class="fas fa-thumbs-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                                </div>
+                                <div class="card-footer bg-transparent d-flex justify-content-between">
+                                    <p class="card-text mb-0"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                    <div>
+                                        <span class="badge badge-dark">nodejs</span>
+                                        <span class="badge badge-dark">html5</span>
+                                        <span class="badge badge-dark">css</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 px-2 py-3 bg-light">
+                                <div class="d-flex align-items-center">
+                                    <div style="font-size:1.5em">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="ml-1">
+                                        <span>UserName</span>
+                                        <span class="badge badge-success">Trusted</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card my-3">
+                        <div class="row mx-0">
+                            <div class="col-sm-2 py-3 border-right d-flex flex-column justify-content-around">
+                                <div>
+                                    <div>
+                                        <p class="text-center font-weight-bold mb-0 w-100">Answers</p>
+                                        <p class="text-center mb-0 w-100">25</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="row mx-0">
+                                        <p class="text-center font-weight-bold mb-2 w-100">Vote</p>
+                                    </div>
+                                    <div class="row mx-0">
+                                        <div class="col-6 border-right text-success">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </div>
+                                        <div class="col-6 text-danger">
+                                            <i class="fas fa-thumbs-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                                </div>
+                                <div class="card-footer bg-transparent d-flex justify-content-between">
+                                    <p class="card-text mb-0"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                    <div>
+                                        <span class="badge badge-dark">nodejs</span>
+                                        <span class="badge badge-dark">html5</span>
+                                        <span class="badge badge-dark">css</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 px-2 py-3 bg-light">
+                                <div class="d-flex align-items-center">
+                                    <div style="font-size:1.5em">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="ml-1">
+                                        <span>UserName</span>
+                                        <span class="badge badge-success">Trusted</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
 
-            </div>
-            <div class="tab-pane fade" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
+                </div>
+                <div class="tab-pane fade" id="nav-voted" role="tabpanel" aria-labelledby="nav-voted-tab">
 
-            </div>
-            <div class="tab-pane fade" id="nav-voted" role="tabpanel" aria-labelledby="nav-voted-tab">
+                </div>
+                <div class="tab-pane fade" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
 
+                </div>
             </div>
-            <div class="tab-pane fade" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
-
-            </div>
+            <aside class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </aside>
         </div>
-        <aside>
-    
-        </aside>
     </main>
     <footer>
 
