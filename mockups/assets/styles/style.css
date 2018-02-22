@@ -58,4 +58,14 @@ body {
     margin-top: calc(-1.25rem - 50px);
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-profile{
+  padding-bottom: 56.25%;
+  background-size: cover;
+  background-position: center;
 }
