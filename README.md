@@ -14,9 +14,9 @@
 
 ### Artefacts
 #### Requirements Specification and User Interfaces
-* A1: [Project presentation](https://github.com/jflcarvalho/lbaw1763/blob/master/Artifacts/A1.md)
-* A2: [Actors and User Stories](https://github.com/jflcarvalho/lbaw1763/blob/master/Artifacts/A2.md)
-* A3: [User Interface Prototype](https://github.com/jflcarvalho/lbaw1763/blob/master/Artifacts/A3.md)
+* A1: [Project presentation](https://github.com/jflcarvalho/lbaw1763/blob/master/Artifacts/lbaw1763_a1.md)
+* A2: [Actors and User Stories](https://github.com/jflcarvalho/lbaw1763/blob/master/Artifacts/lbaw1763_a2.md)
+* A3: [User Interface Prototype](https://github.com/jflcarvalho/lbaw1763/blob/master/Artifacts/lbaw1763_a3.md)
 #### Database specification
 * A4: ...
 * A5: ...
