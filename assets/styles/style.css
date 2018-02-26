@@ -7,12 +7,12 @@ body {
     font-weight: 300;
 }
 
-.dropdown-menu-right{
+.dropdown-menu-right {
     right: 0;
     left: auto !important;
 }
 
-.ml-auto-sm{
+.ml-auto-sm {
     width: 100%;
 }
 
@@ -23,7 +23,7 @@ body {
     }
 }
 
-.btn-signin{
+.btn-signin {
     width: 100%;
     padding-top: 0;
     padding-bottom: 0;
@@ -62,7 +62,7 @@ body {
     border-color: #208bc9d2;
 }
 
-.img-profile{
+.img-profile {
     margin-top: calc(-1.25rem - 50px);
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -72,12 +72,12 @@ body {
     background-position: center;
 }
 
-.bg-profile{
+.bg-profile {
   padding-bottom: 56.25%;
   background-size: cover;
   background-position: center;
 }
 
-.grey {
-    background-color: #f0f2f4;
+.comments {
+    border-radius: 1em;
 }
