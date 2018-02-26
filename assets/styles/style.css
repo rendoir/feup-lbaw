@@ -1,0 +1,84 @@
+body {
+    background: #fff;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+    color: #67757c;
+    font-weight: 300;
+}
+
+.dropdown-menu-right{
+    right: 0;
+    left: auto !important;
+}
+
+.ml-auto-sm{
+    width: 100%;
+}
+
+@media (min-width: 576px) {
+    .ml-auto-sm{
+        width: auto;
+        margin-left: auto !important;
+    }
+}
+
+.btn-signin{
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 32px;
+    margin: 0.2em auto;
+}
+
+.btn-social {
+    display: flex;
+    flex-flow: row nowrap;
+    white-space: nowrap;
+    align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0;
+}
+
+.btn-social > :first-child {
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+    font-size: 24px;
+}
+
+.btn-social > div {
+    line-height: 32px;
+    height: 32px;
+    padding-left: 0.5em;
+    border-left: 1px solid rgba(0,0,0,0.2);
+}
+
+.img-profile{
+    margin-top: calc(-1.25rem - 50px);
+    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-profile{
+  padding-bottom: 56.25%;
+  background-size: cover;
+  background-position: center;
+}
+
+.strict-round {
+    border-radius: .25rem .25rem 0 0;
+}
+
+.grey {
+    background-color: #f0f2f4;
+}
+
+.answers {
+    width: 80%;
+    margin: auto;
+}
