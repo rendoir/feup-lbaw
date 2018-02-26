@@ -9,15 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" type="text/css" media="screen" href="fontawesome/css/fa-svg-with-js.css" />
-    <script defer src="fontawesome/js/fontawesome-all.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/font/fontawesome/css/fa-svg-with-js.css" />
+    <script defer src="assets/font/fontawesome/js/fontawesome-all.js"></script>
 
     <!-- Bootstrap v4 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Styling  -->
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="bootstrap-social.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/bootstrap-social.css" />
 </head>
 <body>
     <header>
@@ -53,7 +53,7 @@
                             Sign In <span class="caret"></span>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <form class="px-4 py-3">
+                            <form class="px-4 py-3" action="index(loged).html">
                                 <div class="form-group">
                                     <label for="exampleDropdownFormEmail1">Email address</label>
                                     <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
@@ -102,8 +102,8 @@
             <div class="tab-content col-md-9" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
                     <div class="card my-3">
-                        <div class="row mx-0">
-                            <div class="col-sm-2 py-3 border-right d-flex flex-column justify-content-around bg-light">
+                        <a class="row mx-0">
+                            <div class="col-sm-2 py-3 border-right rounded-left d-flex flex-column justify-content-around bg-light">
                                 <div>
                                     <div>
                                         <p class="text-center font-weight-bold mb-0 w-100">Answers</p>
@@ -135,11 +135,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="card my-3 border-success ribbon-corner">
                         <div class="row mx-0">
-                            <div class="col-sm-2 py-3 border-right d-flex flex-column justify-content-around bg-light">
+                            <div class="col-sm-2 py-3 border-right rounded-left d-flex flex-column justify-content-around bg-light">
                                 <div>
                                     <div>
                                         <p class="text-center font-weight-bold mb-0 w-100">Answers</p>
@@ -185,46 +185,28 @@
                 </div>
             </div>
             <aside class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" src="http://via.placeholder.com/250x150" alt="Card image cap">
-                    <div class="card-body text-center">
-                        <div>
-                            <img class="rounded-circle img-profile" src="http://via.placeholder.com/100x100" alt="UserImage">
-                        </div>
-                        <h3 class="card-text mb-0">UserName</h3>
-                        <span class="badge badge-success mb-3">Trusted</span>
-                        <div class="my-3">
-                            <i class="fas fa-trophy"></i>
-                            <span>200</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-4 px-1 border-right">
-                                    <div>24</div>
-                                    <small>Questions</small>
-                            </div>
-                            <div class="col-4 px-1">
-                                <div>24</div>
-                                <small>Answers</small>
-                            </div>
-                            <div class="col-4 px-1 border-left">
-                                    <div>24</div>
-                                    <small>Comments</small>
-                            </div>
-                        </div>
+                <form class="px-4 py-3">
+                    <div class="form-group">
+                        <label for="exampleDropdownFormEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
                     </div>
-                </div>
-                <div class="card my-3">
-                    <div class="card-body d-flex flex-column justify-content-center">
-                        <h5 class="card-title">Have a Question?</h5>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                            <!-- <div class="input-group-append">
-                                <span class="input-group-text" id="inputGroup-sizing-default">?</span>
-                            </div> -->
-                        </div>
-                        <a href="#" class="btn btn-outline-danger">Ask!</a>
+                    <div class="form-group">
+                        <label for="exampleDropdownFormPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
                     </div>
-                </div>
+                        <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                        <label class="form-check-label" for="dropdownCheck">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-signin">Sign in</button>
+                    <a class="btn btn-social btn-github" href="#">
+                        <i class="fab fa-github"></i>
+                        <div>Sign in with Github</div>
+                    </a>
+                </form>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">New around here? Sign up</a>
+                <a class="dropdown-item" href="#">Forgot password?</a>
             </aside>
         </div>
     </main>
@@ -237,5 +219,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="assets/lib/jquery.slimscroll.min.js"></script>
 </body>
 </html>
