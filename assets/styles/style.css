@@ -56,8 +56,10 @@ body {
 
 .btn-primary {
     color: #fff;
-    background-color: #20c997;
-    border-color: #20c997;
+    /* background-color: #20c997;
+    border-color: #20c997; */
+    background-color: #208bc9d2;
+    border-color: #208bc9d2;
 }
 
 .img-profile{
