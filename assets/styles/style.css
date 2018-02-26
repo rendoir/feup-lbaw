@@ -70,15 +70,6 @@ body {
   background-position: center;
 }
 
-.strict-round {
-    border-radius: .25rem .25rem 0 0;
-}
-
 .grey {
     background-color: #f0f2f4;
-}
-
-.answers {
-    width: 80%;
-    margin: auto;
 }
