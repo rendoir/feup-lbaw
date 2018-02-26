@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>SegFault</title>
+        <link rel="stylesheet" href="editor/css/editormd.css" />
+    </head>
+    <body>
+        <div id="editor_container"></div>
+
+        <script src="editor/examples/js/jquery.min.js"></script>
+        <script src="editor/editormd.js"></script>
+        <script src="editor/languages/en.js"></script>
+        <script type="text/javascript">
+            $(function() {
+              $("#editor_container").append("<div id=\"editormd\"></div>");
+              let editor = editormd("editormd", {
+                width: "80%",
+                height: 600,
+                path: 'editor/lib/',
+                placeholder: "Write your question here! You can use markdown or the toolbar for advanced stuff!",
+                delay: 0,
+                tex: true,
+                flowChart: true,
+                sequenceDiagram: true,
+                toolbarIcons: function() {
+                  return ["undo", "redo", "|",
+                          "bold", "del", "italic", "ucwords", "uppercase", "lowercase", "|",
+                          "h1", "h2", "h3", "h4", "h5", "h6", "|",
+                          "list-ul", "list-ol", "hr", "|",
+                          "link", "reference-link", "quote", "image", "code", "preformatted-text", "code-block", "table", "|",
+                          "html-entities", "watch", "clear", "search"]
+                }
+              });
+            });
+      </script>
+    </body>
+</html>
