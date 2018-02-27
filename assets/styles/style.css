@@ -92,4 +92,14 @@ body {
 
 .big-icon:hover {
     color: #445259;
-} 
+}
+
+.tab-pane a {
+    color: inherit;
+}
+
+.tab-pane > a:hover {
+    color: inherit;
+    text-decoration: inherit;
+}
+
