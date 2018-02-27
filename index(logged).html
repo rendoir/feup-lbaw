@@ -49,8 +49,11 @@
                 <div class="ml-auto-sm d-flex justify-content-between">
                     
                     <!-- User Panel Icons -->
+                    <!-- Notifications Dropdown -->
                     <div class="dropdown">
-                      <i class="far fa-bell big-icon dropdow-toggle align-center" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                      <span class="dropdow-toggle big-icon align-center px-2" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="far fa-bell"></i>
+                      </span>
                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
                         <button class="dropdown-item" type="button">
                             <i class="far fa-thumbs-up"></i>
@@ -68,7 +71,20 @@
                         </button>
                       </div>
                     </div>
-                    <i class="fas fa-sign-out-alt big-icon align-center"></i>
+
+                    <!-- Options Dropdown-->
+                    <div class="dropdown">
+                      <span class="dropdow-toggle big-icon align-center px-2" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-caret-down"></i>
+                      </span>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
+                        <button class="dropdown-item" type="button">Edit Profile</button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" type="button">Settings</button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" type="button">Log Out</button>
+                      </div>
+                    </div>
 
                 </div>
             </nav>

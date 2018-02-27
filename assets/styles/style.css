@@ -87,5 +87,9 @@ body {
 }
 
 .big-icon {
-    width: 2em;
+    font-size: 1.7em;
 }
+
+.big-icon:hover {
+    color: #445259;
+} 

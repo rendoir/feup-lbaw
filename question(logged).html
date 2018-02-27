@@ -47,41 +47,45 @@
                 </div>
     
                 <div class="ml-auto-sm d-flex justify-content-between">
-                    <!-- Sign In/Sign Up --> 
-                    <div class="dropdown mx-sm-2">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                            Sign In <span class="caret"></span>
+
+                    <!-- User Panel Icons -->
+                    <!-- Notifications Dropdown -->
+                    <div class="dropdown">
+                      <span class="dropdow-toggle big-icon align-center px-2" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="far fa-bell"></i>
+                      </span>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
+                        <button class="dropdown-item" type="button">
+                            <i class="far fa-thumbs-up"></i>
+                            JohnDoe00 upvoted your Question
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <form class="px-4 py-3" action="question(logged).html">
-                                <div class="form-group">
-                                    <label for="exampleDropdownFormEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleDropdownFormPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
-                                </div>
-                                    <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                                    <label class="form-check-label" for="dropdownCheck">Remember me</label>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-signin">Sign in</button>
-                                <a class="btn btn-social btn-github" href="#">
-                                    <i class="fab fa-github"></i>
-                                    <div>Sign in with Github</div>
-                                </a>
-                            </form>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">New around here? Sign up</a>
-                            <a class="dropdown-item" href="#">Forgot password?</a>
-                        </div>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" type="button">
+                            <i class="far fa-comments"></i>
+                            JohnDoe00 answered your Question
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" type="button">
+                            <i class="far fa-check-circle"></i>
+                            Moderator Tester33 selected a correct answer for your Question
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Options Dropdown-->
+                    <div class="dropdown">
+                      <span class="dropdow-toggle big-icon align-center px-2" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-caret-down"></i>
+                      </span>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
+                        <button class="dropdown-item" type="button">Edit Profile</button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" type="button">Settings</button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" type="button">Log Out</button>
+                      </div>
                     </div>
                     
-                    <!-- Help --> 
-                    <div class="dropdown mx-sm-2">
-                        <button class="btn btn-primary" type="button">Sign Up
-                    </div>
                 </div>
             </nav>
         </div>
