@@ -147,19 +147,25 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-9">
+                    <!-- Answer -->
                     <div class="card my-3">
                         <div class="row mx-0">
-                            <div class="col-sm-1">
-                                <span class="align-middle text-muted">
-                                    <div class="text-center">
-                                        <i class="fas fa-thumbs-up"></i>
+                            <div class="col-sm-2 py-3 border-right rounded-left d-flex flex-column justify-content-around">
+                                <div>
+                                    <p class="text-center font-weight-bold mb-0 w-100">Comments</p>
+                                    <p class="text-center mb-0 w-100">3</p>
+                                </div>
+                                <div class="row mx-0">
+                                    <p class="text-center font-weight-bold mb-2 w-100">Votes</p>
+                                    <p class="text-center mb-0 w-100">-1</p>
+                                    <div class="d-flex flex-column" style="margin-top: -2em; margin-left: 75%">
+                                        <i class="fas fa-caret-up"></i>
+                                        <i class="fas fa-caret-down"></i>        
                                     </div>
-                                    <div class="text-center">
-                                        <i class="fas fa-thumbs-down"></i>
-                                    </div>
-                                </span>
+                                </div>
                             </div>
-                            <div class="col-sm-11">
+                            <!-- Answer container -->
+                            <div class="col-sm-10">
                                 <div class="card-body">
                                     <p class="card-text">
                                         Etiam semper lacus eu dolor dictum, a dictum odio laoreet.
@@ -177,25 +183,25 @@
                                     <div class="mr-auto">
                                         <span class="badge badge-info">Edited</span>
                                     </div>
-                                    <div>
-                                        <span class="badge badge-dark">nodejs</span>
-                                        <span class="badge badge-dark">html5</span>
-                                        <span class="badge badge-dark">css</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Comments Container-->
                         <div class="bg-light border-top">
+                            <!-- Comment -->
                             <div class="row my-2">
-                                <div class="col-1 text-center">
-                                    <span class="align-middle">
-                                        <i class="fas fa-thumbs-up"></i>
-                                        <i class="fas fa-thumbs-down"></i>
-                                    </span>
-                                </div>
-                                <div class="col-11">
+                                <div class="col-sm-11 offset-sm-1">
                                     <div class="row mx-3 bg-white comments">
-                                        <div class="col-1 text-center">3</div>
+                                        <div class="col-1 text-center">
+                                            <div class="d-flex justify-content-around align-items-center">
+                                                <span>3</span>
+                                                <div class="d-flex flex-column">
+                                                    <i class="fas fa-caret-up"></i>
+                                                    <i class="fas fa-caret-down"></i>        
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-11">
                                             <p class="mb-0">
                                                 Etiam semper lacus eu dolor dictum, a dictum odio laoreet.
@@ -205,23 +211,26 @@
                                     </div>
                                 </div>   
                             </div>
-                            <div class="row  my-2">
-                                <div class="col-1 text-center">
-                                    <span class="align-middle">
-                                        <i class="fas fa-thumbs-up"></i>
-                                        <i class="fas fa-thumbs-down"></i>
-                                    </span>
-                                </div>
-                                <div class="col-11">
+                            <!-- Comment -->
+                            <div class="row my-2">
+                                <div class="col-sm-11 offset-sm-1">
                                     <div class="row mx-3 bg-white comments">
-                                        <div class="col-1 text-center">3</div>
+                                        <div class="col-1 text-center">
+                                            <div class="d-flex justify-content-around align-items-center">
+                                                <span>3</span>
+                                                <div class="d-flex flex-column">
+                                                    <i class="fas fa-caret-up"></i>
+                                                    <i class="fas fa-caret-down"></i>        
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-11">
                                             <p class="mb-0">
                                                 Etiam semper lacus eu dolor dictum, a dictum odio laoreet.
                                                 Praesent luctus hendrerit dapibus.
                                             </p>
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>   
                             </div>
                         </div>
