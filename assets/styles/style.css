@@ -7,10 +7,6 @@ body {
     font-weight: 300;
 }
 
-h5, h4, h3, h2 {
-    text-weight: bold;
-}
-
 h1 {
     font-family: Futura, "Trebuchet MS", Arial, sans-serif;
     font-style: normal;
@@ -105,6 +101,17 @@ pre {
     height: 100px;
     background-size: cover;
     background-position: center;
+}
+
+.img-profile-big {
+    margin-top: calc(-1.25rem - 120px);
+    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    width: 240px;
+    height: 240px;
+    background-size: cover;
+    background-position: center;
+    border: 7px solid white;
 }
 
 .bg-profile {

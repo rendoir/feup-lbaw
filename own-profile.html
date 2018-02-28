@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SegFault</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/font/fontawesome/css/fa-svg-with-js.css" />
+    <script defer src="assets/font/fontawesome/js/fontawesome-all.js"></script>
+
+    <!-- Bootstrap v4 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Styling  -->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/bootstrap-social.css" />
+</head>
+<body>
+    <header>
+        <div class="bg-light">
+            <nav class="navbar navbar-expand-md navbar-light container">
+                <!-- Logo -->
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/logo.png" width="40" height="40" class="d-inline-block align-center" alt="">
+                    SegFault
+                </a>
+    
+                <!-- Collapse Menu -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link active" href="#">Questions <span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link" href="#">Categories</a>
+                    </div>
+    
+                    <!-- Search Bar -->
+                    <form class="form-inline">
+                        <input class="form-control mx-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+    
+                <div class="ml-auto-sm d-flex justify-content-between">
+
+                    <!-- User Panel Icons -->
+                    <!-- Notifications Dropdown -->
+                    <div class="dropdown">
+                      <span class="dropdow-toggle big-icon align-center px-2" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="far fa-bell"></i>
+                      </span>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
+                        <button class="dropdown-item" type="button">
+                            <i class="far fa-thumbs-up"></i>
+                            JohnDoe00 upvoted your Question
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" type="button">
+                            <i class="far fa-comments"></i>
+                            JohnDoe00 answered your Question
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" type="button">
+                            <i class="far fa-check-circle"></i>
+                            Moderator Tester33 selected a correct answer for your Question
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Options Dropdown-->
+                    <div class="dropdown">
+                      <span class="dropdow-toggle big-icon align-center px-2" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-caret-down"></i>
+                      </span>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
+                        <button class="dropdown-item" type="button">Edit Profile</button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" type="button">Settings</button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" type="button">Log Out</button>
+                      </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <main class="container mt-5">
+            <div class="row" />
+
+                <!-- Main body container -->
+                <div class="tab-content col-md-9">
+                    <img class="card-img-top"  height="350px" src="assets/img/bg-profile.jpg" alt="Card image cap">
+                    <div class="card-body text-center">
+                        <div>
+                            <img class="rounded-circle img-profile-big" src="assets/img/img-profile.jpg" alt="UserImage">
+                        </div>
+                        <h2 class="card-text my-3">António Almeida</h2>
+                        <p class="">
+                                Morbi mollis, eros eget sodales tempor, augue mi aliquet nisi, tempor placerat augue arcu sed odio. 
+                                Aliquam orci urna, porta vel quam quis, aliquam faucibus ante. Curabitur eleifend ut orci sit amet blandit. 
+                                Curabitur placerat ante tortor, ac volutpat nulla tempus vitae. Donec scelerisque ipsum eu tempus congue. 
+                                Vestibulum varius est sapien, in gravida tortor euismod eget. 
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Side Column -->
+                <aside class="col-md-3">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h4 class="card-text my-2">António Almeida</h4>
+                            <div class="d-flex flex-column justify-content-center" >
+                                <div>
+                                    <span class="badge badge-success mt-3 mb-2">Trusted</span>
+                                </div><div>
+                                    <span class="badge badge-success mb-1">Moderator</span>
+                                </div>
+                            </div>
+                            <div class="my-3">
+                                <p>Reputation Points</p>
+                                <i class="fas fa-trophy"></i>
+                                <span>200</span>
+                            </div>
+                            <div class="d-flex flex-column align-content-center container">
+                                <div class="my-2 border-top">
+                                    <i class="far fa-question-circle"></i>
+                                    <span>Questions: 24</span>
+                                </div>
+                                <div class="my-2 border-top">
+                                    <i class="far fa-hand-peace"></i>
+                                    <span>Answers: 24</span>
+                                </div>
+                                <div class="my-2 border-top">
+                                    <i class="far fa-comment"></i>
+                                    <span>Comments: 24</span>
+                                </div>
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+        </main>
+    </header>
+
+    <!-- TODO -->
+
+    <!-- Optional JavaScript -->    
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
