@@ -8,40 +8,13 @@ body {
     min-width: 320px;
 }
 
-h5, h4, h3, h2 {
-    text-weight: bold;
-}
-
-h1 {
+h1, h3 {
     font-family: Futura, "Trebuchet MS", Arial, sans-serif;
     font-style: normal;
     font-variant: normal;
-    font-weight: 500;
-}
-h3 {
-    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 500;
-}
-p {
-    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-    font-style: normal;
-    font-variant: normal;
     font-weight: 400;
 }
-blockquote {
-    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 400;
-}
-pre {
-    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 400;
-}
+
 .ml-auto-sm {
     width: 100%;
 }
@@ -117,10 +90,6 @@ pre {
     border-radius: 1em;
 }
 
-.sweet-gray {
-    background: #8a96a0;
-}
-
 .big-icon {
     font-size: 1.7em;
 }
@@ -144,4 +113,14 @@ pre {
 
 .tab-pane > .card:hover {
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.07), 0 0 20px 0 rgba(0, 0, 0, 0.07);
+}
+
+.sweet-grey {
+    background: #e9ecef;linear-gradient(#e9ecef, #e9ecef)
+}
+
+#question-body{
+    overflow: hidden;
+    transition: max-height 1s;
+    max-height: 70vh;
 }
