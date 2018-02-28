@@ -5,6 +5,7 @@ body {
     overflow-x: hidden;
     color: #67757c;
     font-weight: 300;
+    min-width: 320px;
 }
 
 h5, h4, h3, h2 {
@@ -41,12 +42,6 @@ pre {
     font-variant: normal;
     font-weight: 400;
 }
-
-.dropdown-menu-right {
-    right: 0;
-    left: auto !important;
-}
-
 .ml-auto-sm {
     width: 100%;
 }
@@ -55,6 +50,11 @@ pre {
     .ml-auto-sm{
         width: auto;
         margin-left: auto !important;
+    }
+
+    .dropdown-menu-right {
+        right: 0;
+        left: auto !important;
     }
 }
 
@@ -139,7 +139,7 @@ pre {
 }
 
 .tab-pane > .card {
-    transition: box-shadow 0.5s;
+    transition: box-shadow 0.2s;
 }
 
 .tab-pane > .card:hover {
