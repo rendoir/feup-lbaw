@@ -80,6 +80,17 @@ h1, h3 {
     background-position: center;
 }
 
+.img-profile-big {
+    margin-top: calc(-1.25rem - 120px);
+    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    width: 240px;
+    height: 240px;
+    background-size: cover;
+    background-position: center;
+    border: 7px solid white;
+}
+
 .bg-profile {
   padding-bottom: 56.25%;
   background-size: cover;
