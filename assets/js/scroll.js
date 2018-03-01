@@ -6,6 +6,6 @@ $(window).scroll(function () {
 
     if ( $heightScrolled > 0)
         $('#question-body').css("max-height", "0");
-    else
+    else if($('#question-body').height() == 0)
         $('#question-body').css("max-height", $defaultHeight);
 });

@@ -20,11 +20,11 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/bootstrap-social.css" />
 </head>
 <body>
-    <header>
-        <div id="navbar" class="bg-light sticky-top">
+    <header class="fixed-top">
+        <div id="navbar" class="bg-light">
             <nav class="navbar navbar-expand-md navbar-light container">
                 <!-- Logo -->
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand py-0" href="#">
                     <img src="assets/img/logo.png" width="40" height="40" class="d-inline-block align-center" alt="">
                     SegFault
                 </a>
@@ -87,10 +87,10 @@
         </div>
     </header>
     <main>
-        <section class="sweet-grey">
+        <section id="question" class="sweet-grey">
             <div class="container py-3">
                 <div class="d-flex flex-column">
-                    <header class="border-bottom">
+                    <header class="border-bottom sticky-top">
                         <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
                     </header>
                     <main id="question-body" class="row">

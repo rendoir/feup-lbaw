@@ -8,6 +8,25 @@ body {
     min-width: 320px;
 }
 
+body > header > #navbar {
+    height: 60px;
+}
+
+body > main {
+    padding-top: 60px;
+}
+
+main aside > div {
+    position: sticky;
+    top: 10%;
+}
+
+section#question{
+    z-index: 1020;
+    position: sticky;
+    top: 60px;
+}
+
 h1, h3 {
     font-family: Futura, "Trebuchet MS", Arial, sans-serif;
     font-style: normal;
