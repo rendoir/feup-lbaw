@@ -84,7 +84,7 @@ h1, h3 {
     border-color: #208bc9d2;
 }
 
-.img-profile {
+.img-profile-aside {
     margin-top: calc(-1.25rem - 50px);
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
