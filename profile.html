@@ -20,17 +20,17 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/bootstrap-social.css" />
 </head>
 <body>
-    <header>
-        <div class="bg-light">
-            <nav class="navbar navbar-expand-md navbar-light container">
+    <header class="sticky-top">
+        <div id="navbar" class="bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light container">
                 <!-- Logo -->
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand py-0" href="#">
                     <img src="assets/img/logo.png" width="40" height="40" class="d-inline-block align-center" alt="">
                     SegFault
                 </a>
     
                 <!-- Collapse Menu -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler mr-auto-sm" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -47,11 +47,11 @@
                 </div>
     
                 <!-- START OF NAVBAR RIGHT-SIDE OPTIONS -->                
-                <div class="ml-auto-sm d-flex justify-content-between align-items-center">
+                <div class="ml-auto-sm px-0 col-sm-6 col-lg-3 d-flex justify-content-between justify-content-sm-end">
                     <!-- User Panel Icons -->
                     <!-- Notifications Dropdown -->
                     <div class="dropdown mx-2">
-                        <span class="dropdow-toggle big-icon" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="big-icon" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="pt-1">
                             <i class="far fa-bell"></i>                          
                             </div>
@@ -73,13 +73,13 @@
                             </button>
                         </div>
                     </div>
-
+    
                     <!-- Options Dropdown-->
                     <div class="dropdown px-1">
-                        <span class="dropdow-toggle big-icon mx-2" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="big-icon mx-2" id="profile-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="rounded-circle" src="assets/img/img-profile-icon.jpg" alt="profile picture">
                         </span>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-options">
                         <button class="dropdown-item" type="button">Profile</button>
                         <div class="dropdown-divider"></div>
                         <button class="dropdown-item" type="button">Settings</button>
@@ -87,14 +87,14 @@
                         <button class="dropdown-item" type="button">Log Out</button>
                         </div>
                     </div>
-
+    
                 </div>
                 <!-- END OF NAVBAR RIGHT-SIDE OPTIONS -->
             </nav>
         </div>
     </header>
     <main class="container mt-5">
-        <div class="row" />
+        <div class="row">
 
             <!-- Main body container -->
             <div class="tab-content col-md-9">
@@ -202,33 +202,35 @@
 
             <!-- Side Column -->
             <aside class="col-md-3">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h4 class="card-text my-2">John's Statistics</h4>
-                        <div class="d-flex flex-column justify-content-center">
-                            <div>
-                                <span class="badge badge-success mt-3 mb-2">Trusted</span>
-                            </div><div>
-                                <span class="badge badge-light mb-1 dis-badge">Moderator</span>
+                <div class="aside-content mx-0">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h4 class="card-text my-2">John's Statistics</h4>
+                            <div class="d-flex flex-column justify-content-center">
+                                <div>
+                                    <span class="badge badge-success mt-3 mb-2">Trusted</span>
+                                </div><div>
+                                    <span class="badge badge-light mb-1 dis-badge">Moderator</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="my-3">
-                            <p>Reputation Points</p>
-                            <i class="fas fa-trophy"></i>
-                            <span>21</span>
-                        </div>
-                        <div class="d-flex flex-column align-content-center container">
-                            <div class="py-2">
-                                <i class="far fa-question-circle"></i>
-                                <span>Questions: 12</span>
+                            <div class="my-3">
+                                <p>Reputation Points</p>
+                                <i class="fas fa-trophy"></i>
+                                <span>21</span>
                             </div>
-                            <div class="py-2 border-top">
-                                <i class="far fa-hand-peace"></i>
-                                <span>Answers: 4</span>
-                            </div>
-                            <div class="py-2 border-top">
-                                <i class="far fa-comment"></i>
-                                <span>Comments: 3</span>
+                            <div class="d-flex flex-column align-content-center container">
+                                <div class="py-2">
+                                    <i class="far fa-question-circle"></i>
+                                    <span>Questions: 12</span>
+                                </div>
+                                <div class="py-2 border-top">
+                                    <i class="far fa-hand-peace"></i>
+                                    <span>Answers: 4</span>
+                                </div>
+                                <div class="py-2 border-top">
+                                    <i class="far fa-comment"></i>
+                                    <span>Comments: 3</span>
+                                </div>
                             </div>
                         </div>
                     </div>

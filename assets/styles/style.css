@@ -8,7 +8,7 @@ body {
     min-width: 320px;
 }
 
-main aside > div {
+main .row aside > div.aside-content {
     position: sticky;
     top: 10%;
 }
