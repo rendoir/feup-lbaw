@@ -8,23 +8,15 @@ body {
     min-width: 320px;
 }
 
-body > header > #navbar {
-    height: 60px;
-}
-
-body > main {
-    padding-top: 60px;
-}
-
 main aside > div {
     position: sticky;
     top: 10%;
 }
 
 section#question{
-    z-index: 1020;
+    z-index: 1000;
     position: sticky;
-    top: 60px;
+    top: 94px;
 }
 
 h1, h3 {
@@ -34,13 +26,16 @@ h1, h3 {
     font-weight: 400;
 }
 
-.ml-auto-sm {
-    width: 100%;
-}
-
 @media (min-width: 576px) {
+    section#question{
+        top: 56px;
+    }
+
+    .mr-auto-sm{
+        margin-right: auto !important;
+    }
+
     .ml-auto-sm{
-        width: auto;
         margin-left: auto !important;
     }
 

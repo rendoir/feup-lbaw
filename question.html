@@ -20,9 +20,9 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/bootstrap-social.css" />
 </head>
 <body>
-    <header class="fixed-top">
+    <header class="sticky-top">
         <div id="navbar" class="bg-light">
-            <nav class="navbar navbar-expand-md navbar-light container">
+            <nav class="navbar navbar-expand-lg navbar-light container">
                 <!-- Logo -->
                 <a class="navbar-brand py-0" href="#">
                     <img src="assets/img/logo.png" width="40" height="40" class="d-inline-block align-center" alt="">
@@ -30,7 +30,7 @@
                 </a>
     
                 <!-- Collapse Menu -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler mr-auto-sm" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -46,14 +46,14 @@
                     </form>
                 </div>
     
-                <div class="ml-auto-sm d-flex justify-content-between">
+                <div class="ml-auto-sm px-0 col-sm-6 col-lg-3 d-flex justify-content-between justify-content-sm-end">
                     <!-- Sign In/Sign Up --> 
                     <div class="dropdown mx-sm-2">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                             Sign In <span class="caret"></span>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <form class="px-4 py-3" action="question(logged).html">
+                            <form class="px-4 py-3" action="index(logged).html">
                                 <div class="form-group">
                                     <label for="exampleDropdownFormEmail1">Email address</label>
                                     <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
