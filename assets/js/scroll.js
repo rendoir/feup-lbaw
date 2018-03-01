@@ -5,10 +5,7 @@ $(window).scroll(function () {
     var $heightScrolled = $(window).scrollTop();
 
     if ( $heightScrolled > 0)
-    {
         $('#question-body').css("max-height", "0");
-    }
-    else {
+    else
         $('#question-body').css("max-height", $defaultHeight);
-    }
 });
