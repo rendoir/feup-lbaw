@@ -127,10 +127,14 @@ h1, h3 {
 }
 
 .sweet-grey {
-    background: #e9ecef;linear-gradient(#e9ecef, #e9ecef)
+    background: #e9ecef; /* linear-gradient(#e9ecef, #e9ecef); */
 }
 
-#question-body{
+.own-question:hover {
+    background: #f8f9fa;
+}
+
+#question-body {
     overflow: hidden;
     transition: max-height 1s;
     max-height: 70vh;
