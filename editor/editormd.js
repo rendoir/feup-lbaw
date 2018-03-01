@@ -832,7 +832,7 @@
 
             if (typeof line !== "number")
             {
-                alert("Error: The line number must be an integer.");
+                console.log("Error: The line number must be an integer.");
                 return this;
             }
 
@@ -840,7 +840,7 @@
 
             if (line > count)
             {
-                alert("Error: The line number range 1-" + count);
+                console.log("Error: The line number range 1-" + count);
 
                 return this;
             }
@@ -2309,7 +2309,7 @@
         getHTML : function() {
             if (!this.settings.saveHTMLToTextarea)
             {
-                alert("Error: settings.saveHTMLToTextarea == false");
+                console.log("Error: settings.saveHTMLToTextarea == false");
 
                 return false;
             }
@@ -2338,7 +2338,7 @@
         getPreviewedHTML : function() {
             if (!this.settings.watch)
             {
-                alert("Error: settings.watch == false");
+                console.log("Error: settings.watch == false");
 
                 return false;
             }
@@ -2705,7 +2705,7 @@
             {
                 if (typeof this[name] === "undefined")
                 {
-                    alert("Error: " + name + " plugin is not found, you are not load this plugin.");
+                    console.log("Error: " + name + " plugin is not found, you are not load this plugin.");
 
                     return this;
                 }
@@ -2743,7 +2743,7 @@
 
             if (!settings.searchReplace)
             {
-                alert("Error: settings.searchReplace == false");
+                console.log("Error: settings.searchReplace == false");
                 return this;
             }
 
@@ -3068,7 +3068,7 @@
         tex : function() {
             if (!this.settings.tex)
             {
-                alert("settings.tex === false");
+                console.log("settings.tex === false");
                 return this;
             }
 
@@ -3094,7 +3094,7 @@
         pagebreak : function() {
             if (!this.settings.pageBreak)
             {
-                alert("settings.pageBreak === false");
+                console.log("settings.pageBreak === false");
                 return this;
             }
 
@@ -3200,7 +3200,7 @@
 
             if (!this.settings.emoji)
             {
-                alert("Error: settings.emoji == false");
+                console.log("Error: settings.emoji == false");
                 return ;
             }
 
@@ -3237,7 +3237,7 @@
 
             if (!this.settings.atLink)
             {
-                alert("Error: settings.atLink == false");
+                console.log("Error: settings.atLink == false");
                 return ;
             }
 
