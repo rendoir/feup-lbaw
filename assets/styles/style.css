@@ -156,3 +156,8 @@ h1, h3 {
     border-width: 1px;
     margin-bottom: 1rem;
 }
+
+#jumbotron_about {
+    background-image: url("../img/highway_landscape_blurred.jpg");
+    background-size: cover;
+}
