@@ -134,6 +134,10 @@ h1, h3 {
     background: #f8f9fa;
 }
 
+.dis-badge {
+    color: #707070;
+}
+
 #question-body {
     overflow: hidden;
     transition: max-height 1s;
