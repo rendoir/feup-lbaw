@@ -143,3 +143,16 @@ h1, h3 {
     transition: max-height 1s;
     max-height: 70vh;
 }
+
+#ask-sign-in {
+    transition: max-height 2s, margin 1s;
+    max-height: 0;
+    overflow: hidden;
+    border-width: 0;
+}
+
+#ask-sign-in.active {
+    max-height: 400px;
+    border-width: 1px;
+    margin-bottom: 1rem;
+}
