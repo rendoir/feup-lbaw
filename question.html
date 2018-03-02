@@ -102,19 +102,42 @@
                     </header>
                     <main id="question-body" class="row">
                         <div class="col-md-9 p-3">
-                          <p>Let’s say we’re making a first-person camera. The basic idea is it should yaw to look left &amp; right, and pitch to look up &amp; down. So we write a bit of code like this (using Unity as an example):</p>
-                          <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="pln">    </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Update</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">        </span><span class="typ">float</span><span class="pln"> speed </span><span class="pun">=</span><span class="pln"> lookSpeed </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Time</span><span class="pun">.</span><span class="pln">deltaTime</span><span class="pun">;</span></code></li><li class="L2"><code class="lang-cpp"></code></li><li class="L3"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Yaw around the y axis using the player's horizontal input.        </span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(</span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Pitch around the x axis using the player's vertical input.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln">  </span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L8"><code class="lang-cpp"><span class="pln">    </span><span class="pun">}</span></code></li></ol></pre>
-                          <p>or maybe</p>
-                          <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="com">// Construct a quaternion or a matrix representing incremental camera rotation.</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">    </span><span class="typ">Quaternion</span><span class="pln"> rotation </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Quaternion</span><span class="pun">.</span><span class="typ">Euler</span><span class="pun">(</span></code></li><li class="L2"><code class="lang-cpp"><span class="pln">                            </span><span class="pun">-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-cpp"><span class="pln">                             </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">                             </span><span class="lit">0</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">    </span><span class="com">// Fold this change into the camera's current rotation.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">    transform</span><span class="pun">.</span><span class="pln">rotation </span><span class="pun">*=</span><span class="pln"> rotation</span><span class="pun">;</span></code></li></ol></pre>
-                          <p>And it mostly works, but over time the view starts to get crooked. The camera seems to be turning on its roll axis (z) even though we only told it to rotate on the x and y!</p>
-                          <p><a href="https://i.stack.imgur.com/A9nOC.gif"><img src="https://i.stack.imgur.com/A9nOC.gif" alt="Animated example of a first-person camera tilting sideways"></a></p>
-                          <p>This can also happen if we’re trying to manipulate an object in front of the camera - say it’s a globe we want to turn to look around:</p>
-                          <p><a href="https://i.stack.imgur.com/y6cNH.gif"><img src="https://i.stack.imgur.com/y6cNH.gif" alt="Animated example of a globe tilting sideways"></a></p>
-                          <p>The same problem - after a while the North pole starts to wander away to the left or right. We’re giving input on two axes but we’re getting this confusing rotation on a third. And it happens whether we apply all our rotations around the object’s local axes or the world’s global axes.</p>
-                          <p>In many engines you’ll also see this in the inspector - rotate the object in the world, and suddenly numbers change on an axis we didn’t even touch!</p>
-                          <p><a href="https://i.stack.imgur.com/JpZZ2.gif"><img src="https://i.stack.imgur.com/JpZZ2.gif" alt="Animated example showing manipulating an object next to a readout of its rotation angles. The z angle changes even though the user didn't manipulate that axis."></a></p>
-                          <p><strong>So, is this an engine bug?</strong> How do we tell the program we don’t want it adding extra rotation?</p>
-                          <p>Does it have something to do with Euler angles? Should I use Quaternions or Rotation Matrices or Basis Vectors instead?</p>
+                            <p>Let’s say we’re making a first-person camera. The basic idea is it should yaw to look left &amp;
+                                right, and pitch to look up &amp; down. So we write a bit of code like this (using Unity
+                                as an example):</p>
+                            <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="pln">    </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Update</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">        </span><span class="typ">float</span><span class="pln"> speed </span><span class="pun">=</span><span class="pln"> lookSpeed </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Time</span><span class="pun">.</span><span class="pln">deltaTime</span><span class="pun">;</span></code></li><li class="L2"><code class="lang-cpp"></code></li><li class="L3"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Yaw around the y axis using the player's horizontal input.        </span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(</span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Pitch around the x axis using the player's vertical input.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln">  </span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L8"><code class="lang-cpp"><span class="pln">    </span><span class="pun">}</span></code></li></ol></pre>
+                            <p>or maybe</p>
+                            <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="com">// Construct a quaternion or a matrix representing incremental camera rotation.</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">    </span><span class="typ">Quaternion</span><span class="pln"> rotation </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Quaternion</span><span class="pun">.</span><span class="typ">Euler</span><span class="pun">(</span></code></li><li class="L2"><code class="lang-cpp"><span class="pln">                            </span><span class="pun">-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-cpp"><span class="pln">                             </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">                             </span><span class="lit">0</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">    </span><span class="com">// Fold this change into the camera's current rotation.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">    transform</span><span class="pun">.</span><span class="pln">rotation </span><span class="pun">*=</span><span class="pln"> rotation</span><span class="pun">;</span></code></li></ol></pre>
+                            <p>And it mostly works, but over time the view starts to get crooked. The camera seems to be turning
+                                on its roll axis (z) even though we only told it to rotate on the x and y!</p>
+                            <p>
+                                <a href="https://i.stack.imgur.com/A9nOC.gif">
+                                    <img src="https://i.stack.imgur.com/A9nOC.gif" alt="Animated example of a first-person camera tilting sideways">
+                                </a>
+                            </p>
+                            <p>This can also happen if we’re trying to manipulate an object in front of the camera - say it’s
+                                a globe we want to turn to look around:</p>
+                            <p>
+                                <a href="https://i.stack.imgur.com/y6cNH.gif">
+                                    <img src="https://i.stack.imgur.com/y6cNH.gif" alt="Animated example of a globe tilting sideways">
+                                </a>
+                            </p>
+                            <p>The same problem - after a while the North pole starts to wander away to the left or right. We’re
+                                giving input on two axes but we’re getting this confusing rotation on a third. And it happens
+                                whether we apply all our rotations around the object’s local axes or the world’s global axes.</p>
+                            <p>In many engines you’ll also see this in the inspector - rotate the object in the world, and suddenly
+                                numbers change on an axis we didn’t even touch!</p>
+                            <p>
+                                <a href="https://i.stack.imgur.com/JpZZ2.gif">
+                                    <img src="https://i.stack.imgur.com/JpZZ2.gif" alt="Animated example showing manipulating an object next to a readout of its rotation angles. The z angle changes even though the user didn't manipulate that axis.">
+                                </a>
+                            </p>
+                            <p>
+                                <strong>So, is this an engine bug?</strong> How do we tell the program we don’t want it adding extra
+                                rotation?
+                            </p>
+                            <p>Does it have something to do with Euler angles? Should I use Quaternions or Rotation Matrices
+                                or Basis Vectors instead?</p>
                         </div>
                         <div class="col-md-3 p-3 d-flex flex-column justify-content-between">
                             <div>
@@ -169,7 +192,9 @@
                         <div class="row mx-0">
                             <div class="col-sm-1 py-3 border-right rounded-left d-flex flex-column justify-content-around">
                                 <div class="row mx-0">
-                                    <p class="mx-auto"><i class="fas fa-trophy"></i></p>
+                                    <p class="mx-auto">
+                                        <i class="fas fa-trophy"></i>
+                                    </p>
                                     <p class="text-center mb-0 w-100">-1</p>
                                 </div>
                             </div>
@@ -195,7 +220,7 @@
                                 </div>
                             </div>
 
-                        <!-- COMMENTS -->
+                            <!-- COMMENTS -->
                             <div class="card-body bg-light">
                                 <p class="text-right mb-0">4 comments</p>
                                 <div class="d-flex list-group list-group-flush">
@@ -205,7 +230,8 @@
                                                 3
                                             </div>
                                             <div class="col-11 my-1 pl-4">
-                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus.</p>
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -215,7 +241,8 @@
                                                 2
                                             </div>
                                             <div class="col-11 my-1 pl-4">
-                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus.</p>
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -225,7 +252,8 @@
                                                 1
                                             </div>
                                             <div class="col-11 my-1 pl-4">
-                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus.</p>
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -235,30 +263,29 @@
                                                 -1
                                             </div>
                                             <div class="col-11 my-1 pl-4">
-                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus.</p>
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        <!-- COMMENTS END -->
+                            <!-- COMMENTS END -->
+                        </div>
+
                     </div>
-                        
-                    </div>
-                    
+
                     <div class="card my-3">
                         <div class="row mx-0">
-                            <div class="col-sm-2 py-3 border-right rounded-left d-flex flex-column justify-content-around">
-                                <div>
-                                    <p class="text-center font-weight-bold mb-0 w-100">Comments</p>
-                                    <p class="text-center mb-0 w-100">3</p>
-                                </div>
+                            <div class="col-sm-1 py-3 border-right rounded-left d-flex flex-column justify-content-around">
                                 <div class="row mx-0">
-                                    <p class="text-center font-weight-bold mb-2 w-100">Votes</p>
+                                    <p class="mx-auto">
+                                        <i class="fas fa-trophy"></i>
+                                    </p>
                                     <p class="text-center mb-0 w-100">-1</p>
                                 </div>
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-11">
                                 <div class="card-body">
                                     <p class="card-text">
                                         Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
@@ -279,47 +306,73 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="bg-light border-top">
-                            <div class="row my-2">
-                                <div class="offset-1 col-11">
-                                    <div class="row mx-3 bg-white comments">
-                                        <div class="col-1 text-center">3</div>
-                                        <div class="col-11">
-                                            <p class="mb-0">
-                                                Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus.
-                                            </p>
+
+                            <!-- COMMENTS -->
+                            <div class="card-body bg-light">
+                                <p class="text-right mb-0">4 comments</p>
+                                <div class="d-flex list-group list-group-flush">
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                3
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                2
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                1
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                -1
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row  my-2">
-                                <div class="offset-1 col-11">
-                                    <div class="row mx-3 bg-white comments">
-                                        <div class="col-1 text-center">3</div>
-                                        <div class="col-11">
-                                            <p class="mb-0">
-                                                Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- COMMENTS END -->
                         </div>
+
                     </div>
+
                     <div class="card my-3">
                         <div class="row mx-0">
-                            <div class="col-sm-2 py-3 border-right rounded-left d-flex flex-column justify-content-around">
-                                <div>
-                                    <p class="text-center font-weight-bold mb-0 w-100">Comments</p>
-                                    <p class="text-center mb-0 w-100">3</p>
-                                </div>
+                            <div class="col-sm-1 py-3 border-right rounded-left d-flex flex-column justify-content-around">
                                 <div class="row mx-0">
-                                    <p class="text-center font-weight-bold mb-2 w-100">Votes</p>
+                                    <p class="mx-auto">
+                                        <i class="fas fa-trophy"></i>
+                                    </p>
                                     <p class="text-center mb-0 w-100">-1</p>
                                 </div>
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-11">
                                 <div class="card-body">
                                     <p class="card-text">
                                         Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
@@ -340,47 +393,73 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="bg-light border-top">
-                            <div class="row my-2">
-                                <div class="offset-1 col-11">
-                                    <div class="row mx-3 bg-white comments">
-                                        <div class="col-1 text-center">3</div>
-                                        <div class="col-11">
-                                            <p class="mb-0">
-                                                Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus.
-                                            </p>
+
+                            <!-- COMMENTS -->
+                            <div class="card-body bg-light">
+                                <p class="text-right mb-0">4 comments</p>
+                                <div class="d-flex list-group list-group-flush">
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                3
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                2
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                1
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                -1
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row  my-2">
-                                <div class="offset-1 col-11">
-                                    <div class="row mx-3 bg-white comments">
-                                        <div class="col-1 text-center">3</div>
-                                        <div class="col-11">
-                                            <p class="mb-0">
-                                                Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- COMMENTS END -->
                         </div>
+
                     </div>
+
                     <div class="card my-3">
                         <div class="row mx-0">
-                            <div class="col-sm-2 py-3 border-right rounded-left d-flex flex-column justify-content-around">
-                                <div>
-                                    <p class="text-center font-weight-bold mb-0 w-100">Comments</p>
-                                    <p class="text-center mb-0 w-100">3</p>
-                                </div>
+                            <div class="col-sm-1 py-3 border-right rounded-left d-flex flex-column justify-content-around">
                                 <div class="row mx-0">
-                                    <p class="text-center font-weight-bold mb-2 w-100">Votes</p>
+                                    <p class="mx-auto">
+                                        <i class="fas fa-trophy"></i>
+                                    </p>
                                     <p class="text-center mb-0 w-100">-1</p>
                                 </div>
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-11">
                                 <div class="card-body">
                                     <p class="card-text">
                                         Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
@@ -401,34 +480,149 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="bg-light border-top">
-                            <div class="row my-2">
-                                <div class="offset-1 col-11">
-                                    <div class="row mx-3 bg-white comments">
-                                        <div class="col-1 text-center">3</div>
-                                        <div class="col-11">
-                                            <p class="mb-0">
-                                                Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus.
-                                            </p>
+
+                            <!-- COMMENTS -->
+                            <div class="card-body bg-light">
+                                <p class="text-right mb-0">4 comments</p>
+                                <div class="d-flex list-group list-group-flush">
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                3
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                2
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                1
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                -1
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row  my-2">
-                                <div class="offset-1 col-11">
-                                    <div class="row mx-3 bg-white comments">
-                                        <div class="col-1 text-center">3</div>
-                                        <div class="col-11">
-                                            <p class="mb-0">
-                                                Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- COMMENTS END -->
                         </div>
+
                     </div>
+
+                    <div class="card my-3">
+                        <div class="row mx-0">
+                            <div class="col-sm-1 py-3 border-right rounded-left d-flex flex-column justify-content-around">
+                                <div class="row mx-0">
+                                    <p class="mx-auto">
+                                        <i class="fas fa-trophy"></i>
+                                    </p>
+                                    <p class="text-center mb-0 w-100">-1</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-11">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
+                                        ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum dapibus
+                                        leo id neque consequat placerat.
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-transparent d-flex justify-content-between">
+                                    <p class="card-text mb-0">
+                                        <small class="text-muted">Created by - &nbsp</small>
+                                    </p>
+                                    <div class="mr-auto">
+                                        <span>UserName</span>
+                                        <span class="badge badge-success">Trusted</span>
+                                    </div>
+                                    <div class="mr-auto">
+                                        <span class="badge badge-info">Edited</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- COMMENTS -->
+                            <div class="card-body bg-light">
+                                <p class="text-right mb-0">4 comments</p>
+                                <div class="d-flex list-group list-group-flush">
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                3
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                2
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                1
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item pr-0">
+                                        <div class="row">
+                                            <div class="col-1 my-1 text-center">
+                                                -1
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- COMMENTS END -->
+                        </div>
+
+                    </div>
+
                 </div>
                 <!-- related questions -->
                 <aside class="col-md-3 mt-3">
