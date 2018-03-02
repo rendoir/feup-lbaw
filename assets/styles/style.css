@@ -174,4 +174,5 @@ h1, h3 {
 #jumbotron_about {
     background-image: url("../img/highway_landscape_blurred.jpg");
     background-size: cover;
+    height: 100%;
 }
