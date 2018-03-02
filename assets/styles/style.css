@@ -8,6 +8,17 @@ body {
     min-width: 320px;
 }
 
+main .row aside > div.aside-content {
+    position: sticky;
+    top: 10%;
+}
+
+section#question{
+    z-index: 1000;
+    position: sticky;
+    top: 94px;
+}
+
 h1, h3 {
     font-family: Futura, "Trebuchet MS", Arial, sans-serif;
     font-style: normal;
@@ -15,13 +26,16 @@ h1, h3 {
     font-weight: 400;
 }
 
-.ml-auto-sm {
-    width: 100%;
-}
-
 @media (min-width: 576px) {
+    section#question{
+        top: 56px;
+    }
+
+    .mr-auto-sm{
+        margin-right: auto !important;
+    }
+
     .ml-auto-sm{
-        width: auto;
         margin-left: auto !important;
     }
 
@@ -70,7 +84,7 @@ h1, h3 {
     border-color: #208bc9d2;
 }
 
-.img-profile {
+.img-profile-aside {
     margin-top: calc(-1.25rem - 50px);
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -155,4 +169,9 @@ h1, h3 {
     max-height: 400px;
     border-width: 1px;
     margin-bottom: 1rem;
+}
+
+#jumbotron_about {
+    background-image: url("../img/highway_landscape_blurred.jpg");
+    background-size: cover;
 }

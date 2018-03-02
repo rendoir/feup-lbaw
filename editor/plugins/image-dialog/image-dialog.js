@@ -86,10 +86,7 @@
                             var link = this.find("[data-link]").val();
 
                             if (url === "")
-                            {
-                                alert(imageLang.imageURLEmpty);
-                                return false;
-                            }
+                              return false;
 
 							var altAttr = (alt !== "") ? " \"" + alt + "\"" : "";
 
@@ -132,18 +129,10 @@
 					var isImage   = new RegExp("(\\.(" + settings.imageFormats.join("|") + "))$"); // /(\.(webp|jpg|jpeg|gif|bmp|png))$/
 
 					if (fileName === "")
-					{
-						alert(imageLang.uploadFileEmpty);
+            return false;
 
-                        return false;
-					}
-
-                    if (!isImage.test(fileName))
-					{
-						alert(imageLang.formatNotAllowed + settings.imageFormats.join(", "));
-
-                        return false;
-					}
+          if (!isImage.test(fileName))
+					  return false;
 
                     loading(true);
 

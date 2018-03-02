@@ -41,12 +41,12 @@
             }
             else
             {
-                var dialogHTML = "<div class=\"" + classPrefix + "form\">" + 
-                                        "<label>" + linkLang.url + "</label>" + 
+                var dialogHTML = "<div class=\"" + classPrefix + "form\">" +
+                                        "<label>" + linkLang.url + "</label>" +
                                         "<input type=\"text\" value=\"http://\" data-url />" +
-                                        "<br/>" + 
-                                        "<label>" + linkLang.urlTitle + "</label>" + 
-                                        "<input type=\"text\" value=\"" + selection + "\" data-title />" + 
+                                        "<br/>" +
+                                        "<label>" + linkLang.urlTitle + "</label>" +
+                                        "<input type=\"text\" value=\"" + selection + "\" data-title />" +
                                         "<br/>" +
                                     "</div>";
 
@@ -68,23 +68,20 @@
                             var title = this.find("[data-title]").val();
 
                             if (url === "http://" || url === "")
-                            {
-                                alert(linkLang.urlEmpty);
                                 return false;
-                            }
 
                             /*if (title === "")
                             {
                                 alert(linkLang.titleEmpty);
                                 return false;
                             }*/
-                            
+
                             var str = "[" + title + "](" + url + " \"" + title + "\")";
-                            
+
                             if (title == "")
                             {
                                 str = "[" + url + "](" + url + ")";
-                            }                                
+                            }
 
                             cm.replaceSelection(str);
 
@@ -93,7 +90,7 @@
                             return false;
                         }],
 
-                        cancel : [lang.buttons.cancel, function() {                                   
+                        cancel : [lang.buttons.cancel, function() {
                             this.hide().lockScreen(false).hideMask();
 
                             return false;
@@ -104,10 +101,10 @@
 		};
 
 	};
-    
+
 	// CommonJS/Node.js
 	if (typeof require === "function" && typeof exports === "object" && typeof module === "object")
-    { 
+    {
         module.exports = factory;
     }
 	else if (typeof define === "function")  // AMD/CMD/Sea.js
@@ -124,7 +121,7 @@
                 factory(editormd);
             });
 		}
-	} 
+	}
 	else
 	{
         factory(window.editormd);

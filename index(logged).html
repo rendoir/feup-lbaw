@@ -20,17 +20,17 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/bootstrap-social.css" />
 </head>
 <body>
-    <header>
+    <header class="sticky-top">
         <div id="navbar" class="bg-light">
-            <nav class="navbar navbar-expand-md navbar-light container">
+            <nav class="navbar navbar-expand-lg navbar-light container">
                 <!-- Logo -->
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand py-0" href="#">
                     <img src="assets/img/logo.png" width="40" height="40" class="d-inline-block align-center" alt="">
                     SegFault
                 </a>
-
+    
                 <!-- Collapse Menu -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler mr-auto-sm" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -38,21 +38,20 @@
                         <a class="nav-item nav-link active" href="#">Questions <span class="sr-only">(current)</span></a>
                         <a class="nav-item nav-link" href="#">Categories</a>
                     </div>
-
+    
                     <!-- Search Bar -->
                     <form class="form-inline">
                         <input class="form-control mx-sm-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </div>
-
+    
                 <!-- START OF NAVBAR RIGHT-SIDE OPTIONS -->                
-                <div class="ml-auto-sm d-flex justify-content-between align-items-center">
-                    
+                <div class="ml-auto-sm px-0 col-sm-6 col-lg-3 d-flex justify-content-between justify-content-sm-end">
                     <!-- User Panel Icons -->
                     <!-- Notifications Dropdown -->
                     <div class="dropdown mx-2">
-                        <span class="dropdow-toggle big-icon" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="big-icon" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="pt-1">
                             <i class="far fa-bell"></i>                          
                             </div>
@@ -74,13 +73,13 @@
                             </button>
                         </div>
                     </div>
-
+    
                     <!-- Options Dropdown-->
                     <div class="dropdown px-1">
-                        <span class="dropdow-toggle big-icon mx-2" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="big-icon mx-2" id="profile-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="rounded-circle" src="assets/img/img-profile-icon.jpg" alt="profile picture">
                         </span>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-options">
                         <button class="dropdown-item" type="button">Profile</button>
                         <div class="dropdown-divider"></div>
                         <button class="dropdown-item" type="button">Settings</button>
@@ -88,7 +87,7 @@
                         <button class="dropdown-item" type="button">Log Out</button>
                         </div>
                     </div>
-
+    
                 </div>
                 <!-- END OF NAVBAR RIGHT-SIDE OPTIONS -->
             </nav>
@@ -192,45 +191,47 @@
 
                 </div>
             </div>
-            <aside class="col-md-3">
-                <div class="card">
-                    <img class="card-img-top" src="assets/img/bg-profile.jpg" alt="Card image cap">
-                    <div class="card-body text-center">
-                        <div>
-                            <img class="rounded-circle img-profile" src="assets/img/img-profile.jpg" alt="UserImage">
-                        </div>
-                        <h3 class="card-text mb-0">António Almeida</h3>
-                        <span class="badge badge-success mb-3">Trusted</span>
-                        <div class="my-3">
-                            <i class="fas fa-trophy"></i>
-                            <span>200</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-4 px-1 border-right">
-                                    <div>24</div>
-                                    <small>Questions</small>
+            <aside class="col-md-3 mt-3">
+                <div class="aside-content">
+                    <div class="card">
+                        <img class="card-img-top" src="assets/img/bg-profile.jpg" alt="Card image cap">
+                        <div class="card-body text-center">
+                            <div>
+                                <img class="rounded-circle img-profile-aside" src="assets/img/img-profile.jpg" alt="UserImage">
                             </div>
-                            <div class="col-4 px-1">
-                                <div>24</div>
-                                <small>Answers</small>
+                            <h3 class="card-text mb-0">António Almeida</h3>
+                            <span class="badge badge-success mb-3">Trusted</span>
+                            <div class="my-3">
+                                <i class="fas fa-trophy"></i>
+                                <span>200</span>
                             </div>
-                            <div class="col-4 px-1 border-left">
+                            <div class="row">
+                                <div class="col-4 px-1 border-right">
+                                        <div>24</div>
+                                        <small>Questions</small>
+                                </div>
+                                <div class="col-4 px-1">
                                     <div>24</div>
-                                    <small>Comments</small>
+                                    <small>Answers</small>
+                                </div>
+                                <div class="col-4 px-1 border-left">
+                                        <div>24</div>
+                                        <small>Comments</small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card my-3">
-                    <div class="card-body d-flex flex-column justify-content-center">
-                        <h5 class="card-title">Have a Question?</h5>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                            <!-- <div class="input-group-append">
-                                <span class="input-group-text" id="inputGroup-sizing-default">?</span>
-                            </div> -->
+                    <div class="card my-3">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <h5 class="card-title">Have a Question?</h5>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <!-- <div class="input-group-append">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">?</span>
+                                </div> -->
+                            </div>
+                            <a href="ask_question.html" class="btn btn-outline-danger">Ask!</a>
                         </div>
-                        <a href="ask_question.html" class="btn btn-outline-danger">Ask!</a>
                     </div>
                 </div>
             </aside>
