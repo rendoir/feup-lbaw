@@ -176,3 +176,14 @@ h1, h3 {
     background-size: cover;
     height: 100%;
 }
+
+#jumbotron-error {
+    background-color: black;
+    background-size: cover;
+    padding: 0;
+}
+
+#error-text {
+    color: black;
+    line-height: 150%;
+}
