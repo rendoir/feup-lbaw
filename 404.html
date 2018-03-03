@@ -1,3 +1,7 @@
+---
+permalink: /404.html
+---
+
 <!DOCTYPE html>
 <html>
 
@@ -10,7 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Font Awesome -->
-    <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/font/fontawesome/css/fa-svg-with-js.css" />
+    <script defer src="assets/font/fontawesome/js/fontawesome-all.js"></script>
 
     <!-- Bootstrap v4 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -19,7 +24,6 @@
     <!-- Styling  -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/style.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/bootstrap-social.css" />
-    <link rel="stylesheet" href="editor/css/editormd.css" />
 </head>
 
 <body>
@@ -93,61 +97,34 @@
         </div>
     </header>
 
-    <main class="container">
-        <div class="pt-4 pb-3 pl-3">
-            <h2>
-                Write your Question!
-            </h2>
-        </div>
-
-        <section class="mx-5">
-
-            <!-- Text Editor -->
-            <div id="editor_container"></div>
-
-            <script src="editor/examples/js/jquery.min.js"></script>
-            <script src="editor/editormd.js"></script>
-            <script src="editor/languages/en.js"></script>
-            <script type="text/javascript">
-                $(function () {
-                    $("#editor_container").append("<div id=\"editormd\"></div>");
-                    let editor = editormd("editormd", {
-                        width: "100%",
-                        height: 500,
-                        path: 'editor/lib/',
-                        placeholder: "Write your question here! You can use markdown or the toolbar for advanced stuff!",
-                        delay: 0,
-                        tex: true,
-                        flowChart: true,
-                        sequenceDiagram: true,
-                        saveHTMLToTextarea: true,
-                        toolbarIcons: function () {
-                            return ["undo", "redo", "|",
-                                "bold", "del", "italic", "|",
-                                "list-ul", "list-ol", "hr", "|",
-                                "link", "reference-link", "quote", "image", "code", "code-block", "table", "|",
-                                "watch", "clear", "search"]
-                        }
-                    });
-                });
-            </script>
-
-            <!-- Add tags and post buttons -->
-            <div class="pt-4 pb-1 pl-3">
-                <h5>
-                    Identify your tags with # and separate them using commas!
-                </h5>
-            </div>
-            <div class="input-group mb-3" style="height: 50px;">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">Tags</span>
-                </div>
-                <input type="text" class="form-control" placeholder="#nodejs, #html5, #css" aria-label="Username" aria-describedby="basic-addon1" pattern="(#\w+,?\s*)*">
-            </div>
-            <a class="btn btn-lg btn-success float-right my-4 mr-5" href="question.html" role="button">Post your Question</a>
+    <main class="text-center">
+        <section class="jumbotron jumbotron-fluid" id="jumbotron-error">
+            <img src="assets/img/error.jpg" class="img-fluid my-5" alt="Responsive image">
         </section>
 
+        <div class="pt-2 pb-3 pl-3">
+            <h4 id="error-text">
+                A Segmentation Fault occurred when trying to load the page!<br>
+                It must mean the page does not exist...
+            </h4>
+        </div>
+
+        <a class="btn btn-lg btn-success my-2" href="index.html" role="button"> Get back to Home Page</a> 
     </main>
+    <footer>
+
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="assets/lib/jquery.slimscroll.min.js"></script>
+    <script src="assets/js/ask_login.js"></script>
 </body>
 
 </html>

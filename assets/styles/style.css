@@ -10,7 +10,7 @@ body {
 
 main .row aside > div.aside-content {
     position: sticky;
-    top: 10%;
+    top: 8%;
 }
 
 section#question{
@@ -174,4 +174,16 @@ h1, h3 {
 #jumbotron_about {
     background-image: url("../img/highway_landscape_blurred.jpg");
     background-size: cover;
+    height: 100%;
+}
+
+#jumbotron-error {
+    background-color: black;
+    background-size: cover;
+    padding: 0;
+}
+
+#error-text {
+    color: black;
+    line-height: 150%;
 }
