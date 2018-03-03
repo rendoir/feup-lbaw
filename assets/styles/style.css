@@ -10,7 +10,7 @@ body {
 
 main .row aside > div.aside-content {
     position: sticky;
-    top: 10%;
+    top: 8%;
 }
 
 section#question{
