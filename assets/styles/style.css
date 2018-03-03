@@ -10,7 +10,7 @@ body {
 
 main .row aside > div.aside-content {
     position: sticky;
-    top: 10%;
+    top: 8%;
 }
 
 section#question{
@@ -150,6 +150,14 @@ h1, h3 {
 
 .dis-badge {
     color: #707070;
+}
+
+.comments-card p {
+    margin-bottom: 0;
+}
+
+.discrete {
+    color: rgba(100, 100, 100, 0.4);
 }
 
 #question-body {
