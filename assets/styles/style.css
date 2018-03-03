@@ -152,6 +152,10 @@ h1, h3 {
     color: #707070;
 }
 
+.comments-card p {
+    margin-bottom: 0;
+}
+
 #question-body {
     overflow: hidden;
     transition: max-height 1s;
