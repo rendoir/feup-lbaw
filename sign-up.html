@@ -20,6 +20,7 @@
     <!-- Styling  -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/style.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/bootstrap-social.css" />
+    <link rel="stylesheet" href="editor/css/editormd.css" />
 </head>
 
 <body>
@@ -59,7 +60,7 @@
                             <span class="caret"></span>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <form class="px-4 py-3" action="index(logged).html">
+                            <form class="px-4 py-3" action="question(logged).html">
                                 <div class="form-group">
                                     <label for="exampleDropdownFormEmail1">Email address</label>
                                     <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
@@ -94,29 +95,49 @@
     </header>
 
     <main class="container-fluid px-0">
-        <div class="jumbotron jumbotron-fluid" id="jumbotron_about">
-            <div class="container text-light d-flex flex-column" style="height: 100%;">
-                <div class="p-2 mb-5">
-                    <h1 class="display-4">Welcome to Seg
-                        <i>Fault</i>
-                    </h1>
-                    <p class="lead">A community for
-                        <i>learning</i>. A community for
-                        <i>teaching</i>.</p>
+        <div class="jumbotron jumbotron-fluid" id="jumbotron_signup">
+            <div class="container text-dark d-flex flex-row" style="height: 100%;">
+                <div class="p-2 mx-auto">
+                    <h1 class="display-3 text-weight-light">Don't be left out!</h1>
+                    <p class="lead">Join our ever-growing user base.</p>
                 </div>
-
-                <div class="p-2 my-5 align-self-stretch">
-                    <blockquote class="blockquote text-right">
-                        <p class="mb-0">Tell me and I forget. Teach me and I remember. Involve me and I learn.</p>
-                        <footer class="blockquote-footer text-light">Benjamin Franklin</footer>
-                    </blockquote>
+                <div class="p-2 mx-auto text-dark">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <h5 class="card-title">Sign-Up</h5> -->
+                            <form>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"><small>Username</small></label>
+                                    <input type="text" class="form-control" id="signup-username" placeholder="Your username here">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"><small>Email address</small></label>
+                                    <input type="email" class="form-control" id="signup-email" aria-describedby="emailHelp" placeholder="Your email here">
+                                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1"><small>Password</small></label>
+                                    <input type="password" class="form-control" id="signup-password" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1"><small>Confirm Password</small></label>
+                                    <input type="password" class="form-control" id="signup-confirm-password" placeholder="Password">
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">I accept the terms and conditions.</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-2 mx-auto">Sign up for SegFault</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </div>
-
-        <!-- Explore Button ? -->
     </main>
+
+    <footer>
+    </footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -126,6 +147,8 @@
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <script src="assets/lib/jquery.slimscroll.min.js"></script>
+    <script src="assets/js/scroll.js"></script>
 </body>
 
 </html>

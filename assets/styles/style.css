@@ -185,6 +185,12 @@ h1, h3 {
     height: 100%;
 }
 
+#jumbotron_signup {
+    background-image: url("../img/car_blurred_background.jpg");
+    background-size: cover;
+    height: 100%;
+}
+
 #jumbotron-error {
     background-color: black;
     background-size: cover;
