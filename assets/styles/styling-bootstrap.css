@@ -1,0 +1,25 @@
+:root {
+    --golden-tainoi: #FFBC4A;
+    --regal-blue: #143557;
+    --neon-carrot: #FF8F39;
+    --tangaroa: #081F3A;
+}
+
+a {
+    color: var(--neon-carrot)
+}
+
+.nav-tabs .nav-link {
+    border-width: 0 !important;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    color: inherit;
+    border-bottom-width: 1px !important;
+    border-bottom-color: var(--neon-carrot) !important; 
+}
+
+.nav-link.active, .nav-tabs .nav-link.active:focus, .nav-tabs .nav-link.active:hover{
+    border-bottom-width: 2px !important;
+    border-bottom-color: var(--golden-tainoi) !important; 
+}
