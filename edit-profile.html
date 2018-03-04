@@ -126,9 +126,24 @@
                 <div>
                     <img class="rounded-circle img-profile-big" src="assets/img/img-profile.jpg" alt="UserImage">
                 </div>
-                <span class="bg-white text-info p-2 edit-main-pic">
-                    <i class="fas fa-pencil-alt"></i>
-                </span>
+
+                <!-- Edit profile picture button -->
+                <button class="btn bg-white text-info py-2 px-3 edit-main-pic" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <i class="fas fa-pencil-alt edit-pic-icon"></i>
+                </button>
+                <div class="dropdown-menu mt-1 mb-0 p-0 b-0 edit-profile-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="input-group m-auto">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile02">
+                            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="">Upload</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="input-group my-4">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="">First and last name</span>
