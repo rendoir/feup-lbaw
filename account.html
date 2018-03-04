@@ -99,29 +99,98 @@
         </div>
     </header>
     <main class="container mt-5">
+
+        <div class="pb-4 pl-5">
+            <h2>
+                Account Settings
+            </h2>
+        </div>
+
         <section class="card">
             <div class="row text-center">
-                <div class="col-2">
-                    E-mail
-                </div>
-                <div class="col-8">
-                    antonioalmeida@gmail.com
-                </div>
-                <div class="col-2" data-toggle="collapse" href="#editEmail" role="button" aria-expanded="false" aria-controls="editEmail">
-                    Edit
+
+                <div class="col-4 py-4">
+                    <h4>
+                        Editable Settings
+                    </h4>
                 </div>
                 <div class="w-100"></div>
-                <div class="col-2">
+
+                <!-- Email change -->
+                <div class="col-2 pb-2">
+                    E-mail
+                </div>
+                <div class="col-8 pb-2">
+                    antonioalmeida@gmail.com
+                </div>
+                <div class="col-2 pb-2" data-toggle="collapse" href="#editEmail" role="button" aria-expanded="false" aria-controls="editEmail">
+                    <button type="button" class="btn btn-outline-info">Edit</button>
+                </div>
+                <div class="collapse bg-light px-4 pt-4 pb-3 box-shadow" id="editEmail">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica,
+                    craft beer labore wes anderson cred nesciunt sapiente ea proident.
+
+                </div>
+
+                <div class="w-100 mt-3"></div>
+
+                <!-- Password Change -->
+                <div class="col-2 pb-2">
                     Password
                 </div>
-                <div class="col-8">
+                <div class="col-8 pb-2">
                     Its a good idea to use a strong password that you do not use anywhere else
                 </div>
-                <div class="col-2" data-toggle="collapse" href="#editPassword" role="button" aria-expanded="false" aria-controls="editPassword">
-                    Change
+                <div class="col-2 pb-2" data-toggle="collapse" href="#editPassword" role="button" aria-expanded="false" aria-controls="editPassword">
+                    <button type="button" class="btn btn-outline-info">Change</button>
                 </div>
+                <div class="collapse bg-light px-4 pt-4 pb-3 box-shadow" id="editPassword">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica,
+                    craft beer labore wes anderson cred nesciunt sapiente ea proident.
+
+                </div>
+
+                <div class="w-100 mt-3"></div>
+
+                <!-- Associated Accounts -->
+                <div class="col-4 pt-3 pb-4">
+                    <h4>
+                        Associated Accounts
+                    </h4>
+                </div>
+                <div class="w-100"></div>
+                <div class="col-2 pb-4">
+                    <span>
+                        <i class="fab fa-github mr-1"></i>
+                    </span>
+                    Github:
+                </div>
+                <div class="col-8 pb-4">
+                    <a href="#">antonioalmeida</a>
+                </div>
+
+                <div class="w-100"></div>
+                <div class="col-2 pb-4">
+                    <span>
+                        <i class="fab fa-google mr-1"></i>
+                    </span>
+                    Google:
+                </div>
+                <div class="col-8 pb-4">
+                    <button type="button" class="btn btn-outline-danger">
+                        <span>
+                            <i class="fab fa-google mr-1"></i>
+                        </span>
+                        Associate Account
+                    </button>
+                </div>
+
             </div>
         </section>
+
+        <div class="text-center">
+            <a class="btn btn-info my-5" href="own-profile.html" role="button">Get back to Profile</a>
+        </div>
     </main>
 
     <!-- TODO -->
