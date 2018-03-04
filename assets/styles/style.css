@@ -268,3 +268,28 @@ h1, h3 {
 	-webkit-transform: scale(1);
 	transform: scale(1);
 }
+
+#update-back-pic {
+    position:absolute;
+    left: 2rem;
+    top:1rem;
+}
+
+.profile-textarea {
+    resize: none;
+    height: 12rem;
+ }
+
+ .profile-name {
+    font-size: 24px;
+ }
+
+ .edit-main-pic {
+    font-size:28px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.09), 0 0 20px 0 rgba(0, 0, 0, 0.09);
+    position: absolute;
+    top: 385px;
+    left: calc(50% + 65px);
+    z-index: 1600;
+ }
