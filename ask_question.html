@@ -8,6 +8,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-signin-client_id" content="***REMOVED***.apps.googleusercontent.com">
 
     <!-- Font Awesome -->
     <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
@@ -77,6 +78,9 @@
                                     <i class="fab fa-github"></i>
                                     <div>Sign in with Github</div>
                                 </a>
+                                <div class="mx-auto mt-1 d-flex">
+                                    <div class="g-signin2" data-onsuccess="onSignIn" data-width="200" data-height="34" data-longtitle="true">button</div>
+                                </div>
                             </form>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">New around here? Sign up</a>
@@ -108,6 +112,8 @@
             <script src="editor/examples/js/jquery.min.js"></script>
             <script src="editor/editormd.js"></script>
             <script src="editor/languages/en.js"></script>
+            <script src="https://apis.google.com/js/platform.js" async defer></script>
+            
             <script type="text/javascript">
                 $(function () {
                     $("#editor_container").append("<div id=\"editormd\"></div>");
