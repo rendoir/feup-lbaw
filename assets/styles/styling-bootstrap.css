@@ -1,12 +1,14 @@
 :root {
-    --golden-tainoi: #FFBC4A;
-    --regal-blue: #143557;
-    --neon-carrot: #FF8F39;
-    --tangaroa: #081F3A;
+    --azure: #FAFEFE;
+    --pattens-blue: #D2DEE7;
+    --medium-aquamarine: #4FD0AE;
+    --cadet-blue: #45A9A9;
+    --san-marino: #526B97;
+    --jordy-blue: #75A6DA;
 }
 
 a {
-    color: var(--neon-carrot)
+    color: var(--medium-aquamarine)
 }
 
 .nav-tabs .nav-link {
@@ -16,10 +18,44 @@ a {
 .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
     color: inherit;
     border-bottom-width: 1px !important;
-    border-bottom-color: var(--neon-carrot) !important; 
+    border-bottom-color: var(--cadet-blue) !important; 
 }
 
 .nav-link.active, .nav-tabs .nav-link.active:focus, .nav-tabs .nav-link.active:hover{
     border-bottom-width: 2px !important;
-    border-bottom-color: var(--golden-tainoi) !important; 
+    border-bottom-color: var(--medium-aquamarine) !important; 
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: var(--medium-aquamarine);
+    border-color: var(--medium-aquamarine);
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: var(--cadet-blue);
+    border-color: var(--cadet-blue);
+}
+
+.border-success {
+    border-color: var(--medium-aquamarine) !important;
+}
+
+.badge.badge-dark {
+    background-color: var(--jordy-blue) !important;
+}
+
+.badge.badge-success {
+    background-color: var(--cadet-blue) !important;
+}
+
+.btn.btn-outline-success {
+    color: var(--medium-aquamarine) !important;
+    border-color: var(--medium-aquamarine) !important;
+}
+
+.btn.btn-outline-success:hover {
+    color: var(--azure) !important;
+    background-color: var(--medium-aquamarine) !important;
 }
