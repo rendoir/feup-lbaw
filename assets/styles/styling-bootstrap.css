@@ -32,10 +32,19 @@ a {
     border-color: var(--medium-aquamarine);
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
     color: #fff;
     background-color: var(--cadet-blue);
     border-color: var(--cadet-blue);
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(69, 169, 169, 0.5);
+}
+
+.btn-primary.focus, .btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(79, 208, 174, 0.5);
 }
 
 .border-success {
@@ -58,4 +67,28 @@ a {
 .btn.btn-outline-success:hover {
     color: var(--azure) !important;
     background-color: var(--medium-aquamarine) !important;
+}
+
+#btn_ask_question {
+    color: var(--jordy-blue);
+    border-color: var(--jordy-blue) !important;
+}
+
+#btn_ask_question:hover {
+    color: var(--azure);
+    background-color: var(--jordy-blue) !important;
+}
+
+.btn-outline-info.focus, .btn-outline-info:focus, .btn-outline-info:not(:disabled):not(.disabled).active:focus, .btn-outline-info:not(:disabled):not(.disabled):active:focus, .show>.btn-outline-info.dropdown-toggle:focus{
+    box-shadow: 0 0 0 0.2rem rgba(117, 166, 218, 0.5);
+}
+
+.btn-outline-info:not(:disabled):not(.disabled).active, .btn-outline-info:not(:disabled):not(.disabled):active, .show>.btn-outline-info.dropdown-toggle {
+    color: #fff !important;
+    background-color: var(--jordy-blue) !important;
+    border-color: var(--jordy-blue) !important;
+}
+
+.ribbon-warning {
+    background-color: var(--jordy-blue);
 }
