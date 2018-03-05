@@ -11,6 +11,14 @@ a {
     color: var(--medium-aquamarine)
 }
 
+.unnoticed-a {
+    color: #67757c;
+}
+.unnoticed-a:hover {
+    text-decoration: none;
+    color: #67757c;
+}
+
 .nav-tabs .nav-link {
     border-width: 0 !important;
 }
@@ -69,12 +77,12 @@ a {
     background-color: var(--medium-aquamarine) !important;
 }
 
-#btn_ask_question {
+.btn-outline-info {
     color: var(--jordy-blue);
     border-color: var(--jordy-blue) !important;
 }
 
-#btn_ask_question:hover {
+.btn-outline-info:hover {
     color: var(--azure);
     background-color: var(--jordy-blue) !important;
 }
@@ -87,6 +95,16 @@ a {
     color: #fff !important;
     background-color: var(--jordy-blue) !important;
     border-color: var(--jordy-blue) !important;
+}
+
+.btn-info {
+    color: var(--azure);
+    background-color: var(--jordy-blue) !important;
+    border-color: var(--jordy-blue) !important;   
+}
+.btn-info:hover {
+    background-color: var(--san-marino) !important;
+    border-color: var(--san-marino) !important;
 }
 
 .ribbon-warning {
