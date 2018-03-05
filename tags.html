@@ -13,7 +13,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/font/fontawesome/css/fa-svg-with-js.css" />
     <script defer src="assets/font/fontawesome/js/fontawesome-all.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>    
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Bootstrap v4 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -99,26 +99,386 @@
         </div>
     </header>
 
-    <main class="container">
-      <div class="tagcloud">
-      	<ul>
-      		<li><a href="#">javascript</a><span>10</span></li>
-      		<li><a href="#">android</a><span>6</span></li>
-      		<li><a href="#">c++</a><span>20</span></li>
-      		<li><a href="#">c</a><span>15</span></li>
-      		<li><a href="#">java</a><span>16</span></li>
-      		<li><a href="#">html</a><span>4</span></li>
-      		<li><a href="#">css</a><span>11</span></li>
-      		<li><a href="#">python</a><span>17</span></li>
-      		<li><a href="#">artificial intelligence</a><span>5</span></li>
-      		<li><a href="#">computer graphics</a><span>9</span></li>
-      		<li><a href="#">php</a><span>8</span></li>
-      		<li><a href="#">computer audio</a><span>7</span></li>
-      		<li><a href="#">database</a><span>7</span></li>
-      		<li><a href="#">web</a><span>12</span></li>
-      		<li><a href="#">sql</a><span>6</span></li>
-      	</ul>
-      </div>
+    <main class="container mt-5">
+
+        <section class="d-flex flex-row justify-content-between mb-3">
+            <div class="mb-4 ml-5">
+                <h2>
+                    Category Cloud
+                </h2>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="input-group mb-4 w-50 mr-5">
+                <div class="input-group-prepend">
+                    <span class="input-group-text btn btn-primary" id="basic-addon1">Search your Category here</span>
+                </div>
+                <input type="text" class="form-control" placeholder="e.g. javascript" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+
+        </section>
+
+        <!-- TagCloud -->
+        <div class="tagcloud text-center mt-2 mb-4">
+            <ul>
+                <li>
+                    <a href="#">javascript</a>
+                    <span>10</span>
+                </li>
+                <li>
+                    <a href="#">android</a>
+                    <span>6</span>
+                </li>
+                <li>
+                    <a href="#">c++</a>
+                    <span>20</span>
+                </li>
+                <li>
+                    <a href="#">c#</a>
+                    <span>15</span>
+                </li>
+                <li>
+                    <a href="#">java</a>
+                    <span>16</span>
+                </li>
+                <li>
+                    <a href="#">html</a>
+                    <span>4</span>
+                </li>
+                <li>
+                    <a href="#">css</a>
+                    <span>11</span>
+                </li>
+                <li>
+                    <a href="#">python</a>
+                    <span>17</span>
+                </li>
+                <li>
+                    <a href="#">artificial intelligence</a>
+                    <span>5</span>
+                </li>
+                <li>
+                    <a href="#">computer graphics</a>
+                    <span>9</span>
+                </li>
+                <li>
+                    <a href="#">php</a>
+                    <span>8</span>
+                </li>
+                <li>
+                    <a href="#">computer audio</a>
+                    <span>7</span>
+                </li>
+                <li>
+                    <a href="#">database</a>
+                    <span>7</span>
+                </li>
+                <li>
+                    <a href="#">web</a>
+                    <span>12</span>
+                </li>
+                <li>
+                    <a href="#">sql</a>
+                    <span>6</span>
+                </li>
+                <li>
+                    <a href="#">javascript</a>
+                    <span>10</span>
+                </li>
+                <li>
+                    <a href="#">android</a>
+                    <span>6</span>
+                </li>
+                <li>
+                    <a href="#">c++</a>
+                    <span>20</span>
+                </li>
+                <li>
+                    <a href="#">c</a>
+                    <span>15</span>
+                </li>
+                <li>
+                    <a href="#">java</a>
+                    <span>16</span>
+                </li>
+                <li>
+                    <a href="#">html</a>
+                    <span>4</span>
+                </li>
+                <li>
+                    <a href="#">css</a>
+                    <span>11</span>
+                </li>
+                <li>
+                    <a href="#">python</a>
+                    <span>17</span>
+                </li>
+                <li>
+                    <a href="#">artificial intelligence</a>
+                    <span>5</span>
+                </li>
+                <li>
+                    <a href="#">computer graphics</a>
+                    <span>9</span>
+                </li>
+                <li>
+                    <a href="#">php</a>
+                    <span>8</span>
+                </li>
+                <li>
+                    <a href="#">computer audio</a>
+                    <span>7</span>
+                </li>
+                <li>
+                    <a href="#">database</a>
+                    <span>7</span>
+                </li>
+                <li>
+                    <a href="#">web</a>
+                    <span>12</span>
+                </li>
+                <li>
+                    <a href="#">sql</a>
+                    <span>6</span>
+                </li>
+                <li>
+                    <a href="#">javascript</a>
+                    <span>10</span>
+                </li>
+                <li>
+                    <a href="#">android</a>
+                    <span>6</span>
+                </li>
+                <li>
+                    <a href="#">c++</a>
+                    <span>20</span>
+                </li>
+                <li>
+                    <a href="#">finite automaton</a>
+                    <span>15</span>
+                </li>
+                <li>
+                    <a href="#">java</a>
+                    <span>16</span>
+                </li>
+                <li>
+                    <a href="#">html</a>
+                    <span>4</span>
+                </li>
+                <li>
+                    <a href="#">css</a>
+                    <span>11</span>
+                </li>
+                <li>
+                    <a href="#">python</a>
+                    <span>17</span>
+                </li>
+                <li>
+                    <a href="#">artificial intelligence</a>
+                    <span>5</span>
+                </li>
+                <li>
+                    <a href="#">computer graphics</a>
+                    <span>9</span>
+                </li>
+                <li>
+                    <a href="#">php</a>
+                    <span>8</span>
+                </li>
+                <li>
+                    <a href="#">computer audio</a>
+                    <span>7</span>
+                </li>
+                <li>
+                    <a href="#">Laravel</a>
+                    <span>7</span>
+                </li>
+                <li>
+                    <a href="#">web</a>
+                    <span>12</span>
+                </li>
+                <li>
+                    <a href="#">sql</a>
+                    <span>6</span>
+                </li>
+                <li>
+                    <a href="#">javascript</a>
+                    <span>10</span>
+                </li>
+                <li>
+                    <a href="#">android</a>
+                    <span>6</span>
+                </li>
+                <li>
+                    <a href="#">c++</a>
+                    <span>20</span>
+                </li>
+                <li>
+                    <a href="#">c</a>
+                    <span>15</span>
+                </li>
+                <li>
+                    <a href="#">java</a>
+                    <span>16</span>
+                </li>
+                <li>
+                    <a href="#">html</a>
+                    <span>4</span>
+                </li>
+                <li>
+                    <a href="#">css</a>
+                    <span>11</span>
+                </li>
+                <li>
+                    <a href="#">python</a>
+                    <span>17</span>
+                </li>
+                <li>
+                    <a href="#">prolog</a>
+                    <span>5</span>
+                </li>
+                <li>
+                    <a href="#">computer graphics</a>
+                    <span>9</span>
+                </li>
+                <li>
+                    <a href="#">php</a>
+                    <span>8</span>
+                </li>
+                <li>
+                    <a href="#">computer audio</a>
+                    <span>7</span>
+                </li>
+                <li>
+                    <a href="#">database</a>
+                    <span>7</span>
+                </li>
+                <li>
+                    <a href="#">web</a>
+                    <span>12</span>
+                </li>
+                <li>
+                    <a href="#">sql</a>
+                    <span>6</span>
+                </li>
+                <li>
+                    <a href="#">javascript</a>
+                    <span>10</span>
+                </li>
+                <li>
+                    <a href="#">android</a>
+                    <span>6</span>
+                </li>
+                <li>
+                    <a href="#">c++</a>
+                    <span>20</span>
+                </li>
+                <li>
+                    <a href="#">c</a>
+                    <span>15</span>
+                </li>
+                <li>
+                    <a href="#">java</a>
+                    <span>16</span>
+                </li>
+                <li>
+                    <a href="#">html</a>
+                    <span>4</span>
+                </li>
+                <li>
+                    <a href="#">libgdx</a>
+                    <span>11</span>
+                </li>
+                <li>
+                    <a href="#">python</a>
+                    <span>17</span>
+                </li>
+                <li>
+                    <a href="#">artificial intelligence</a>
+                    <span>5</span>
+                </li>
+                <li>
+                    <a href="#">computer graphics</a>
+                    <span>9</span>
+                </li>
+                <li>
+                    <a href="#">php</a>
+                    <span>8</span>
+                </li>
+                <li>
+                    <a href="#">computer audio</a>
+                    <span>7</span>
+                </li>
+                <li>
+                    <a href="#">database</a>
+                    <span>7</span>
+                </li>
+                <li>
+                    <a href="#">web</a>
+                    <span>12</span>
+                </li>
+                <li>
+                    <a href="#">sql</a>
+                    <span>6</span>
+                </li>
+                <li>
+                    <a href="#">javascript</a>
+                    <span>10</span>
+                </li>
+                <li>
+                    <a href="#">android</a>
+                    <span>6</span>
+                </li>
+                <li>
+                    <a href="#">c++</a>
+                    <span>20</span>
+                </li>
+                <li>
+                    <a href="#">c</a>
+                    <span>15</span>
+                </li>
+                <li>
+                    <a href="#">java</a>
+                    <span>16</span>
+                </li>
+                <li>
+                    <a href="#">html</a>
+                    <span>4</span>
+                </li>
+                <li>
+                    <a href="#">css</a>
+                    <span>11</span>
+                </li>
+                <li>
+                    <a href="#">python</a>
+                    <span>17</span>
+                </li>
+                <li>
+                    <a href="#">artificial intelligence</a>
+                    <span>5</span>
+                </li>
+                <li>
+                    <a href="#">computer graphics</a>
+                    <span>9</span>
+                </li>
+                <li>
+                    <a href="#">php</a>
+                    <span>8</span>
+                </li>
+                <li>
+                    <a href="#">photoshop</a>
+                    <span>7</span>
+                </li>
+                <li>
+                    <a href="#">database</a>
+                    <span>7</span>
+                </li>
+                <li>
+                    <a href="#">web</a>
+                    <span>12</span>
+                </li>
+            </ul>
+        </div>
     </main>
 </body>
 

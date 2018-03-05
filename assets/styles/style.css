@@ -197,7 +197,7 @@ h1, h3 {
 .tagcloud ul {
 	margin: 0;
 	padding: 0;
-	list-style: none;
+    list-style: none;
 }
 .tagcloud ul li {
 	position: relative;
@@ -208,8 +208,8 @@ h1, h3 {
 .tagcloud ul li a {
 	position: relative;
 	display: inline-block;
-	height: 28px;
-	line-height: 28px;
+	height: 32px;
+    line-height: 32px;
 	padding: 0 1em;
 	background: #fff;
 	border: 1px solid #aaa;
@@ -219,7 +219,7 @@ h1, h3 {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	color: #333;
-	font-size: 13px;
+	font-size: 19px;
 	text-decoration: none;
 	-webkit-transition: .2s;
 	transition: .2s;
@@ -229,14 +229,14 @@ h1, h3 {
 	top: 0;
 	right: -10px;
 	z-index: 2;
-	width: 28px;
-	height: 28px;
-	line-height: 28px;
-	background-color: #3498db;
-	border: 1px solid #3498db;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #75A6DA;
+	border: 1px solid #75A6DA;
 	border-radius: 100%;
 	color: #fff;
-	font-size: 13px;
+	font-size: 19px;
 	text-align: center;
 	opacity: 0;
 	-webkit-transition: .2s;
@@ -252,13 +252,13 @@ h1, h3 {
 	width: 0;
 	height: 0;
 	margin-top: -7px;
-	border-color: transparent #3498db transparent transparent;
+	border-color: transparent #75A6DA transparent transparent;
 	border-style: solid;
 	border-width: 7px 14px 7px 0;
 }
 .tagcloud ul li a:hover {
-	border: 1px solid #3498db;
-	color: #3498db;
+	border: 1px solid #75A6DA;
+	color: #75A6DA;
 }
 .tagcloud ul li:hover span {
 	right: -26px;
