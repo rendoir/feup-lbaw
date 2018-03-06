@@ -398,6 +398,7 @@ nav {
     /* Sign Up Page */
     #sign-up-jumbo {
         flex-direction: column !important;
+        text-align: center;
     }
 
     /* Index Page */
