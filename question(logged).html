@@ -20,6 +20,7 @@
 
     <!-- Styling  -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/ribbons.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/bootstrap-social.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/styling-bootstrap.css" />
 </head>
@@ -104,8 +105,9 @@
         <section id="question" class="sweet-grey">
             <div class="container py-3">
                 <div class="d-flex flex-column">
-                    <header class="border-bottom sticky-top">
+                    <header class="border-bottom sticky-top d-flex">
                         <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
+                        <button class="btn ml-auto h3 bg-transparent" style="color: #526B97"><i class="fas fa-pencil-alt"></i></button>
                     </header>
                     <main id="question-body" class="row">
                         <div class="col-md-9 p-3">
@@ -157,6 +159,9 @@
                                     <span class="badge badge-dark">css</span>
                                 </div>
                             </div>
+                            <div class="ribbon ribbon-overflow ribbon-vertical-r px-0" style="height: auto; color: #75A6DA; right: 20px; top: 5px">
+                                <i class="far fa-heart h4"></i>
+                            </div>
                         </div>
                     </main>
                 </div>
@@ -169,14 +174,14 @@
                     <!-- Answer -->
                     <div class="card my-3">
                         <div class="row mx-0">
-                            <div class="col-1 d-flex flex-column align-items-start">
-                                <div class="p-2 mt-3 mb-auto">
+                            <div class="col-1 py-3 d-flex flex-column align-items-center justify-content-between">
+                                <div class="p-2">
                                     <i class="fas fa-trophy"></i>
                                     <p class="text-center mb-0 w-100">7</p>
                                 </div>
-                                <div class="p-2 ml-1">
-                                    <i class="fas fa-arrow-up"></i>
-                                    <i class="fas fa-arrow-down discrete"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <a href="#"><i class="fas fa-arrow-up"></i></a>
+                                    <a href="#"><i class="fas fa-arrow-down discrete"></i></a>
                                 </div>
                             </div>
                             <div class="col-11">
@@ -188,24 +193,155 @@
                                         <span class="badge badge-light float-right mr-2 mt-3">Edited</span>
                                     </p>
                                 </div>
-                                <div class="card-footer bg-transparent d-flex justify-content-between">
-                                    <p class="card-text mb-0">
-                                        <small class="text-muted">Created by - &nbsp</small>
-                                    </p>
-                                    <div class="mr-auto">
+                                <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
+                                    <div>
+                                        <small class="text-muted">Created by -</small>
                                         <span>UserName</span>
                                         <span class="badge badge-success">Trusted</span>
                                     </div>
-                                    <div class="ml-auto">
-                                        <p class="text-right mb-0">4 comments</p>
-                                    </div>
+                                    <small class="ml-auto mr-1">4 comments</small>
+                                    <a href="#">Add Comment</a>
                                 </div>
                             </div>
                         </div>
                         <!-- COMMENTS -->
                         <div class="card-footer comments-card">
                             <div class="d-flex list-group list-group-flush">
-                                <div class="pr-0 bg-transparent">
+                                <div class="list-group-item bg-transparent">
+                                    <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements
+                                        of a graphic document or visual presentation. Replacing content with placeholder
+                                        text allows designers to design the form of the content before the content
+                                        itself has been produced.</p>
+                                    <div class="d-flex mt-3">
+                                        <p class="discrete mr-1">1</p>
+                                        <a class="discrete" href="#">UpVote</a>
+                                        <span class="discrete">•</span>
+                                        <a class="discrete" href="#">DownVote</a>
+                                        <span class="discrete">•</span>
+                                        <a class="discrete" href="#">Report </a>
+                                        <p class="ml-auto discrete">AndreFCruz</p>
+                                    </div>
+                                    <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97"><i class="fas fa-pencil-alt"></i></button>    
+                                </div>
+                                <div class="list-group-item bg-transparent">
+                                    <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit
+                                        dapibus.
+                                    </p>
+                                    <div class="d-flex mt-3">
+                                        <p class="discrete mr-1">1</p>
+                                        <a class="discrete" href="#">UpVote</a>
+                                        <span class="discrete">•</span>
+                                        <a class="discrete" href="#">DownVote</a>
+                                        <span class="discrete">•</span>
+                                        <a class="discrete" href="#">Report </a>
+                                        <p class="ml-auto discrete">jflcarvalho</p>
+                                    </div>
+                                </div>
+                                <div class="list-group-item bg-transparent">
+                                    <p>This is a sample comment!! *Insert meme here*</p>
+                                    <div class="d-flex mt-3">
+                                        <p class="discrete mr-1">1</p>
+                                        <a class="discrete" href="#">UpVote</a>
+                                        <span class="discrete">•</span>
+                                        <a class="discrete" href="#">DownVote</a>
+                                        <span class="discrete">•</span>
+                                        <a class="discrete" href="#">Report </a>
+                                        <p class="ml-auto discrete">EdgarACarneiro</p>
+                                    </div>
+                                </div>
+                                <div class="list-group-item bg-transparent">
+                                    <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit
+                                        dapibus. Bada badu badumtsss.</p>
+                                    <div class="d-flex mt-3">
+                                        <p class="discrete mr-1">1</p>
+                                        <a class="discrete" href="#">UpVote</a>
+                                        <span class="discrete">•</span>
+                                        <a class="discrete" href="#">DownVote</a>
+                                        <span class="discrete">•</span>
+                                        <a class="discrete" href="#">Report </a>
+                                        <p class="ml-auto discrete">rendoir</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COMMENTS END -->
+                    </div>
+                    <!-- ANSWER END -->
+
+                    <!-- Answer -->
+                    <div class="card my-3">
+                        <div class="row mx-0">
+                            <div class="col-1 py-3 d-flex flex-column align-items-center justify-content-between">
+                                <div class="p-2">
+                                    <i class="fas fa-trophy"></i>
+                                    <p class="text-center mb-0 w-100">7</p>
+                                </div>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <a href="#"><i class="fas fa-arrow-up"></i></a>
+                                    <a href="#"><i class="fas fa-arrow-down discrete"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-11">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
+                                        ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum dapibus
+                                        leo id neque consequat placerat.
+                                        <span class="badge badge-light float-right mr-2 mt-3">Edited</span>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97"><i class="fas fa-pencil-alt"></i></button>
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
+                                    <div>
+                                        <small class="text-muted">Created by -</small>
+                                        <span>UserName</span>
+                                        <span class="badge badge-success">Trusted</span>
+                                    </div>
+                                    <small class="ml-auto mr-1">4 comments</small>
+                                    <a href="#">Add Comment</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ANSWER END -->
+
+                    <!-- Answer -->
+                    <div class="card my-3">
+                        <div class="row mx-0">
+                            <div class="col-1 py-3 d-flex flex-column align-items-center justify-content-between">
+                                <div class="p-2">
+                                    <i class="fas fa-trophy"></i>
+                                    <p class="text-center mb-0 w-100">7</p>
+                                </div>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <a href="#"><i class="fas fa-arrow-up"></i></a>
+                                    <a href="#"><i class="fas fa-arrow-down discrete"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-11">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
+                                        ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum dapibus
+                                        leo id neque consequat placerat.
+                                        <span class="badge badge-light float-right mr-2 mt-3">Edited</span>
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
+                                    <div>
+                                        <small class="text-muted">Created by -</small>
+                                        <span>UserName</span>
+                                        <span class="badge badge-success">Trusted</span>
+                                    </div>
+                                    <small class="ml-auto mr-1">4 comments</small>
+                                    <a href="#">Add Comment</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COMMENTS -->
+                        <div class="card-footer comments-card">
+                            <div class="d-flex list-group list-group-flush">
+                                <div class="list-group-item px-0 bg-transparent">
                                     <div class="row mx-sm-0">
                                         <div class="col-1 my-auto text-center">
                                             <i class="fas fa-arrow-up"></i>
@@ -223,7 +359,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="pr-0 bg-transparent">
+                                <div class="list-group-item px-0 bg-transparent">
                                     <div class="row mx-sm-0">
                                         <div class="col-1 my-1 text-center">
                                             <i class="fas fa-arrow-up"></i>
@@ -240,7 +376,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="pr-0 bg-transparent">
+                                <div class="list-group-item px-0 bg-transparent">
                                     <div class="row mx-sm-0">
                                         <div class="col-1 my-auto text-center">
                                             <i class="fas fa-arrow-up"></i>
@@ -255,7 +391,99 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="pr-0 bg-transparent">
+                            </div>
+                        </div>
+                        <!-- COMMENTS END -->
+                    </div>
+                    <!-- ANSWER END -->
+
+                    <!-- Answer -->
+                    <div class="card my-3">
+                        <div class="row mx-0">
+                            <div class="col-1 py-3 d-flex flex-column align-items-center justify-content-between">
+                                <div class="p-2">
+                                    <i class="fas fa-trophy"></i>
+                                    <p class="text-center mb-0 w-100">7</p>
+                                </div>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <a href="#"><i class="fas fa-arrow-up"></i></a>
+                                    <a href="#"><i class="fas fa-arrow-down discrete"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-11">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
+                                        ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum dapibus
+                                        leo id neque consequat placerat.
+                                        <span class="badge badge-light float-right mr-2 mt-3">Edited</span>
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
+                                    <div>
+                                        <small class="text-muted">Created by -</small>
+                                        <span>UserName</span>
+                                        <span class="badge badge-success">Trusted</span>
+                                    </div>
+                                    <small class="ml-auto mr-1">4 comments</small>
+                                    <a href="#">Add Comment</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COMMENTS -->
+                        <div class="card-footer comments-card">
+                            <div class="d-flex list-group list-group-flush">
+                                <div class="list-group-item px-0 bg-transparent">
+                                    <div class="row mx-sm-0">
+                                        <div class="col-1 my-auto text-center">
+                                            <i class="fas fa-arrow-up"></i>
+                                            <p class="text-center mb-0 w-100">3</p>
+                                            <i class="fas fa-arrow-down discrete"></i>
+                                        </div>
+                                        <div class="col-11 my-1 pl-3">
+                                            <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual elements
+                                                of a graphic document or visual presentation. Replacing content with placeholder
+                                                text allows designers to design the form of the content before the content
+                                                itself has been produced.</p>
+                                            <p class="text-right discrete">
+                                                AndreFCruz
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item px-0 bg-transparent">
+                                    <div class="row mx-sm-0">
+                                        <div class="col-1 my-1 text-center">
+                                            <i class="fas fa-arrow-up"></i>
+                                            <p class="text-center mb-0 w-100">1</p>
+                                            <i class="fas fa-arrow-down discrete"></i>
+                                        </div>
+                                        <div class="col-11 my-1 pl-4">
+                                            <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit
+                                                dapibus.
+                                            </p>
+                                            <p class="text-right discrete">
+                                                jflcarvalho
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item px-0 bg-transparent">
+                                    <div class="row mx-sm-0">
+                                        <div class="col-1 my-auto text-center">
+                                            <i class="fas fa-arrow-up"></i>
+                                            <p class="text-center mb-0 w-100">1</p>
+                                            <i class="fas fa-arrow-down discrete"></i>
+                                        </div>
+                                        <div class="col-11 my-auto pl-4">
+                                            <p>This is a sample comment!! *Insert meme here*</p>
+                                            <p class="text-right discrete">
+                                                EdgarACarneiro
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item px-0 bg-transparent">
                                     <div class="row mx-sm-0">
                                         <div class="col-1 my-auto text-center">
                                             <i class="fas fa-arrow-up"></i>
@@ -277,250 +505,7 @@
                     </div>
                     <!-- ANSWER END -->
 
-                    <!-- Answer -->
-                    <div class="card my-3">
-                        <div class="row mx-0">
-                            <div class="col-1 d-flex flex-column align-items-start">
-                                <div class="p-2 mt-3 mb-auto">
-                                    <i class="fas fa-trophy"></i>
-                                    <p class="text-center mb-0 w-100">5</p>
-                                </div>
-                                <div class="p-2 ml-1">
-                                    <i class="fas fa-arrow-up"></i>
-                                    <i class="fas fa-arrow-down discrete"></i>
-                                </div>
-                            </div>
-                            <div class="col-11">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
-                                        ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum dapibus
-                                        leo id neque consequat placerat.
-                                        <span class="badge badge-light float-right mr-2 mt-3">Edited</span>
-                                    </p>
-                                </div>
-                                <div class="card-footer bg-transparent d-flex justify-content-between">
-                                    <p class="card-text mb-0">
-                                        <small class="text-muted">Created by - &nbsp</small>
-                                    </p>
-                                    <div class="mr-auto">
-                                        <span>UserName</span>
-                                        <span class="badge badge-success">Trusted</span>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p class="text-right mb-0">0 comments</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ANSWER END -->
-
-                    <!-- Answer -->
-                    <div class="card my-3">
-                        <div class="row mx-0">
-                            <div class="col-1 d-flex flex-column align-items-start">
-                                <div class="p-2 mt-3 mb-auto">
-                                    <i class="fas fa-trophy"></i>
-                                    <p class="text-center mb-0 w-100">1</p>
-                                </div>
-                                <div class="p-2 ml-1">
-                                    <i class="fas fa-arrow-up"></i>
-                                    <i class="fas fa-arrow-down discrete"></i>
-                                </div>
-                            </div>
-                            <div class="col-11">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
-                                        ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum dapibus
-                                        leo id neque consequat placerat.
-                                        <span class="badge badge-light float-right mr-2 mt-3">Edited</span>
-                                    </p>
-                                </div>
-                                <div class="card-footer bg-transparent d-flex justify-content-between">
-                                    <p class="card-text mb-0">
-                                        <small class="text-muted">Created by - &nbsp</small>
-                                    </p>
-                                    <div class="mr-auto">
-                                        <span>UserName</span>
-                                        <span class="badge badge-success">Trusted</span>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p class="text-right mb-0">3 comments</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- COMMENTS -->
-                        <div class="card-footer comments-card">
-                            <div class="d-flex list-group list-group-flush">
-                                <div class="pr-0 bg-transparent">
-                                    <div class="row mx-sm-0">
-                                        <div class="col-1 my-auto text-center">
-                                            <i class="fas fa-arrow-up"></i>
-                                            <p class="text-center mb-0 w-100">3</p>
-                                            <i class="fas fa-arrow-down discrete"></i>
-                                        </div>
-                                        <div class="col-11 my-1 pl-3">
-                                            <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual elements
-                                                of a graphic document or visual presentation. Replacing content with placeholder
-                                                text allows designers to design the form of the content before the content
-                                                itself has been produced.</p>
-                                            <p class="text-right discrete">
-                                                AndreFCruz
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pr-0 bg-transparent">
-                                    <div class="row mx-sm-0">
-                                        <div class="col-1 my-1 text-center">
-                                            <i class="fas fa-arrow-up"></i>
-                                            <p class="text-center mb-0 w-100">1</p>
-                                            <i class="fas fa-arrow-down discrete"></i>
-                                        </div>
-                                        <div class="col-11 my-1 pl-4">
-                                            <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit
-                                                dapibus.
-                                            </p>
-                                            <p class="text-right discrete">
-                                                jflcarvalho
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pr-0 bg-transparent">
-                                    <div class="row mx-sm-0">
-                                        <div class="col-1 my-auto text-center">
-                                            <i class="fas fa-arrow-up"></i>
-                                            <p class="text-center mb-0 w-100">1</p>
-                                            <i class="fas fa-arrow-down discrete"></i>
-                                        </div>
-                                        <div class="col-11 my-auto pl-4">
-                                            <p>This is a sample comment!! *Insert meme here*</p>
-                                            <p class="text-right discrete">
-                                                EdgarACarneiro
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- COMMENTS END -->
-                    </div>
-                    <!-- ANSWER END -->
-
-                    <!-- Answer -->
-                    <div class="card my-3">
-                        <div class="row mx-0">
-                            <div class="col-1 d-flex flex-column align-items-start">
-                                <div class="p-2 mt-3 mb-auto">
-                                    <i class="fas fa-trophy"></i>
-                                    <p class="text-center mb-0 w-100">-2</p>
-                                </div>
-                                <div class="p-2 ml-1">
-                                    <i class="fas fa-arrow-up"></i>
-                                    <i class="fas fa-arrow-down discrete"></i>
-                                </div>
-                            </div>
-                            <div class="col-11">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
-                                        ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum dapibus
-                                        leo id neque consequat placerat.
-                                        <span class="badge badge-light float-right mr-2 mt-3">Edited</span>
-                                    </p>
-                                </div>
-                                <div class="card-footer bg-transparent d-flex justify-content-between">
-                                    <p class="card-text mb-0">
-                                        <small class="text-muted">Created by - &nbsp</small>
-                                    </p>
-                                    <div class="mr-auto">
-                                        <span>UserName</span>
-                                        <span class="badge badge-success">Trusted</span>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p class="text-right mb-0">4 comments</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- COMMENTS -->
-                        <div class="card-footer comments-card">
-                            <div class="d-flex list-group list-group-flush">
-                                <div class="pr-0 bg-transparent">
-                                    <div class="row mx-sm-0">
-                                        <div class="col-1 my-auto text-center">
-                                            <i class="fas fa-arrow-up"></i>
-                                            <p class="text-center mb-0 w-100">3</p>
-                                            <i class="fas fa-arrow-down discrete"></i>
-                                        </div>
-                                        <div class="col-11 my-1 pl-3">
-                                            <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual elements
-                                                of a graphic document or visual presentation. Replacing content with placeholder
-                                                text allows designers to design the form of the content before the content
-                                                itself has been produced.</p>
-                                            <p class="text-right discrete">
-                                                AndreFCruz
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pr-0 bg-transparent">
-                                    <div class="row mx-sm-0">
-                                        <div class="col-1 my-1 text-center">
-                                            <i class="fas fa-arrow-up"></i>
-                                            <p class="text-center mb-0 w-100">1</p>
-                                            <i class="fas fa-arrow-down discrete"></i>
-                                        </div>
-                                        <div class="col-11 my-1 pl-4">
-                                            <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit
-                                                dapibus.
-                                            </p>
-                                            <p class="text-right discrete">
-                                                jflcarvalho
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pr-0 bg-transparent">
-                                    <div class="row mx-sm-0">
-                                        <div class="col-1 my-auto text-center">
-                                            <i class="fas fa-arrow-up"></i>
-                                            <p class="text-center mb-0 w-100">1</p>
-                                            <i class="fas fa-arrow-down discrete"></i>
-                                        </div>
-                                        <div class="col-11 my-auto pl-4">
-                                            <p>This is a sample comment!! *Insert meme here*</p>
-                                            <p class="text-right discrete">
-                                                EdgarACarneiro
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pr-0 bg-transparent">
-                                    <div class="row mx-sm-0">
-                                        <div class="col-1 my-auto text-center">
-                                            <i class="fas fa-arrow-up"></i>
-                                            <p class="text-center mb-0 w-100">-1</p>
-                                            <i class="fas fa-arrow-down discrete"></i>
-                                        </div>
-                                        <div class="col-11 my-auto pl-4">
-                                            <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit
-                                                dapibus. Bada badu badumtsss.</p>
-                                            <p class="text-right discrete">
-                                                rendoir
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- COMMENTS END -->
-                    </div>
-                    <!-- ANSWER END -->
+                    <button class="btn btn-outline-info">Answer this question</button>
 
                 </div>
                 <!-- related questions -->
@@ -564,6 +549,7 @@
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <script src="assets/lib/jquery.slimscroll.min.js"></script>
