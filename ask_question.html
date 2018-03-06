@@ -54,47 +54,50 @@
                     </form>
                 </div>
 
+                <!-- START OF NAVBAR RIGHT-SIDE OPTIONS -->
                 <div class="ml-auto-sm px-0 col-sm-6 col-lg-3 d-flex justify-content-between justify-content-sm-end">
-                    <!-- Sign In/Sign Up -->
-                    <div class="dropdown mx-sm-2">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                            Sign In
-                            <span class="caret"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <form class="px-4 py-3" action="index(logged).html">
-                                <div class="form-group">
-                                    <label for="exampleDropdownFormEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleDropdownFormPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                                    <label class="form-check-label" for="dropdownCheck">Remember me</label>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-signin">Sign in</button>
-                                <a class="btn btn-social btn-github" href="#">
-                                    <i class="fab fa-github"></i>
-                                    <div>Sign in with Github</div>
-                                </a>
-                                <div class="mx-auto mt-1 d-flex">
-                                    <div class="g-signin2" data-onsuccess="onSignIn" data-width="200" data-height="34" data-longtitle="true">button</div>
-                                </div>
-                            </form>
+                    <!-- User Panel Icons -->
+                    <!-- Notifications Dropdown -->
+                    <div class="dropdown mx-2">
+                        <span class="big-icon" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="pt-1">
+                                <i class="far fa-bell"></i>
+                            </div>
+                        </span>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
+                            <button class="dropdown-item" type="button">
+                                <i class="far fa-thumbs-up"></i>
+                                JohnDoe00 upvoted your Question
+                            </button>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">New around here? Sign up</a>
-                            <a class="dropdown-item" href="#">Forgot password?</a>
+                            <button class="dropdown-item" type="button">
+                                <i class="far fa-comments"></i>
+                                JohnDoe00 answered your Question
+                            </button>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item" type="button">
+                                <i class="far fa-check-circle"></i>
+                                Moderator Tester33 selected a correct answer for your Question
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Help -->
-                    <div class="dropdown mx-sm-2">
-                        <button class="btn btn-primary" type="button">Sign Up
+                    <!-- Options Dropdown-->
+                    <div class="dropdown px-1">
+                        <span class="big-icon mx-2" id="profile-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="rounded-circle" src="assets/img/img-profile-icon.jpg" alt="profile picture">
+                        </span>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-options">
+                            <a href="own-profile.html" class="dropdown-item" role="button">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="account.html" class="dropdown-item" role="button">Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="index.html" class="dropdown-item" role="button">Log Out</a>
+                        </div>
                     </div>
+
                 </div>
+                <!-- END OF NAVBAR RIGHT-SIDE OPTIONS -->
             </nav>
         </div>
     </header>
@@ -102,10 +105,12 @@
     <main class="container">
 
         <!--This is an example for markdown to html-->
-        <div id="markdown" style="display:none;"><textarea>```cpp
+        <div id="markdown" style="display:none;">
+            <textarea>```cpp
 Object* obj = new Object();
-            ```</textarea></div>
-        
+            ```</textarea>
+        </div>
+
         <div class="pt-4 pb-3 pl-3">
             <h2>
                 Write your Question!
@@ -131,7 +136,7 @@ Object* obj = new Object();
             <script src="https://apis.google.com/js/platform.js" async defer></script>
 
             <script type="text/javascript">
-            var editor;
+                var editor;
                 $(function () {
                     $("#editor_container").append("<div id=\"editormd\"></div>");
                     editor = editormd("editormd", {
