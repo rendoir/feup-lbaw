@@ -302,6 +302,10 @@ nav {
 /*************************************************/
 
 @media (min-width: 576px) {
+    .mb-sm-n-100{
+        margin-bottom: -100%;
+    }
+    
     section#question{
         top: 56px;
     }
