@@ -326,9 +326,13 @@ nav {
 
 @media (max-width: 576px) {
 
+    /* Nav bar */
     nav > div.ml-auto-sm.px-0.col-sm-6.col-lg-3.d-flex {
         margin-top: 1rem;
         margin-bottom: 0.5rem;
+    }
+    nav > a > span {
+        display: none;
     }
 
     /* Tags page */
@@ -386,5 +390,13 @@ nav {
     /* Sign Up Page */
     #sign-up-jumbo {
         flex-direction: column !important;
+    }
+
+    /* Index Page */
+    #nav-new > a > div > div:first-child,
+    #nav-hot > a > div > div:first-child,
+    #nav-voted > a > div > div:first-child,
+    #nav-active > a > div > div:first-child {
+        flex-direction: row !important;
     }
 }
