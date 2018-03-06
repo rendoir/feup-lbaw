@@ -341,4 +341,31 @@ h1, h3 {
     #categories-search > .input-group-prepend {
        display: none;
     }
+
+    /* About page */
+    .team-sentences {
+        display: none;
+    }
+
+    /* Account Page */
+    #account-settings > .col-4.py-4,
+    #account-settings > .col-4.pt-3.pb-4 {
+        max-width: none;
+        flex-basis: 100%;
+    }
+    #account-settings > .col-8.pb-2 {
+        display: none;
+    }
+    #account-settings > .col-2.pb-2{
+        max-width: none;
+        flex-basis: 50%;
+    }
+    #account-settings > .col-2.pb-4{
+        max-width: none;
+        flex-basis: 40%;
+    }
+    #account-settings > .col-8.pb-4 {
+        max-width: none;
+        flex-basis: 60%;
+    }
 }
