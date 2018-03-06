@@ -26,25 +26,6 @@ h1, h3 {
     font-weight: 400;
 }
 
-@media (min-width: 576px) {
-    section#question{
-        top: 56px;
-    }
-
-    .mr-auto-sm{
-        margin-right: auto !important;
-    }
-
-    .ml-auto-sm{
-        margin-left: auto !important;
-    }
-
-    .dropdown-menu-right {
-        right: 0;
-        left: auto !important;
-    }
-}
-
 .btn-signin {
     width: 100%;
     padding-top: 0;
@@ -309,4 +290,55 @@ h1, h3 {
 
 .hover-box-shadow:hover {
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.07), 0 0 20px 0 rgba(0, 0, 0, 0.07);
+}
+
+
+/*************************************************/
+/************** Responsive Design ****************/
+/*************************************************/
+
+@media (min-width: 576px) {
+    section#question{
+        top: 56px;
+    }
+
+    .mr-auto-sm{
+        margin-right: auto !important;
+    }
+
+    .ml-auto-sm{
+        margin-left: auto !important;
+    }
+
+    .dropdown-menu-right {
+        right: 0;
+        left: auto !important;
+    }
+}
+
+@media (max-width: 576px) {
+
+    nav > div.ml-auto-sm.px-0.col-sm-6.col-lg-3.d-flex {
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Tags page */
+    #category-header {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    #category-header > * {
+        margin-left: 0 !important;
+    }
+    #categories-search {
+        align-self: center;
+        margin-right: 0 !important;
+    }
+    #categories-search > .form-control {
+        border-radius: .25rem !important;
+    }
+    #categories-search > .input-group-prepend {
+       display: none;
+    }
 }
