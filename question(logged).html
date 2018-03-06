@@ -108,46 +108,48 @@
                 <div class="d-flex flex-column">
                     <header class="border-bottom sticky-top d-flex">
                         <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
-                        <button class="btn ml-auto h3 bg-transparent" style="color: #526B97"><i class="fas fa-pencil-alt"></i></button>
+                        <button class="btn ml-auto h3 bg-transparent" style="color: #526B97">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
                     </header>
                     <main id="question-body" class="row">
                         <div class="col-md-9 p-3">
-                                <p>Let’s say we’re making a first-person camera. The basic idea is it should yaw to look left &amp;
-                                        right, and pitch to look up &amp; down. So we write a bit of code like this (using Unity
-                                        as an example):</p>
-                                    <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="pln">    </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Update</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">        </span><span class="typ">float</span><span class="pln"> speed </span><span class="pun">=</span><span class="pln"> lookSpeed </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Time</span><span class="pun">.</span><span class="pln">deltaTime</span><span class="pun">;</span></code></li><li class="L2"><code class="lang-cpp"></code></li><li class="L3"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Yaw around the y axis using the player's horizontal input.        </span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(</span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Pitch around the x axis using the player's vertical input.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln">  </span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L8"><code class="lang-cpp"><span class="pln">    </span><span class="pun">}</span></code></li></ol></pre>
-                                    <p>or maybe</p>
-                                    <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="com">// Construct a quaternion or a matrix representing incremental camera rotation.</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">    </span><span class="typ">Quaternion</span><span class="pln"> rotation </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Quaternion</span><span class="pun">.</span><span class="typ">Euler</span><span class="pun">(</span></code></li><li class="L2"><code class="lang-cpp"><span class="pln">                            </span><span class="pun">-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-cpp"><span class="pln">                             </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">                             </span><span class="lit">0</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">    </span><span class="com">// Fold this change into the camera's current rotation.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">    transform</span><span class="pun">.</span><span class="pln">rotation </span><span class="pun">*=</span><span class="pln"> rotation</span><span class="pun">;</span></code></li></ol></pre>
-                                    <p>And it mostly works, but over time the view starts to get crooked. The camera seems to be turning
-                                        on its roll axis (z) even though we only told it to rotate on the x and y!</p>
-                                    <p>
-                                        <a href="https://i.stack.imgur.com/A9nOC.gif">
-                                            <img src="https://i.stack.imgur.com/A9nOC.gif" alt="Animated example of a first-person camera tilting sideways">
-                                        </a>
-                                    </p>
-                                    <p>This can also happen if we’re trying to manipulate an object in front of the camera - say it’s
-                                        a globe we want to turn to look around:</p>
-                                    <p>
-                                        <a href="https://i.stack.imgur.com/y6cNH.gif">
-                                            <img src="https://i.stack.imgur.com/y6cNH.gif" alt="Animated example of a globe tilting sideways">
-                                        </a>
-                                    </p>
-                                    <p>The same problem - after a while the North pole starts to wander away to the left or right. We’re
-                                        giving input on two axes but we’re getting this confusing rotation on a third. And it happens
-                                        whether we apply all our rotations around the object’s local axes or the world’s global axes.</p>
-                                    <p>In many engines you’ll also see this in the inspector - rotate the object in the world, and suddenly
-                                        numbers change on an axis we didn’t even touch!</p>
-                                    <p>
-                                        <a href="https://i.stack.imgur.com/JpZZ2.gif">
-                                            <img src="https://i.stack.imgur.com/JpZZ2.gif" alt="Animated example showing manipulating an object next to a readout of its rotation angles. The z angle changes even though the user didn't manipulate that axis.">
-                                        </a>
-                                    </p>
-                                    <p>
-                                        <strong>So, is this an engine bug?</strong> How do we tell the program we don’t want it adding extra
-                                        rotation?
-                                    </p>
-                                    <p>Does it have something to do with Euler angles? Should I use Quaternions or Rotation Matrices
-                                        or Basis Vectors instead?</p>
+                            <p>Let’s say we’re making a first-person camera. The basic idea is it should yaw to look left &amp;
+                                right, and pitch to look up &amp; down. So we write a bit of code like this (using Unity
+                                as an example):</p>
+                            <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="pln">    </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Update</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">        </span><span class="typ">float</span><span class="pln"> speed </span><span class="pun">=</span><span class="pln"> lookSpeed </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Time</span><span class="pun">.</span><span class="pln">deltaTime</span><span class="pun">;</span></code></li><li class="L2"><code class="lang-cpp"></code></li><li class="L3"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Yaw around the y axis using the player's horizontal input.        </span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(</span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Pitch around the x axis using the player's vertical input.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln">  </span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L8"><code class="lang-cpp"><span class="pln">    </span><span class="pun">}</span></code></li></ol></pre>
+                            <p>or maybe</p>
+                            <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="com">// Construct a quaternion or a matrix representing incremental camera rotation.</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">    </span><span class="typ">Quaternion</span><span class="pln"> rotation </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Quaternion</span><span class="pun">.</span><span class="typ">Euler</span><span class="pun">(</span></code></li><li class="L2"><code class="lang-cpp"><span class="pln">                            </span><span class="pun">-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-cpp"><span class="pln">                             </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">                             </span><span class="lit">0</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">    </span><span class="com">// Fold this change into the camera's current rotation.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">    transform</span><span class="pun">.</span><span class="pln">rotation </span><span class="pun">*=</span><span class="pln"> rotation</span><span class="pun">;</span></code></li></ol></pre>
+                            <p>And it mostly works, but over time the view starts to get crooked. The camera seems to be turning
+                                on its roll axis (z) even though we only told it to rotate on the x and y!</p>
+                            <p>
+                                <a href="https://i.stack.imgur.com/A9nOC.gif">
+                                    <img src="https://i.stack.imgur.com/A9nOC.gif" alt="Animated example of a first-person camera tilting sideways">
+                                </a>
+                            </p>
+                            <p>This can also happen if we’re trying to manipulate an object in front of the camera - say it’s
+                                a globe we want to turn to look around:</p>
+                            <p>
+                                <a href="https://i.stack.imgur.com/y6cNH.gif">
+                                    <img src="https://i.stack.imgur.com/y6cNH.gif" alt="Animated example of a globe tilting sideways">
+                                </a>
+                            </p>
+                            <p>The same problem - after a while the North pole starts to wander away to the left or right. We’re
+                                giving input on two axes but we’re getting this confusing rotation on a third. And it happens
+                                whether we apply all our rotations around the object’s local axes or the world’s global axes.</p>
+                            <p>In many engines you’ll also see this in the inspector - rotate the object in the world, and suddenly
+                                numbers change on an axis we didn’t even touch!</p>
+                            <p>
+                                <a href="https://i.stack.imgur.com/JpZZ2.gif">
+                                    <img src="https://i.stack.imgur.com/JpZZ2.gif" alt="Animated example showing manipulating an object next to a readout of its rotation angles. The z angle changes even though the user didn't manipulate that axis.">
+                                </a>
+                            </p>
+                            <p>
+                                <strong>So, is this an engine bug?</strong> How do we tell the program we don’t want it adding extra
+                                rotation?
+                            </p>
+                            <p>Does it have something to do with Euler angles? Should I use Quaternions or Rotation Matrices
+                                or Basis Vectors instead?</p>
                         </div>
                         <div class="col-md-3 p-3 d-flex flex-column justify-content-between">
                             <div>
@@ -197,44 +199,44 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="card my-3">
-                            <div class="card-body">
-                        
-                                <!-- Text Editor -->
-                                <div id="editor_container"></div>
+                        <div class="card-body">
 
-                                <script src="editor/examples/js/jquery.min.js"></script>
-                                <script src="editor/editormd.js"></script>
-                                <script src="editor/languages/en.js"></script>
-                                <script src="https://apis.google.com/js/platform.js" async defer></script>
+                            <!-- Text Editor -->
+                            <div id="editor_container"></div>
 
-                                <script type="text/javascript">
+                            <script src="editor/examples/js/jquery.min.js"></script>
+                            <script src="editor/editormd.js"></script>
+                            <script src="editor/languages/en.js"></script>
+                            <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+                            <script type="text/javascript">
                                 var editor;
-                                    $(function () {
-                                        $("#editor_container").append("<div id=\"editormd\"></div>");
-                                        editor = editormd("editormd", {
-                                            width: "100%",
-                                            height: 300,
-                                            path: 'editor/lib/',
-                                            placeholder: "Write your question here! You can use markdown or the toolbar for advanced stuff!",
-                                            delay: 0,
-                                            tex: true,
-                                            dialogDraggable: false,
-                                            saveHTMLToTextarea: true,
-                                            toolbarIcons: function () {
-                                                return ["undo", "redo", "|",
-                                                    "bold", "del", "italic", "|",
-                                                    "list-ul", "list-ol", "hr", "|",
-                                                    "link", "reference-link", "quote", "image", "code", "code-block", "table", "|",
-                                                    "watch", "clear", "search"]
-                                            }
-                                        });
+                                $(function () {
+                                    $("#editor_container").append("<div id=\"editormd\"></div>");
+                                    editor = editormd("editormd", {
+                                        width: "100%",
+                                        height: 300,
+                                        path: 'editor/lib/',
+                                        placeholder: "Write your question here! You can use markdown or the toolbar for advanced stuff!",
+                                        delay: 0,
+                                        tex: true,
+                                        dialogDraggable: false,
+                                        saveHTMLToTextarea: true,
+                                        toolbarIcons: function () {
+                                            return ["undo", "redo", "|",
+                                                "bold", "del", "italic", "|",
+                                                "list-ul", "list-ol", "hr", "|",
+                                                "link", "reference-link", "quote", "image", "code", "code-block", "table", "|",
+                                                "watch", "clear", "search"]
+                                        }
                                     });
-                                </script>
+                                });
+                            </script>
 
-                                <div class="d-flex">
-                                    <div class="p-2 text-muted">Character count: 33</div>
-                                    <button class="p-2 ml-auto btn btn-outline-info my-2 my-sm-0" type="submit">Post answer</button>
-                                </div>
+                            <div class="d-flex">
+                                <div class="p-2 text-muted">Character count: 33</div>
+                                <button class="p-2 ml-auto btn btn-outline-info my-2 my-sm-0" type="submit">Post answer</button>
+                            </div>
                         </div>
                     </div>
                     <!-- Answer -->
@@ -246,8 +248,12 @@
                                     <p class="text-center mb-0 w-100">7</p>
                                 </div>
                                 <div class="d-flex flex-column justify-content-around mb-sm-n-100">
-                                    <a href="#"><i class="fas fa-arrow-up"></i></a>
-                                    <a href="#"><i class="fas fa-arrow-down discrete"></i></a>
+                                    <a href="#">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fas fa-arrow-down discrete"></i>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
@@ -270,7 +276,6 @@
                                         <span class="badge badge-success">Trusted</span>
                                     </div>
                                     <small class="ml-auto mr-1 text-center">4 comments</small>
-                                    <a class="text-center pl-2" href="#">Add Comment</a>
                                 </div>
                             </div>
                         </div>
@@ -278,10 +283,9 @@
                         <div class="card-footer comments-card px-0 px-sm-4">
                             <div class="d-flex list-group list-group-flush">
                                 <div class="list-group-item bg-transparent">
-                                    <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements
-                                        of a graphic document or visual presentation. Replacing content with placeholder
-                                        text allows designers to design the form of the content before the content
-                                        itself has been produced.</p>
+                                    <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements of a graphic
+                                        document or visual presentation. Replacing content with placeholder text allows designers
+                                        to design the form of the content before the content itself has been produced.</p>
                                     <div class="d-flex flex-wrap mt-3">
                                         <p class="discrete mr-2">1</p>
                                         <a class="discrete mr-1" href="#">UpVote</a>
@@ -290,11 +294,12 @@
                                         <a class="discrete" href="#">Report </a>
                                         <p class="ml-auto discrete">AndreFCruz</p>
                                     </div>
-                                    <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97"><i class="fas fa-pencil-alt"></i></button>    
+                                    <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
                                 </div>
                                 <div class="list-group-item bg-transparent">
-                                    <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit
-                                        dapibus.
+                                    <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
                                     </p>
                                     <div class="d-flex flex-wrap mt-3">
                                         <p class="discrete mr-2">1</p>
@@ -328,6 +333,14 @@
                                         <p class="ml-auto discrete">rendoir</p>
                                     </div>
                                 </div>
+                                <div class="list-group-item bg-transparent">
+                                    <div class="input-group mt-3">
+                                        <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-success" type="button">Add Comment</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- COMMENTS END -->
@@ -343,8 +356,12 @@
                                     <p class="text-center mb-0 w-100">7</p>
                                 </div>
                                 <div class="d-flex flex-column justify-content-around mb-sm-n-100">
-                                    <a href="#"><i class="fas fa-arrow-up"></i></a>
-                                    <a href="#"><i class="fas fa-arrow-down discrete"></i></a>
+                                    <a href="#">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fas fa-arrow-down discrete"></i>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
@@ -354,7 +371,9 @@
                                         ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum dapibus
                                         leo id neque consequat placerat.
                                         <span class="badge badge-light float-right mr-2 mt-1">Edited</span>
-                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97"><i class="fas fa-pencil-alt"></i></button>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </p>
                                 </div>
                             </div>
@@ -368,7 +387,18 @@
                                         <span class="badge badge-success">Trusted</span>
                                     </div>
                                     <small class="ml-auto mr-1 text-center">4 comments</small>
-                                    <a class="text-center pl-2" href="#">Add Comment</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer comments-card px-0 px-sm-4">
+                            <div class="d-flex list-group list-group-flush">
+                                <div class="list-group-item bg-transparent">
+                                    <div class="input-group mt-3">
+                                        <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-success" type="button">Add Comment</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -384,8 +414,12 @@
                                     <p class="text-center mb-0 w-100">7</p>
                                 </div>
                                 <div class="d-flex flex-column justify-content-around mb-sm-n-100">
-                                    <a href="#"><i class="fas fa-arrow-up"></i></a>
-                                    <a href="#"><i class="fas fa-arrow-down discrete"></i></a>
+                                    <a href="#">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fas fa-arrow-down discrete"></i>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
@@ -408,7 +442,6 @@
                                         <span class="badge badge-success">Trusted</span>
                                     </div>
                                     <small class="ml-auto mr-1 text-center">4 comments</small>
-                                    <a class="text-center pl-2" href="#">Add Comment</a>
                                 </div>
                             </div>
                         </div>
@@ -416,10 +449,9 @@
                         <div class="card-footer comments-card px-0 px-sm-4">
                             <div class="d-flex list-group list-group-flush">
                                 <div class="list-group-item bg-transparent">
-                                    <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements
-                                        of a graphic document or visual presentation. Replacing content with placeholder
-                                        text allows designers to design the form of the content before the content
-                                        itself has been produced.</p>
+                                    <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements of a graphic
+                                        document or visual presentation. Replacing content with placeholder text allows designers
+                                        to design the form of the content before the content itself has been produced.</p>
                                     <div class="d-flex flex-wrap mt-3">
                                         <p class="discrete mr-2">1</p>
                                         <a class="discrete mr-1" href="#">UpVote</a>
@@ -430,8 +462,7 @@
                                     </div>
                                 </div>
                                 <div class="list-group-item bg-transparent">
-                                    <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit
-                                        dapibus.
+                                    <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
                                     </p>
                                     <div class="d-flex flex-wrap mt-3">
                                         <p class="discrete mr-2">1</p>
@@ -453,12 +484,20 @@
                                         <p class="ml-auto discrete">EdgarACarneiro</p>
                                     </div>
                                 </div>
+                                <div class="list-group-item bg-transparent">
+                                    <div class="input-group mt-3">
+                                        <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-success" type="button">Add Comment</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- COMMENTS END -->
                     </div>
                     <!-- ANSWER END -->
-                    
+
                     <!-- Answer -->
                     <div class="card my-3  ">
                         <div class="row mx-0">
@@ -468,8 +507,12 @@
                                     <p class="text-center mb-0 w-100">7</p>
                                 </div>
                                 <div class="d-flex flex-column justify-content-around mb-sm-n-100">
-                                    <a href="#"><i class="fas fa-arrow-up"></i></a>
-                                    <a href="#"><i class="fas fa-arrow-down discrete"></i></a>
+                                    <a href="#">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fas fa-arrow-down discrete"></i>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
@@ -492,7 +535,6 @@
                                         <span class="badge badge-success">Trusted</span>
                                     </div>
                                     <small class="ml-auto mr-1 text-center">4 comments</small>
-                                    <a class="text-center pl-2" href="#">Add Comment</a>
                                 </div>
                             </div>
                         </div>
@@ -500,10 +542,9 @@
                         <div class="card-footer comments-card px-0 px-sm-4">
                             <div class="d-flex list-group list-group-flush">
                                 <div class="list-group-item bg-transparent">
-                                    <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual elements
-                                        of a graphic document or visual presentation. Replacing content with placeholder
-                                        text allows designers to design the form of the content before the content
-                                        itself has been produced.</p>
+                                    <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual elements of a graphic
+                                        document or visual presentation. Replacing content with placeholder text allows designers
+                                        to design the form of the content before the content itself has been produced.</p>
                                     <div class="d-flex flex-wrap mt-3">
                                         <p class="discrete mr-2">1</p>
                                         <a class="discrete mr-1" href="#">UpVote</a>
@@ -514,8 +555,7 @@
                                     </div>
                                 </div>
                                 <div class="list-group-item bg-transparent">
-                                    <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit
-                                        dapibus.
+                                    <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
                                     </p>
                                     <div class="d-flex flex-wrap mt-3">
                                         <p class="discrete mr-2">1</p>
@@ -547,6 +587,14 @@
                                         <a class="discrete mr-2" href="#">DownVote</a>
                                         <a class="discrete" href="#">Report </a>
                                         <p class="ml-auto discrete">rendoir</p>
+                                    </div>
+                                </div>
+                                <div class="list-group-item bg-transparent">
+                                    <div class="input-group mt-3">
+                                        <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-success" type="button">Add Comment</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
