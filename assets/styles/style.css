@@ -409,6 +409,11 @@ nav {
         text-align: center;
     }
 
+    #sign-up-jumbo p.lead {
+        color: #eee;
+        text-shadow: 1px 1px #111111cc;
+    }
+
     /* Index Page */
     #nav-new > a > div > div:first-child,
     #nav-hot > a > div > div:first-child,
