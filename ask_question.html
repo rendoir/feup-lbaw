@@ -100,6 +100,12 @@
     </header>
 
     <main class="container">
+
+        <!--This is an example for markdown to html-->
+        <div id="markdown" style="display:none;"><textarea>```cpp
+Object* obj = new Object();
+            ```</textarea></div>
+        
         <div class="pt-4 pb-3 pl-3">
             <h2>
                 Write your Question!
@@ -117,9 +123,10 @@
             <script src="https://apis.google.com/js/platform.js" async defer></script>
 
             <script type="text/javascript">
+            var editor;
                 $(function () {
                     $("#editor_container").append("<div id=\"editormd\"></div>");
-                    let editor = editormd("editormd", {
+                    editor = editormd("editormd", {
                         width: "100%",
                         height: 500,
                         path: 'editor/lib/',
@@ -129,6 +136,7 @@
                         flowChart: true,
                         sequenceDiagram: true,
                         dialogDraggable: false,
+                        saveHTMLToTextarea: true,
                         toolbarIcons: function () {
                             return ["undo", "redo", "|",
                                 "bold", "del", "italic", "|",

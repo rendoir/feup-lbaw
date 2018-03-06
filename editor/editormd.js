@@ -3893,6 +3893,7 @@
      */
 
     editormd.markdownToHTML = function(id, options) {
+        console.log("----------------------------");
         var defaults = {
             gfm                  : true,
             toc                  : true,
@@ -3902,7 +3903,7 @@
             tocDropdown          : false,
             tocContainer         : "",
             markdown             : "",
-            markdownSourceCode   : false,
+            markdownSourceCode   : true,
             htmlDecode           : false,
             autoLoadKaTeX        : true,
             pageBreak            : true,
@@ -3968,6 +3969,7 @@
         } else {
             saveTo.remove();
         }
+        console.log(markdownParsed);
 
         div.addClass("markdown-body " + this.classPrefix + "html-preview").append(markdownParsed);
 
