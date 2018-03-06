@@ -26,6 +26,10 @@ h1, h3 {
     font-weight: 400;
 }
 
+nav {
+    z-index: 1200 !important;
+}
+
 .btn-signin {
     width: 100%;
     padding-top: 0;
@@ -270,7 +274,7 @@ h1, h3 {
     position: absolute;
     top: 385px;
     left: calc(50% + 65px);
-    z-index: 1600;
+    z-index: 1000;
 }
 .edit-main-pic:hover {
     box-shadow: 0 0 15px 0 rgba(179, 46, 46, 0.13), 0 0 25px 0 rgba(0, 0, 0, 0.13);
@@ -367,5 +371,16 @@ h1, h3 {
     #account-settings > .col-8.pb-4 {
         max-width: none;
         flex-basis: 60%;
+    }
+
+    /* Ask Question PAge */
+    #question-editor {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Sign Up Page */
+    #sign-up-jumbo {
+        flex-direction: column !important;
     }
 }
