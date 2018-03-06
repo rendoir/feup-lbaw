@@ -153,7 +153,7 @@
 
                             <!-- Question Comments -->
                             <div class="text-center">
-                                <button class="btn btn-secondary my-4" type="button" data-toggle="collapse" data-target="#QuestionComments" aria-expanded="false"
+                                <button class="btn btn-secundary my-4" type="button" data-toggle="collapse" data-target="#QuestionComments" aria-expanded="false"
                                     aria-controls="QuestionComments">
                                     Show Question Comments
                                 </button>
@@ -169,7 +169,7 @@
                                             <div class="d-flex flex-wrap mt-3">
                                                 <p class="discrete mr-2">1</p>
                                                 <a class="discrete mr-1" href="#">UpVote</a>
-                                                <span class="discrete mr-1">/</span>
+                                                <span class="mx-1 discrete">&#8226</span>
                                                 <a class="discrete mr-2" href="#">DownVote</a>
                                                 <a class="discrete" href="#">Report </a>
                                                 <p class="ml-auto discrete">AndreFCruz</p>
@@ -184,7 +184,7 @@
                                             <div class="d-flex flex-wrap mt-3">
                                                 <p class="discrete mr-2">1</p>
                                                 <a class="discrete mr-1" href="#">UpVote</a>
-                                                <span class="discrete mr-1">/</span>
+                                                <span class="mx-1 discrete">&#8226</span>
                                                 <a class="discrete mr-2" href="#">DownVote</a>
                                                 <a class="discrete" href="#">Report </a>
                                                 <p class="ml-auto discrete">rendoir</p>
@@ -240,7 +240,7 @@
                                 </div>
                             </div>
                             <div class="ribbon ribbon-overflow ribbon-vertical-r px-0" style="height: auto; color: #75A6DA; right: 20px; top: 5px">
-                                <h4 class="mr-4"><i class="fas fa-heart"></i></h4>
+                                <i class="far fa-heart h4"></i>
                             </div>
                         </div>
                     </main>
@@ -278,10 +278,8 @@
                                             return ["undo", "redo", "|",
                                                 "bold", "del", "italic", "|",
                                                 "list-ul", "list-ol", "hr", "|",
-                                                "link", "reference-link", "quote", "image",
-                                                "code", "code-block", "table", "|",
-                                                "watch", "clear", "search"
-                                            ]
+                                                "link", "reference-link", "quote", "image", "code", "code-block", "table", "|",
+                                                "watch", "clear", "search"]
                                         }
                                     });
                                 });
@@ -294,7 +292,7 @@
                         </div>
                     </div>
                     <!-- Answer -->
-                    <div class="card my-3">
+                    <div class="card my-3 ">
                         <div class="row mx-0">
                             <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
                                 <div class="p-2">
@@ -324,68 +322,83 @@
                         <div class="row mx-0">
                             <div class="col-sm-11 ml-auto">
                                 <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
-                                    <div>
+                                    <div class="text-center">
                                         <small class="text-muted">Created by -</small>
                                         <span>UserName</span>
                                         <span class="badge badge-success">Trusted</span>
                                     </div>
-                                    <small class="ml-auto mr-1">4 comments</small>
-                                    <a href="#">Add Comment</a>
+                                    <div class="text-center m-auto">
+                                        <a role="button" data-toggle="collapse" href="#AnswerComments1" aria-expanded="false" aria-controls="AnswerComments1">
+                                            Show Comments
+                                        </a>
+                                    </div>
+                                    <small class="ml-auto mr-1 text-center">4 comments</small>
                                 </div>
                             </div>
                         </div>
                         <!-- COMMENTS -->
-                        <div class="card-footer comments-card px-0 px-sm-4">
-                            <div class="d-flex list-group list-group-flush">
-                                <div class="list-group-item bg-transparent">
-                                    <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements of a graphic
-                                        document or visual presentation. Replacing content with placeholder text allows designers
-                                        to design the form of the content before the content itself has been produced.</p>
-                                    <div class="d-flex flex-wrap mt-3">
-                                        <p class="discrete mr-2">1</p>
-                                        <a class="discrete" href="#">UpVote</a>
-                                        <span class="mx-1 discrete">&#8226</span>
-                                        <a class="discrete mr-2" href="#">DownVote</a>
-                                        <a class="discrete" href="#">Report </a>
-                                        <p class="ml-auto discrete">AndreFCruz</p>
+                        <div class="collapse" id="AnswerComments1">
+                            <div class="card-footer comments-card px-0 px-sm-4">
+                                <div class="d-flex list-group list-group-flush">
+                                    <div class="list-group-item bg-transparent">
+                                        <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements of
+                                            a graphic document or visual presentation. Replacing content with placeholder
+                                            text allows designers to design the form of the content before the content itself
+                                            has been produced.</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">AndreFCruz</p>
+                                        </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </div>
-                                    <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </button>
-                                </div>
-                                <div class="list-group-item bg-transparent">
-                                    <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
-                                    </p>
-                                    <div class="d-flex flex-wrap mt-3">
-                                        <p class="discrete mr-2">1</p>
-                                        <a class="discrete" href="#">UpVote</a>
-                                        <span class="mx-1 discrete">&#8226</span>
-                                        <a class="discrete mr-2" href="#">DownVote</a>
-                                        <a class="discrete" href="#">Report </a>
-                                        <p class="ml-auto discrete">jflcarvalho</p>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
+                                        </p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">jflcarvalho</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="list-group-item bg-transparent">
-                                    <p>This is a sample comment!! *Insert meme here*</p>
-                                    <div class="d-flex flex-wrap mt-3">
-                                        <p class="discrete mr-2">1</p>
-                                        <a class="discrete" href="#">UpVote</a>
-                                        <span class="mx-1 discrete">&#8226</span>
-                                        <a class="discrete mr-2" href="#">DownVote</a>
-                                        <a class="discrete" href="#">Report </a>
-                                        <p class="ml-auto discrete">EdgarACarneiro</p>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>This is a sample comment!! *Insert meme here*</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">EdgarACarneiro</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="list-group-item bg-transparent">
-                                    <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit
-                                        dapibus. Bada badu badumtsss.</p>
-                                    <div class="d-flex flex-wrap mt-3">
-                                        <p class="discrete mr-2">1</p>
-                                        <a class="discrete" href="#">UpVote</a>
-                                        <span class="mx-1 discrete">&#8226</span>
-                                        <a class="discrete mr-2" href="#">DownVote</a>
-                                        <a class="discrete" href="#">Report </a>
-                                        <p class="ml-auto discrete">rendoir</p>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit
+                                            dapibus. Bada badu badumtsss.</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">rendoir</p>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <div class="input-group mt-3">
+                                            <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-success" type="button">Add Comment</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -395,7 +408,7 @@
                     <!-- ANSWER END -->
 
                     <!-- Answer -->
-                    <div class="card my-3">
+                    <div class="card my-3 ">
                         <div class="row mx-0">
                             <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
                                 <div class="p-2">
@@ -428,21 +441,41 @@
                         <div class="row mx-0">
                             <div class="col-sm-11 ml-auto">
                                 <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
-                                    <div>
+                                    <div class="text-center">
                                         <small class="text-muted">Created by -</small>
                                         <span>UserName</span>
                                         <span class="badge badge-success">Trusted</span>
                                     </div>
-                                    <small class="ml-auto mr-1">0 comments</small>
-                                    <a href="#">Add Comment</a>
+                                    <div class="text-center m-auto">
+                                        <a role="button" data-toggle="collapse" href="#AnswerComments2" aria-expanded="false" aria-controls="AnswerComments2">
+                                            Show Comments
+                                        </a>
+                                    </div>
+                                    <small class="ml-auto mr-1 text-center">4 comments</small>
                                 </div>
                             </div>
                         </div>
+                        <!-- Comments -->
+                        <div class="collapse" id="AnswerComments2">
+                            <div class="card-footer comments-card px-0 px-sm-4">
+                                <div class="d-flex list-group list-group-flush">
+                                    <div class="list-group-item bg-transparent">
+                                        <div class="input-group mt-3">
+                                            <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-success" type="button">Add Comment</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END Comments -->
                     </div>
                     <!-- ANSWER END -->
 
                     <!-- Answer -->
-                    <div class="card my-3">
+                    <div class="card my-3 ">
                         <div class="row mx-0">
                             <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
                                 <div class="p-2">
@@ -472,53 +505,68 @@
                         <div class="row mx-0">
                             <div class="col-sm-11 ml-auto">
                                 <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
-                                    <div>
+                                    <div class="text-center">
                                         <small class="text-muted">Created by -</small>
                                         <span>UserName</span>
                                         <span class="badge badge-success">Trusted</span>
                                     </div>
-                                    <small class="ml-auto mr-1">4 comments</small>
-                                    <a href="#">Add Comment</a>
+                                    <div class="text-center m-auto">
+                                        <a role="button" data-toggle="collapse" href="#AnswerComments3" aria-expanded="false" aria-controls="AnswerComments3">
+                                            Show Comments
+                                        </a>
+                                    </div>
+                                    <small class="ml-auto mr-1 text-center">4 comments</small>
                                 </div>
                             </div>
                         </div>
                         <!-- COMMENTS -->
-                        <div class="card-footer comments-card px-0 px-sm-4">
-                            <div class="d-flex list-group list-group-flush">
-                                <div class="list-group-item bg-transparent">
-                                    <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements of a graphic
-                                        document or visual presentation. Replacing content with placeholder text allows designers
-                                        to design the form of the content before the content itself has been produced.</p>
-                                    <div class="d-flex flex-wrap mt-3">
-                                        <p class="discrete mr-2">1</p>
-                                        <a class="discrete" href="#">UpVote</a>
-                                        <span class="mx-1 discrete">&#8226</span>
-                                        <a class="discrete mr-2" href="#">DownVote</a>
-                                        <a class="discrete" href="#">Report </a>
-                                        <p class="ml-auto discrete">AndreFCruz</p>
+                        <div class="collapse" id="AnswerComments3">
+                            <div class="card-footer comments-card px-0 px-sm-4">
+                                <div class="d-flex list-group list-group-flush">
+                                    <div class="list-group-item bg-transparent">
+                                        <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements of
+                                            a graphic document or visual presentation. Replacing content with placeholder
+                                            text allows designers to design the form of the content before the content itself
+                                            has been produced.</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">AndreFCruz</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="list-group-item bg-transparent">
-                                    <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
-                                    </p>
-                                    <div class="d-flex flex-wrap mt-3">
-                                        <p class="discrete mr-2">1</p>
-                                        <a class="discrete" href="#">UpVote</a>
-                                        <span class="mx-1 discrete">&#8226</span>
-                                        <a class="discrete mr-2" href="#">DownVote</a>
-                                        <a class="discrete" href="#">Report </a>
-                                        <p class="ml-auto discrete">jflcarvalho</p>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
+                                        </p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">jflcarvalho</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="list-group-item bg-transparent">
-                                    <p>This is a sample comment!! *Insert meme here*</p>
-                                    <div class="d-flex flex-wrap mt-3">
-                                        <p class="discrete mr-2">1</p>
-                                        <a class="discrete" href="#">UpVote</a>
-                                        <span class="mx-1 discrete">&#8226</span>
-                                        <a class="discrete mr-2" href="#">DownVote</a>
-                                        <a class="discrete" href="#">Report </a>
-                                        <p class="ml-auto discrete">EdgarACarneiro</p>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>This is a sample comment!! *Insert meme here*</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">EdgarACarneiro</p>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <div class="input-group mt-3">
+                                            <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-success" type="button">Add Comment</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -528,7 +576,7 @@
                     <!-- ANSWER END -->
 
                     <!-- Answer -->
-                    <div class="card my-3">
+                    <div class="card my-3  ">
                         <div class="row mx-0">
                             <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
                                 <div class="p-2">
@@ -558,74 +606,86 @@
                         <div class="row mx-0">
                             <div class="col-sm-11 ml-auto">
                                 <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
-                                    <div>
+                                    <div class="text-center">
                                         <small class="text-muted">Created by -</small>
                                         <span>UserName</span>
                                         <span class="badge badge-success">Trusted</span>
                                     </div>
-                                    <small class="ml-auto mr-1">4 comments</small>
-                                    <a href="#">Add Comment</a>
+                                    <div class="text-center m-auto">
+                                        <a role="button" data-toggle="collapse" href="#AnswerComments4" aria-expanded="false" aria-controls="AnswerComments4">
+                                            Show Comments
+                                        </a>
+                                    </div>
+                                    <small class="ml-auto mr-1 text-center">4 comments</small>
                                 </div>
                             </div>
                         </div>
                         <!-- COMMENTS -->
-                        <div class="card-footer comments-card px-0 px-sm-4">
-                            <div class="d-flex list-group list-group-flush">
-                                <div class="list-group-item bg-transparent">
-                                    <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual elements of a graphic
-                                        document or visual presentation. Replacing content with placeholder text allows designers
-                                        to design the form of the content before the content itself has been produced.</p>
-                                    <div class="d-flex flex-wrap mt-3">
-                                        <p class="discrete mr-2">1</p>
-                                        <a class="discrete" href="#">UpVote</a>
-                                        <span class="mx-1 discrete">&#8226</span>
-                                        <a class="discrete mr-2" href="#">DownVote</a>
-                                        <a class="discrete" href="#">Report </a>
-                                        <p class="ml-auto discrete">AndreFCruz</p>
+                        <div class="collapse" id="AnswerComments4">
+                            <div class="card-footer comments-card px-0 px-sm-4">
+                                <div class="d-flex list-group list-group-flush">
+                                    <div class="list-group-item bg-transparent">
+                                        <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual elements of
+                                            a graphic document or visual presentation. Replacing content with placeholder
+                                            text allows designers to design the form of the content before the content itself
+                                            has been produced.</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">AndreFCruz</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="list-group-item bg-transparent">
-                                    <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
-                                    </p>
-                                    <div class="d-flex flex-wrap mt-3">
-                                        <p class="discrete mr-2">1</p>
-                                        <a class="discrete" href="#">UpVote</a>
-                                        <span class="mx-1 discrete">&#8226</span>
-                                        <a class="discrete mr-2" href="#">DownVote</a>
-                                        <a class="discrete" href="#">Report </a>
-                                        <p class="ml-auto discrete">jflcarvalho</p>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
+                                        </p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">jflcarvalho</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="list-group-item bg-transparent">
-                                    <p>This is a sample comment!! *Insert meme here*</p>
-                                    <div class="d-flex flex-wrap mt-3">
-                                        <p class="discrete mr-2">1</p>
-                                        <a class="discrete" href="#">UpVote</a>
-                                        <span class="mx-1 discrete">&#8226</span>
-                                        <a class="discrete mr-2" href="#">DownVote</a>
-                                        <a class="discrete" href="#">Report </a>
-                                        <p class="ml-auto discrete">EdgarACarneiro</p>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>This is a sample comment!! *Insert meme here*</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">EdgarACarneiro</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="list-group-item bg-transparent">
-                                    <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit
-                                        dapibus. Bada badu badumtsss.</p>
-                                    <div class="d-flex flex-wrap mt-3">
-                                        <p class="discrete mr-2">1</p>
-                                        <a class="discrete" href="#">UpVote</a>
-                                        <span class="mx-1 discrete">&#8226</span>
-                                        <a class="discrete mr-2" href="#">DownVote</a>
-                                        <a class="discrete" href="#">Report </a>
-                                        <p class="ml-auto discrete">rendoir</p>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit
+                                            dapibus. Bada badu badumtsss.</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">rendoir</p>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <div class="input-group mt-3">
+                                            <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-success" type="button">Add Comment</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- COMMENTS END -->
                     </div>
-                    <!-- ANSWER END -->
-
-                    <button class="btn btn-outline-info">Answer this question</button>
 
                 </div>
                 <!-- related questions -->
