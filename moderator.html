@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SegFault</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-signin-client_id" content="***REMOVED***.apps.googleusercontent.com">
+
+    <!-- Font Awesome -->
+    <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+
+    <!-- Bootstrap v4 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <!-- Styling  -->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/ribbons.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/bootstrap-social.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/styles/styling-bootstrap.css" />
+    <link rel="stylesheet" href="editor/css/editormd.css" />
+</head>
+
+<body>
+    <header class="sticky-top">
+        <div id="navbar" class="bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light container">
+                <!-- Logo -->
+                <a class="navbar-brand py-0" href="index(logged).html">
+                    <img src="assets/img/logo.png" width="40" height="40" class="d-inline-block align-center" alt="">
+                    <span>SegFault</span>
+                </a>
+
+                <!-- Collapse Menu -->
+                <button class="navbar-toggler mr-auto-sm" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link active" href="index(logged).html">Questions
+                            <span class="sr-only">(current)</span>
+                        </a>
+                        <a class="nav-item nav-link" href="tags.html">Categories</a>
+                    </div>
+
+                    <!-- Search Bar -->
+                    <form class="form-inline">
+                        <input class="form-control mx-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+
+                <!-- START OF NAVBAR RIGHT-SIDE OPTIONS -->
+                <div class="ml-auto-sm px-0 col-sm-6 col-lg-3 d-flex justify-content-between justify-content-sm-end">
+                    <!-- User Panel Icons -->
+                    <!-- Notifications Dropdown -->
+                    <div class="dropdown mx-2">
+                        <span class="big-icon" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="pt-1">
+                                <i class="far fa-bell"></i>
+                            </div>
+                        </span>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
+                            <button class="dropdown-item" type="button">
+                                <i class="far fa-thumbs-up"></i>
+                                JohnDoe00 upvoted your Question
+                            </button>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item" type="button">
+                                <i class="far fa-comments"></i>
+                                JohnDoe00 answered your Question
+                            </button>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item" type="button">
+                                <i class="far fa-check-circle"></i>
+                                Moderator Tester33 selected a correct answer for your Question
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Options Dropdown-->
+                    <div class="dropdown px-1">
+                        <span class="big-icon mx-2" id="profile-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="rounded-circle" src="assets/img/img-profile-icon.jpg" alt="profile picture">
+                        </span>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-options">
+                            <a href="own-profile.html" class="dropdown-item" role="button">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="account.html" class="dropdown-item" role="button">Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="index.html" class="dropdown-item" role="button">Log Out</a>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- END OF NAVBAR RIGHT-SIDE OPTIONS -->
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section id="question" class="sweet-grey">
+            <div class="container py-3">
+                <div class="d-flex flex-column">
+                    <header class="border-bottom sticky-top d-flex">
+                        <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
+                        <button class="btn ml-auto h3 bg-transparent" style="color: #526B97">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <small class="ml-auto mr-1 text-center mt-auto mb-auto">
+                            <a href="#">Report</a>
+                        </small>
+                    </header>
+                    <main id="question-body" class="row" style="overflow-y:auto">
+                        <div class="col-md-9 p-3">
+                            <p>Let’s say we’re making a first-person camera. The basic idea is it should yaw to look left &amp;
+                                right, and pitch to look up &amp; down. So we write a bit of code like this (using Unity
+                                as an example):</p>
+                            <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="pln">    </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Update</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">        </span><span class="typ">float</span><span class="pln"> speed </span><span class="pun">=</span><span class="pln"> lookSpeed </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Time</span><span class="pun">.</span><span class="pln">deltaTime</span><span class="pun">;</span></code></li><li class="L2"><code class="lang-cpp"></code></li><li class="L3"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Yaw around the y axis using the player's horizontal input.        </span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(</span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Pitch around the x axis using the player's vertical input.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln">  </span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L8"><code class="lang-cpp"><span class="pln">    </span><span class="pun">}</span></code></li></ol></pre>
+                            <p>or maybe</p>
+                            <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="com">// Construct a quaternion or a matrix representing incremental camera rotation.</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">    </span><span class="typ">Quaternion</span><span class="pln"> rotation </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Quaternion</span><span class="pun">.</span><span class="typ">Euler</span><span class="pun">(</span></code></li><li class="L2"><code class="lang-cpp"><span class="pln">                            </span><span class="pun">-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-cpp"><span class="pln">                             </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">                             </span><span class="lit">0</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">    </span><span class="com">// Fold this change into the camera's current rotation.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">    transform</span><span class="pun">.</span><span class="pln">rotation </span><span class="pun">*=</span><span class="pln"> rotation</span><span class="pun">;</span></code></li></ol></pre>
+                            <p>And it mostly works, but over time the view starts to get crooked. The camera seems to be turning
+                                on its roll axis (z) even though we only told it to rotate on the x and y!</p>
+                            <p>
+                                <a href="https://i.stack.imgur.com/A9nOC.gif">
+                                    <img src="https://i.stack.imgur.com/A9nOC.gif" alt="Animated example of a first-person camera tilting sideways">
+                                </a>
+                            </p>
+                            <p>This can also happen if we’re trying to manipulate an object in front of the camera - say it’s
+                                a globe we want to turn to look around:</p>
+                            <p>
+                                <a href="https://i.stack.imgur.com/y6cNH.gif">
+                                    <img src="https://i.stack.imgur.com/y6cNH.gif" alt="Animated example of a globe tilting sideways">
+                                </a>
+                            </p>
+                            <p>The same problem - after a while the North pole starts to wander away to the left or right. We’re
+                                giving input on two axes but we’re getting this confusing rotation on a third. And it happens
+                                whether we apply all our rotations around the object’s local axes or the world’s global axes.</p>
+                            <p>In many engines you’ll also see this in the inspector - rotate the object in the world, and suddenly
+                                numbers change on an axis we didn’t even touch!</p>
+                            <p>
+                                <a href="https://i.stack.imgur.com/JpZZ2.gif">
+                                    <img src="https://i.stack.imgur.com/JpZZ2.gif" alt="Animated example showing manipulating an object next to a readout of its rotation angles. The z angle changes even though the user didn't manipulate that axis.">
+                                </a>
+                            </p>
+                            <p>
+                                <strong>So, is this an engine bug?</strong> How do we tell the program we don’t want it adding extra
+                                rotation?
+                            </p>
+                            <p>Does it have something to do with Euler angles? Should I use Quaternions or Rotation Matrices
+                                or Basis Vectors instead?</p>
+
+                            <!-- Question Comments -->
+                            <div class="text-center">
+                                <button class="btn btn-secundary my-4" type="button" data-toggle="collapse" data-target="#QuestionComments" aria-expanded="false"
+                                    aria-controls="QuestionComments">
+                                    Show Question Comments
+                                </button>
+                            </div>
+                            <div class="collapse" id="QuestionComments">
+                                <div class="rounded card-footer comments-card px-0 px-sm-4 mb-5">
+                                    <div class="d-flex list-group list-group-flush">
+                                        <div class="list-group-item bg-transparent">
+                                            <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements
+                                                of a graphic document or visual presentation. Replacing content with placeholder
+                                                text allows designers to design the form of the content before the content
+                                                itself has been produced.</p>
+                                            <div class="d-flex flex-wrap mt-3">
+                                                <p class="discrete mr-2">1</p>
+                                                <a class="discrete mr-1" href="#">UpVote</a>
+                                                <span class="mx-1 discrete">&#8226</span>
+                                                <a class="discrete mr-2" href="#">DownVote</a>
+                                                <a class="discrete" href="#">Report </a>
+                                                <p class="ml-auto discrete">AndreFCruz</p>
+                                            </div>
+                                            <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </button>
+                                        </div>
+                                        <div class="list-group-item bg-transparent">
+                                            <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit
+                                                dapibus. Bada badu badumtsss.</p>
+                                            <div class="d-flex flex-wrap mt-3">
+                                                <p class="discrete mr-2">1</p>
+                                                <a class="discrete mr-1" href="#">UpVote</a>
+                                                <span class="mx-1 discrete">&#8226</span>
+                                                <a class="discrete mr-2" href="#">DownVote</a>
+                                                <a class="discrete" href="#">Report </a>
+                                                <p class="ml-auto discrete">rendoir</p>
+                                            </div>
+                                            <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </button>
+                                        </div>
+                                        <div class="list-group-item bg-transparent">
+                                            <div class="input-group mt-3">
+                                                <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-success" type="button">Add Comment</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END Question comments -->
+                        </div>
+                        <div class="col-md-3 p-3 d-flex flex-column justify-content-between">
+                            <div>
+                                <div>
+                                    <span class="font-weight-bold w-100">Answers: </span>
+                                    <span class="w-100">15</span>
+                                </div>
+                                <div>
+                                    <span class="font-weight-bold w-100">Votes: </span>
+                                    <span class="w-100">5</span>
+                                </div>
+                            </div>
+                            <div class="row" style="font-size: 1.5em">
+                                <div class="col-6 text-center">
+                                    <i class="fas fa-thumbs-up"></i>
+                                </div>
+                                <div class="col-6 border-left text-center">
+                                    <i class="fas fa-thumbs-down discrete"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-flex">
+                                    <p class="mb-0">
+                                        <small>Created by - &nbsp</small>
+                                    </p>
+                                    <div class="mr-auto">
+                                        <span>UserName</span>
+                                        <span class="badge badge-success">Trusted</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="badge badge-dark">nodejs</span>
+                                    <span class="badge badge-dark">html5</span>
+                                    <span class="badge badge-dark">css</span>
+                                </div>
+                            </div>
+                            <div class="ribbon ribbon-overflow ribbon-vertical-r px-0 h4" style="height: auto; color: #75A6DA; right: 20px; top: 5px">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </section>
+        <section class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="card my-3">
+                        <div class="card-body">
+
+                            <!-- Text Editor -->
+                            <div id="editor_container"></div>
+
+                            <script src="editor/examples/js/jquery.min.js"></script>
+                            <script src="editor/editormd.js"></script>
+                            <script src="editor/languages/en.js"></script>
+                            <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+                            <script type="text/javascript">
+                                var editor;
+                                $(function () {
+                                    $("#editor_container").append("<div id=\"editormd\"></div>");
+                                    editor = editormd("editormd", {
+                                        width: "100%",
+                                        height: 300,
+                                        path: 'editor/lib/',
+                                        placeholder: "Write your answer here! You can use markdown or the toolbar for advanced stuff!",
+                                        delay: 0,
+                                        tex: true,
+                                        dialogDraggable: false,
+                                        saveHTMLToTextarea: true,
+                                        toolbarIcons: function () {
+                                            return ["undo", "redo", "|",
+                                                "bold", "del", "italic", "|",
+                                                "list-ul", "list-ol", "hr", "|",
+                                                "link", "reference-link", "quote", "image", "code", "code-block", "table", "|",
+                                                "watch", "clear", "search"]
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <div class="d-flex">
+                                <div class="p-2 text-muted">Character count: 33</div>
+                                <button class="p-2 ml-auto btn btn-outline-info my-2 my-sm-0" type="submit">Post answer</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Answer -->
+                    <div class="card my-3 ">
+                        <div>
+                            <a class="btn btn-outline-success w-100" href="#" role="button">
+                                <i class="fas fa-check"></i>
+                                <span class="pl-2">
+                                    Mark Answer as correct
+                                </span>
+                            </a>
+                        </div>
+                        <div class="row mx-0">
+                            <div class="col-2 col-sm-1 py-2 d-flex flex-column align-items-center justify-content-between">
+                                <div class="p-2">
+                                    <i class="fas fa-trophy"></i>
+                                    <p class="text-center mb-0 w-100">7</p>
+                                </div>
+                                <div class="d-flex flex-column justify-content-around mb-sm-n-100">
+                                    <a href="#">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fas fa-arrow-down discrete"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <button class="btn ml-auto h3 bg-transparent mt-5 ribbon ribbon-right" style="color: #526B97">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
+                                <div class="card-body p-1 p-sm-4">
+                                    <p class="card-text">
+                                        Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
+                                        ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum dapibus
+                                        leo id neque consequat placerat.
+                                        <span class="badge badge-light float-right mr-2 mt-1">Edited</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-0">
+                            <div class="col-sm-11 ml-auto">
+                                <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
+                                    <div class="text-center">
+                                        <small class="text-muted">Created by -</small>
+                                        <span>UserName</span>
+                                        <span class="badge badge-success">Trusted</span>
+                                    </div>
+                                    <div class="text-center m-auto">
+                                        <a role="button" data-toggle="collapse" href="#AnswerComments1" aria-expanded="false" aria-controls="AnswerComments1">
+                                            Show Comments
+                                        </a>
+                                    </div>
+                                    <small class="ml-auto mr-1 text-center mt-auto mb-auto">
+                                        <a href="#">Report</a>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COMMENTS -->
+                        <div class="collapse" id="AnswerComments1">
+                            <div class="card-footer comments-card px-0 px-sm-4">
+                                <div class="d-flex list-group list-group-flush">
+                                    <div class="list-group-item bg-transparent">
+                                        <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements of
+                                            a graphic document or visual presentation. Replacing content with placeholder
+                                            text allows designers to design the form of the content before the content itself
+                                            has been produced.</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">AndreFCruz</p>
+                                        </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
+                                        </p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">jflcarvalho</p>
+                                        </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>This is a sample comment!! *Insert meme here*</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">EdgarACarneiro</p>
+                                        </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit
+                                            dapibus. Bada badu badumtsss.</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">rendoir</p>
+                                        </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <div class="input-group mt-3">
+                                            <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-success" type="button">Add Comment</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COMMENTS END -->
+                    </div>
+                    <!-- ANSWER END -->
+
+                    <!-- Answer -->
+                    <div class="card my-3 ">
+                        <div>
+                            <a class="btn btn-outline-success w-100" href="#" role="button">
+                                <i class="fas fa-check"></i>
+                                <span class="pl-2">
+                                    Mark Answer as correct
+                                </span>
+                            </a>
+                        </div>
+                        <div class="row mx-0">
+                            <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
+                                <div class="p-2">
+                                    <i class="fas fa-trophy"></i>
+                                    <p class="text-center mb-0 w-100">7</p>
+                                </div>
+                                <div class="d-flex flex-column justify-content-around mb-sm-n-100">
+                                    <a href="#">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fas fa-arrow-down discrete"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <button class="btn ml-auto h3 bg-transparent mt-5 ribbon ribbon-right" style="color: #526B97">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
+                                <div class="card-body p-1 p-sm-4">
+                                    <p class="card-text">
+                                        Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
+                                        ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum dapibus
+                                        leo id neque consequat placerat.
+                                        <span class="badge badge-light float-right mr-2 mt-1">Edited</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-0">
+                            <div class="col-sm-11 ml-auto">
+                                <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
+                                    <div class="text-center">
+                                        <small class="text-muted">Created by -</small>
+                                        <span>UserName</span>
+                                        <span class="badge badge-success">Moderator</span>
+                                    </div>
+                                    <div class="text-center m-auto">
+                                        <a role="button" data-toggle="collapse" href="#AnswerComments3" aria-expanded="false" aria-controls="AnswerComments3">
+                                            Show Comments
+                                        </a>
+                                    </div>
+                                    <small class="ml-auto mr-1 text-center mt-auto mb-auto">
+                                        <a href="#">Report</a>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COMMENTS -->
+                        <div class="collapse" id="AnswerComments3">
+                            <div class="card-footer comments-card px-0 px-sm-4">
+                                <div class="d-flex list-group list-group-flush">
+                                    <div class="list-group-item bg-transparent">
+                                        <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements of
+                                            a graphic document or visual presentation. Replacing content with placeholder
+                                            text allows designers to design the form of the content before the content itself
+                                            has been produced.</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">AndreFCruz</p>
+                                        </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
+                                        </p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">jflcarvalho</p>
+                                        </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>This is a sample comment!! *Insert meme here*</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">EdgarACarneiro</p>
+                                        </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <div class="input-group mt-3">
+                                            <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-success" type="button">Add Comment</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COMMENTS END -->
+                    </div>
+                    <!-- ANSWER END -->
+
+                    <!-- Answer -->
+                    <div class="card my-3  ">
+                        <div>
+                            <a class="btn btn-outline-success w-100" href="#" role="button">
+                                <i class="fas fa-check"></i>
+                                <span class="pl-2">
+                                    Mark Answer as correct
+                                </span>
+                            </a>
+                        </div>
+                        <div class="row mx-0">
+                            <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
+                                <div class="p-2">
+                                    <i class="fas fa-trophy"></i>
+                                    <p class="text-center mb-0 w-100">7</p>
+                                </div>
+                                <div class="d-flex flex-column justify-content-around mb-sm-n-100">
+                                    <a href="#">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fas fa-arrow-down discrete"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <button class="btn ml-auto h3 bg-transparent mt-5 ribbon ribbon-right" style="color: #526B97">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
+                                <div class="card-body p-1 p-sm-4">
+                                    <p class="card-text">
+                                        Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
+                                        ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum dapibus
+                                        leo id neque consequat placerat.
+                                        <span class="badge badge-light float-right mr-2 mt-1">Edited</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-0">
+                            <div class="col-sm-11 ml-auto">
+                                <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
+                                    <div class="text-center">
+                                        <small class="text-muted">Created by -</small>
+                                        <span>UserName</span>
+                                        <span class="badge badge-success">Trusted</span>
+                                    </div>
+                                    <div class="text-center m-auto">
+                                        <a role="button" data-toggle="collapse" href="#AnswerComments4" aria-expanded="false" aria-controls="AnswerComments4">
+                                            Show Comments
+                                        </a>
+                                    </div>
+                                    <small class="ml-auto mr-1 text-center mt-auto mb-auto">
+                                        <a href="#">Report</a>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COMMENTS -->
+                        <div class="collapse" id="AnswerComments4">
+                            <div class="card-footer comments-card px-0 px-sm-4">
+                                <div class="d-flex list-group list-group-flush">
+                                    <div class="list-group-item bg-transparent">
+                                        <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual elements of
+                                            a graphic document or visual presentation. Replacing content with placeholder
+                                            text allows designers to design the form of the content before the content itself
+                                            has been produced.</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">AndreFCruz</p>
+                                        </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
+                                        </p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">jflcarvalho</p>
+                                        </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>This is a sample comment!! *Insert meme here*</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">EdgarACarneiro</p>
+                                        </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit
+                                            dapibus. Bada badu badumtsss.</p>
+                                        <div class="d-flex flex-wrap mt-3">
+                                            <p class="discrete mr-2">1</p>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
+                                            <p class="ml-auto discrete">rendoir</p>
+                                        </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="list-group-item bg-transparent">
+                                        <div class="input-group mt-3">
+                                            <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-success" type="button">Add Comment</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COMMENTS END -->
+                    </div>
+
+                </div>
+                <!-- related questions -->
+                <div class="col-md-3">
+                    <div class="card my-3">
+                        <div class="card-header bg-transparent">Related Questions</div>
+                        <div class="card-body p-1 p-sm-4">
+                            <h5 class="card-title">Success card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-light">
+        <div class="container align-items-center row py-2 mx-auto mt-4">
+            <div class="col text-left">
+                © 2018 SegFault
+            </div>
+            <div class="col text-center">
+                <a class="" href="index.html">
+                    <img src="assets/img/logo.png" width="50" height="50" class="d-inline-block align-center" alt="Segfault Logo">
+                </a>
+            </div>
+            <div class="col text-right">
+                <a class="nav-link" href="about.html">
+                    About us
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="assets/js/scroll.js"></script>
+</body>
+
+</html>
