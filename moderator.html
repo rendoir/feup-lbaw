@@ -108,8 +108,15 @@
                 <div class="d-flex flex-column">
                     <header class="border-bottom sticky-top d-flex">
                         <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
+                        <button class="btn ml-auto h3 bg-transparent" style="color: #526B97">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
                         <small class="ml-auto mr-1 text-center mt-auto mb-auto">
                             <a href="#">Report</a>
+                            <span class="mx-1 discrete">&#8226</span>
+                            <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
                         </small>
                     </header>
                     <main id="question-body" class="row" style="overflow-y:auto">
@@ -168,9 +175,10 @@
                                                 itself has been produced.</p>
                                             <div class="d-flex flex-wrap mt-3">
                                                 <p class="discrete mr-2">1</p>
-                                                <span class="mx-1 discrete">
-                                                    <i class="fas fa-trophy"></i>
-                                                </span>
+                                                <a class="discrete mr-1" href="#">UpVote</a>
+                                                <span class="mx-1 discrete">&#8226</span>
+                                                <a class="discrete mr-2" href="#">DownVote</a>
+                                                <a class="discrete" href="#">Report </a>
                                                 <span class="mx-1 discrete">&#8226</span>
                                                 <a class="discrete" data-toggle="modal" href="#deleteModal">
                                                     <i class="far fa-trash-alt"></i>
@@ -190,8 +198,15 @@
                                                 <span class="mx-1 discrete">&#8226</span>
                                                 <a class="discrete mr-2" href="#">DownVote</a>
                                                 <a class="discrete" href="#">Report </a>
+                                                <span class="mx-1 discrete">&#8226</span>
+                                                <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </a>
                                                 <p class="ml-auto discrete">rendoir</p>
                                             </div>
+                                            <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </button>
                                         </div>
                                         <div class="list-group-item bg-transparent">
                                             <div class="input-group mt-3">
@@ -217,7 +232,6 @@
                                     <span class="w-100">5</span>
                                 </div>
                             </div>
-                            <!-- Votes just for logged users -->
                             <div class="row" style="font-size: 1.5em">
                                 <div class="col-6 text-center">
                                     <i class="fas fa-thumbs-up"></i>
@@ -233,7 +247,7 @@
                                     </p>
                                     <div class="mr-auto">
                                         <span>UserName</span>
-                                        <span class="badge badge-success">Moderator</span>
+                                        <span class="badge badge-success">Trusted</span>
                                     </div>
                                 </div>
                                 <div>
@@ -243,7 +257,7 @@
                                 </div>
                             </div>
                             <div class="ribbon ribbon-overflow ribbon-vertical-r px-0 h4" style="height: auto; color: #75A6DA; right: 20px; top: 5px">
-                                <i class="far fa-heart"></i>
+                                <i class="fas fa-heart"></i>
                             </div>
                         </div>
                     </main>
@@ -295,9 +309,17 @@
                         </div>
                     </div>
                     <!-- Answer -->
-                    <div class="card my-3 border-success">
+                    <div class="card my-3 ">
+                        <div>
+                            <a class="btn btn-outline-success w-100" href="#" role="button">
+                                <i class="fas fa-check"></i>
+                                <span class="pl-2">
+                                    Mark Answer as correct
+                                </span>
+                            </a>
+                        </div>
                         <div class="row mx-0">
-                            <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
+                            <div class="col-2 col-sm-1 py-2 d-flex flex-column align-items-center justify-content-between">
                                 <div class="p-2">
                                     <i class="fas fa-trophy"></i>
                                     <p class="text-center mb-0 w-100">7</p>
@@ -311,6 +333,9 @@
                                     </a>
                                 </div>
                             </div>
+                            <button class="btn ml-auto h3 bg-transparent mt-5 ribbon ribbon-right" style="color: #526B97">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
                             <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
                                 <div class="card-body p-1 p-sm-4">
                                     <p class="card-text">
@@ -337,6 +362,10 @@
                                     </div>
                                     <small class="ml-auto mr-1 text-center mt-auto mb-auto">
                                         <a href="#">Report</a>
+                                        <span class="mx-1 discrete">&#8226</span>
+                                        <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
                                     </small>
                                 </div>
                             </div>
@@ -352,9 +381,10 @@
                                             has been produced.</p>
                                         <div class="d-flex flex-wrap mt-3">
                                             <p class="discrete mr-2">1</p>
-                                            <span class="mx-1 discrete">
-                                                <i class="fas fa-trophy"></i>
-                                            </span>
+                                            <a class="discrete mr-1" href="#">UpVote</a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete" href="#">Report </a>
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete" data-toggle="modal" href="#deleteModal">
                                                 <i class="far fa-trash-alt"></i>
@@ -374,8 +404,15 @@
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
                                             <a class="discrete" href="#">Report </a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
                                             <p class="ml-auto discrete">jflcarvalho</p>
                                         </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </div>
                                     <div class="list-group-item bg-transparent">
                                         <p>This is a sample comment!! *Insert meme here*</p>
@@ -385,8 +422,15 @@
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
                                             <a class="discrete" href="#">Report </a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
                                             <p class="ml-auto discrete">EdgarACarneiro</p>
                                         </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </div>
                                     <div class="list-group-item bg-transparent">
                                         <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit
@@ -397,8 +441,15 @@
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
                                             <a class="discrete" href="#">Report </a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
                                             <p class="ml-auto discrete">rendoir</p>
                                         </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </div>
                                     <div class="list-group-item bg-transparent">
                                         <div class="input-group mt-3">
@@ -417,16 +468,32 @@
 
                     <!-- Answer -->
                     <div class="card my-3 ">
+                        <div>
+                            <a class="btn btn-outline-success w-100" href="#" role="button">
+                                <i class="fas fa-check"></i>
+                                <span class="pl-2">
+                                    Mark Answer as correct
+                                </span>
+                            </a>
+                        </div>
                         <div class="row mx-0">
                             <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
                                 <div class="p-2">
                                     <i class="fas fa-trophy"></i>
                                     <p class="text-center mb-0 w-100">7</p>
                                 </div>
-                                <button class="btn ml-auto h3 bg-transparent" style="color: #526B97">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </button>
+                                <div class="d-flex flex-column justify-content-around mb-sm-n-100">
+                                    <a href="#">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fas fa-arrow-down discrete"></i>
+                                    </a>
+                                </div>
                             </div>
+                            <button class="btn ml-auto h3 bg-transparent mt-5 ribbon ribbon-right" style="color: #526B97">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
                             <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
                                 <div class="card-body p-1 p-sm-4">
                                     <p class="card-text">
@@ -447,81 +514,16 @@
                                         <span class="badge badge-success">Moderator</span>
                                     </div>
                                     <div class="text-center m-auto">
-                                        <a role="button" data-toggle="collapse" href="#AnswerComments2" aria-expanded="false" aria-controls="AnswerComments2">
-                                            Show Comments
-                                        </a>
-                                    </div>
-                                    <small class="ml-auto mr-1 text-center mt-auto mb-auto">4 comments
-                                        <span class="mx-1 discrete">&#8226</span>
-                                        <a class="discrete" data-toggle="modal" href="#deleteModal">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Comments -->
-                        <div class="collapse" id="AnswerComments2">
-                            <div class="card-footer comments-card px-0 px-sm-4">
-                                <div class="d-flex list-group list-group-flush">
-                                    <div class="list-group-item bg-transparent">
-                                        <div class="input-group mt-3">
-                                            <input type="text" class="form-control" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-success" type="button">Add Comment</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END Comments -->
-                    </div>
-                    <!-- ANSWER END -->
-
-                    <!-- Answer -->
-                    <div class="card my-3 ">
-                        <div class="row mx-0">
-                            <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
-                                <div class="p-2">
-                                    <i class="fas fa-trophy"></i>
-                                    <p class="text-center mb-0 w-100">7</p>
-                                </div>
-                                <div class="d-flex flex-column justify-content-around mb-sm-n-100">
-                                    <a href="#">
-                                        <i class="fas fa-arrow-up"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="fas fa-arrow-down discrete"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
-                                <div class="card-body p-1 p-sm-4">
-                                    <p class="card-text">
-                                        Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit dapibus. Class aptent taciti sociosqu
-                                        ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum dapibus
-                                        leo id neque consequat placerat.
-                                        <span class="badge badge-light float-right mr-2 mt-1">Edited</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mx-0">
-                            <div class="col-sm-11 ml-auto">
-                                <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
-                                    <div class="text-center">
-                                        <small class="text-muted">Created by -</small>
-                                        <span>UserName</span>
-                                        <span class="badge badge-success">Trusted</span>
-                                    </div>
-                                    <div class="text-center m-auto">
                                         <a role="button" data-toggle="collapse" href="#AnswerComments3" aria-expanded="false" aria-controls="AnswerComments3">
                                             Show Comments
                                         </a>
                                     </div>
                                     <small class="ml-auto mr-1 text-center mt-auto mb-auto">
                                         <a href="#">Report</a>
+                                        <span class="mx-1 discrete">&#8226</span>
+                                        <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
                                     </small>
                                 </div>
                             </div>
@@ -541,8 +543,15 @@
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
                                             <a class="discrete" href="#">Report </a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
                                             <p class="ml-auto discrete">AndreFCruz</p>
                                         </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </div>
                                     <div class="list-group-item bg-transparent">
                                         <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
@@ -553,8 +562,15 @@
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
                                             <a class="discrete" href="#">Report </a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
                                             <p class="ml-auto discrete">jflcarvalho</p>
                                         </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </div>
                                     <div class="list-group-item bg-transparent">
                                         <p>This is a sample comment!! *Insert meme here*</p>
@@ -564,8 +580,15 @@
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
                                             <a class="discrete" href="#">Report </a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
                                             <p class="ml-auto discrete">EdgarACarneiro</p>
                                         </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </div>
                                     <div class="list-group-item bg-transparent">
                                         <div class="input-group mt-3">
@@ -584,6 +607,14 @@
 
                     <!-- Answer -->
                     <div class="card my-3  ">
+                        <div>
+                            <a class="btn btn-outline-success w-100" href="#" role="button">
+                                <i class="fas fa-check"></i>
+                                <span class="pl-2">
+                                    Mark Answer as correct
+                                </span>
+                            </a>
+                        </div>
                         <div class="row mx-0">
                             <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
                                 <div class="p-2">
@@ -599,6 +630,9 @@
                                     </a>
                                 </div>
                             </div>
+                            <button class="btn ml-auto h3 bg-transparent mt-5 ribbon ribbon-right" style="color: #526B97">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
                             <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
                                 <div class="card-body p-1 p-sm-4">
                                     <p class="card-text">
@@ -625,6 +659,10 @@
                                     </div>
                                     <small class="ml-auto mr-1 text-center mt-auto mb-auto">
                                         <a href="#">Report</a>
+                                        <span class="mx-1 discrete">&#8226</span>
+                                        <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
                                     </small>
                                 </div>
                             </div>
@@ -642,10 +680,17 @@
                                             <p class="discrete mr-2">1</p>
                                             <a class="discrete mr-1" href="#">UpVote</a>
                                             <span class="mx-1 discrete">&#8226</span>
-                                            <a class="discrete mr-2" href="#">DownVote</a>
+                                            <a class="discrete mr-4" href="#">DownVote</a>
                                             <a class="discrete" href="#">Report </a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
                                             <p class="ml-auto discrete">AndreFCruz</p>
                                         </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </div>
                                     <div class="list-group-item bg-transparent">
                                         <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit dapibus.
@@ -656,8 +701,15 @@
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
                                             <a class="discrete" href="#">Report </a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
                                             <p class="ml-auto discrete">jflcarvalho</p>
                                         </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </div>
                                     <div class="list-group-item bg-transparent">
                                         <p>This is a sample comment!! *Insert meme here*</p>
@@ -667,8 +719,15 @@
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
                                             <a class="discrete" href="#">Report </a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
                                             <p class="ml-auto discrete">EdgarACarneiro</p>
                                         </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </div>
                                     <div class="list-group-item bg-transparent">
                                         <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus hendrerit
@@ -679,8 +738,15 @@
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
                                             <a class="discrete" href="#">Report </a>
+                                            <span class="mx-1 discrete">&#8226</span>
+                                            <a class="discrete" data-toggle="modal" href="#deleteModal">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
                                             <p class="ml-auto discrete">rendoir</p>
                                         </div>
+                                        <button class="btn ml-auto h3 bg-transparent ribbon ribbon-right" style="color: #526B97">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
                                     </div>
                                     <div class="list-group-item bg-transparent">
                                         <div class="input-group mt-3">

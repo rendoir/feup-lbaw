@@ -108,9 +108,12 @@
                 <div class="d-flex flex-column">
                     <header class="border-bottom sticky-top d-flex">
                         <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
-                        <small class="ml-auto mr-1 text-center mt-auto mb-auto">
-                            <a href="#">Report</a>
-                        </small>
+                        <button class="btn ml-auto h3 bg-transparent" style="color: #526B97">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <a class="discrete m-auto" data-toggle="modal" href="#deleteModal">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
                     </header>
                     <main id="question-body" class="row" style="overflow-y:auto">
                         <div class="col-md-9 p-3">
@@ -217,15 +220,6 @@
                                     <span class="w-100">5</span>
                                 </div>
                             </div>
-                            <!-- Votes just for logged users -->
-                            <div class="row" style="font-size: 1.5em">
-                                <div class="col-6 text-center">
-                                    <i class="fas fa-thumbs-up"></i>
-                                </div>
-                                <div class="col-6 border-left text-center">
-                                    <i class="fas fa-thumbs-down discrete"></i>
-                                </div>
-                            </div>
                             <div>
                                 <div class="d-flex">
                                     <p class="mb-0">
@@ -233,7 +227,7 @@
                                     </p>
                                     <div class="mr-auto">
                                         <span>UserName</span>
-                                        <span class="badge badge-success">Moderator</span>
+                                        <span class="badge badge-success">Trusted</span>
                                     </div>
                                 </div>
                                 <div>
@@ -243,7 +237,7 @@
                                 </div>
                             </div>
                             <div class="ribbon ribbon-overflow ribbon-vertical-r px-0 h4" style="height: auto; color: #75A6DA; right: 20px; top: 5px">
-                                <i class="far fa-heart"></i>
+                                <i class="fas fa-heart"></i>
                             </div>
                         </div>
                     </main>
@@ -295,9 +289,17 @@
                         </div>
                     </div>
                     <!-- Answer -->
-                    <div class="card my-3 border-success">
+                    <div class="card my-3 ">
+                        <div>
+                            <a class="btn btn-outline-success w-100" href="#" role="button">
+                                <i class="fas fa-check"></i>
+                                <span class="pl-2">
+                                    Mark Answer as correct
+                                </span>
+                            </a>
+                        </div>
                         <div class="row mx-0">
-                            <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
+                            <div class="col-2 col-sm-1 py-2 d-flex flex-column align-items-center justify-content-between">
                                 <div class="p-2">
                                     <i class="fas fa-trophy"></i>
                                     <p class="text-center mb-0 w-100">7</p>
@@ -417,6 +419,14 @@
 
                     <!-- Answer -->
                     <div class="card my-3 ">
+                        <div>
+                            <a class="btn btn-outline-success w-100" href="#" role="button">
+                                <i class="fas fa-check"></i>
+                                <span class="pl-2">
+                                    Mark Answer as correct
+                                </span>
+                            </a>
+                        </div>
                         <div class="row mx-0">
                             <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
                                 <div class="p-2">
@@ -451,7 +461,7 @@
                                             Show Comments
                                         </a>
                                     </div>
-                                    <small class="ml-auto mr-1 text-center mt-auto mb-auto">4 comments
+                                    <small class="ml-auto mr-1 text-center ml-auto mr-auto">4 comments
                                         <span class="mx-1 discrete">&#8226</span>
                                         <a class="discrete" data-toggle="modal" href="#deleteModal">
                                             <i class="far fa-trash-alt"></i>
@@ -481,6 +491,14 @@
 
                     <!-- Answer -->
                     <div class="card my-3 ">
+                        <div>
+                            <a class="btn btn-outline-success w-100" href="#" role="button">
+                                <i class="fas fa-check"></i>
+                                <span class="pl-2">
+                                    Mark Answer as correct
+                                </span>
+                            </a>
+                        </div>
                         <div class="row mx-0">
                             <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
                                 <div class="p-2">
@@ -513,7 +531,7 @@
                                     <div class="text-center">
                                         <small class="text-muted">Created by -</small>
                                         <span>UserName</span>
-                                        <span class="badge badge-success">Trusted</span>
+                                        <span class="badge badge-success">Moderator</span>
                                     </div>
                                     <div class="text-center m-auto">
                                         <a role="button" data-toggle="collapse" href="#AnswerComments3" aria-expanded="false" aria-controls="AnswerComments3">
@@ -584,6 +602,14 @@
 
                     <!-- Answer -->
                     <div class="card my-3  ">
+                        <div>
+                            <a class="btn btn-outline-success w-100" href="#" role="button">
+                                <i class="fas fa-check"></i>
+                                <span class="pl-2">
+                                    Mark Answer as correct
+                                </span>
+                            </a>
+                        </div>
                         <div class="row mx-0">
                             <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
                                 <div class="p-2">

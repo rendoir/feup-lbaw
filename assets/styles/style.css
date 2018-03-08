@@ -324,6 +324,28 @@ nav {
     }
 }
 
+@media (max-width: 992px) {
+    /* Nav bar */
+    nav > div.ml-auto-sm.px-0.col-sm-6.col-lg-3.d-flex {
+        position: absolute !important;
+        right: 5rem;
+        top: 1rem;
+    }
+    nav > div.ml-auto-sm.px-0.col-sm-6.col-lg-3.d-flex > div:first-child {
+        margin-right: 1rem;
+    }
+    nav > a {
+        margin-right: 0;
+    }
+    nav > .navbar-collapse > .form-inline > input {
+        width: 60% !important;
+        margin-right: 0.5rem;
+    }
+    nav {
+        padding: 1rem !important;
+    }
+}
+
 @media (max-width: 576px) {
 
     /* Nav bar */
@@ -425,7 +447,6 @@ nav {
     /* Questions Page */
     #question {
         top: 65px !important;
-        
     }
     .question-answer-nlogged > div:first-child > div {
         max-width: none;
