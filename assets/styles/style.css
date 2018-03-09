@@ -30,6 +30,10 @@ nav {
     z-index: 1200 !important;
 }
 
+.w-80 {
+    width: 80%;
+}
+
 .btn-signin {
     width: 100%;
     padding-top: 0;
@@ -344,6 +348,41 @@ nav {
     nav {
         padding: 1rem !important;
     }
+
+    /* Account Page */
+    #account-settings > .col-2.pb-2{
+        max-width: none;
+        flex-basis: 20%;
+    }
+    #account-settings > .col-8.pb-2 {
+        max-width: none;
+        flex-basis: 55%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Account Page */
+    #account-settings > .col-4.py-4,
+    #account-settings > .col-4.pt-3.pb-4 {
+        max-width: none;
+        flex-basis: 100%;
+    }
+    #account-settings > .col-8.pb-2 {
+        display: none;
+    }
+    #account-settings > .col-2.pb-2{
+        max-width: none;
+        flex-basis: 50%;
+    }
+    #account-settings > .col-2.pb-4{
+        max-width: none;
+        flex-basis: 40%;
+    }
+    #account-settings > .col-8.pb-4 {
+        max-width: none;
+        flex-basis: 60%;
+    }
 }
 
 @media (max-width: 576px) {
@@ -395,28 +434,6 @@ nav {
     /* About page */
     .team-sentences {
         display: none;
-    }
-
-    /* Account Page */
-    #account-settings > .col-4.py-4,
-    #account-settings > .col-4.pt-3.pb-4 {
-        max-width: none;
-        flex-basis: 100%;
-    }
-    #account-settings > .col-8.pb-2 {
-        display: none;
-    }
-    #account-settings > .col-2.pb-2{
-        max-width: none;
-        flex-basis: 50%;
-    }
-    #account-settings > .col-2.pb-4{
-        max-width: none;
-        flex-basis: 40%;
-    }
-    #account-settings > .col-8.pb-4 {
-        max-width: none;
-        flex-basis: 60%;
     }
 
     /* Ask Question PAge */
