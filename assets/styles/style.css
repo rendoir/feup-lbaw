@@ -182,7 +182,7 @@ nav {
 #jumbotron_signup {
     background-image: url("../img/car_blurred_background.jpg");
     background-size: cover;
-    height: 100%;
+    height: 100vh;
 }
 
 #jumbotron-error {
