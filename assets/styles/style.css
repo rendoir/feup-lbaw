@@ -163,7 +163,8 @@ nav {
 }
 
 #jumbotron_about {
-    background-image: url("../img/highway_landscape_blurred.jpg");
+    background-image: url("../img/paper.jpg");
+    /* background: linear-gradient(to bottom, rgb(0,150,136), rgba(0, 150, 136, 0.2)); */
     background-size: cover;
     height: 100%;
 }
@@ -351,6 +352,12 @@ nav {
         max-width: none;
         flex-basis: 55%;
     }
+
+    /* Sign Up Page */
+    #sign-up-jumbo p.lead {
+        color: #eee;
+        text-shadow: 1px 1px #111111cc;
+    }
 }
 
 @media (max-width: 768px) {
@@ -412,6 +419,12 @@ nav {
        display: none;
     }
 
+    /* Sign-up page */
+    #sign-up-jumbo {
+        flex-direction: column !important;
+        text-align: center;
+    }
+    
     /* About page */
     .team-sentences {
         display: none;
@@ -421,17 +434,6 @@ nav {
     #question-editor {
         margin-left: 0 !important;
         margin-right: 0 !important;
-    }
-
-    /* Sign Up Page */
-    #sign-up-jumbo {
-        flex-direction: column !important;
-        text-align: center;
-    }
-
-    #sign-up-jumbo p.lead {
-        color: #eee;
-        text-shadow: 1px 1px #111111cc;
     }
 
     /* Index Page */
