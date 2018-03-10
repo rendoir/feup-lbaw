@@ -37,6 +37,10 @@ a {
     border-bottom-color: var(--medium-aquamarine) !important; 
 }
 
+input, .form-control{
+    border-radius: 1.5em;
+}
+
 .btn{
     border-radius: 1.5em;
 }
