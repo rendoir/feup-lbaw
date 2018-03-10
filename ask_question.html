@@ -160,7 +160,7 @@ Object* obj = new Object();
             </script>
 
             <!-- Add tags and post buttons -->
-            <div class="pt-4 pb-1 pl-3">
+            <div class="pt-4 pb-1 pl-3 ">
                 <h5>
                     Identify your tags with # and separate them using commas!
                 </h5>
@@ -169,8 +169,8 @@ Object* obj = new Object();
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Tags</span>
                 </div>
-                <input type="text" class="form-control" placeholder="#nodejs, #html5, #css" aria-label="Username" aria-describedby="basic-addon1"
-                    pattern="(#\w+,?\s*)*">
+                <input type="text" class="form-control" value="nodejs,html5,css" aria-label="Username" aria-describedby="basic-addon1"
+                    pattern="(#\w+,?\s*)*" data-role="tagsinput">
             </div>
 
             <div class="text-right">
