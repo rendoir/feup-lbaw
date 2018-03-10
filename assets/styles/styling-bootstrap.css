@@ -41,6 +41,10 @@ input, .form-control{
     border-radius: 1.5em;
 }
 
+.bg-light {
+    background-color: #F3F4F6!important;
+}
+
 .btn{
     border-radius: 1.5em;
 }
