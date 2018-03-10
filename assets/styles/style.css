@@ -13,10 +13,18 @@ main .row aside > div.aside-content {
     top: 8%;
 }
 
+body > header.sticky-top{
+    transition: box-shadow .25s;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);
+}
+
+.sticky-shadow{
+    box-shadow: 0 8px 20px -9px rgba(0, 0, 0, 0.3) !important;
+}
+
 section#question{
     z-index: 1000;
     position: sticky;
-    top: 94px;
 }
 
 h1, h3 {
@@ -139,12 +147,6 @@ nav {
 
 .discrete {
     color: rgba(100, 100, 100, 0.4);
-}
-
-#question-body {
-    overflow: hidden;
-    transition: max-height 1s;
-    max-height: 70vh;
 }
 
 #ask-sign-in {

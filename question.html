@@ -97,156 +97,158 @@
                 </div>
             </nav>
         </div>
-    </header>
-    <main>
         <section id="question" class="sweet-grey">
             <div class="container py-3">
-                <div class="d-flex flex-column">
-                    <header class="border-bottom sticky-top">
-                        <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
-                    </header>
-                    <main id="question-body" class="row" style="overflow-y:auto">
-                        <div class="col-md-9 p-3">
-                            <p>Let’s say we’re making a first-person camera. The basic idea is it should yaw to look left &amp;
-                                right, and pitch to look up &amp; down. So we write a bit of code like this (using Unity
-                                as an example):</p>
-                            <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="pln">    </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Update</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">        </span><span class="typ">float</span><span class="pln"> speed </span><span class="pun">=</span><span class="pln"> lookSpeed </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Time</span><span class="pun">.</span><span class="pln">deltaTime</span><span class="pun">;</span></code></li><li class="L2"><code class="lang-cpp"></code></li><li class="L3"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Yaw around the y axis using the player's horizontal input.        </span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(</span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Pitch around the x axis using the player's vertical input.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln">  </span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L8"><code class="lang-cpp"><span class="pln">    </span><span class="pun">}</span></code></li></ol></pre>
-                            <p>or maybe</p>
-                            <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="com">// Construct a quaternion or a matrix representing incremental camera rotation.</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">    </span><span class="typ">Quaternion</span><span class="pln"> rotation </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Quaternion</span><span class="pun">.</span><span class="typ">Euler</span><span class="pun">(</span></code></li><li class="L2"><code class="lang-cpp"><span class="pln">                            </span><span class="pun">-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-cpp"><span class="pln">                             </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">                             </span><span class="lit">0</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">    </span><span class="com">// Fold this change into the camera's current rotation.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">    transform</span><span class="pun">.</span><span class="pln">rotation </span><span class="pun">*=</span><span class="pln"> rotation</span><span class="pun">;</span></code></li></ol></pre>
-                            <p>And it mostly works, but over time the view starts to get crooked. The camera seems to be turning
-                                on its roll axis (z) even though we only told it to rotate on the x and y!</p>
-                            <p>
-                                <a href="https://i.stack.imgur.com/A9nOC.gif">
-                                    <img src="https://i.stack.imgur.com/A9nOC.gif" alt="Animated example of a first-person camera tilting sideways">
-                                </a>
-                            </p>
-                            <p>This can also happen if we’re trying to manipulate an object in front of the camera - say it’s
-                                a globe we want to turn to look around:</p>
-                            <p>
-                                <a href="https://i.stack.imgur.com/y6cNH.gif">
-                                    <img src="https://i.stack.imgur.com/y6cNH.gif" alt="Animated example of a globe tilting sideways">
-                                </a>
-                            </p>
-                            <p>The same problem - after a while the North pole starts to wander away to the left or right. We’re
-                                giving input on two axes but we’re getting this confusing rotation on a third. And it happens
-                                whether we apply all our rotations around the object’s local axes or the world’s global axes.</p>
-                            <p>In many engines you’ll also see this in the inspector - rotate the object in the world, and suddenly
-                                numbers change on an axis we didn’t even touch!</p>
-                            <p>
-                                <a href="https://i.stack.imgur.com/JpZZ2.gif">
-                                    <img src="https://i.stack.imgur.com/JpZZ2.gif" alt="Animated example showing manipulating an object next to a readout of its rotation angles. The z angle changes even though the user didn't manipulate that axis.">
-                                </a>
-                            </p>
-                            <p>
-                                <strong>So, is this an engine bug?</strong> How do we tell the program we don’t want it adding extra
-                                rotation?
-                            </p>
-                            <p>Does it have something to do with Euler angles? Should I use Quaternions or Rotation Matrices
-                                or Basis Vectors instead?</p>
-                            <!-- Question Comments -->
-                            <div class="text-center">
-                                <button class="btn btn-secundary my-4" type="button" data-toggle="collapse" data-target="#QuestionComments" aria-expanded="false"
-                                    aria-controls="QuestionComments">
-                                    Show Question Comments
-                                </button>
-                            </div>
-                            <div class="collapse" id="QuestionComments">
-                                <div class="card-footer comments-card">
-                                    <div class="d-flex list-group list-group-flush">
-                                        <div class="list-group-item px-0 bg-transparent">
-                                            <div class="row mx-sm-0">
-                                                <div class="col-1 my-auto text-center">
-                                                    <p class="text-center mb-0 w-100">3</p>
-                                                </div>
-                                                <div class="col-11 my-1 pl-3">
-                                                    <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual
-                                                        elements of a graphic document or visual presentation. Replacing
-                                                        content with placeholder text allows designers to design the form
-                                                        of the content before the content itself has been produced.</p>
-                                                    <p class="text-right discrete">
-                                                        AndreFCruz
-                                                    </p>
-                                                </div>
+                <header class="border-bottom sticky-top">
+                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
+                </header>
+            </div>
+        </section>
+    </header>
+    <main>
+        <section id="question-body" class="sweet-grey">
+            <div class="container">
+                <main  class="row" style="overflow-y:auto">
+                    <div class="col-md-9 p-3">
+                        <p>Let’s say we’re making a first-person camera. The basic idea is it should yaw to look left &amp;
+                            right, and pitch to look up &amp; down. So we write a bit of code like this (using Unity
+                            as an example):</p>
+                        <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="pln">    </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Update</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">        </span><span class="typ">float</span><span class="pln"> speed </span><span class="pun">=</span><span class="pln"> lookSpeed </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Time</span><span class="pun">.</span><span class="pln">deltaTime</span><span class="pun">;</span></code></li><li class="L2"><code class="lang-cpp"></code></li><li class="L3"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Yaw around the y axis using the player's horizontal input.        </span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(</span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Pitch around the x axis using the player's vertical input.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln">  </span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L8"><code class="lang-cpp"><span class="pln">    </span><span class="pun">}</span></code></li></ol></pre>
+                        <p>or maybe</p>
+                        <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="com">// Construct a quaternion or a matrix representing incremental camera rotation.</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">    </span><span class="typ">Quaternion</span><span class="pln"> rotation </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Quaternion</span><span class="pun">.</span><span class="typ">Euler</span><span class="pun">(</span></code></li><li class="L2"><code class="lang-cpp"><span class="pln">                            </span><span class="pun">-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-cpp"><span class="pln">                             </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">                             </span><span class="lit">0</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">    </span><span class="com">// Fold this change into the camera's current rotation.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">    transform</span><span class="pun">.</span><span class="pln">rotation </span><span class="pun">*=</span><span class="pln"> rotation</span><span class="pun">;</span></code></li></ol></pre>
+                        <p>And it mostly works, but over time the view starts to get crooked. The camera seems to be turning
+                            on its roll axis (z) even though we only told it to rotate on the x and y!</p>
+                        <p>
+                            <a href="https://i.stack.imgur.com/A9nOC.gif">
+                                <img src="https://i.stack.imgur.com/A9nOC.gif" alt="Animated example of a first-person camera tilting sideways">
+                            </a>
+                        </p>
+                        <p>This can also happen if we’re trying to manipulate an object in front of the camera - say it’s
+                            a globe we want to turn to look around:</p>
+                        <p>
+                            <a href="https://i.stack.imgur.com/y6cNH.gif">
+                                <img src="https://i.stack.imgur.com/y6cNH.gif" alt="Animated example of a globe tilting sideways">
+                            </a>
+                        </p>
+                        <p>The same problem - after a while the North pole starts to wander away to the left or right. We’re
+                            giving input on two axes but we’re getting this confusing rotation on a third. And it happens
+                            whether we apply all our rotations around the object’s local axes or the world’s global axes.</p>
+                        <p>In many engines you’ll also see this in the inspector - rotate the object in the world, and suddenly
+                            numbers change on an axis we didn’t even touch!</p>
+                        <p>
+                            <a href="https://i.stack.imgur.com/JpZZ2.gif">
+                                <img src="https://i.stack.imgur.com/JpZZ2.gif" alt="Animated example showing manipulating an object next to a readout of its rotation angles. The z angle changes even though the user didn't manipulate that axis.">
+                            </a>
+                        </p>
+                        <p>
+                            <strong>So, is this an engine bug?</strong> How do we tell the program we don’t want it adding extra
+                            rotation?
+                        </p>
+                        <p>Does it have something to do with Euler angles? Should I use Quaternions or Rotation Matrices
+                            or Basis Vectors instead?</p>
+                        <!-- Question Comments -->
+                        <div class="text-center">
+                            <button class="btn btn-secundary my-4" type="button" data-toggle="collapse" data-target="#QuestionComments" aria-expanded="false"
+                                aria-controls="QuestionComments">
+                                Show Question Comments
+                            </button>
+                        </div>
+                        <div class="collapse" id="QuestionComments">
+                            <div class="card-footer comments-card">
+                                <div class="d-flex list-group list-group-flush">
+                                    <div class="list-group-item px-0 bg-transparent">
+                                        <div class="row mx-sm-0">
+                                            <div class="col-1 my-auto text-center">
+                                                <p class="text-center mb-0 w-100">3</p>
+                                            </div>
+                                            <div class="col-11 my-1 pl-3">
+                                                <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual
+                                                    elements of a graphic document or visual presentation. Replacing
+                                                    content with placeholder text allows designers to design the form
+                                                    of the content before the content itself has been produced.</p>
+                                                <p class="text-right discrete">
+                                                    AndreFCruz
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="list-group-item px-0 bg-transparent">
-                                            <div class="row mx-sm-0">
-                                                <div class="col-1 my-1 text-center">
-                                                    <p class="text-center mb-0 w-100">1</p>
-                                                </div>
-                                                <div class="col-11 my-1 pl-4">
-                                                    <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit
-                                                        dapibus.
-                                                    </p>
-                                                    <p class="text-right discrete">
-                                                        jflcarvalho
-                                                    </p>
-                                                </div>
+                                    </div>
+                                    <div class="list-group-item px-0 bg-transparent">
+                                        <div class="row mx-sm-0">
+                                            <div class="col-1 my-1 text-center">
+                                                <p class="text-center mb-0 w-100">1</p>
+                                            </div>
+                                            <div class="col-11 my-1 pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit
+                                                    dapibus.
+                                                </p>
+                                                <p class="text-right discrete">
+                                                    jflcarvalho
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="list-group-item px-0 bg-transparent">
-                                            <div class="row mx-sm-0">
-                                                <div class="col-1 my-auto text-center">
-                                                    <p class="text-center mb-0 w-100">1</p>
-                                                </div>
-                                                <div class="col-11 my-auto pl-4">
-                                                    <p>This is a sample comment!! *Insert meme here*</p>
-                                                    <p class="text-right discrete">
-                                                        EdgarACarneiro
-                                                    </p>
-                                                </div>
+                                    </div>
+                                    <div class="list-group-item px-0 bg-transparent">
+                                        <div class="row mx-sm-0">
+                                            <div class="col-1 my-auto text-center">
+                                                <p class="text-center mb-0 w-100">1</p>
+                                            </div>
+                                            <div class="col-11 my-auto pl-4">
+                                                <p>This is a sample comment!! *Insert meme here*</p>
+                                                <p class="text-right discrete">
+                                                    EdgarACarneiro
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="list-group-item px-0 bg-transparent">
-                                            <div class="row mx-sm-0">
-                                                <div class="col-1 my-auto text-center">
-                                                    <p class="text-center mb-0 w-100">-1</p>
-                                                </div>
-                                                <div class="col-11 my-auto pl-4">
-                                                    <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
-                                                        hendrerit dapibus. Bada badu badumtsss.</p>
-                                                    <p class="text-right discrete">
-                                                        rendoir
-                                                    </p>
-                                                </div>
+                                    </div>
+                                    <div class="list-group-item px-0 bg-transparent">
+                                        <div class="row mx-sm-0">
+                                            <div class="col-1 my-auto text-center">
+                                                <p class="text-center mb-0 w-100">-1</p>
+                                            </div>
+                                            <div class="col-11 my-auto pl-4">
+                                                <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
+                                                    hendrerit dapibus. Bada badu badumtsss.</p>
+                                                <p class="text-right discrete">
+                                                    rendoir
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- END Question comments -->
                         </div>
-                        <div class="col-md-3 p-3 d-flex flex-column justify-content-between">
+                        <!-- END Question comments -->
+                    </div>
+                    <div class="col-md-3 p-3 d-flex flex-column justify-content-between">
+                        <div>
                             <div>
-                                <div>
-                                    <span class="font-weight-bold w-100">Answers: </span>
-                                    <span class="w-100">15</span>
-                                </div>
-                                <div>
-                                    <span class="font-weight-bold w-100">Votes: </span>
-                                    <span class="w-100">5</span>
-                                </div>
+                                <span class="font-weight-bold w-100">Answers: </span>
+                                <span class="w-100">15</span>
                             </div>
+                            <div>
+                                <span class="font-weight-bold w-100">Votes: </span>
+                                <span class="w-100">5</span>
+                            </div>
+                        </div>
 
-                            <div>
-                                <div class="d-flex">
-                                    <p class="mb-0">
-                                        <small>Created by - &nbsp</small>
-                                    </p>
-                                    <div class="mr-auto">
-                                        <span>UserName</span>
-                                        <span class="badge badge-success">Trusted</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <span class="badge badge-dark">nodejs</span>
-                                    <span class="badge badge-dark">html5</span>
-                                    <span class="badge badge-dark">css</span>
+                        <div>
+                            <div class="d-flex">
+                                <p class="mb-0">
+                                    <small>Created by - &nbsp</small>
+                                </p>
+                                <div class="mr-auto">
+                                    <span>UserName</span>
+                                    <span class="badge badge-success">Trusted</span>
                                 </div>
                             </div>
+                            <div>
+                                <span class="badge badge-dark">nodejs</span>
+                                <span class="badge badge-dark">html5</span>
+                                <span class="badge badge-dark">css</span>
+                            </div>
                         </div>
-                    </main>
-                </div>
+                    </div>
+                </main>
             </div>
         </section>
 
@@ -637,6 +639,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    
     <script src="assets/js/scroll.js"></script>
 </body>
 
