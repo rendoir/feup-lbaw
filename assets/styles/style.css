@@ -6,6 +6,16 @@ body {
     color: #67757c;
     font-weight: 300;
     min-width: 320px;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 66px;
+}
+
+body > footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 66px;
 }
 
 main .row aside > div.aside-content {
