@@ -122,7 +122,8 @@
                     <div class="col-md-9 p-3">
                         <p>Let’s say we’re making a first-person camera. The basic idea is it should yaw to look left &amp;
                             right, and pitch to look up &amp; down. So we write a bit of code like this (using Unity as an
-                            example):</p>
+                            example):
+                        </p>
                         <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="pln">    </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Update</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">        </span><span class="typ">float</span><span class="pln"> speed </span><span class="pun">=</span><span class="pln"> lookSpeed </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Time</span><span class="pun">.</span><span class="pln">deltaTime</span><span class="pun">;</span></code></li><li class="L2"><code class="lang-cpp"></code></li><li class="L3"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Yaw around the y axis using the player's horizontal input.        </span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(</span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Pitch around the x axis using the player's vertical input.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln">  </span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L8"><code class="lang-cpp"><span class="pln">    </span><span class="pun">}</span></code></li></ol></pre>
                         <p>or maybe</p>
                         <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="com">// Construct a quaternion or a matrix representing incremental camera rotation.</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">    </span><span class="typ">Quaternion</span><span class="pln"> rotation </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Quaternion</span><span class="pun">.</span><span class="typ">Euler</span><span class="pun">(</span></code></li><li class="L2"><code class="lang-cpp"><span class="pln">                            </span><span class="pun">-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-cpp"><span class="pln">                             </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">                             </span><span class="lit">0</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">    </span><span class="com">// Fold this change into the camera's current rotation.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">    transform</span><span class="pun">.</span><span class="pln">rotation </span><span class="pun">*=</span><span class="pln"> rotation</span><span class="pun">;</span></code></li></ol></pre>
@@ -342,7 +343,9 @@
                                         </a>
                                     </div>
                                     <small class="ml-auto mr-1 text-center mt-auto mb-auto">
-                                        <a href="#">Report</a>
+                                        <a href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </a>
                                     </small>
                                 </div>
                             </div>
@@ -379,7 +382,9 @@
                                             <a class="discrete mr-1" href="#">UpVote</a>
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
-                                            <a class="discrete" href="#">Report </a>
+                                            <a class="discrete" href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </a>
                                             <p class="ml-auto discrete">jflcarvalho</p>
                                         </div>
                                     </div>
@@ -390,7 +395,9 @@
                                             <a class="discrete mr-1" href="#">UpVote</a>
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
-                                            <a class="discrete" href="#">Report </a>
+                                            <a class="discrete" href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </a>
                                             <p class="ml-auto discrete">EdgarACarneiro</p>
                                         </div>
                                     </div>
@@ -402,7 +409,9 @@
                                             <a class="discrete mr-1" href="#">UpVote</a>
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
-                                            <a class="discrete" href="#">Report </a>
+                                            <a class="discrete" href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </a>
                                             <p class="ml-auto discrete">rendoir</p>
                                         </div>
                                     </div>
@@ -543,7 +552,9 @@
                                         </a>
                                     </div>
                                     <small class="ml-auto mr-1 text-center mt-auto mb-auto">
-                                        <a href="#">Report</a>
+                                        <a href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </a>
                                     </small>
                                 </div>
                             </div>
@@ -562,7 +573,9 @@
                                             <a class="discrete mr-1" href="#">UpVote</a>
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
-                                            <a class="discrete" href="#">Report </a>
+                                            <a class="discrete" href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </a>
                                             <p class="ml-auto discrete">AndreFCruz</p>
                                         </div>
                                     </div>
@@ -574,7 +587,9 @@
                                             <a class="discrete mr-1" href="#">UpVote</a>
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
-                                            <a class="discrete" href="#">Report </a>
+                                            <a class="discrete" href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </a>
                                             <p class="ml-auto discrete">jflcarvalho</p>
                                         </div>
                                     </div>
@@ -585,7 +600,9 @@
                                             <a class="discrete mr-1" href="#">UpVote</a>
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
-                                            <a class="discrete" href="#">Report </a>
+                                            <a class="discrete" href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </a>
                                             <p class="ml-auto discrete">EdgarACarneiro</p>
                                         </div>
                                     </div>
@@ -654,7 +671,9 @@
                                         </a>
                                     </div>
                                     <small class="ml-auto mr-1 text-center mt-auto mb-auto">
-                                        <a href="#">Report</a>
+                                        <a href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </a>
                                     </small>
                                 </div>
                             </div>
@@ -673,7 +692,9 @@
                                             <a class="discrete mr-1" href="#">UpVote</a>
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
-                                            <a class="discrete" href="#">Report </a>
+                                            <a class="discrete" href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </a>
                                             <p class="ml-auto discrete">AndreFCruz</p>
                                         </div>
                                     </div>
@@ -685,7 +706,9 @@
                                             <a class="discrete mr-1" href="#">UpVote</a>
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
-                                            <a class="discrete" href="#">Report </a>
+                                            <a class="discrete" href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </a>
                                             <p class="ml-auto discrete">jflcarvalho</p>
                                         </div>
                                     </div>
@@ -696,7 +719,9 @@
                                             <a class="discrete mr-1" href="#">UpVote</a>
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
-                                            <a class="discrete" href="#">Report </a>
+                                            <a class="discrete" href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </a>
                                             <p class="ml-auto discrete">EdgarACarneiro</p>
                                         </div>
                                     </div>
@@ -708,7 +733,9 @@
                                             <a class="discrete mr-1" href="#">UpVote</a>
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
-                                            <a class="discrete" href="#">Report </a>
+                                            <a class="discrete" href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </a>
                                             <p class="ml-auto discrete">rendoir</p>
                                         </div>
                                     </div>
