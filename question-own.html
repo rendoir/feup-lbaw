@@ -31,13 +31,13 @@
             <nav class="navbar navbar-expand-lg navbar-light container">
                 <!-- Logo -->
                 <a class="navbar-brand py-0 order-0 mr-0 mr-sm-3" href="index(logged).html">
-                    <img src="assets/img/logo.png" width="40" height="40" class="d-inline-block align-center" alt=""> 
+                    <img src="assets/img/logo.png" width="40" height="40" class="d-inline-block align-center" alt="">
                     <span>SegFault</span>
                 </a>
 
                 <!-- Collapse Menu -->
-                <button class="navbar-toggler mr-auto-sm order-2 ml-sm-3" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler mr-auto-sm order-2 ml-sm-3" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse order-sm-1 ml-3" id="navbarNavAltMarkup">
@@ -121,8 +121,8 @@
                 <main id="question-body" class="row">
                     <div class="col-md-9 p-3">
                         <p>Let’s say we’re making a first-person camera. The basic idea is it should yaw to look left &amp;
-                            right, and pitch to look up &amp; down. So we write a bit of code like this (using Unity
-                            as an example):</p>
+                            right, and pitch to look up &amp; down. So we write a bit of code like this (using Unity as an
+                            example):</p>
                         <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="pln">    </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Update</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">        </span><span class="typ">float</span><span class="pln"> speed </span><span class="pun">=</span><span class="pln"> lookSpeed </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Time</span><span class="pun">.</span><span class="pln">deltaTime</span><span class="pun">;</span></code></li><li class="L2"><code class="lang-cpp"></code></li><li class="L3"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Yaw around the y axis using the player's horizontal input.        </span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(</span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">        </span><span class="com">// Pitch around the x axis using the player's vertical input.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">        transform</span><span class="pun">.</span><span class="typ">Rotate</span><span class="pun">(-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span><span class="pln">  </span><span class="lit">0f</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0f</span><span class="pun">);</span></code></li><li class="L8"><code class="lang-cpp"><span class="pln">    </span><span class="pun">}</span></code></li></ol></pre>
                         <p>or maybe</p>
                         <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-cpp"><span class="com">// Construct a quaternion or a matrix representing incremental camera rotation.</span></code></li><li class="L1"><code class="lang-cpp"><span class="pln">    </span><span class="typ">Quaternion</span><span class="pln"> rotation </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Quaternion</span><span class="pun">.</span><span class="typ">Euler</span><span class="pun">(</span></code></li><li class="L2"><code class="lang-cpp"><span class="pln">                            </span><span class="pun">-</span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Vertical"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-cpp"><span class="pln">                             </span><span class="typ">Input</span><span class="pun">.</span><span class="typ">GetAxis</span><span class="pun">(</span><span class="str">"Horizontal"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> speed</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-cpp"><span class="pln">                             </span><span class="lit">0</span><span class="pun">);</span></code></li><li class="L5"><code class="lang-cpp"></code></li><li class="L6"><code class="lang-cpp"><span class="pln">    </span><span class="com">// Fold this change into the camera's current rotation.</span></code></li><li class="L7"><code class="lang-cpp"><span class="pln">    transform</span><span class="pun">.</span><span class="pln">rotation </span><span class="pun">*=</span><span class="pln"> rotation</span><span class="pun">;</span></code></li></ol></pre>
@@ -133,8 +133,8 @@
                                 <img src="https://i.stack.imgur.com/A9nOC.gif" alt="Animated example of a first-person camera tilting sideways">
                             </a>
                         </p>
-                        <p>This can also happen if we’re trying to manipulate an object in front of the camera - say it’s
-                            a globe we want to turn to look around:</p>
+                        <p>This can also happen if we’re trying to manipulate an object in front of the camera - say it’s a
+                            globe we want to turn to look around:</p>
                         <p>
                             <a href="https://i.stack.imgur.com/y6cNH.gif">
                                 <img src="https://i.stack.imgur.com/y6cNH.gif" alt="Animated example of a globe tilting sideways">
@@ -154,8 +154,8 @@
                             <strong>So, is this an engine bug?</strong> How do we tell the program we don’t want it adding extra
                             rotation?
                         </p>
-                        <p>Does it have something to do with Euler angles? Should I use Quaternions or Rotation Matrices
-                            or Basis Vectors instead?</p>
+                        <p>Does it have something to do with Euler angles? Should I use Quaternions or Rotation Matrices or
+                            Basis Vectors instead?</p>
 
                         <!-- Question Comments -->
                         <div class="text-center">
@@ -168,10 +168,10 @@
                             <div class="rounded card-footer comments-card px-0 px-sm-4 mb-5">
                                 <div class="d-flex list-group list-group-flush">
                                     <div class="list-group-item bg-transparent">
-                                        <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements
-                                            of a graphic document or visual presentation. Replacing content with placeholder
-                                            text allows designers to design the form of the content before the content
-                                            itself has been produced.</p>
+                                        <p>lorem ipsum is a filler text commonly used to demonstrate the textual elements of
+                                            a graphic document or visual presentation. Replacing content with placeholder
+                                            text allows designers to design the form of the content before the content itself
+                                            has been produced.</p>
                                         <div class="d-flex flex-wrap mt-3">
                                             <p class="discrete mr-2">1</p>
                                             <span class="mx-1 discrete">
@@ -195,7 +195,9 @@
                                             <a class="discrete mr-1" href="#">UpVote</a>
                                             <span class="mx-1 discrete">&#8226</span>
                                             <a class="discrete mr-2" href="#">DownVote</a>
-                                            <a class="discrete" href="#">Report </a>
+                                            <a class="discrete" href="#" role="button" data-toggle="tooltip" data-placemente="top" title="Report">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </a>
                                             <p class="ml-auto discrete">rendoir</p>
                                         </div>
                                     </div>
@@ -748,8 +750,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        The process of deletion of a message is irreversible. 
-                        All the comments or answers to this message will also be deleted.
+                        The process of deletion of a message is irreversible. All the comments or answers to this message will also be deleted.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Delete</button>
@@ -785,7 +786,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    
+
+    <script src="assets/js/tooltip.js"></script>
     <script src="assets/js/scroll.js"></script>
 </body>
 
