@@ -371,8 +371,8 @@ nav {
 
     /* Tags page */
     #categories-search {
-        margin-bottom: auto;
-        margin-top: 1rem;
+        margin-bottom: auto !important;
+        margin-top: 1rem !important;
     }
 }
 
