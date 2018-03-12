@@ -368,6 +368,12 @@ nav {
         color: #eee;
         text-shadow: 1px 1px #111111cc;
     }
+
+    /* Tags page */
+    #categories-search {
+        margin-bottom: auto;
+        margin-top: 1rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -392,6 +398,17 @@ nav {
     #account-settings > .col-8.pb-4 {
         max-width: none;
         flex-basis: 60%;
+    }
+
+    /* About page */
+    .team-sentences {
+        display: none;
+    }
+
+    /* Tags page */
+    #categories-search > .form-control,
+    #categories-search > .input-group-prepend > span {
+        border-radius: .25rem !important;
     }
 }
 
@@ -434,10 +451,8 @@ nav {
         flex-direction: column !important;
         text-align: center;
     }
-    
-    /* About page */
-    .team-sentences {
-        display: none;
+    #jumbotron_signup {
+        height: 100%;
     }
 
     /* Ask Question PAge */
