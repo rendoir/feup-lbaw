@@ -3327,7 +3327,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+reputation: Integer {NOT NULL} = 0",
+											"text": "+/reputation: Integer {NOT NULL}",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -4086,9 +4086,9 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 824,
+									"left": 816,
 									"top": 584,
-									"width": 7,
+									"width": 22,
 									"height": 13,
 									"autoResize": false,
 									"alpha": 0.4324080682536504,
@@ -4098,7 +4098,7 @@
 									},
 									"edgePosition": 2,
 									"underline": false,
-									"text": "1",
+									"text": "0..1",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5,
 									"wordWrap": false
@@ -4189,19 +4189,19 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 706,
+									"left": 702,
 									"top": 583,
-									"width": 7,
+									"width": 22,
 									"height": 13,
 									"autoResize": false,
-									"alpha": -0.540419059094438,
-									"distance": 11.661903789690601,
+									"alpha": -0.40489152766454983,
+									"distance": 15.231546211727817,
 									"hostEdge": {
 										"$ref": "AAAAAAFhezFSd/uUKcA="
 									},
 									"edgePosition": 0,
 									"underline": false,
-									"text": "1",
+									"text": "0..1",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5,
 									"wordWrap": false
@@ -8894,12 +8894,12 @@
 							"showShadow": true,
 							"containerChangeable": false,
 							"containerExtending": false,
-							"left": 1232,
+							"left": 1224,
 							"top": 320,
-							"width": 201,
+							"width": 241,
 							"height": 25,
 							"autoResize": false,
-							"text": "{rep = QP + AP + CP/2 - R*10}",
+							"text": "{reputation = QP + AP + CP/2 - R*10}",
 							"wordWrap": true
 						},
 						{
@@ -8924,7 +8924,7 @@
 								"$ref": "AAAAAAFiCx9osJFdgX8="
 							},
 							"lineStyle": 1,
-							"points": "1319:319;1308:308"
+							"points": "1329:319;1316:308"
 						},
 						{
 							"_type": "UMLClassView",
@@ -11170,7 +11170,7 @@
 								"visibility": "public",
 								"navigable": true,
 								"aggregation": "none",
-								"multiplicity": "1",
+								"multiplicity": "0..1",
 								"isReadOnly": false,
 								"isOrdered": false,
 								"isUnique": false,
@@ -11189,7 +11189,7 @@
 								"visibility": "public",
 								"navigable": true,
 								"aggregation": "none",
-								"multiplicity": "1",
+								"multiplicity": "0..1",
 								"isReadOnly": false,
 								"isOrdered": false,
 								"isUnique": false,
@@ -11713,7 +11713,7 @@
 									},
 									"name": "formula",
 									"visibility": "public",
-									"specification": "rep = QP + AP + CP/2 - R*10"
+									"specification": "reputation = QP + AP + CP/2 - R*10"
 								}
 							],
 							"visibility": "public",
@@ -11723,8 +11723,7 @@
 							"isReadOnly": false,
 							"isOrdered": false,
 							"isUnique": false,
-							"defaultValue": "0",
-							"isDerived": false,
+							"isDerived": true,
 							"aggregation": "none",
 							"isID": false
 						}
