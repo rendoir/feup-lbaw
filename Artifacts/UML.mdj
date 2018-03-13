@@ -17,7 +17,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Collaborative Q&A",
+					"name": "UML",
 					"visible": true,
 					"defaultDiagram": true,
 					"ownedViews": [
@@ -8433,9 +8433,9 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1000,
+									"left": 989,
 									"top": 195,
-									"width": 40,
+									"width": 63,
 									"height": 13,
 									"autoResize": false,
 									"alpha": 1.5707963267948966,
@@ -8445,7 +8445,7 @@
 									},
 									"edgePosition": 1,
 									"underline": false,
-									"text": "+editor",
+									"text": "+lastEditor",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5,
 									"wordWrap": false
@@ -10817,7 +10817,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFheyF2DOxlr4M="
 							},
-							"name": "editor",
+							"name": "lastEditor",
 							"end1": {
 								"_type": "UMLAssociationEnd",
 								"_id": "AAAAAAFiBUd1ghUQhok=",
