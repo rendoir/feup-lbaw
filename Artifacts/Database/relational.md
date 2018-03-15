@@ -1,0 +1,5 @@
+Message(__id__, content *NN*, creation_date *NN*, score *NN*, reports *NN*)  
+Comment(__message_id->Message__, commentable_id->Commentable)  
+Commentable(__message_id->Message__)  
+Question(__commentable_id->Commentable__, title *NN*, correct_answer_id->Answer)  
+Answer(__commentable_id->Comentable__, question_id->Question)  
