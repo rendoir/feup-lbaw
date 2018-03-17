@@ -9207,7 +9207,7 @@
 							"width": 153,
 							"height": 57,
 							"autoResize": false,
-							"text": "A Moderator is a User that has attained a Moderator Badge.",
+							"text": "A Moderator is a User that has attained the Moderator Badge.",
 							"wordWrap": true
 						},
 						{
@@ -12104,11 +12104,11 @@
 							"containerChangeable": false,
 							"containerExtending": false,
 							"left": 1536,
-							"top": 640,
-							"width": 225,
-							"height": 64,
+							"top": 632,
+							"width": 233,
+							"height": 77,
 							"autoResize": false,
-							"text": "Moderator badges are attributed by the system to users with reputation over 500 points, and cannot be manually created.",
+							"text": "The Moderator badge is attributed by the system to users with reputation over 500 points, and which have already attained the Trusted badge.",
 							"wordWrap": true
 						},
 						{
@@ -12156,8 +12156,8 @@
 							"tail": {
 								"$ref": "AAAAAAFiNJOvOyG1d4I="
 							},
-							"lineStyle": 1,
-							"points": "1648:639;1647:595"
+							"lineStyle": 0,
+							"points": "1650:632;1650:594"
 						},
 						{
 							"_type": "UMLNoteLinkView",
@@ -12371,6 +12371,100 @@
 							},
 							"lineStyle": 1,
 							"points": "745:373;775:373"
+						},
+						{
+							"_type": "UMLNoteView",
+							"_id": "AAAAAAFiNK+jURKTtAE=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"visible": true,
+							"enabled": true,
+							"lineColor": "#000000",
+							"fillColor": "#ffffff",
+							"fontColor": "#000000",
+							"font": "Arial;13;0",
+							"showShadow": true,
+							"containerChangeable": false,
+							"containerExtending": false,
+							"left": 1672,
+							"top": 368,
+							"width": 233,
+							"height": 51,
+							"autoResize": false,
+							"text": "Badges are automatically attributed by the system, and cannot be manually attributed.",
+							"wordWrap": true
+						},
+						{
+							"_type": "UMLNoteView",
+							"_id": "AAAAAAFiNLCpQCE5q8A=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"visible": true,
+							"enabled": true,
+							"lineColor": "#000000",
+							"fillColor": "#ffffff",
+							"fontColor": "#000000",
+							"font": "Arial;13;0",
+							"showShadow": true,
+							"containerChangeable": false,
+							"containerExtending": false,
+							"left": 1776,
+							"top": 632,
+							"width": 161,
+							"height": 77,
+							"autoResize": false,
+							"text": "A Trusted badge is attributed by the system to users which have correctly answered 50 questions.",
+							"wordWrap": true
+						},
+						{
+							"_type": "UMLNoteLinkView",
+							"_id": "AAAAAAFiNLJ1tCWEmNo=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"visible": true,
+							"enabled": true,
+							"lineColor": "#000000",
+							"fillColor": "#ffffff",
+							"fontColor": "#000000",
+							"font": "Arial;13;0",
+							"showShadow": true,
+							"containerChangeable": false,
+							"containerExtending": false,
+							"head": {
+								"$ref": "AAAAAAFheziwDh90oUY="
+							},
+							"tail": {
+								"$ref": "AAAAAAFiNK+jURKTtAE="
+							},
+							"lineStyle": 1,
+							"points": "1734:419;1708:431"
+						},
+						{
+							"_type": "UMLNoteLinkView",
+							"_id": "AAAAAAFiNLMNdSyFPdc=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"visible": true,
+							"enabled": true,
+							"lineColor": "#000000",
+							"fillColor": "#ffffff",
+							"fontColor": "#000000",
+							"font": "Arial;13;0",
+							"showShadow": true,
+							"containerChangeable": false,
+							"containerExtending": false,
+							"head": {
+								"$ref": "AAAAAAFiKU5OZhfZCJs="
+							},
+							"tail": {
+								"$ref": "AAAAAAFiNLCpQCE5q8A="
+							},
+							"lineStyle": 1,
+							"points": "1823:631;1792:595"
 						}
 					]
 				},
