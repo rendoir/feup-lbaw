@@ -1,6 +1,0 @@
-Message(__id__, content *NN*, creation_date *NN* *DF Today*, score *NN* *DF 0*, reports *NN* *DF 0*)  
-Comment(__id->Message__, parent->Message *NN*, *CK parent not in Comment*)  
-Question(__id->Message__, title *NN*, correct_answer_id->Answer)  
-Answer(__id->Message__, question_id->Question *NN*)  
-Category(__name__, description, usage *DF 0*)  
-QuestionCategory(__category->Category__, __question->Question__, *CK number_tuples > 0 && number_tuples < 6*)  
