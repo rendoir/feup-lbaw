@@ -8928,7 +8928,7 @@
 									"model": {
 										"$ref": "AAAAAAFiKTEJHpTwVk8="
 									},
-									"visible": false,
+									"visible": true,
 									"enabled": true,
 									"lineColor": "#000000",
 									"fillColor": "#ffffff",
@@ -8937,18 +8937,19 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1668,
-									"top": 404,
-									"width": 0,
+									"left": 1648,
+									"top": 415,
+									"width": 5,
 									"height": 13,
 									"autoResize": false,
-									"alpha": -0.5235987755982988,
-									"distance": 25,
+									"alpha": -5.742766385953445,
+									"distance": 11.661903789690601,
 									"hostEdge": {
 										"$ref": "AAAAAAFiKTEJIJT90F4="
 									},
 									"edgePosition": 2,
 									"underline": false,
+									"text": "*",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5,
 									"wordWrap": false
@@ -9030,7 +9031,7 @@
 									"model": {
 										"$ref": "AAAAAAFiKTEJHpTx3B4="
 									},
-									"visible": false,
+									"visible": true,
 									"enabled": true,
 									"lineColor": "#000000",
 									"fillColor": "#ffffff",
@@ -9039,18 +9040,19 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1477,
-									"top": 349,
-									"width": 0,
+									"left": 1464,
+									"top": 375,
+									"width": 5,
 									"height": 13,
 									"autoResize": false,
-									"alpha": 0.5235987755982988,
-									"distance": 25,
+									"alpha": -0.9505463678392619,
+									"distance": 17.204650534085253,
 									"hostEdge": {
 										"$ref": "AAAAAAFiKTEJIJT90F4="
 									},
 									"edgePosition": 0,
 									"underline": false,
+									"text": "*",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5,
 									"wordWrap": false
@@ -14093,6 +14095,7 @@
 										"visibility": "public",
 										"navigable": true,
 										"aggregation": "none",
+										"multiplicity": "*",
 										"isReadOnly": false,
 										"isOrdered": false,
 										"isUnique": false,
@@ -14111,6 +14114,7 @@
 										"visibility": "public",
 										"navigable": true,
 										"aggregation": "none",
+										"multiplicity": "*",
 										"isReadOnly": false,
 										"isOrdered": false,
 										"isUnique": false,
