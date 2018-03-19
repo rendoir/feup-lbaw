@@ -12200,12 +12200,12 @@
 							"showShadow": true,
 							"containerChangeable": false,
 							"containerExtending": false,
-							"left": 872,
-							"top": 144,
+							"left": 864,
+							"top": 152,
 							"width": 257,
 							"height": 41,
 							"autoResize": false,
-							"text": "This relation implies that the User is the message's Owner, or is a Moderator.",
+							"text": "This relation implies that the User is the message's Owner (author).",
 							"wordWrap": true
 						},
 						{
@@ -12230,7 +12230,7 @@
 								"$ref": "AAAAAAFiNHw7FFaehYA="
 							},
 							"lineStyle": 1,
-							"points": "1024:292;1004:185"
+							"points": "1024:292;998:193"
 						},
 						{
 							"_type": "UMLNoteLinkView",
