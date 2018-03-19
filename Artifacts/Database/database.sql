@@ -13,25 +13,22 @@ CREATE TABLE QuestionCategory (
 );
 
 CREATE TABLE Question (
-    id BIGSERIAL,
-    commentable_id BIGINT NOT NULL,
+    id BIGINT NOT NULL,
     title TEXT NOT NULL,
     correct_answer BIGINT
 );
 
 CREATE TABLE Answer (
-    id BIGSERIAL,
-    commentable_id BIGINT NOT NULL,
+    id BIGINT NOT NULL,
     question_id BIGINT NOT NULL
 );
 
 CREATE TABLE Commentable (
-    message_id BIGINT NOT NULL
+    id BIGINT NOT NULL
 );
 
 CREATE TABLE Comment (
-    id BIGSERIAL,
-    message_id BIGINT NOT NULL,
+    id BIGINT NOT NULL,
     commentable_id BIGINT NOT NULL
 );
 
@@ -55,6 +52,12 @@ CREATE TABLE "TimeStamp" (
     creation_time TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
+CREATE TABLE ModeratorEdition (
+    message_content_id BIGINT NOT NULL,
+    moderator_id BIGINT NOT NULL,
+    creation_time TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+);
+
 CREATE TABLE Vote (
     message_id BIGINT NOT NULL,
     user_id BIGINT NOT NULL,
@@ -71,7 +74,7 @@ CREATE TABLE "User" (
 );
 
 CREATE TABLE Moderator (
-    user_id BIGINT NOT NULL
+    id BIGINT NOT NULL
 );
 
 CREATE TABLE Notification (
@@ -83,14 +86,12 @@ CREATE TABLE Notification (
 );
 
 CREATE TABLE CommentableNotification (
-    id BIGSERIAL,
-    notification_id BIGINT NOT NULL,
+    id BIGINT NOT NULL,
     commentable_id BIGINT NOT NULL
 );
 
 CREATE TABLE BadgeNotification (
-    id BIGSERIAL,
-    notification_id BIGINT NOT NULL,
+    id BIGINT NOT NULL,
     badge_id BIGINT NOT NULL
 );
 
@@ -106,11 +107,11 @@ CREATE TABLE Badge (
 );
 
 CREATE TABLE ModeratorBadge (
-    badge_id INTEGER NOT NULL
+    id INTEGER NOT NULL
 );
 
 CREATE TABLE TrustedBadge (
-    badge_id INTEGER NOT NULL
+    id INTEGER NOT NULL
 );
 
 
@@ -129,7 +130,7 @@ ALTER TABLE ONLY Answer
   ADD CONSTRAINT answer_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY Commentable
-  ADD CONSTRAINT commentable_pkey PRIMARY KEY (message_id);
+  ADD CONSTRAINT commentable_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY Comment
   ADD CONSTRAINT comment_pkey PRIMARY KEY (id);
@@ -143,6 +144,9 @@ ALTER TABLE ONLY MessageContent
 ALTER TABLE ONLY "TimeStamp"
   ADD CONSTRAINT timestamp_pkey PRIMARY KEY (message_content_id);
 
+ALTER TABLE ONLY ModeratorEdition
+  ADD CONSTRAINT moderator_edition_pkey PRIMARY KEY (message_content_id);
+
 ALTER TABLE ONLY Vote
   ADD CONSTRAINT vote_pkey PRIMARY KEY (message_id, user_id);
 
@@ -150,7 +154,7 @@ ALTER TABLE ONLY "User"
   ADD CONSTRAINT user_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY Moderator
-  ADD CONSTRAINT moderator_pkey PRIMARY KEY (user_id);
+  ADD CONSTRAINT moderator_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY Notification
   ADD CONSTRAINT notification_pkey PRIMARY KEY (id);
@@ -168,10 +172,10 @@ ALTER TABLE ONLY Badge
   ADD CONSTRAINT badge_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY ModeratorBadge
-  ADD CONSTRAINT moderator_badge_pkey PRIMARY KEY (badge_id);
+  ADD CONSTRAINT moderator_badge_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY TrustedBadge
-  ADD CONSTRAINT trusted_badge_pkey PRIMARY KEY (badge_id);
+  ADD CONSTRAINT trusted_badge_pkey PRIMARY KEY (id);
 
 
 -- Unique
@@ -193,25 +197,25 @@ ALTER TABLE ONLY QuestionCategory
 ADD CONSTRAINT question_category_category_fkey FOREIGN KEY (category_id) REFERENCES Category(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY Question
-ADD CONSTRAINT question_commentable_fkey FOREIGN KEY (commentable_id) REFERENCES Commentable(message_id) ON UPDATE CASCADE;
+ADD CONSTRAINT question_fkey FOREIGN KEY (id) REFERENCES Commentable(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY Question
 ADD CONSTRAINT question_correct_fkey FOREIGN KEY (correct_answer) REFERENCES Answer(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY Answer
-ADD CONSTRAINT answer_commentable_fkey FOREIGN KEY (commentable_id) REFERENCES Commentable(message_id) ON UPDATE CASCADE;
+ADD CONSTRAINT answer_fkey FOREIGN KEY (id) REFERENCES Commentable(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY Answer
 ADD CONSTRAINT answer_question_fkey FOREIGN KEY (question_id) REFERENCES Question(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY Commentable
-ADD CONSTRAINT commentable_message_fkey FOREIGN KEY (message_id) REFERENCES Message(id) ON UPDATE CASCADE;
+ADD CONSTRAINT commentable_message_fkey FOREIGN KEY (id) REFERENCES Message(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY Comment
-ADD CONSTRAINT comment_message_fkey FOREIGN KEY (message_id) REFERENCES Message(id) ON UPDATE CASCADE;
+ADD CONSTRAINT comment_fkey FOREIGN KEY (id) REFERENCES Message(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY Comment
-ADD CONSTRAINT comment_commentable_fkey FOREIGN KEY (commentable_id) REFERENCES Commentable(message_id) ON UPDATE CASCADE;
+ADD CONSTRAINT comment_commentable_fkey FOREIGN KEY (commentable_id) REFERENCES Commentable(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY MessageContent
 ADD CONSTRAINT message_content_message_fkey FOREIGN KEY (message_id) REFERENCES Message(id) ON UPDATE CASCADE;
@@ -222,6 +226,12 @@ ADD CONSTRAINT time_stamp_message_content_fkey FOREIGN KEY (message_content_id) 
 ALTER TABLE ONLY "TimeStamp"
 ADD CONSTRAINT time_stamp_user_fkey FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
 
+ALTER TABLE ONLY ModeratorEdition
+ADD CONSTRAINT moderator_edition_message_content_fkey FOREIGN KEY (message_content_id) REFERENCES MessageContent(id) ON UPDATE CASCADE;
+
+ALTER TABLE ONLY ModeratorEdition
+ADD CONSTRAINT moderator_edition_user_fkey FOREIGN KEY (moderator_id) REFERENCES Moderator(id) ON UPDATE CASCADE;
+
 ALTER TABLE ONLY Vote
 ADD CONSTRAINT vote_message_fkey FOREIGN KEY (message_id) REFERENCES Message(id) ON UPDATE CASCADE;
 
@@ -229,19 +239,19 @@ ALTER TABLE ONLY Vote
 ADD CONSTRAINT vote_user_fkey FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY Moderator
-ADD CONSTRAINT moderator_user_fkey FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
+ADD CONSTRAINT moderator_user_fkey FOREIGN KEY (id) REFERENCES "User"(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY Notification
 ADD CONSTRAINT notification_user_fkey FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY CommentableNotification
-ADD CONSTRAINT commentable_notification_fkey FOREIGN KEY (notification_id) REFERENCES Notification(id) ON UPDATE CASCADE;
+ADD CONSTRAINT commentable_notification_fkey FOREIGN KEY (id) REFERENCES Notification(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY CommentableNotification
-ADD CONSTRAINT commentable_notification_commentable_fkey FOREIGN KEY (commentable_id) REFERENCES Commentable(message_id) ON UPDATE CASCADE;
+ADD CONSTRAINT commentable_notification_commentable_fkey FOREIGN KEY (id) REFERENCES Commentable(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY BadgeNotification
-ADD CONSTRAINT badge_notification_fkey FOREIGN KEY (notification_id) REFERENCES Notification(id) ON UPDATE CASCADE;
+ADD CONSTRAINT badge_notification_fkey FOREIGN KEY (id) REFERENCES Notification(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY BadgeNotification
 ADD CONSTRAINT badge_notification_badge_fkey FOREIGN KEY (badge_id) REFERENCES Badge(id) ON UPDATE CASCADE;
@@ -253,7 +263,7 @@ ALTER TABLE ONLY BadgeAttainment
 ADD CONSTRAINT badge_attainment_badge_fkey FOREIGN KEY (badge_id) REFERENCES Badge(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY ModeratorBadge
-ADD CONSTRAINT moderator_badge_fkey FOREIGN KEY (badge_id) REFERENCES Badge(id) ON UPDATE CASCADE;
+ADD CONSTRAINT moderator_badge_fkey FOREIGN KEY (id) REFERENCES Badge(id) ON UPDATE CASCADE;
 
 ALTER TABLE ONLY TrustedBadge
-ADD CONSTRAINT trusted_badge_fkey FOREIGN KEY (badge_id) REFERENCES Badge(id) ON UPDATE CASCADE;
+ADD CONSTRAINT trusted_badge_fkey FOREIGN KEY (id) REFERENCES Badge(id) ON UPDATE CASCADE;
