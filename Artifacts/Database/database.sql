@@ -21,39 +21,40 @@ DROP TABLE IF EXISTS ModeratorBadge CASCADE;
 DROP TABLE IF EXISTS TrustedBadge CASCADE;
 
 CREATE TABLE Category (
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT,
     num_posts INTEGER DEFAULT 0 NOT NULL
 );
 
 CREATE TABLE QuestionCategory (
-    question_id BIGINT NOT NULL,
-    category_id INTEGER NOT NULL
+    question_id BIGINT,
+    category_id INTEGER,
+    PRIMARY KEY (question_id, category_id)
 );
 
 CREATE TABLE Question (
-    id BIGINT NOT NULL,
+    id BIGINT PRIMARY KEY,
     title TEXT NOT NULL,
-    correct_answer BIGINT
+    correct_answer BIGINT UNIQUE
 );
 
 CREATE TABLE Answer (
-    id BIGINT NOT NULL,
+    id BIGINT PRIMARY KEY,
     question_id BIGINT NOT NULL
 );
 
 CREATE TABLE Commentable (
-    id BIGINT NOT NULL
+    id BIGINT PRIMARY KEY
 );
 
 CREATE TABLE Comment (
-    id BIGINT NOT NULL,
+    id BIGINT PRIMARY KEY,
     commentable_id BIGINT NOT NULL
 );
 
 CREATE TABLE Message (
-    id BIGSERIAL,
+    id BIGSERIAL PRIMARY KEY,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     score INTEGER DEFAULT 0 NOT NULL,
     num_reports SMALLINT DEFAULT 0 NOT NULL,
@@ -61,19 +62,19 @@ CREATE TABLE Message (
 );
 
 CREATE TABLE MessageContent (
-    id BIGSERIAL,
+    id BIGSERIAL PRIMARY KEY,
     content TEXT NOT NULL,
     message_id BIGINT
 );
 
 CREATE TABLE "TimeStamp" (
-    message_content_id BIGINT NOT NULL,
+    message_content_id BIGINT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     creation_time TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
 CREATE TABLE ModeratorEdition (
-    message_content_id BIGINT NOT NULL,
+    message_content_id BIGINT PRIMARY KEY,
     moderator_id BIGINT NOT NULL,
     creation_time TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
@@ -81,24 +82,25 @@ CREATE TABLE ModeratorEdition (
 CREATE TABLE Vote (
     message_id BIGINT NOT NULL,
     user_id BIGINT NOT NULL,
-    positive BOOLEAN NOT NULL
+    positive BOOLEAN NOT NULL,
+    PRIMARY KEY (message_id, user_id)
 );
 
 CREATE TABLE "User" (
-    id BIGSERIAL,
-    username TEXT NOT NULL,
-    email TEXT NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
+    username TEXT NOT NULL UNIQUE,
+    email TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
     biography TEXT,
     reputation SMALLINT NOT NULL
 );
 
 CREATE TABLE Moderator (
-    id BIGINT NOT NULL
+    id BIGINT PRIMARY KEY
 );
 
 CREATE TABLE Notification (
-    id BIGSERIAL,
+    id BIGSERIAL PRIMARY KEY,
     description TEXT NOT NULL,
     "date" TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     read BOOLEAN NOT NULL,
@@ -106,183 +108,111 @@ CREATE TABLE Notification (
 );
 
 CREATE TABLE CommentableNotification (
-    id BIGINT NOT NULL,
+    id BIGINT PRIMARY KEY,
     commentable_id BIGINT NOT NULL
 );
 
 CREATE TABLE BadgeNotification (
-    id BIGINT NOT NULL,
+    id BIGINT PRIMARY KEY,
     badge_id BIGINT NOT NULL
 );
 
 CREATE TABLE BadgeAttainment (
     user_id BIGINT NOT NULL,
     badge_id SMALLINT NOT NULL,
-    attainment_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+    attainment_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    PRIMARY KEY (user_id, badge_id)
 );
 
 CREATE TABLE Badge (
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     description TEXT NOT NULL
 );
 
 CREATE TABLE ModeratorBadge (
-    id INTEGER NOT NULL
+    id INTEGER PRIMARY KEY
 );
 
 CREATE TABLE TrustedBadge (
-    id INTEGER NOT NULL
+    id INTEGER PRIMARY KEY
 );
 
 
--- Primary Keys
-ALTER TABLE ONLY Category
-  ADD CONSTRAINT category_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY QuestionCategory
-  ADD CONSTRAINT question_category_pkey PRIMARY KEY (question_id, category_id);
-
-ALTER TABLE ONLY Question
-  ADD CONSTRAINT question_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY Answer
-  ADD CONSTRAINT answer_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY Commentable
-  ADD CONSTRAINT commentable_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY Comment
-  ADD CONSTRAINT comment_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY Message
-  ADD CONSTRAINT message_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY MessageContent
-  ADD CONSTRAINT message_content_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY "TimeStamp"
-  ADD CONSTRAINT timestamp_pkey PRIMARY KEY (message_content_id);
-
-ALTER TABLE ONLY ModeratorEdition
-  ADD CONSTRAINT moderator_edition_pkey PRIMARY KEY (message_content_id);
-
-ALTER TABLE ONLY Vote
-  ADD CONSTRAINT vote_pkey PRIMARY KEY (message_id, user_id);
-
-ALTER TABLE ONLY "User"
-  ADD CONSTRAINT user_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY Moderator
-  ADD CONSTRAINT moderator_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY Notification
-  ADD CONSTRAINT notification_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY CommentableNotification
-  ADD CONSTRAINT commentable_notification_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY BadgeNotification
-  ADD CONSTRAINT badge_notification_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY BadgeAttainment
-  ADD CONSTRAINT badge_attainment_pkey PRIMARY KEY (user_id, badge_id);
-
-ALTER TABLE ONLY Badge
-  ADD CONSTRAINT badge_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY ModeratorBadge
-  ADD CONSTRAINT moderator_badge_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY TrustedBadge
-  ADD CONSTRAINT trusted_badge_pkey PRIMARY KEY (id);
-
-
--- Unique
-ALTER TABLE ONLY Question
-  ADD CONSTRAINT correct_answer_key UNIQUE (correct_answer);
-
-ALTER TABLE ONLY "User"
-  ADD CONSTRAINT user_email_key UNIQUE (email);
-
-ALTER TABLE ONLY "User"
-  ADD CONSTRAINT username_key UNIQUE (username);
-
-
 -- Foreign Keys
-ALTER TABLE ONLY QuestionCategory
-  ADD CONSTRAINT question_category_question_fkey FOREIGN KEY (question_id) REFERENCES Question(id) ON UPDATE CASCADE;
+ALTER TABLE QuestionCategory
+  ADD FOREIGN KEY (question_id) REFERENCES Question(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY QuestionCategory
-  ADD CONSTRAINT question_category_category_fkey FOREIGN KEY (category_id) REFERENCES Category(id) ON UPDATE CASCADE;
+ALTER TABLE QuestionCategory
+  ADD FOREIGN KEY (category_id) REFERENCES Category(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY Question
-  ADD CONSTRAINT question_fkey FOREIGN KEY (id) REFERENCES Commentable(id) ON UPDATE CASCADE;
+ALTER TABLE Question
+  ADD FOREIGN KEY (id) REFERENCES Commentable(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY Question
-  ADD CONSTRAINT question_correct_fkey FOREIGN KEY (correct_answer) REFERENCES Answer(id) ON UPDATE CASCADE;
+ALTER TABLE Question
+  ADD FOREIGN KEY (correct_answer) REFERENCES Answer(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY Answer
-  ADD CONSTRAINT answer_fkey FOREIGN KEY (id) REFERENCES Commentable(id) ON UPDATE CASCADE;
+ALTER TABLE Answer
+  ADD FOREIGN KEY (id) REFERENCES Commentable(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY Answer
-  ADD CONSTRAINT answer_question_fkey FOREIGN KEY (question_id) REFERENCES Question(id) ON UPDATE CASCADE;
+ALTER TABLE Answer
+  ADD FOREIGN KEY (question_id) REFERENCES Question(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY Commentable
-  ADD CONSTRAINT commentable_message_fkey FOREIGN KEY (id) REFERENCES Message(id) ON UPDATE CASCADE;
+ALTER TABLE Commentable
+  ADD FOREIGN KEY (id) REFERENCES Message(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY Comment
-  ADD CONSTRAINT comment_fkey FOREIGN KEY (id) REFERENCES Message(id) ON UPDATE CASCADE;
+ALTER TABLE Comment
+  ADD FOREIGN KEY (id) REFERENCES Message(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY Comment
-  ADD CONSTRAINT comment_commentable_fkey FOREIGN KEY (commentable_id) REFERENCES Commentable(id) ON UPDATE CASCADE;
+ALTER TABLE Comment
+  ADD FOREIGN KEY (commentable_id) REFERENCES Commentable(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY MessageContent
-  ADD CONSTRAINT message_content_message_fkey FOREIGN KEY (message_id) REFERENCES Message(id) ON UPDATE CASCADE;
+ALTER TABLE MessageContent
+  ADD FOREIGN KEY (message_id) REFERENCES Message(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY "TimeStamp"
-  ADD CONSTRAINT time_stamp_message_content_fkey FOREIGN KEY (message_content_id) REFERENCES MessageContent(id) ON UPDATE CASCADE;
+ALTER TABLE "TimeStamp"
+  ADD FOREIGN KEY (message_content_id) REFERENCES MessageContent(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY "TimeStamp"
-  ADD CONSTRAINT time_stamp_user_fkey FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
+ALTER TABLE "TimeStamp"
+  ADD FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY ModeratorEdition
-  ADD CONSTRAINT moderator_edition_message_content_fkey FOREIGN KEY (message_content_id) REFERENCES MessageContent(id) ON UPDATE CASCADE;
+ALTER TABLE ModeratorEdition
+  ADD FOREIGN KEY (message_content_id) REFERENCES MessageContent(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY ModeratorEdition
-  ADD CONSTRAINT moderator_edition_user_fkey FOREIGN KEY (moderator_id) REFERENCES Moderator(id) ON UPDATE CASCADE;
+ALTER TABLE ModeratorEdition
+  ADD FOREIGN KEY (moderator_id) REFERENCES Moderator(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY Vote
-  ADD CONSTRAINT vote_message_fkey FOREIGN KEY (message_id) REFERENCES Message(id) ON UPDATE CASCADE;
+ALTER TABLE Vote
+  ADD FOREIGN KEY (message_id) REFERENCES Message(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY Vote
-  ADD CONSTRAINT vote_user_fkey FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
+ALTER TABLE Vote
+  ADD FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY Moderator
-  ADD CONSTRAINT moderator_user_fkey FOREIGN KEY (id) REFERENCES "User"(id) ON UPDATE CASCADE;
+ALTER TABLE Moderator
+  ADD FOREIGN KEY (id) REFERENCES "User"(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY Notification
-  ADD CONSTRAINT notification_user_fkey FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
+ALTER TABLE Notification
+  ADD FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY CommentableNotification
-  ADD CONSTRAINT commentable_notification_fkey FOREIGN KEY (id) REFERENCES Notification(id) ON UPDATE CASCADE;
+ALTER TABLE CommentableNotification
+  ADD FOREIGN KEY (id) REFERENCES Notification(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY CommentableNotification
-  ADD CONSTRAINT commentable_notification_commentable_fkey FOREIGN KEY (id) REFERENCES Commentable(id) ON UPDATE CASCADE;
+ALTER TABLE CommentableNotification
+  ADD FOREIGN KEY (id) REFERENCES Commentable(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY BadgeNotification
-  ADD CONSTRAINT badge_notification_fkey FOREIGN KEY (id) REFERENCES Notification(id) ON UPDATE CASCADE;
+ALTER TABLE BadgeNotification
+  ADD FOREIGN KEY (id) REFERENCES Notification(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY BadgeNotification
-  ADD CONSTRAINT badge_notification_badge_fkey FOREIGN KEY (badge_id) REFERENCES Badge(id) ON UPDATE CASCADE;
+ALTER TABLE BadgeNotification
+  ADD FOREIGN KEY (badge_id) REFERENCES Badge(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY BadgeAttainment
-  ADD CONSTRAINT badge_attainment_user_fkey FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
+ALTER TABLE BadgeAttainment
+  ADD FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY BadgeAttainment
-  ADD CONSTRAINT badge_attainment_badge_fkey FOREIGN KEY (badge_id) REFERENCES Badge(id) ON UPDATE CASCADE;
+ALTER TABLE BadgeAttainment
+  ADD FOREIGN KEY (badge_id) REFERENCES Badge(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY ModeratorBadge
-  ADD CONSTRAINT moderator_badge_fkey FOREIGN KEY (id) REFERENCES Badge(id) ON UPDATE CASCADE;
+ALTER TABLE ModeratorBadge
+  ADD FOREIGN KEY (id) REFERENCES Badge(id) ON UPDATE CASCADE;
 
-ALTER TABLE ONLY TrustedBadge
-  ADD CONSTRAINT trusted_badge_fkey FOREIGN KEY (id) REFERENCES Badge(id) ON UPDATE CASCADE;
+ALTER TABLE TrustedBadge
+  ADD FOREIGN KEY (id) REFERENCES Badge(id) ON UPDATE CASCADE;
