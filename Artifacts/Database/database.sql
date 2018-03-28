@@ -1,59 +1,59 @@
 -- Tables
-DROP TABLE IF EXISTS Category CASCADE;
-DROP TABLE IF EXISTS QuestionCategory CASCADE;
-DROP TABLE IF EXISTS Question CASCADE;
-DROP TABLE IF EXISTS Answer CASCADE;
-DROP TABLE IF EXISTS Commentable CASCADE;
-DROP TABLE IF EXISTS Comment CASCADE;
-DROP TABLE IF EXISTS Message CASCADE;
-DROP TABLE IF EXISTS MessageContent CASCADE;
-DROP TABLE IF EXISTS "TimeStamp" CASCADE;
-DROP TABLE IF EXISTS ModEdition CASCADE;
-DROP TABLE IF EXISTS Vote CASCADE;
-DROP TABLE IF EXISTS "User" CASCADE;
-DROP TABLE IF EXISTS Moderator CASCADE;
-DROP TABLE IF EXISTS Notification CASCADE;
-DROP TABLE IF EXISTS CommentableNotification CASCADE;
-DROP TABLE IF EXISTS BadgeNotification CASCADE;
-DROP TABLE IF EXISTS BadgeAttainment CASCADE;
-DROP TABLE IF EXISTS Badge CASCADE;
-DROP TABLE IF EXISTS ModeratorBadge CASCADE;
-DROP TABLE IF EXISTS TrustedBadge CASCADE;
+DROP TABLE IF EXISTS category CASCADE;
+DROP TABLE IF EXISTS question_category CASCADE;
+DROP TABLE IF EXISTS question CASCADE;
+DROP TABLE IF EXISTS answer CASCADE;
+DROP TABLE IF EXISTS commentable CASCADE;
+DROP TABLE IF EXISTS comment CASCADE;
+DROP TABLE IF EXISTS message CASCADE;
+DROP TABLE IF EXISTS message_content CASCADE;
+DROP TABLE IF EXISTS time_stamp CASCADE;
+DROP TABLE IF EXISTS moderator_edition CASCADE;
+DROP TABLE IF EXISTS vote CASCADE;
+DROP TABLE IF EXISTS "user" CASCADE;
+DROP TABLE IF EXISTS moderator CASCADE;
+DROP TABLE IF EXISTS notification CASCADE;
+DROP TABLE IF EXISTS commentable_notification CASCADE;
+DROP TABLE IF EXISTS badge_notification CASCADE;
+DROP TABLE IF EXISTS badge_attainment CASCADE;
+DROP TABLE IF EXISTS badge CASCADE;
+DROP TABLE IF EXISTS moderator_badge CASCADE;
+DROP TABLE IF EXISTS trusted_badge CASCADE;
 
-CREATE TABLE Category (
+CREATE TABLE category (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT,
     num_posts INTEGER DEFAULT 0 NOT NULL
 );
 
-CREATE TABLE QuestionCategory (
+CREATE TABLE question_category (
     question_id BIGINT,
     category_id INTEGER,
     PRIMARY KEY (question_id, category_id)
 );
 
-CREATE TABLE Question (
+CREATE TABLE question (
     id BIGINT PRIMARY KEY,
     title TEXT NOT NULL,
     correct_answer BIGINT UNIQUE
 );
 
-CREATE TABLE Answer (
+CREATE TABLE answer (
     id BIGINT PRIMARY KEY,
     question_id BIGINT NOT NULL
 );
 
-CREATE TABLE Commentable (
+CREATE TABLE commentable (
     id BIGINT PRIMARY KEY
 );
 
-CREATE TABLE Comment (
+CREATE TABLE comment (
     id BIGINT PRIMARY KEY,
     commentable_id BIGINT NOT NULL
 );
 
-CREATE TABLE Message (
+CREATE TABLE message (
     id BIGSERIAL PRIMARY KEY,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     score INTEGER DEFAULT 0 NOT NULL,
@@ -61,32 +61,32 @@ CREATE TABLE Message (
     is_banned BOOLEAN DEFAULT FALSE
 );
 
-CREATE TABLE MessageContent (
+CREATE TABLE message_content (
     id BIGSERIAL PRIMARY KEY,
     content TEXT NOT NULL,
     message_id BIGINT
 );
 
-CREATE TABLE "TimeStamp" (
+CREATE TABLE time_stamp (
     message_content_id BIGINT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     creation_time TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
-CREATE TABLE ModeratorEdition (
+CREATE TABLE moderator_edition (
     message_content_id BIGINT PRIMARY KEY,
     moderator_id BIGINT NOT NULL,
     creation_time TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
-CREATE TABLE Vote (
+CREATE TABLE vote (
     message_id BIGINT NOT NULL,
     user_id BIGINT NOT NULL,
     positive BOOLEAN NOT NULL,
     PRIMARY KEY (message_id, user_id)
 );
 
-CREATE TABLE "User" (
+CREATE TABLE "user" (
     id BIGSERIAL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
@@ -95,11 +95,11 @@ CREATE TABLE "User" (
     reputation SMALLINT NOT NULL
 );
 
-CREATE TABLE Moderator (
+CREATE TABLE moderator (
     id BIGINT PRIMARY KEY
 );
 
-CREATE TABLE Notification (
+CREATE TABLE notification (
     id BIGSERIAL PRIMARY KEY,
     description TEXT NOT NULL,
     "date" TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
@@ -107,112 +107,112 @@ CREATE TABLE Notification (
     user_id BIGINT NOT NULL
 );
 
-CREATE TABLE CommentableNotification (
+CREATE TABLE commentable_notification (
     id BIGINT PRIMARY KEY,
     commentable_id BIGINT NOT NULL
 );
 
-CREATE TABLE BadgeNotification (
+CREATE TABLE badge_notification (
     id BIGINT PRIMARY KEY,
     badge_id BIGINT NOT NULL
 );
 
-CREATE TABLE BadgeAttainment (
+CREATE TABLE badge_attainment (
     user_id BIGINT NOT NULL,
     badge_id SMALLINT NOT NULL,
     attainment_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     PRIMARY KEY (user_id, badge_id)
 );
 
-CREATE TABLE Badge (
+CREATE TABLE badge (
     id SERIAL PRIMARY KEY,
     description TEXT NOT NULL
 );
 
-CREATE TABLE ModeratorBadge (
+CREATE TABLE moderator_badge (
     id INTEGER PRIMARY KEY
 );
 
-CREATE TABLE TrustedBadge (
+CREATE TABLE trusted_badge (
     id INTEGER PRIMARY KEY
 );
 
 
 -- Foreign Keys
-ALTER TABLE QuestionCategory
-  ADD FOREIGN KEY (question_id) REFERENCES Question(id) ON UPDATE CASCADE;
+ALTER TABLE question_category
+  ADD FOREIGN KEY (question_id) REFERENCES question(id) ON UPDATE CASCADE;
 
-ALTER TABLE QuestionCategory
-  ADD FOREIGN KEY (category_id) REFERENCES Category(id) ON UPDATE CASCADE;
+ALTER TABLE question_category
+  ADD FOREIGN KEY (category_id) REFERENCES category(id) ON UPDATE CASCADE;
 
-ALTER TABLE Question
-  ADD FOREIGN KEY (id) REFERENCES Commentable(id) ON UPDATE CASCADE;
+ALTER TABLE question
+  ADD FOREIGN KEY (id) REFERENCES commentable(id) ON UPDATE CASCADE;
 
-ALTER TABLE Question
-  ADD FOREIGN KEY (correct_answer) REFERENCES Answer(id) ON UPDATE CASCADE;
+ALTER TABLE question
+  ADD FOREIGN KEY (correct_answer) REFERENCES answer(id) ON UPDATE CASCADE;
 
-ALTER TABLE Answer
-  ADD FOREIGN KEY (id) REFERENCES Commentable(id) ON UPDATE CASCADE;
+ALTER TABLE answer
+  ADD FOREIGN KEY (id) REFERENCES commentable(id) ON UPDATE CASCADE;
 
-ALTER TABLE Answer
-  ADD FOREIGN KEY (question_id) REFERENCES Question(id) ON UPDATE CASCADE;
+ALTER TABLE answer
+  ADD FOREIGN KEY (question_id) REFERENCES question(id) ON UPDATE CASCADE;
 
-ALTER TABLE Commentable
-  ADD FOREIGN KEY (id) REFERENCES Message(id) ON UPDATE CASCADE;
+ALTER TABLE commentable
+  ADD FOREIGN KEY (id) REFERENCES message(id) ON UPDATE CASCADE;
 
-ALTER TABLE Comment
-  ADD FOREIGN KEY (id) REFERENCES Message(id) ON UPDATE CASCADE;
+ALTER TABLE comment
+  ADD FOREIGN KEY (id) REFERENCES message(id) ON UPDATE CASCADE;
 
-ALTER TABLE Comment
-  ADD FOREIGN KEY (commentable_id) REFERENCES Commentable(id) ON UPDATE CASCADE;
+ALTER TABLE comment
+  ADD FOREIGN KEY (commentable_id) REFERENCES commentable(id) ON UPDATE CASCADE;
 
-ALTER TABLE MessageContent
-  ADD FOREIGN KEY (message_id) REFERENCES Message(id) ON UPDATE CASCADE;
+ALTER TABLE message_content
+  ADD FOREIGN KEY (message_id) REFERENCES message(id) ON UPDATE CASCADE;
 
-ALTER TABLE "TimeStamp"
-  ADD FOREIGN KEY (message_content_id) REFERENCES MessageContent(id) ON UPDATE CASCADE;
+ALTER TABLE time_stamp
+  ADD FOREIGN KEY (message_content_id) REFERENCES message_content(id) ON UPDATE CASCADE;
 
-ALTER TABLE "TimeStamp"
-  ADD FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
+ALTER TABLE time_stamp
+  ADD FOREIGN KEY (user_id) REFERENCES "user"(id) ON UPDATE CASCADE;
 
-ALTER TABLE ModeratorEdition
-  ADD FOREIGN KEY (message_content_id) REFERENCES MessageContent(id) ON UPDATE CASCADE;
+ALTER TABLE moderator_edition
+  ADD FOREIGN KEY (message_content_id) REFERENCES message_content(id) ON UPDATE CASCADE;
 
-ALTER TABLE ModeratorEdition
-  ADD FOREIGN KEY (moderator_id) REFERENCES Moderator(id) ON UPDATE CASCADE;
+ALTER TABLE moderator_edition
+  ADD FOREIGN KEY (moderator_id) REFERENCES moderator(id) ON UPDATE CASCADE;
 
-ALTER TABLE Vote
-  ADD FOREIGN KEY (message_id) REFERENCES Message(id) ON UPDATE CASCADE;
+ALTER TABLE vote
+  ADD FOREIGN KEY (message_id) REFERENCES message(id) ON UPDATE CASCADE;
 
-ALTER TABLE Vote
-  ADD FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
+ALTER TABLE vote
+  ADD FOREIGN KEY (user_id) REFERENCES "user"(id) ON UPDATE CASCADE;
 
-ALTER TABLE Moderator
-  ADD FOREIGN KEY (id) REFERENCES "User"(id) ON UPDATE CASCADE;
+ALTER TABLE moderator
+  ADD FOREIGN KEY (id) REFERENCES "user"(id) ON UPDATE CASCADE;
 
-ALTER TABLE Notification
-  ADD FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
+ALTER TABLE notification
+  ADD FOREIGN KEY (user_id) REFERENCES "user"(id) ON UPDATE CASCADE;
 
-ALTER TABLE CommentableNotification
-  ADD FOREIGN KEY (id) REFERENCES Notification(id) ON UPDATE CASCADE;
+ALTER TABLE commentable_notification
+  ADD FOREIGN KEY (id) REFERENCES notification(id) ON UPDATE CASCADE;
 
-ALTER TABLE CommentableNotification
-  ADD FOREIGN KEY (id) REFERENCES Commentable(id) ON UPDATE CASCADE;
+ALTER TABLE commentable_notification
+  ADD FOREIGN KEY (id) REFERENCES commentable(id) ON UPDATE CASCADE;
 
-ALTER TABLE BadgeNotification
-  ADD FOREIGN KEY (id) REFERENCES Notification(id) ON UPDATE CASCADE;
+ALTER TABLE badge_notification
+  ADD FOREIGN KEY (id) REFERENCES notification(id) ON UPDATE CASCADE;
 
-ALTER TABLE BadgeNotification
-  ADD FOREIGN KEY (badge_id) REFERENCES Badge(id) ON UPDATE CASCADE;
+ALTER TABLE badge_notification
+  ADD FOREIGN KEY (badge_id) REFERENCES badge(id) ON UPDATE CASCADE;
 
-ALTER TABLE BadgeAttainment
-  ADD FOREIGN KEY (user_id) REFERENCES "User"(id) ON UPDATE CASCADE;
+ALTER TABLE badge_attainment
+  ADD FOREIGN KEY (user_id) REFERENCES "user"(id) ON UPDATE CASCADE;
 
-ALTER TABLE BadgeAttainment
-  ADD FOREIGN KEY (badge_id) REFERENCES Badge(id) ON UPDATE CASCADE;
+ALTER TABLE badge_attainment
+  ADD FOREIGN KEY (badge_id) REFERENCES badge(id) ON UPDATE CASCADE;
 
-ALTER TABLE ModeratorBadge
-  ADD FOREIGN KEY (id) REFERENCES Badge(id) ON UPDATE CASCADE;
+ALTER TABLE moderator_badge
+  ADD FOREIGN KEY (id) REFERENCES badge(id) ON UPDATE CASCADE;
 
-ALTER TABLE TrustedBadge
-  ADD FOREIGN KEY (id) REFERENCES Badge(id) ON UPDATE CASCADE;
+ALTER TABLE trusted_badge
+  ADD FOREIGN KEY (id) REFERENCES badge(id) ON UPDATE CASCADE;
