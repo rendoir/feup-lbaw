@@ -65,7 +65,7 @@ CREATE TABLE message_version (
     content TEXT NOT NULL,
     message_id BIGINT,
     creation_time TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    moderator_id BIGINT NOT NULL,
+    moderator_id BIGINT NOT NULL
 );
 
 CREATE TABLE vote (
