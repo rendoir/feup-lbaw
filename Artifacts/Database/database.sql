@@ -6,9 +6,7 @@ DROP TABLE IF EXISTS answer CASCADE;
 DROP TABLE IF EXISTS commentable CASCADE;
 DROP TABLE IF EXISTS comment CASCADE;
 DROP TABLE IF EXISTS message CASCADE;
-DROP TABLE IF EXISTS message_content CASCADE;
-DROP TABLE IF EXISTS time_stamp CASCADE;
-DROP TABLE IF EXISTS moderator_edition CASCADE;
+DROP TABLE IF EXISTS message_version CASCADE;
 DROP TABLE IF EXISTS vote CASCADE;
 DROP TABLE IF EXISTS "user" CASCADE;
 DROP TABLE IF EXISTS moderator CASCADE;
@@ -58,25 +56,16 @@ CREATE TABLE message (
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     score INTEGER DEFAULT 0 NOT NULL,
     num_reports SMALLINT DEFAULT 0 NOT NULL,
-    is_banned BOOLEAN DEFAULT FALSE
+    is_banned BOOLEAN DEFAULT FALSE,
+    author BIGINT NOT NULL
 );
 
-CREATE TABLE message_content (
+CREATE TABLE message_version (
     id BIGSERIAL PRIMARY KEY,
     content TEXT NOT NULL,
-    message_id BIGINT
-);
-
-CREATE TABLE time_stamp (
-    message_content_id BIGINT PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    creation_time TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
-);
-
-CREATE TABLE moderator_edition (
-    message_content_id BIGINT PRIMARY KEY,
+    message_id BIGINT,
+    creation_time TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     moderator_id BIGINT NOT NULL,
-    creation_time TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
 CREATE TABLE vote (
@@ -139,6 +128,9 @@ CREATE TABLE trusted_badge (
 
 
 -- Foreign Keys
+ALTER TABLE message
+  ADD FOREIGN KEY (author) REFERENCES "user"(id) ON UPDATE CASCADE;
+
 ALTER TABLE question_category
   ADD FOREIGN KEY (question_id) REFERENCES question(id) ON UPDATE CASCADE;
 
@@ -166,19 +158,10 @@ ALTER TABLE comment
 ALTER TABLE comment
   ADD FOREIGN KEY (commentable_id) REFERENCES commentable(id) ON UPDATE CASCADE;
 
-ALTER TABLE message_content
+ALTER TABLE message_version
   ADD FOREIGN KEY (message_id) REFERENCES message(id) ON UPDATE CASCADE;
 
-ALTER TABLE time_stamp
-  ADD FOREIGN KEY (message_content_id) REFERENCES message_content(id) ON UPDATE CASCADE;
-
-ALTER TABLE time_stamp
-  ADD FOREIGN KEY (user_id) REFERENCES "user"(id) ON UPDATE CASCADE;
-
-ALTER TABLE moderator_edition
-  ADD FOREIGN KEY (message_content_id) REFERENCES message_content(id) ON UPDATE CASCADE;
-
-ALTER TABLE moderator_edition
+ALTER TABLE message_version
   ADD FOREIGN KEY (moderator_id) REFERENCES moderator(id) ON UPDATE CASCADE;
 
 ALTER TABLE vote
