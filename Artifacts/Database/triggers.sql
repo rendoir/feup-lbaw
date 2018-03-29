@@ -1,6 +1,3 @@
--- TODO:
--- badges (give them, assign mod)
-
 -- A message is banned when it exceeds the report limits
 CREATE FUNCTION ban_message() RETURNS TRIGGER AS $$
   BEGIN
@@ -222,3 +219,56 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER award_trusted
   BEFORE UPDATE OF correct_answer ON question
   FOR EACH ROW EXECUTE PROCEDURE award_trusted();
+
+
+-- Award moderator badge
+CREATE FUNCTION award_moderator_reputation() RETURNS TRIGGER AS $$
+  DECLARE moderator_id SMALLINT;
+  DECLARE trusted_id SMALLINT;
+  BEGIN
+    SELECT INTO moderator_id id FROM moderator_badge;
+    SELECT INTO trusted_id id FROM trusted_badge;
+    IF NOT EXISTS
+      (SELECT *
+        FROM badge_attainment
+        WHERE NEW.id = badge_attainment.user_id AND moderator_id = badge_attainment.badge_id)
+      AND EXISTS
+      (SELECT *
+        FROM badge_attainment
+        WHERE NEW.id = badge_attainment.user_id AND trusted_id = badge_attainment.badge_id)
+      AND NEW.reputation >= 500 THEN
+        INSERT INTO badge_attainment (user_id, badge_id) VALUES (NEW.id, moderator_id);
+        INSERT INTO moderator (id) VALUES (NEW.id);
+    END IF;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER award_moderator_reputation
+  AFTER UPDATE OF reputation ON "user"
+  FOR EACH ROW EXECUTE PROCEDURE award_moderator_reputation();
+
+CREATE FUNCTION award_moderator_trusted() RETURNS TRIGGER AS $$
+  DECLARE moderator_id SMALLINT;
+  DECLARE trusted_id SMALLINT;
+  DECLARE rep REAL;
+  BEGIN
+    SELECT INTO moderator_id id FROM moderator_badge;
+    SELECT INTO trusted_id id FROM trusted_badge;
+    SELECT INTO rep reputation FROM "user" WHERE "user".id = NEW.user_id;
+    IF NEW.badge_id = trusted_id
+    AND NOT EXISTS
+      (SELECT *
+        FROM badge_attainment
+        WHERE NEW.user_id = badge_attainment.user_id AND moderator_id = badge_attainment.badge_id)
+      AND rep >= 500 THEN
+        INSERT INTO badge_attainment (user_id, badge_id) VALUES (NEW.user_id, moderator_id);
+        INSERT INTO moderator (id) VALUES (NEW.user_id);
+    END IF;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER award_moderator_trusted
+  AFTER INSERT ON badge_attainment
+  FOR EACH ROW EXECUTE PROCEDURE award_moderator_trusted();
