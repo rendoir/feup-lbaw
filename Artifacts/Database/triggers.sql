@@ -1,5 +1,4 @@
 -- TODO:
--- reputation (scores)
 -- badges (give them, assign mod)
 
 -- A message is banned when it exceeds the report limits
@@ -38,7 +37,7 @@ CREATE FUNCTION check_categories() RETURNS TRIGGER AS $$
   BEGIN
     SELECT INTO num_categories count(*)
       FROM question_category
-      WHERE NEW.question_id = question_category.id;
+      WHERE question_id = question_category.id;
     IF num_categories > 5 THEN
       RAISE EXCEPTION 'A questions can only have a maximum of 5 categories';
     ELSIF num_categories < 1 THEN
@@ -99,6 +98,65 @@ CREATE TRIGGER update_category
   FOR EACH ROW EXECUTE PROCEDURE update_category();
 
 
+-- Update score on vote changes
+CREATE FUNCTION update_score_vote() RETURNS TRIGGER AS $$
+  BEGIN
+    IF NEW.positive AND NOT OLD.positive THEN
+      UPDATE message
+        SET score = score + 2
+        WHERE NEW.message_id = message.id;
+    ELSIF NOT NEW.positive AND OLD.positive THEN
+      UPDATE message
+        SET score = score - 2
+        WHERE NEW.message_id = message.id;
+    END IF;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_score_vote
+  BEFORE UPDATE ON Vote
+  FOR EACH ROW EXECUTE PROCEDURE update_score_vote();
+
+CREATE FUNCTION insert_score_vote() RETURNS TRIGGER AS $$
+  BEGIN
+    IF NEW.positive THEN
+      UPDATE message
+        SET score = score + 1
+        WHERE NEW.message_id = message.id;
+    ELSIF NOT NEW.positive THEN
+      UPDATE message
+        SET score = score - 1
+        WHERE NEW.message_id = message.id;
+    END IF;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_score_vote
+  BEFORE INSERT ON Vote
+  FOR EACH ROW EXECUTE PROCEDURE insert_score_vote();
+
+CREATE FUNCTION delete_score_vote() RETURNS TRIGGER AS $$
+  BEGIN
+    IF OLD.positive THEN
+      UPDATE message
+        SET score = score - 1
+        WHERE OLD.message_id = message.id;
+    ELSIF NOT OLD.positive THEN
+      UPDATE message
+        SET score = score + 1
+        WHERE OLD.message_id = message.id;
+    END IF;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER delete_score_vote
+  BEFORE DELETE ON Vote
+  FOR EACH ROW EXECUTE PROCEDURE delete_score_vote();
+
+
 -- Update reputation: reports
 CREATE FUNCTION update_reputation_reports() RETURNS TRIGGER AS $$
   BEGIN
@@ -112,3 +170,24 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER update_reputation_reports
   BEFORE UPDATE OF num_reports ON message
   FOR EACH ROW EXECUTE PROCEDURE update_reputation_reports();
+
+
+-- Update reputation: message scores
+CREATE FUNCTION update_reputation_scores() RETURNS TRIGGER AS $$
+  BEGIN
+    IF EXISTS (SELECT * FROM commentable WHERE NEW.id = commentable.id) THEN
+      UPDATE "user"
+        SET reputation = reputation + (NEW.score - OLD.score)
+        WHERE NEW.author = "user".id;
+    ELSIF EXISTS (SELECT * FROM comment WHERE NEW.id = comment.id) THEN
+      UPDATE "user"
+        SET reputation = reputation + (NEW.score - OLD.score)/2
+        WHERE NEW.author = "user".id;
+    END IF;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_reputation_scores
+  BEFORE UPDATE OF score ON message
+  FOR EACH ROW EXECUTE PROCEDURE update_reputation_scores();
