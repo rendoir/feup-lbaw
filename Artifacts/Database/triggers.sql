@@ -27,7 +27,7 @@ CREATE FUNCTION check_correct() RETURNS TRIGGER AS $$
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER check_correct
-  BEFORE INSERT OR UPDATE OF correct_answer ON question
+  BEFORE UPDATE OF correct_answer ON question
   FOR EACH ROW EXECUTE PROCEDURE check_correct();
 
 
@@ -191,3 +191,34 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER update_reputation_scores
   BEFORE UPDATE OF score ON message
   FOR EACH ROW EXECUTE PROCEDURE update_reputation_scores();
+
+
+-- Award trusted badge
+CREATE FUNCTION award_trusted() RETURNS TRIGGER AS $$
+  DECLARE answer_author BIGINT;
+  DECLARE trusted_id SMALLINT;
+  DECLARE num_correct_answers INTEGER;
+  BEGIN
+    SELECT INTO answer_author author
+      FROM message
+      WHERE message.id = NEW.correct_answer;
+    SELECT INTO trusted_id id FROM trusted_badge;
+    IF NOT EXISTS
+      (SELECT *
+        FROM badge_attainment
+        WHERE answer_author = badge_attainment.user_id AND trusted_id = badge_attainment.badge_id)
+    THEN
+      SELECT INTO num_correct_answers count(*)
+        FROM message, question
+        WHERE message.id = question.correct_answer AND message.author = answer_author;
+      IF num_correct_answers >= 50 THEN
+        INSERT INTO badge_attainment (user_id, badge_id) VALUES (answer_author, trusted_id);
+      END IF;
+    END IF;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER award_trusted
+  BEFORE UPDATE OF correct_answer ON question
+  FOR EACH ROW EXECUTE PROCEDURE award_trusted();
