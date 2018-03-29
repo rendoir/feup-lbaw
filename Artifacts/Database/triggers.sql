@@ -1,22 +1,26 @@
+-- TODO:
+-- reputation (scores)
+-- badges (give them, assign mod)
+
 -- A message is banned when it exceeds the report limits
 CREATE FUNCTION ban_message() RETURNS TRIGGER AS $$
   BEGIN
-    UPDATE Message SET is_banned = TRUE;
+    UPDATE message SET NEW.is_banned = TRUE;
     RETURN NEW;
   END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER ban_message
-  BEFORE INSERT OR UPDATE OF num_reports ON Message
+  BEFORE UPDATE OF num_reports ON message
   FOR EACH ROW
-    WHEN ( NEW.num_reports >= 5 + new.score^(1/3) )
-    EXECUTE PROCEDURE ban_message();
+    WHEN ( NEW.num_reports >= 5 + NEW.score^(1/3) )
+      EXECUTE PROCEDURE ban_message();
 
 
 -- Check if the correct answer is an answer to that question
 CREATE FUNCTION check_correct() RETURNS TRIGGER AS $$
   BEGIN
-    IF NOT EXISTS (SELECT * FROM Answer WHERE NEW.correct_answer = id AND NEW.id = question_id) THEN
+    IF NOT EXISTS (SELECT * FROM answer WHERE NEW.correct_answer = id AND NEW.id = question_id) THEN
       RAISE EXCEPTION 'An answer can only be marked as correct if it is an answer of the question';
     END IF;
     RETURN NEW;
@@ -24,5 +28,87 @@ CREATE FUNCTION check_correct() RETURNS TRIGGER AS $$
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER check_correct
-  BEFORE INSERT OR UPDATE OF correct_answer ON Question
+  BEFORE INSERT OR UPDATE OF correct_answer ON question
   FOR EACH ROW EXECUTE PROCEDURE check_correct();
+
+
+-- Ensure questions have one to five categories
+CREATE FUNCTION check_categories() RETURNS TRIGGER AS $$
+  DECLARE num_categories SMALLINT;
+  BEGIN
+    SELECT INTO num_categories count(*)
+      FROM question_category
+      WHERE NEW.question_id = question_category.id;
+    IF num_categories > 5 THEN
+      RAISE EXCEPTION 'A questions can only have a maximum of 5 categories';
+    ELSIF num_categories < 1 THEN
+      RAISE EXCEPTION 'A questions must have at least 1 category';
+    END IF;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_categories
+  AFTER INSERT OR UPDATE OR DELETE ON question_category
+  FOR EACH ROW EXECUTE PROCEDURE check_categories();
+
+
+-- Ensure number of posts per category is always updated
+CREATE FUNCTION insert_category() RETURNS TRIGGER AS $$
+  BEGIN
+    UPDATE category
+      SET num_posts = num_posts + 1
+      WHERE NEW.category_id = category.id;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_category
+  AFTER INSERT ON question_category
+  FOR EACH ROW EXECUTE PROCEDURE insert_category();
+
+
+CREATE FUNCTION delete_category() RETURNS TRIGGER AS $$
+  BEGIN
+    UPDATE category
+      SET num_posts = num_posts - 1
+      WHERE OLD.category_id = category.id;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER delete_category
+  AFTER DELETE ON question_category
+  FOR EACH ROW EXECUTE PROCEDURE delete_category();
+
+
+CREATE FUNCTION update_category() RETURNS TRIGGER AS $$
+  BEGIN
+    UPDATE category
+      SET num_posts = num_posts - 1
+      WHERE OLD.category_id = category.id;
+    UPDATE category
+      SET num_posts = num_posts + 1
+      WHERE NEW.category_id = category.id;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_category
+  AFTER UPDATE ON question_category
+  FOR EACH ROW EXECUTE PROCEDURE update_category();
+
+
+-- Update reputation: reports
+CREATE FUNCTION update_reputation_reports() RETURNS TRIGGER AS $$
+  BEGIN
+    UPDATE "user"
+      SET reputation = reputation - (NEW.num_reports - OLD.num_reports)*10
+      WHERE NEW.author = "user".id;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_reputation_reports
+  BEFORE UPDATE OF num_reports ON message
+  FOR EACH ROW EXECUTE PROCEDURE update_reputation_reports();

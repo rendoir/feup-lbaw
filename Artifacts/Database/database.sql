@@ -23,7 +23,7 @@ CREATE TABLE "user" (
     email TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
     biography TEXT,
-    reputation SMALLINT NOT NULL
+    reputation REAL NOT NULL DEFAULT 0.0
 );
 
 CREATE TABLE moderator (
