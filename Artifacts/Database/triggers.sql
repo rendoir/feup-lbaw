@@ -16,8 +16,9 @@ CREATE TRIGGER ban_message
 -- Check if the correct answer is an answer to that question
 CREATE FUNCTION check_correct() RETURNS TRIGGER AS $$
   BEGIN
-    IF NOT EXISTS (SELECT * FROM answer WHERE NEW.correct_answer = id AND NEW.id = question_id) THEN
-      RAISE EXCEPTION 'An answer can only be marked as correct if it is an answer of the question';
+    IF NEW.correct_answer IS NOT NULL AND
+      NOT EXISTS (SELECT * FROM answer WHERE NEW.correct_answer = id AND NEW.id = question_id) THEN
+        RAISE EXCEPTION 'An answer can only be marked as correct if it is an answer of the question';
     END IF;
     RETURN NEW;
   END;
