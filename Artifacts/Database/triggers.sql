@@ -220,7 +220,7 @@ CREATE FUNCTION award_trusted() RETURNS TRIGGER AS $$
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER award_trusted
-  BEFORE UPDATE OF correct_answer ON question
+  AFTER UPDATE OF correct_answer ON question
   FOR EACH ROW EXECUTE PROCEDURE award_trusted();
 
 
