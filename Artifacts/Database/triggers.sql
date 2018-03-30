@@ -1,7 +1,9 @@
 -- A message is banned when it exceeds the report limits
 CREATE FUNCTION ban_message() RETURNS TRIGGER AS $$
   BEGIN
-    UPDATE message SET is_banned = TRUE;
+    UPDATE message
+      SET is_banned = TRUE
+      WHERE NEW.id = message.id;
     RETURN NEW;
   END;
 $$ LANGUAGE plpgsql;
@@ -179,7 +181,7 @@ CREATE FUNCTION update_reputation_scores() RETURNS TRIGGER AS $$
         WHERE NEW.author = "user".id;
     ELSIF EXISTS (SELECT * FROM comment WHERE NEW.id = comment.id) THEN
       UPDATE "user"
-        SET reputation = reputation + (NEW.score - OLD.score)/2
+        SET reputation = reputation + (NEW.score - OLD.score)/2.0
         WHERE NEW.author = "user".id;
     END IF;
     RETURN NEW;
