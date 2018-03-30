@@ -35,11 +35,11 @@ CREATE FUNCTION check_categories() RETURNS TRIGGER AS $$
   BEGIN
     SELECT INTO num_categories count(*)
       FROM question_category
-      WHERE question_id = question_category.id;
+      WHERE question_id = question_category.question_id;
     IF num_categories > 5 THEN
-      RAISE EXCEPTION 'A questions can only have a maximum of 5 categories';
+      RAISE EXCEPTION 'A question can only have a maximum of 5 categories';
     ELSIF num_categories < 1 THEN
-      RAISE EXCEPTION 'A questions must have at least 1 category';
+      RAISE EXCEPTION 'A question must have at least 1 category';
     END IF;
     RETURN NEW;
   END;
