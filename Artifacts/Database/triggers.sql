@@ -1,13 +1,13 @@
 -- A message is banned when it exceeds the report limits
 CREATE FUNCTION ban_message() RETURNS TRIGGER AS $$
   BEGIN
-    UPDATE message SET NEW.is_banned = TRUE;
+    UPDATE message SET is_banned = TRUE;
     RETURN NEW;
   END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER ban_message
-  BEFORE UPDATE OF num_reports ON message
+  AFTER UPDATE OF num_reports ON message
   FOR EACH ROW
     WHEN ( NEW.num_reports >= 5 + NEW.score^(1/3) )
       EXECUTE PROCEDURE ban_message();
