@@ -275,3 +275,22 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER award_moderator_trusted
   AFTER INSERT ON badge_attainment
   FOR EACH ROW EXECUTE PROCEDURE award_moderator_trusted();
+
+
+-- Users can't vote their own messages
+CREATE FUNCTION check_own_vote() RETURNS TRIGGER AS $$
+  DECLARE message_author BIGINT;
+  BEGIN
+    SELECT INTO message_author author
+      FROM message
+      WHERE message.id = NEW.message_id;
+    IF message_author = NEW.user_id THEN
+      RAISE EXCEPTION 'A user is not allowed to vote their own messages';
+    END IF;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_own_vote
+  BEFORE INSERT ON Vote
+  FOR EACH ROW EXECUTE PROCEDURE check_own_vote();
