@@ -34,10 +34,16 @@ CREATE TRIGGER check_correct
 -- Ensure questions have one to five categories
 CREATE FUNCTION check_categories() RETURNS TRIGGER AS $$
   DECLARE num_categories SMALLINT;
+  DECLARE current RECORD;
   BEGIN
-    SELECT INTO num_categories count(*)
+      IF TG_OP = 'INSERT' THEN
+        current = NEW;
+      ELSE
+        current = OLD;
+      END IF;
+      SELECT INTO num_categories count(*)
       FROM question_category
-      WHERE question_id = question_category.question_id;
+      WHERE current.question_id = question_category.question_id;
     IF num_categories > 5 THEN
       RAISE EXCEPTION 'A question can only have a maximum of 5 categories';
     ELSIF num_categories < 1 THEN
@@ -48,7 +54,7 @@ CREATE FUNCTION check_categories() RETURNS TRIGGER AS $$
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER check_categories
-  AFTER INSERT OR UPDATE OR DELETE ON question_category
+  AFTER INSERT OR DELETE ON question_category
   FOR EACH ROW EXECUTE PROCEDURE check_categories();
 
 
