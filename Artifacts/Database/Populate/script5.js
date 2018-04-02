@@ -3024,9 +3024,15 @@ let q_end = new Date(2016, 0, 1, 0, 0, 0, 0);
 let o_start = new Date(2016, 0, 1, 0, 0, 0, 0);
 let o_end = new Date(2017, 0, 1, 0, 0, 0, 0);
 
+function addZero(tmp) {
+  if(tmp >= 10)
+    return tmp;
+  return '0' + tmp;
+}
+
 function dateStr(date) {
   let date_str = "";
-  date_str += date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+  date_str += date.getFullYear() + '-' + addZero((date.getMonth()+1)) + '-' + addZero(date.getDate()) + ' ' + addZero(date.getHours()) + ':' + addZero(date.getMinutes()) + ':' + addZero(date.getSeconds());
   return date_str;
 }
 

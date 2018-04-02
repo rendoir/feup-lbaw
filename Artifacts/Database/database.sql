@@ -75,7 +75,7 @@ CREATE TABLE message_version (
     id BIGSERIAL PRIMARY KEY,
     content TEXT NOT NULL,
     message_id BIGINT NOT NULL REFERENCES message(id),
-    creation_time TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    creation_time TIMESTAMP NOT NULL DEFAULT now(),
     moderator_id BIGINT REFERENCES moderator(id)
 );
 

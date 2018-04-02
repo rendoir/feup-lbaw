@@ -12,7 +12,7 @@ for(let i = 0; i < inserts.length; i++) {
       if((author == "16" || author == "17") && rng > 75) {
         _tmp_++;
         votes.push("insert into vote (message_id, user_id, positive) values (" + (i+1) + ", " + j + ", " + "TRUE);");
-      } else if(author != "16" && author != "17" && rng < 10) {
+      } else if(author != "16" && author != "17" && rng < 5) {
         let rng_bool = Math.floor(Math.random() * 100);
         let bool_str = (rng_bool > 80) ? "FALSE" : "TRUE";
         votes.push("insert into vote (message_id, user_id, positive) values (" + (i+1) + ", " + j + ", " + bool_str + ");");
