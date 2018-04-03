@@ -34,6 +34,7 @@ ORDER BY
   num_answers DESC
 LIMIT 25;
 
+-- SELECT04
 -- Select the contents ot the 25 most answered questions
 SELECT * FROM (
   SELECT question.id, COUNT(answer.question_id) AS num_answers
@@ -60,12 +61,14 @@ ON
 ORDER BY
   most_answered.num_answers DESC;
 
+-- SELECT05
 -- Select the categories ordered by number of posts/questions in each category
 SELECT name, num_posts
 FROM category
 ORDER BY 
   num_posts DESC;
 
+-- SELECT06
 -- For a given category, select the 25 most recent questions and their contents (and select only those that aren't banned)
 SELECT DISTINCT ON (creation_time, question.id) category.id, question_id, title, content, correct_answer, score, creation_time, is_banned, author
 FROM category, question, question_category, message, message_version
@@ -83,6 +86,7 @@ ORDER BY
   question.id
 LIMIT 25;
 
+-- SELECT07
 -- Select all the answers of a given question, from newest to oldest
 SELECT DISTINCT ON (answer.id) answer.id, content, creation_time, is_banned, author
 FROM question, answer, message, message_version
@@ -97,7 +101,7 @@ ORDER BY
   answer.id,
   creation_time DESC;
 
-
+-- SELECT08
 -- Select all of a User's questions
 SELECT DISTINCT ON (creation_time, question.id) question.id, title, content, score, creation_time, is_banned
 FROM "user" u, message, message_version, question
@@ -112,7 +116,7 @@ ORDER BY
   creation_time DESC,
   question.id;
 
-
+-- SELECT09
 -- Select all of a User's answers
 SELECT DISTINCT ON (creation_time, answer.id) answer.id, content, score, creation_time, is_banned
 FROM "user" u, message, message_version, answer
@@ -127,6 +131,7 @@ ORDER BY
   creation_time DESC,
   answer.id;
 
+-- SELECT10
 -- Select all of a User's comments
 SELECT DISTINCT ON (creation_time, comment.id) comment.id, content, score, creation_time, is_banned
 FROM "user" u, message, message_version, comment
@@ -141,28 +146,32 @@ ORDER BY
   creation_time DESC,
   comment.id;
 
+-- SELECT11
 -- Select all of a User's correct answers
 
 
+-- SELECT12
 -- Select all of a User's unread notifications
 
-
+-- SELECT13
 -- Select all of a User's badges
 
-
+-- SELECT14
 -- Select a User's profile information
 
-
+-- SELECT15
 -- Select a User's total number of questions
 
-
+-- SELECT16
 -- Select a User's total number of answers
 
-
+-- SELECT17
 -- Select a User's total number of comments
 
-
+-- SELECT18
 -- Select all tags that partially match a given string *
+
+-- SELECT19
 -- Select all questions whose title partially matches a given string *
 
 
