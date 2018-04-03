@@ -86,6 +86,12 @@ CREATE TABLE vote (
     PRIMARY KEY (message_id, user_id)
 );
 
+CREATE TABLE report (
+    message_id BIGINT NOT NULL REFERENCES message(id),
+    user_id BIGINT NOT NULL REFERENCES "user"(id),
+    PRIMARY KEY (message_id, user_id)
+);
+
 CREATE TABLE badge (
     id SERIAL PRIMARY KEY,
     description TEXT NOT NULL
@@ -101,9 +107,8 @@ CREATE TABLE trusted_badge (
 
 CREATE TABLE notification (
     id BIGSERIAL PRIMARY KEY,
-    description TEXT NOT NULL,
     "date" TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    read BOOLEAN NOT NULL,
+    read BOOLEAN NOT NULL DEFAULT FALSE,
     user_id BIGINT NOT NULL REFERENCES "user"(id)
 );
 
@@ -143,6 +148,8 @@ DROP FUNCTION IF EXISTS award_trusted();
 DROP FUNCTION IF EXISTS award_moderator_reputation();
 DROP FUNCTION IF EXISTS award_moderator_trusted();
 DROP FUNCTION IF EXISTS check_own_vote();
+DROP FUNCTION IF EXISTS insert_report();
+DROP FUNCTION IF EXISTS delete_report();
 
 DROP TRIGGER IF EXISTS ban_message ON message;
 DROP TRIGGER IF EXISTS check_correct ON question;
@@ -159,6 +166,8 @@ DROP TRIGGER IF EXISTS award_trusted ON question;
 DROP TRIGGER IF EXISTS award_moderator_reputation ON "user";
 DROP TRIGGER IF EXISTS award_moderator_trusted ON badge_attainment;
 DROP TRIGGER IF EXISTS check_own_vote ON vote;
+DROP TRIGGER IF EXISTS insert_report ON report;
+DROP TRIGGER IF EXISTS delete_report ON report;
 
 -- A message is banned when it exceeds the report limits
 CREATE FUNCTION ban_message() RETURNS TRIGGER AS $$
@@ -462,3 +471,30 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER check_own_vote
   BEFORE INSERT ON Vote
   FOR EACH ROW EXECUTE PROCEDURE check_own_vote();
+
+
+CREATE FUNCTION insert_report() RETURNS TRIGGER AS $$
+  BEGIN
+    UPDATE message
+      SET num_reports = num_reports + 1
+      WHERE NEW.message_id = message.id;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_report
+  BEFORE INSERT ON report
+  FOR EACH ROW EXECUTE PROCEDURE insert_report();
+
+CREATE FUNCTION delete_report() RETURNS TRIGGER AS $$
+  BEGIN
+    UPDATE message
+      SET num_reports = num_reports - 1
+      WHERE NEW.message_id = message.id;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER delete_report
+  BEFORE DELETE ON report
+  FOR EACH ROW EXECUTE PROCEDURE delete_report();
