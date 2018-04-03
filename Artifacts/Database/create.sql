@@ -16,6 +16,7 @@ DROP TABLE IF EXISTS notification CASCADE;
 DROP TABLE IF EXISTS commentable_notification CASCADE;
 DROP TABLE IF EXISTS badge_notification CASCADE;
 DROP TABLE IF EXISTS badge_attainment CASCADE;
+DROP TABLE IF EXISTS report CASCADE;
 
 CREATE TABLE "user" (
     id BIGSERIAL PRIMARY KEY,
@@ -114,7 +115,8 @@ CREATE TABLE notification (
 
 CREATE TABLE commentable_notification (
     id BIGINT PRIMARY KEY REFERENCES notification(id),
-    commentable_id BIGINT NOT NULL REFERENCES commentable(id)
+    notified_msg BIGINT NOT NULL REFERENCES commentable(id),
+    trigger_msg BIGINT NOT NULL REFERENCES message(id)
 );
 
 CREATE TABLE badge_notification (
@@ -150,6 +152,9 @@ DROP FUNCTION IF EXISTS award_moderator_trusted();
 DROP FUNCTION IF EXISTS check_own_vote();
 DROP FUNCTION IF EXISTS insert_report();
 DROP FUNCTION IF EXISTS delete_report();
+DROP FUNCTION IF EXISTS gen_comment_notification();
+DROP FUNCTION IF EXISTS gen_answer_notification();
+DROP FUNCTION IF EXISTS gen_badge_notification();
 
 DROP TRIGGER IF EXISTS ban_message ON message;
 DROP TRIGGER IF EXISTS check_correct ON question;
@@ -168,6 +173,9 @@ DROP TRIGGER IF EXISTS award_moderator_trusted ON badge_attainment;
 DROP TRIGGER IF EXISTS check_own_vote ON vote;
 DROP TRIGGER IF EXISTS insert_report ON report;
 DROP TRIGGER IF EXISTS delete_report ON report;
+DROP TRIGGER IF EXISTS gen_comment_notification ON comment;
+DROP TRIGGER IF EXISTS gen_answer_notification ON answer;
+DROP TRIGGER IF EXISTS gen_badge_notification ON badge_attainment;
 
 -- A message is banned when it exceeds the report limits
 CREATE FUNCTION ban_message() RETURNS TRIGGER AS $$
@@ -498,3 +506,49 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER delete_report
   BEFORE DELETE ON report
   FOR EACH ROW EXECUTE PROCEDURE delete_report();
+
+CREATE FUNCTION gen_comment_notification() RETURNS TRIGGER AS $$
+  DECLARE current_id BIGINT;
+  DECLARE notified_user BIGINT;
+  BEGIN
+    SELECT INTO current_id nextval(pg_get_serial_sequence('notification', 'id'));
+    SELECT INTO notified_user author FROM message WHERE message.id = NEW.commentable_id;
+    INSERT INTO notification (id, user_id) VALUES (current_id, notified_user);
+    INSERT INTO commentable_notification (id, notified_msg, trigger_msg) VALUES (current_id, NEW.commentable_id, NEW.id);
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER gen_comment_notification
+  AFTER INSERT ON comment
+  FOR EACH ROW EXECUTE PROCEDURE gen_comment_notification();
+
+CREATE FUNCTION gen_answer_notification() RETURNS TRIGGER AS $$
+  DECLARE current_id BIGINT;
+  DECLARE notified_user BIGINT;
+  BEGIN
+    SELECT INTO current_id nextval(pg_get_serial_sequence('notification', 'id'));
+    SELECT INTO notified_user author FROM message WHERE message.id = NEW.question_id;
+    INSERT INTO notification (id, user_id) VALUES (current_id, notified_user);
+    INSERT INTO commentable_notification (id, notified_msg, trigger_msg) VALUES (current_id, NEW.question_id, NEW.id);
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER gen_answer_notification
+  AFTER INSERT ON answer
+  FOR EACH ROW EXECUTE PROCEDURE gen_answer_notification();
+
+CREATE FUNCTION gen_badge_notification() RETURNS TRIGGER AS $$
+  DECLARE current_id BIGINT;
+  BEGIN
+    SELECT INTO current_id nextval(pg_get_serial_sequence('notification', 'id'));
+    INSERT INTO notification (id, user_id) VALUES (current_id, NEW.user_id);
+    INSERT INTO badge_notification (id, badge_id) VALUES (current_id, NEW.badge_id);
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER gen_badge_notification
+  AFTER INSERT ON badge_attainment
+  FOR EACH ROW EXECUTE PROCEDURE gen_badge_notification();
