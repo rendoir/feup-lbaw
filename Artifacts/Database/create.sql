@@ -127,6 +127,39 @@ CREATE TABLE badge_attainment (
 ALTER TABLE question
   ADD FOREIGN KEY (correct_answer) REFERENCES answer(id) ON UPDATE CASCADE;
 
+
+DROP FUNCTION IF EXISTS ban_message();
+DROP FUNCTION IF EXISTS check_correct();
+DROP FUNCTION IF EXISTS check_categories();
+DROP FUNCTION IF EXISTS insert_category();
+DROP FUNCTION IF EXISTS delete_category();
+DROP FUNCTION IF EXISTS update_category();
+DROP FUNCTION IF EXISTS update_score_vote();
+DROP FUNCTION IF EXISTS insert_score_vote();
+DROP FUNCTION IF EXISTS delete_score_vote();
+DROP FUNCTION IF EXISTS update_reputation_reports();
+DROP FUNCTION IF EXISTS update_reputation_scores();
+DROP FUNCTION IF EXISTS award_trusted();
+DROP FUNCTION IF EXISTS award_moderator_reputation();
+DROP FUNCTION IF EXISTS award_moderator_trusted();
+DROP FUNCTION IF EXISTS check_own_vote();
+
+DROP TRIGGER IF EXISTS ban_message ON message;
+DROP TRIGGER IF EXISTS check_correct ON question;
+DROP TRIGGER IF EXISTS check_categories ON question_category;
+DROP TRIGGER IF EXISTS insert_category ON question_category;
+DROP TRIGGER IF EXISTS delete_category ON question_category;
+DROP TRIGGER IF EXISTS update_category ON question_category;
+DROP TRIGGER IF EXISTS update_score_vote ON vote;
+DROP TRIGGER IF EXISTS insert_score_vote ON vote;
+DROP TRIGGER IF EXISTS delete_score_vote ON vote;
+DROP TRIGGER IF EXISTS update_reputation_reports ON message;
+DROP TRIGGER IF EXISTS update_reputation_scores ON message;
+DROP TRIGGER IF EXISTS award_trusted ON question;
+DROP TRIGGER IF EXISTS award_moderator_reputation ON "user";
+DROP TRIGGER IF EXISTS award_moderator_trusted ON badge_attainment;
+DROP TRIGGER IF EXISTS check_own_vote ON vote;
+
 -- A message is banned when it exceeds the report limits
 CREATE FUNCTION ban_message() RETURNS TRIGGER AS $$
   BEGIN
