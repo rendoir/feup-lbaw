@@ -1,5 +1,5 @@
-insert into badge (description) values ('trusted');
-insert into badge (description) values ('moderator');
+insert into badge (id, description) values (1, 'trusted');
+insert into badge (id, description) values (2, 'moderator');
 insert into trusted_badge (id) values (1);
 insert into moderator_badge (id) values (2);
 
