@@ -140,7 +140,6 @@ DROP FUNCTION IF EXISTS check_correct();
 DROP FUNCTION IF EXISTS check_categories();
 DROP FUNCTION IF EXISTS insert_category();
 DROP FUNCTION IF EXISTS delete_category();
-DROP FUNCTION IF EXISTS update_category();
 DROP FUNCTION IF EXISTS update_score_vote();
 DROP FUNCTION IF EXISTS insert_score_vote();
 DROP FUNCTION IF EXISTS delete_score_vote();
@@ -161,7 +160,6 @@ DROP TRIGGER IF EXISTS check_correct ON question;
 DROP TRIGGER IF EXISTS check_categories ON question_category;
 DROP TRIGGER IF EXISTS insert_category ON question_category;
 DROP TRIGGER IF EXISTS delete_category ON question_category;
-DROP TRIGGER IF EXISTS update_category ON question_category;
 DROP TRIGGER IF EXISTS update_score_vote ON vote;
 DROP TRIGGER IF EXISTS insert_score_vote ON vote;
 DROP TRIGGER IF EXISTS delete_score_vote ON vote;
@@ -264,23 +262,6 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER delete_category
   AFTER DELETE ON question_category
   FOR EACH ROW EXECUTE PROCEDURE delete_category();
-
-
-CREATE FUNCTION update_category() RETURNS TRIGGER AS $$
-  BEGIN
-    UPDATE category
-      SET num_posts = num_posts - 1
-      WHERE OLD.category_id = category.id;
-    UPDATE category
-      SET num_posts = num_posts + 1
-      WHERE NEW.category_id = category.id;
-    RETURN NEW;
-  END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER update_category
-  AFTER UPDATE ON question_category
-  FOR EACH ROW EXECUTE PROCEDURE update_category();
 
 
 -- Update score on vote changes
