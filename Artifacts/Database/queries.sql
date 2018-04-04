@@ -1,26 +1,38 @@
 -- SELECT01
 -- Select all comments of a Message, order by their descending score
-SELECT commentable.id, comment.id, score, is_banned, author, content, creation_time
-FROM commentable, comment, message, message_version
-WHERE
-  commentable.id = $messageId AND
-  commentable.id = comment.commentable_id AND
-  comment.id = message.id AND
-  message.id = message_version.message_id
-ORDER BY message.score DESC;
--- TODO check editions
+SELECT *
+FROM (
+  SELECT DISTINCT ON (comment.id) comment.id, commentable.id, score, is_banned, author, content, creation_time
+  FROM commentable, comment, message, message_version
+  WHERE
+    commentable.id = $messageId AND
+    commentable.id = comment.commentable_id AND
+    comment.id = message.id AND
+    message.id = message_version.message_id
+  ORDER BY
+    comment.id,
+    creation_time DESC
+  ) updated_comments
+ORDER BY
+  updated_comments.score DESC;
 
 -- SELECT02
 -- Select the first 25 questions, ordered by descending date of the last edition
-SELECT DISTINCT ON (question.id) question.id, title, correct_answer, score, is_banned, author, content, creation_time
-FROM question, commentable, message, message_version
-WHERE 
- question.id = commentable.id AND
- commentable.id = message.id AND
- message.id = message_version.message_id
-ORDER BY question.id, message_version.creation_time DESC
-LIMIT 25;
---TODO check
+SELECT *
+FROM (
+  SELECT DISTINCT ON (question.id) question.id, title, correct_answer, score, is_banned, author, content, creation_time
+  FROM question, commentable, message, message_version
+  WHERE 
+   question.id = commentable.id AND
+   commentable.id = message.id AND
+   message.id = message_version.message_id
+  ORDER BY
+    question.id,
+    message_version.creation_time DESC
+  LIMIT 25
+  ) unordered_questions
+ORDER BY
+  unordered_questions.creation_time DESC
 
 -- SELECT03
 -- Select the IDs of the 25 questions with most answers (the most discussed questions)
@@ -71,37 +83,46 @@ ORDER BY
 
 -- SELECT06
 -- For a given category, select the 25 most recent questions and their contents (and select only those that aren't banned)
-SELECT DISTINCT ON (creation_time, question.id) category.id, question_id, title, content, correct_answer, score, creation_time, is_banned, author
-FROM category, question, question_category, message, message_version
-WHERE
-  category.id = $categoryId AND
-  question_category.question_id = question.id AND
-  question_category.category_id = category.id AND
-  question.id = message.id AND
-  message.id = message_version.message_id
-GROUP BY question.id, category.id, question_category.question_id, title, content, correct_answer, score, creation_time, is_banned, author, content
-HAVING
-  is_banned = FALSE
+SELECT *
+FROM (
+  SELECT DISTINCT ON (question.id) category.id, question_id, title, content, correct_answer, score, creation_time, is_banned, author
+  FROM category, question, question_category, message, message_version
+  WHERE
+    category.id = $categoryId AND
+    question_category.question_id = question.id AND
+    question_category.category_id = category.id AND
+    question.id = message.id AND
+    message.id = message_version.message_id
+  GROUP BY question.id, category.id, question_category.question_id, title, content, correct_answer, score, creation_time, is_banned, author, content
+  HAVING
+    is_banned = FALSE
+  ORDER BY
+    question.id,
+    creation_time DESC
+  LIMIT 25
+) category_questions
 ORDER BY
-  message_version.creation_time DESC,
-  question.id
-LIMIT 25;
---TODO check
+ category_questions.creation_time DESC
 
 -- SELECT07
 -- Select all the answers of a given question, from newest to oldest
-SELECT DISTINCT ON (answer.id) answer.id, content, creation_time, is_banned, author
-FROM question, answer, message, message_version
-WHERE
-  question.id = $questionId AND
-  question.id = answer.question_id AND
-  answer.id = message.id AND
-  message.id = message_version.message_id
-GROUP BY
-  answer.id, content, creation_time, is_banned, author
+SELECT *
+FROM (
+  SELECT DISTINCT ON (answer.id) answer.id, content, creation_time, is_banned, author
+  FROM question, answer, message, message_version
+  WHERE
+    question.id = $questionId AND
+    question.id = answer.question_id AND
+    answer.id = message.id AND
+    message.id = message_version.message_id
+  GROUP BY
+    answer.id, content, creation_time, is_banned, author
+  ORDER BY
+    answer.id,
+    creation_time DESC
+  ) question_answers
 ORDER BY
-  answer.id,
-  creation_time DESC;
+  question_answers.creation_time DESC;
 
 -- SELECT08
 -- Select all of a User's questions
@@ -234,14 +255,14 @@ GROUP BY
   u.id;
 
 -- SELECT18
--- Select all tags that partially match a given string *
+-- Select all tags that partially match a given string
 SELECT *
 FROM category
 WHERE
   name LIKE '%$search%';
 
 -- SELECT19
--- Select all questions whose title partially matches a given string *
+-- Select all questions whose title partially matches a given string
 SELECT *
 FROM question
 WHERE
