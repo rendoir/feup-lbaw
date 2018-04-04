@@ -14,12 +14,10 @@ CREATE INDEX message_version_message ON message_version USING btree(message_id);
 CREATE INDEX message_author ON message USING btree(author);
 CREATE INDEX notification_user ON notification USING btree(user_id);
 
-CREATE INDEX category_name ON category USING gist(to_tsvector('english', name));
+CREATE INDEX category_name ON category USING gin(to_tsvector('english', name));
 CREATE INDEX question_title ON question USING gist(to_tsvector('english', title));
 
 
 -- Uniqueness Constraints for Case Insensitive Username and Email
 CREATE INDEX unique_lowercase_username ON "user" (lower(username));
 CREATE INDEX unique_lowercase_email ON "user" (lower(email));
-
-
