@@ -211,7 +211,6 @@ WHERE
 GROUP BY
   u.id;
 
-
 -- SELECT16
 -- Select a User's total number of answers
 SELECT u.id, COUNT(*)
@@ -236,30 +235,55 @@ GROUP BY
 
 -- SELECT18
 -- Select all tags that partially match a given string *
+SELECT *
+FROM category
+WHERE
+  name LIKE '%$search%';
 
 -- SELECT19
 -- Select all questions whose title partially matches a given string *
+SELECT *
+FROM question
+WHERE
+  title LIKE '%$search%';
 
 
+-- ** Most Common Modifications **
 
--- ** Most Common Modifications ** --
--- insert a new message version; insert a new question/answer/comment; update user's bio; inserting a new vote (!!!)
+-- INSERT01
+-- Adding a new message version, either meaning the message was edited or is being added
+INSERT INTO message_version (id, content, message_id, creation_time, moderator_id)
+ VALUES (nextval('message_version_id_seq'::regclass), $content, $message_id, now(), $moderator_id);
+
+ -- INSERT02
+ -- Insert a new Question
+ INSERT INTO question (id, title, correct_answer)
+ VALUES ($id, $title, $correct_answer);
+
+ -- INSERT03
+ -- Create a new Answer
+INSERT INTO answer(id, question_id)
+ VALUES ($id, $question_id);
+
+ -- INSERT04
+ -- Create new Comment
+INSERT INTO comment(id, commentable_id)
+ VALUES ($id, $commentable_id);
+
+ -- INSERT05
+ -- New user registered
+INSERT INTO "user"(id, username, email, password_hash, biography, reputation)
+ VALUES (nextval('user_id_seq'::regclass), $username, $email, $password_hash, $biography, 0.0);
+
+ -- INSERT06
+ -- Vote in a Message
+INSERT INTO vote(message_id, user_id, positive)
+ VALUES ($message_id, $user_id, $positive);
+
+ -- UPDATE01
+ -- Update User Info
+UPDATE "user"
+SET username = $username, email = $email, password_hash = $password_hash, biography = $biography
+WHERE id= $id;
 
 -- There are no deletes, because data rules all.
-
-
-
-
-
-
--- USELESS STUFF
-
--- Select the number of answers of a given question (to be deleted, mby) TODO
-SELECT question.id, COUNT(answer.question_id)
-FROM question, answer, message
-WHERE
-  question.id = $messageId AND
-  question.id = message.id AND
-  answer.question_id = question.id
-GROUP BY
-  question.id;
