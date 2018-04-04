@@ -20,6 +20,7 @@ WHERE
  message.id = message_version.message_id
 ORDER BY question.id, message_version.creation_time DESC
 LIMIT 25;
+--TODO check
 
 -- SELECT03
 -- Select the IDs of the 25 questions with most answers (the most discussed questions)
@@ -73,7 +74,7 @@ ORDER BY
 SELECT DISTINCT ON (creation_time, question.id) category.id, question_id, title, content, correct_answer, score, creation_time, is_banned, author
 FROM category, question, question_category, message, message_version
 WHERE
-  category.id = 4 AND
+  category.id = $categoryId AND
   question_category.question_id = question.id AND
   question_category.category_id = category.id AND
   question.id = message.id AND
@@ -85,6 +86,7 @@ ORDER BY
   message_version.creation_time DESC,
   question.id
 LIMIT 25;
+--TODO check
 
 -- SELECT07
 -- Select all the answers of a given question, from newest to oldest
@@ -103,70 +105,134 @@ ORDER BY
 
 -- SELECT08
 -- Select all of a User's questions
-SELECT DISTINCT ON (creation_time, question.id) question.id, title, content, score, creation_time, is_banned
-FROM "user" u, message, message_version, question
-WHERE
-  u.id = 4 AND
-  u.id = message.author AND
-  message.id = question.id AND
-  message.id = message_version.message_id
-GROUP BY
-  question.id, title, content, score, creation_time, is_banned
+SELECT *
+FROM (
+  SELECT DISTINCT ON (question.id) question.id, title, content, score, creation_time, is_banned
+  FROM "user" u, message, message_version, question
+  WHERE
+    u.id = $user.Id AND
+    u.id = message.author AND
+    message.id = question.id AND
+    message.id = message_version.message_id
+  GROUP BY
+    question.id, title, content, score, creation_time, is_banned
+  ORDER BY
+    question.id,
+    creation_time DESC
+  ) updated_questions
 ORDER BY
-  creation_time DESC,
-  question.id;
+  updated_questions.creation_time DESC;
 
 -- SELECT09
 -- Select all of a User's answers
-SELECT DISTINCT ON (creation_time, answer.id) answer.id, content, score, creation_time, is_banned
-FROM "user" u, message, message_version, answer
-WHERE
-  u.id = 4 AND
-  u.id = message.author AND
-  message.id = answer.id AND
-  message.id = message_version.message_id
-GROUP BY
-  answer.id, content, score, creation_time, is_banned
+SELECT *
+FROM (
+  SELECT DISTINCT ON (answer.id) answer.id, content, score, creation_time, is_banned
+  FROM "user" u, message, message_version, answer
+  WHERE
+    u.id = $user.Id AND
+    u.id = message.author AND
+    message.id = answer.id AND
+    message.id = message_version.message_id
+  GROUP BY
+    answer.id, content, score, creation_time, is_banned
+  ORDER BY
+    answer.id,
+    creation_time DESC
+  ) updated_answers
 ORDER BY
-  creation_time DESC,
-  answer.id;
+  updated_answers.creation_time DESC;
 
 -- SELECT10
 -- Select all of a User's comments
-SELECT DISTINCT ON (creation_time, comment.id) comment.id, content, score, creation_time, is_banned
-FROM "user" u, message, message_version, comment
-WHERE
-  u.id = 7 AND
-  u.id = message.author AND
-  message.id = comment.id AND
-  message.id = message_version.message_id
-GROUP BY
-  comment.id, content, score, creation_time, is_banned
+SELECT *
+FROM (
+  SELECT DISTINCT ON (comment.id) comment.id, content, score, creation_time, is_banned
+  FROM "user" u, message, message_version, comment
+  WHERE
+    u.id = $usedId AND
+    u.id = message.author AND
+    message.id = comment.id AND
+    message.id = message_version.message_id
+  GROUP BY
+    comment.id, content, score, creation_time, is_banned
+  ORDER BY
+    comment.id,
+    creation_time DESC
+  ) updated_comments
 ORDER BY
-  creation_time DESC,
-  comment.id;
+  updated_comments.creation_time DESC;
 
 -- SELECT11
 -- Select all of a User's correct answers
-
+SELECT answer.id, score, is_banned
+FROM answer, question, message, "user" u
+WHERE
+  u.id = $ usedId AND
+  u.id = message.author AND
+  message.id = answer.id AND
+  answer.id = question.correct_answer;
 
 -- SELECT12
 -- Select all of a User's unread notifications
+SELECT notification.id, notification.date
+FROM "user" u, notification
+WHERE
+  u.id = $userId AND
+  u.id = notification.user_id
+GROUP BY
+  u.id, notification.id
+HAVING
+  notification.read = FALSE;
 
 -- SELECT13
 -- Select all of a User's badges
+SELECT badge.id, description, attainment_date
+FROM "user" u, badge_attainment b_a, badge
+WHERE
+  u.id = b_a.user_id AND
+  b_a.badge_id = badge.id;
 
 -- SELECT14
 -- Select a User's profile information
+SELECT username, email, biography, reputation
+FROM "user" u
+WHERE
+  u.id = $userId;
 
 -- SELECT15
 -- Select a User's total number of questions
+SELECT u.id, COUNT(*)
+FROM "user" u, message, question
+WHERE
+  u.id = $userId AND
+  u.id = message.author AND
+  message.id = question.id
+GROUP BY
+  u.id;
+
 
 -- SELECT16
 -- Select a User's total number of answers
+SELECT u.id, COUNT(*)
+FROM "user" u, message, answer
+WHERE
+  u.id = $userId AND
+  u.id = message.author AND
+  message.id = answer.id
+GROUP BY
+  u.id;
 
 -- SELECT17
 -- Select a User's total number of comments
+SELECT u.id, COUNT(*)
+FROM "user" u, message, comment
+WHERE
+  u.id = $userId AND
+  u.id = message.author AND
+  message.id = comment.id
+GROUP BY
+  u.id;
 
 -- SELECT18
 -- Select all tags that partially match a given string *
