@@ -14,13 +14,13 @@
 
 ### Artefacts
 #### Requirements Specification and User Interfaces
-* A1: [Project presentation](https://github.com/jflcarvalho/lbaw1763/blob/master/Artifacts/lbaw1763_a1.md)
-* A2: [Actors and User Stories](https://github.com/jflcarvalho/lbaw1763/blob/master/Artifacts/lbaw1763_a2.md)
-* A3: [User Interface Prototype](https://github.com/jflcarvalho/lbaw1763/blob/master/Artifacts/lbaw1763_a3.md)
+* A1: [Project presentation](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a1.md)
+* A2: [Actors and User Stories](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a2.md)
+* A3: [User Interface Prototype](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a3.md)
 #### Database specification
-* A4: [Conceptual Data Model](https://github.com/jflcarvalho/lbaw1763/blob/master/Artifacts/lbaw1763_a4.md)
-* A5: [Relational Schema](https://github.com/jflcarvalho/lbaw1763/blob/master/Artifacts/lbaw1763_a5.md)
-* A6: [Integrity constraints, indexes, triggers, user functions and DB population](https://github.com/jflcarvalho/lbaw1763/blob/master/Artifacts/lbaw1763_a6.md)
+* A4: [Conceptual Data Model](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a4.md)
+* A5: [Relational Schema](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a5.md)
+* A6: [Integrity constraints, indexes, triggers, user functions and DB population](https://github.com/jflcarvalho/lbaw1763/blob/master/artifacts/lbaw1763_a6.md)
 #### Architecture specification and Prototype
 * A7: ...
 * A8: ...
