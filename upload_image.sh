@@ -3,7 +3,7 @@
 # Stop execution if a step fails
 set -e
 
-DOCKER_USERNAME=sudoblob # Replace by your docker hub username
+DOCKER_USERNAME=situati0n # Replace by your docker hub username
 IMAGE_NAME=lbaw1763
 
 # Modified to work from docker container
