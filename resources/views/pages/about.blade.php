@@ -4,7 +4,7 @@
 
 @section('content')
 
-<main class="container-fluid px-0">
+<section class="container-fluid px-0">
     <div class="jumbotron jumbotron-fluid mb-0" id="jumbotron_about">
         <div class="container text-dark d-flex flex-column" style="height: 100%;">
             <div class="p-2 mb-5">
@@ -62,6 +62,6 @@
 
     </div>
 
-</main>
+</section>
 
 @endsection

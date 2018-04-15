@@ -163,9 +163,7 @@
     </div>
   </header>
 
-  <section id="content">
-    @yield('content')
-  </section>
+  @yield('content')
 
 </main>
 
