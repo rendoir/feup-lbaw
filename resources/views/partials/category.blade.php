@@ -1,0 +1,1 @@
+<span class="badge badge-dark"><?=$category->name?></span> 

@@ -34,9 +34,7 @@
                     <span class="badge badge-success">Trusted</span>
                 </div>
                 <div>
-                    <span class="badge badge-dark">nodejs</span>
-                    <span class="badge badge-dark">html5</span>
-                    <span class="badge badge-dark">css</span>
+                    @each('partials.category', $message->categories, 'category')
                 </div>
             </div>
         </div>
