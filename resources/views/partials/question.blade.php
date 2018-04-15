@@ -16,17 +16,21 @@
         </div>
         <div class="col-sm-10">
             <div class="card-body">
+                <?php
+                    $message = $question->message;
+                    $content = $message->message_version;
+                    $author = $message->get_author();
+                ?>
                 <h5 class="card-title"><?=$question->title?></h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia feugiat tempor.
-                    Mauris...
-                </p>
+
+                <p class="card-text"><?=$content->content?></p>
             </div>
             <div class="card-footer bg-transparent d-flex justify-content-between">
                 <p class="card-text mb-0">
-                    <small class="text-muted">Created by - &nbsp</small>
+                    <small class="text-muted">Created by - &nbsp</small><?=$author->username?>
                 </p>
                 <div class="mr-auto">
-                    <span>UserName</span>
+                    <span></span>
                     <span class="badge badge-success">Trusted</span>
                 </div>
                 <div>
