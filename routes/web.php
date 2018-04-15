@@ -27,7 +27,8 @@ Route::get('about', function() {
 });
 
 Route::get('questions', function() {
-    $questions = array_slice((array) App\Question::all(), 0, 10);
+    // TODO don't use User table, but there are currently no questions on the DB :(
+    $questions = array_slice((array) App\User::all(), 0, 10);
 
     return view('pages/questions', ['questions' => $questions]);
 });
