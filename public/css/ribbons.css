@@ -1,0 +1,344 @@
+/*******************
+ribbons page
+******************/
+.ribbon-wrapper,
+.ribbon-wrapper-reverse,
+.ribbon-wrapper-bottom,
+.ribbon-wrapper-right-bottom {
+  position: relative;
+  padding: 50px 15px 15px 15px; }
+
+.ribbon-vwrapper {
+  padding: 15px 15px 15px 50px;
+  position: relative; }
+
+.ribbon-overflow {
+  overflow: hidden; }
+
+.ribbon-vwrapper-reverse {
+  padding: 15px 50px 15px 15px; }
+
+.ribbon-wrapper-bottom {
+  padding: 15px 15px 50px 50px; }
+
+.ribbon-wrapper-right-bottom {
+  padding: 15px 50px 50px 15px; }
+
+.ribbon-content {
+  margin-bottom: 0px; }
+
+.ribbon {
+  padding: 0 20px;
+  height: 30px;
+  line-height: 30px;
+  clear: left;
+  position: absolute;
+  top: 12px;
+  left: -2px;
+  color: #ffffff; }
+
+.ribbon-bookmark:before {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  display: block;
+  width: 0;
+  height: 0;
+  content: '';
+  border: 15px solid #263238;
+  border-right: 10px solid transparent; }
+
+.ribbon-right {
+  left: auto;
+  right: -2px; }
+
+.ribbon-bookmark.ribbon-right:before {
+  right: 100%;
+  left: auto;
+  border-right: 15px solid #263238;
+  border-left: 10px solid transparent; }
+
+
+a:hover > div.ribbon-vertical-l, 
+a:hover > div.ribbon-vertical-r {
+    height: 70px;
+}
+
+.ribbon-vertical-l,
+.ribbon-vertical-r {
+  clear: none;
+  padding: 0 5px;
+  transition: height 0.5s;
+  height: 10px;
+  width: 30px;
+  line-height: 70px;
+  text-align: center;
+  left: 12px;
+  top: -2px; }
+
+.ribbon-vertical-r {
+  left: auto;
+  right: 12px; }
+
+.ribbon-bookmark.ribbon-vertical-l:before,
+.ribbon-bookmark.ribbon-vertical-r:before {
+  top: 100%;
+  left: 0;
+  margin-top: -14px;
+  border-right: 15px solid #263238;
+  border-bottom: 10px solid transparent; }
+
+.ribbon-badge {
+  top: 15px;
+  overflow: hidden;
+  left: -90px;
+  width: 100%;
+  text-align: center;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg); }
+
+.ribbon-badge.ribbon-right {
+  left: auto;
+  right: -90px;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
+.ribbon-badge.ribbon-bottom {
+  top: auto;
+  bottom: 15px;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
+.ribbon-badge.ribbon-right.ribbon-bottom {
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg); }
+
+.ribbon-corner {
+  top: 0;
+  left: 0;
+  background-color: transparent !important;
+  padding: 6px 0 0 10px; }
+
+.ribbon-corner i {
+  position: relative; }
+
+.ribbon-corner:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  content: '';
+  border: 30px solid transparent;
+  border-top-color: #009efb;
+  border-left-color: #009efb; }
+
+.ribbon-corner.ribbon-right:before {
+  right: 0;
+  left: auto;
+  border-right-color: #526069;
+  border-left-color: transparent; }
+
+.ribbon-corner.ribbon-right {
+  right: 0;
+  left: auto;
+  padding: 6px 10px 0 0; }
+
+.ribbon-corner.ribbon-bottom:before {
+  top: auto;
+  bottom: 0;
+  border-top-color: transparent;
+  border-bottom-color: #526069; }
+
+.ribbon-corner.ribbon-bottom {
+  bottom: 0;
+  top: auto;
+  padding: 0 10px 6px 10px; }
+
+.ribbon-custom {
+  background: #009efb; }
+
+.ribbon-bookmark.ribbon-right.ribbon-custom:before {
+  border-right-color: #009efb;
+  border-left-color: transparent; }
+
+.ribbon-bookmark.ribbon-vertical-l.ribbon-custom:before,
+.ribbon-bookmark.ribbon-vertical-r.ribbon-custom:before {
+  border-right-color: #009efb;
+  border-bottom-color: transparent; }
+
+.ribbon-primary {
+  background: #7460ee; }
+
+.ribbon-bookmark.ribbon-primary:before {
+  border-color: #7460ee;
+  border-right-color: transparent; }
+
+.ribbon-bookmark.ribbon-right.ribbon-primary:before {
+  border-right-color: #7460ee;
+  border-left-color: transparent; }
+
+.ribbon-bookmark.ribbon-vertical-l.ribbon-primary:before,
+.ribbon-bookmark.ribbon-vertical-r.ribbon-primary:before {
+  border-right-color: #7460ee;
+  border-bottom-color: transparent; }
+
+.ribbon-primary.ribbon-corner:before {
+  border-top-color: #7460ee;
+  border-left-color: #7460ee; }
+
+.ribbon-primary.ribbon-corner.ribbon-right:before {
+  border-right-color: #7460ee;
+  border-left-color: transparent; }
+
+.ribbon-primary.ribbon-corner.ribbon-bottom:before {
+  border-top-color: transparent;
+  border-bottom-color: #7460ee; }
+
+.ribbon-success {
+  background: #26c6da; }
+
+.ribbon-bookmark.ribbon-success:before {
+  border-color: #26c6da;
+  border-right-color: transparent; }
+
+.ribbon-bookmark.ribbon-right.ribbon-success:before {
+  border-right-color: #26c6da;
+  border-left-color: transparent; }
+
+.ribbon-bookmark.ribbon-vertical-l.ribbon-success:before,
+.ribbon-bookmark.ribbon-vertical-r.ribbon-success:before {
+  border-right-color: #26c6da;
+  border-bottom-color: transparent; }
+
+.ribbon-success.ribbon-corner:before {
+  border-top-color: #26c6da;
+  border-left-color: #26c6da; }
+
+.ribbon-success.ribbon-corner.ribbon-right:before {
+  border-right-color: #26c6da;
+  border-left-color: transparent; }
+
+.ribbon-success.ribbon-corner.ribbon-bottom:before {
+  border-top-color: transparent;
+  border-bottom-color: #26c6da; }
+
+.ribbon-info {
+  background: #1e88e5; }
+
+.ribbon-bookmark.ribbon-info:before {
+  border-color: #1e88e5;
+  border-right-color: transparent; }
+
+.ribbon-bookmark.ribbon-right.ribbon-info:before {
+  border-right-color: #1e88e5;
+  border-left-color: transparent; }
+
+.ribbon-bookmark.ribbon-vertical-l.ribbon-info:before,
+.ribbon-bookmark.ribbon-vertical-r.ribbon-info:before {
+  border-right-color: #1e88e5;
+  border-bottom-color: transparent; }
+
+.ribbon-info.ribbon-corner:before {
+  border-top-color: #1e88e5;
+  border-left-color: #1e88e5; }
+
+.ribbon-info.ribbon-corner.ribbon-right:before {
+  border-right-color: #1e88e5;
+  border-left-color: transparent; }
+
+.ribbon-info.ribbon-corner.ribbon-bottom:before {
+  border-top-color: transparent;
+  border-bottom-color: #1e88e5; }
+
+.ribbon-warning {
+  background: #ffb22b; }
+
+.ribbon-bookmark.ribbon-warning:before {
+  border-color: #ffb22b;
+  border-right-color: transparent; }
+
+.ribbon-bookmark.ribbon-right.ribbon-warning:before {
+  border-right-color: #ffb22b;
+  border-left-color: transparent; }
+
+.ribbon-bookmark.ribbon-vertical-l.ribbon-warning:before,
+.ribbon-bookmark.ribbon-vertical-r.ribbon-warning:before {
+  border-right-color: #ffb22b;
+  border-bottom-color: transparent; }
+
+.ribbon-warning.ribbon-corner:before {
+  border-top-color: #ffb22b;
+  border-left-color: #ffb22b; }
+
+.ribbon-warning.ribbon-corner.ribbon-right:before {
+  border-right-color: #ffb22b;
+  border-left-color: transparent; }
+
+.ribbon-warning.ribbon-corner.ribbon-bottom:before {
+  border-top-color: transparent;
+  border-bottom-color: #ffb22b; }
+
+.ribbon-danger {
+  background: #fc4b6c; }
+
+.ribbon-bookmark.ribbon-danger:before {
+  border-color: #fc4b6c;
+  border-right-color: transparent; }
+
+.ribbon-bookmark.ribbon-right.ribbon-danger:before {
+  border-right-color: #fc4b6c;
+  border-left-color: transparent; }
+
+.ribbon-bookmark.ribbon-vertical-l.ribbon-danger:before,
+.ribbon-bookmark.ribbon-vertical-r.ribbon-danger:before {
+  border-right-color: #fc4b6c;
+  border-bottom-color: transparent; }
+
+.ribbon-danger.ribbon-corner:before {
+  border-top-color: #fc4b6c;
+  border-left-color: #fc4b6c; }
+
+.ribbon-danger.ribbon-corner.ribbon-right:before {
+  border-right-color: #fc4b6c;
+  border-left-color: transparent; }
+
+.ribbon-danger.ribbon-corner.ribbon-bottom:before {
+  border-top-color: transparent;
+  border-bottom-color: #fc4b6c; }
+
+.ribbon-default {
+  background: #263238; }
+
+.ribbon-bookmark.ribbon-default:before {
+  border-color: #263238;
+  border-right-color: transparent; }
+
+.ribbon-bookmark.ribbon-right.ribbon-default:before {
+  border-right-color: #263238;
+  border-left-color: transparent; }
+
+.ribbon-bookmark.ribbon-vertical-l.ribbon-default:before,
+.ribbon-bookmark.ribbon-vertical-r.ribbon-default:before {
+  border-right-color: #263238;
+  border-bottom-color: transparent; }
+
+.ribbon-default.ribbon-corner:before {
+  border-top-color: #263238;
+  border-left-color: #263238; }
+
+.ribbon-default.ribbon-corner.ribbon-right:before {
+  border-right-color: #263238;
+  border-left-color: transparent; }
+
+.ribbon-default.ribbon-corner.ribbon-bottom:before {
+  border-top-color: transparent;
+  border-bottom-color: #263238; }
