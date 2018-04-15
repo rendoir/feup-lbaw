@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password_hash',
+        'username', 'email', 'password_hash'
     ];
 
     /**
@@ -29,4 +29,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password_hash'
     ];
+
+    public function getAuthPassword()
+    {
+        return $this->attributes['password_hash'];
+    }
 }
