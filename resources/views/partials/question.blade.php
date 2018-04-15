@@ -16,7 +16,7 @@
         </div>
         <div class="col-sm-10">
             <div class="card-body">
-                <h5 class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h5>
+                <h5 class="card-title"><?=$question->title?></h5>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia feugiat tempor.
                     Mauris...
                 </p>

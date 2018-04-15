@@ -24,14 +24,8 @@
             <div class="tab-content col-md-9" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
 
-                    <!-- @each('partials.question', $questions, 'question') -->
-                    <?php
-                    foreach ($questions as $q) {
-                        foreach ($q as $value) {
-                            echo $value;
-                        }
-                    }
-                    ?>
+                    @each('partials.question', $questions, 'question')
+
 
                 </div>
                 <div class="tab-pane fade" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
