@@ -23,7 +23,7 @@
                 ?>
                 <h5 class="card-title"><?=$question->title?></h5>
 
-                <p class="card-text"><?=$content->content?></p>
+                <p class="card-text"><?=substr($content->content, 0, 240)?>...</p>
             </div>
             <div class="card-footer bg-transparent d-flex justify-content-between">
                 <p class="card-text mb-0">

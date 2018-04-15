@@ -26,8 +26,8 @@ Route::get('about', function() {
     return view('pages/about');
 });
 
-Route::get('questions', function() {
-    $questions = App\Question::all();
+Route::get('questions/{page_num?}', function($page_num = 0) {
+    $questions = App\Question::all()->forPage($page_num ,25);
 
     return view('pages/questions', ['questions' => $questions]);
 });
