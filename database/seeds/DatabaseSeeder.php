@@ -15,6 +15,18 @@ class DatabaseSeeder extends Seeder
 
          $path = 'resources/sql/seed.sql';
          DB::unprepared(file_get_contents($path));
+
+//         $this->createUsers();
+         $this->loadFile('resources/sql/populate.sql');
+
          $this->command->info('Database seeded!');
+     }
+
+     private function createUsers() {
+         factory(App\User::class, 5)->create();
+     }
+
+     private function loadFile($filePath) {
+         DB::unprepared(file_get_contents($filePath));
      }
 }
