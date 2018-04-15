@@ -27,5 +27,7 @@ Route::get('about', function() {
 });
 
 Route::get('questions', function() {
-    return view('pages/questions');
+    $questions = array_slice((array) App\Question::all(), 0, 10);
+
+    return view('pages/questions', ['questions' => $questions]);
 });
