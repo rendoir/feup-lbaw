@@ -29,7 +29,8 @@ CREATE TABLE users (
     email TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
     biography TEXT,
-    reputation REAL NOT NULL DEFAULT 0.0
+    reputation REAL NOT NULL DEFAULT 0.0,
+    remember_token VARCHAR(100)
 );
 
 CREATE TABLE moderators (

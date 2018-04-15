@@ -15,6 +15,7 @@
       // Fix for Firefox autofocus CSS bug
       // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
   </script>
+  <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
 
   <!-- Font Awesome -->
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -110,7 +111,7 @@
                 <div class="dropdown-divider"></div>
                 <a href="account.html" class="dropdown-item" role="button">Settings</a>
                 <div class="dropdown-divider"></div>
-                <a href="index.html" class="dropdown-item" role="button">Log Out</a>
+                <a id="logout" class="dropdown-item">Log Out</a>
               </div>
             </div>
 

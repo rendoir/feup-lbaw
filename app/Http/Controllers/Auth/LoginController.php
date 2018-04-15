@@ -45,4 +45,11 @@ class LoginController extends Controller
         return [filter_var($email_or_username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username' => $email_or_username,
                 'password' => $password];
     }
+
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+    }
 }
