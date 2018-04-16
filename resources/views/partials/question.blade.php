@@ -30,9 +30,9 @@
                 <p class="card-text mb-0">
                     <small class="text-muted">Created by - &nbsp</small><?=$author->username?>
                 </p>
-                <div class="ml-1 mr-auto">
+                <div class="ml-2 mr-auto">
                     <span></span>
-                    <span class="badge badge-success">Trusted</span>
+                    <span class="badge badge-success"><?=$author->getBadge()?></span>
                 </div>
                 <div>
                     @each('partials.category', $message->categories, 'category')
