@@ -22,6 +22,10 @@ class Question extends Model
         return $this->answers()->count();
     }
 
+    public function hasCorrectAnswer() {
+        return $this->belongsTo('App\Answer', 'correct_answer')->first();
+    }
+
     public function scopeHighlyVoted($query) {
 
         return $query->join('messages', "messages.id", "questions.id")

@@ -1,11 +1,11 @@
-<a class="card my-3 question-card" href="question.html">
+<?php
+    $message = $question->message;
+    $content = $message->message_version;
+    $author = $message->get_author();
+    $score = $message->score;
+?>
+<a class="card my-3 question-card <?= ($question->hasCorrectAnswer() != null ? 'border-success' : '') ?>" href="question.html">
     <div class="row mx-0">
-    <?php
-        $message = $question->message;
-        $content = $message->message_version;
-        $author = $message->get_author();
-        $score = $message->score;
-    ?>
         <div class="col-sm-2 py-3 border-right rounded-left d-flex flex-column justify-content-around bg-light">
             <div>
                 <div>
