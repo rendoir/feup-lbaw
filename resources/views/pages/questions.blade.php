@@ -26,7 +26,6 @@
 
                     @each('partials.question', $questions, 'question')
 
-
                 </div>
                 <div class="tab-pane fade" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
 
