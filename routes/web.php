@@ -12,11 +12,12 @@
 */
 
 Route::get('/', function () {
-    return redirect('questions');
+    return redirect('login');
 });
 
 // Authentication
-Route::post('login', 'Auth\LoginController@login')->name('login');
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
@@ -26,7 +27,9 @@ Route::get('about', function() {
 });
 
 Route::get('questions/{page_num?}', function($page_num = 0) {
-    $questions = App\Question::all()->forPage($page_num ,25);
+    
+    $questions = App\Question::all()->forPage($page_num, 25);
+    $most_voted = App\Question::HighlyVoted()->forPage($page_num, 25)->get();
 
-    return view('pages/questions', ['questions' => $questions]);
+    return view('pages/questions', ['questions' => $questions, 'most_voted' => $most_voted]);
 });

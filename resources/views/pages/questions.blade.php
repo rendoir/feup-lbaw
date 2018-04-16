@@ -32,6 +32,8 @@
                 </div>
                 <div class="tab-pane fade" id="nav-voted" role="tabpanel" aria-labelledby="nav-voted-tab">
 
+                    @each('partials.question', $most_voted, 'question')
+
                 </div>
                 <div class="tab-pane fade" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
 
