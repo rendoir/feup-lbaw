@@ -14,4 +14,12 @@ class Question extends Model
         return $this->hasOne('App\Message', 'id');
     }
 
+    public function answers() {
+        return $this->hasMany('App\Answer');
+    }
+
+    public function get_num_answers() {
+        return $this->answers()->count();
+    }
+
 }
