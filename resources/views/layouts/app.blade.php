@@ -148,13 +148,13 @@
                 </div>
               </form>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="sign-up.html">New around here? Sign up</a>
+              <a class="dropdown-item" href="{{ route('register') }}">New around here? Sign up</a>
             </div>
           </div>
 
           <!-- Sign up -->
           <div class="dropdown mx-2">
-            <a class="btn btn-primary" href="sign-up.html" role="button">Sign Up</a>
+            <a class="btn btn-primary" href="{{ route('register') }}" role="button">Sign Up</a>
           </div>
 
         <!-- END OF NAVBAR RIGHT-SIDE OPTIONS -->
