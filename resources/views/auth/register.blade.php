@@ -11,8 +11,9 @@
                 <div class="p-2 mx-auto text-dark">
                     <div class="card">
                         <div class="card-body">
-                            <form id="signup_form">
-                                <div class="form-group">
+                          <form method="POST" action="{{ route('register') }}">
+                               {{ csrf_field() }}
+                               <div class="form-group">
                                     <label for="username">
                                         <small>Username</small>
                                     </label>
@@ -41,7 +42,7 @@
                                     <input type="checkbox" class="form-check-input" id="check">
                                     <label class="form-check-label" for="check">I accept the terms and conditions.</label>
                                 </div>
-                                <button id="signup" class="btn btn-primary mt-2 mx-auto">
+                                <button type="submit" class="btn btn-primary mt-2 mx-auto">
                                   Sign up for SegFault
                                 </button>
                               </form>
