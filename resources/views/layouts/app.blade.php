@@ -125,10 +125,10 @@
               <span class="caret"></span>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-              <form class="px-4 py-3" action="index(logged).html">
+              <form id="signin_form" class="px-4 py-3">
                 <div class="form-group">
                   <label for="exampleDropdownFormEmail1">Email address</label>
-                  <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+                  <input type="text" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
                 </div>
                 <div class="form-group">
                   <label for="exampleDropdownFormPassword1">Password</label>
@@ -138,7 +138,7 @@
                   <input type="checkbox" class="form-check-input" id="dropdownCheck">
                   <label class="form-check-label" for="dropdownCheck">Remember me</label>
                 </div>
-                <button type="submit" class="btn btn-primary btn-signin">Sign in</button>
+                <button id="login" type="button" class="btn btn-primary btn-signin">Sign in</button>
                 <a class="btn btn-social btn-github" href="#">
                   <i class="fab fa-github"></i>
                   <div>Sign in with Github</div>

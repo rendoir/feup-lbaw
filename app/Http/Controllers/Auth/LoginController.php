@@ -52,4 +52,13 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
     }
+
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        $this->authenticated($request, $this->guard()->user());
+    }
 }
