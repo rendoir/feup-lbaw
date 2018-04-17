@@ -24,8 +24,6 @@
             <div class="tab-content col-md-9" id="nav-tabContent">
                 <div class="tab-pane fade @if (isset($type) && strcmp($type, 'recent')) {{ "show active" }} @endif" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
 
-                    <?php Log::debug($type); ?>
-
                     @if (isset($type) && strcmp($type, 'recent'))
                         @each('partials.question', $questions, 'question')
                     @endif
@@ -46,6 +44,19 @@
                 </div>
                 <div class="tab-pane fade" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
 
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a <?php 
+                            $url = Request::url();
+                            $page_number = intval(substr(strrchr($url, "/"), 1)) - 1;
+                            if($page_number >= 0)
+                                echo 'href="' . $page_number . '"';
+                        ?>>Previous Page</a>
+                    <a href="<?php 
+                            $url = Request::url();
+                            $page_number = intval(substr(strrchr($url, "/"), 1)) + 1;
+                            echo $page_number;
+                        ?>">Next Page</a>                    
                 </div>
             </div>
             <aside class="col-md-3 mb-3">
