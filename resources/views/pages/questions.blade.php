@@ -52,6 +52,11 @@
                             if($page_number >= 0)
                                 echo 'href="' . $page_number . '"';
                         ?>>Previous Page</a>
+                    <span>Page Number: <?php 
+                            $url = Request::url();
+                            $page_number = intval(substr(strrchr($url, "/"), 1));
+                            echo $page_number;
+                        ?></span>
                     <a href="<?php 
                             $url = Request::url();
                             $page_number = intval(substr(strrchr($url, "/"), 1)) + 1;
