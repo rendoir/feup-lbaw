@@ -24,8 +24,8 @@ class Message extends Model
     }
 
     public function was_edited() {
-        return ($this->hasMany(
-            'App\MessageVersion'
-        )->count() > 1);
+        return (
+            $this->hasMany('App\MessageVersion')->count() > 1
+        );
     }
 }

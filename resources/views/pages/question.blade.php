@@ -10,6 +10,7 @@
     $author = $message->get_author();
     $score = $message->score;
     $answers = $question->answers();
+    $num_answers = $question->get_num_answers();
 ?>
 
 <section id="question" class="sticky-top bg-light" class="sweet-grey">
@@ -101,7 +102,7 @@
                 <div>
                     <div>
                         <span class="font-weight-bold w-100">Answers: </span>
-                        <span class="w-100"><?=$question->get_num_answers()?></span>
+                        <span class="w-100"><?=$num_answers?></span>
                     </div>
                     <div>
                         <span class="font-weight-bold w-100">Votes: </span>
@@ -131,7 +132,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-9">
-            @each ('partials.answer', $answers, 'answer')
+            @for ($i = 0; $i < $num_answers; $i++)
+                @include('partials.answer', ['answer' => $answers[$i]])
+            @endfor
         </div>
         <!-- related questions -->
         <aside class="col-md-3 mt-3">

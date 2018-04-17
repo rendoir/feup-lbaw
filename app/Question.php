@@ -31,7 +31,7 @@ class Question extends Model
     }
 
     public function commentable() {
-        return $this->belongsTo('App\Commentable');
+        return $this->hasOne('App\Commentable');
     }
 
 }

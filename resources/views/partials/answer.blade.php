@@ -3,6 +3,8 @@
     $content = $message->message_version;
     $author = $message->get_author();
     $score = $message->score;
+
+    $commentable = $answer->commentable;
 ?>
 <!-- Answer -->
 <div class="card my-3 question-answer-nlogged border-success">
@@ -32,18 +34,18 @@
                     <span class="badge badge-success"><?=$author->getBadge()?></span>
                 </div>
                 <div class="text-center m-auto">
-                    <a role="button" data-toggle="collapse" href="#AnswerComments1" aria-expanded="false" aria-controls="AnswerComments1">
+                    <a role="button" data-toggle="collapse" href="#AnswerComments<?=$i?>" aria-expanded="false" aria-controls="AnswerComments<?=$i?>">
                         Show Comments
                     </a>
                 </div>
                 <div class="ml-auto">
-                    <p class="text-right mb-0">4 comments</p>
+                    <p class="text-right mb-0"><?=$commentable->get_num_comments()?> comments</p>
                 </div>
             </div>
         </div>
     </div>
     <!-- COMMENTS -->
-    <div class="collapse" id="AnswerComments1">
+    <div class="collapse" id="AnswerComments<?=$i?>">
         <div class="card-footer comments-card">
             <div class="d-flex list-group list-group-flush">
                 <div class="list-group-item px-0 bg-transparent">
