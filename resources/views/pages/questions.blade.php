@@ -9,10 +9,10 @@
         <!-- Nav With Separators -->
         <div class="row mt-3">
             <div class="nav nav-tabs col-md-9" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-new-tab" aria-controls="nav-new" aria-selected="true"
+                <a class="nav-item nav-link @if(isset($type) && strcmp($type, 'recent') == 0){{"active"}}@endif" id="nav-new-tab" aria-controls="nav-new" aria-selected="true"
                    href="@if(isset($type) && strcmp($type, 'recent') != 0){{ url('/questions/recent/0') }}@else{{ "#" }}@endif">Recent</a>
                 <a class="nav-item nav-link" id="nav-hot-tab" href="#nav-hot" aria-controls="nav-hot" aria-selected="false">Hot</a>
-                <a class="nav-item nav-link" id="nav-voted-tab" aria-controls="nav-voted" aria-selected="false"
+                <a class="nav-item nav-link @if(isset($type) && strcmp($type, 'highly-voted') == 0){{"active"}}@endif" id="nav-voted-tab" aria-controls="nav-voted" aria-selected="false"
                    href="@if(isset($type) && strcmp($type, 'highly-voted') != 0){{ url('/questions/highly-voted/0') }}@else{{ "#" }}@endif">Highly Voted</a>
                 <a class="nav-item nav-link" id="nav-active-tab" href="#nav-active" role="tab" aria-controls="nav-active"
                    aria-selected="false">Active</a>
@@ -22,9 +22,9 @@
         <!-- Separators Contents -->
         <div class="row">
             <div class="tab-content col-md-9" id="nav-tabContent">
-                <div class="tab-pane fade @if (isset($type) && strcmp($type, 'recent')) {{ "show active" }} @endif" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'recent') == 0){{"show active"}}@endif" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
 
-                    @if (isset($type) && strcmp($type, 'recent'))
+                    @if (isset($type) && strcmp($type, 'recent') == 0)
                         @each('partials.question', $questions, 'question')
                     @endif
 
@@ -33,11 +33,11 @@
 
 
                 </div>
-                <div class="tab-pane fade @if (isset($type) && strcmp($type, 'highly-voted')) {{ "show active" }} @endif" id="nav-voted" role="tabpanel" aria-labelledby="nav-voted-tab"
+                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'highly-voted') == 0){{"show active"}}@endif" id="nav-voted" role="tabpanel" aria-labelledby="nav-voted-tab"
                     @if (isset($type) && strcmp($type, 'highly-voted') == false) {{ 'href="/questions/highly-voted/0"' }} @endif>
 
 
-                @if (isset($type) && strcmp($type, 'highly-voted'))
+                    @if (isset($type) && strcmp($type, 'highly-voted') == 0)
                         @each('partials.question', $questions, 'question')
                     @endif
 
