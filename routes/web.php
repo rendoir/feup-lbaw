@@ -26,10 +26,26 @@ Route::get('about', function() {
     return view('pages/about');
 });
 
-Route::get('questions/{page_num?}', function($page_num = 0) {
-    
-    $questions = App\Question::all()->forPage($page_num, 25);
-    $most_voted = App\Question::HighlyVoted()->forPage($page_num, 25)->get();
+//Route::get('questions/{page_num?}', function($page_num = 0) {
+//
+//    $questions = App\Question::all()->forPage($page_num, 25);
+//    $most_voted = App\Question::HighlyVoted()->forPage($page_num, 25)->get();
+//
+//    return view('pages/questions', ['questions' => $questions, 'most_voted' => $most_voted]);
+//});
 
-    return view('pages/questions', ['questions' => $questions, 'most_voted' => $most_voted]);
+Route::get('questions', function() {
+    return redirect('questions/recent/0');
+});
+
+Route::get('questions/recent/{page_num}', function($page_num) {
+    $questions = App\Question::all()->forPage($page_num, 25);
+
+    return view('pages/questions', ['questions' => $questions, 'type' => 'recent']);
+});
+
+Route::get('questions/highly-voted/{page_num}', function($page_num) {
+    $questions = App\Question::HighlyVoted()->forPage($page_num, 25)->get();
+
+    return view('pages/questions', ['questions' => $questions, 'type' => 'highly-voted']);
 });
