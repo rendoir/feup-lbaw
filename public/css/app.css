@@ -1,0 +1,215 @@
+/*
+ * Social Buttons for Bootstrap
+ *
+ * Copyright 2013-2016 Panayiotis Lipiridis
+ * Licensed under the MIT License
+ *
+ * https://github.com/lipis/bootstrap-social
+ */
+
+.btn-github {
+  color: #fff;
+  background-color: #444;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-github:focus,
+.btn-github.focus {
+  color: #fff;
+  background-color: #2b2b2b;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-github:hover {
+  color: #fff;
+  background-color: #2b2b2b;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-github:active,
+.btn-github.active,
+.open > .dropdown-toggle.btn-github {
+  color: #fff;
+  background-color: #2b2b2b;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-github:active:hover,
+.btn-github.active:hover,
+.open > .dropdown-toggle.btn-github:hover,
+.btn-github:active:focus,
+.btn-github.active:focus,
+.open > .dropdown-toggle.btn-github:focus,
+.btn-github:active.focus,
+.btn-github.active.focus,
+.open > .dropdown-toggle.btn-github.focus {
+  color: #fff;
+  background-color: #191919;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-github:active,
+.btn-github.active,
+.open > .dropdown-toggle.btn-github {
+  background-image: none;
+}
+
+.btn-github.disabled:hover,
+.btn-github[disabled]:hover,
+fieldset[disabled] .btn-github:hover,
+.btn-github.disabled:focus,
+.btn-github[disabled]:focus,
+fieldset[disabled] .btn-github:focus,
+.btn-github.disabled.focus,
+.btn-github[disabled].focus,
+fieldset[disabled] .btn-github.focus {
+  background-color: #444;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-github .badge {
+  color: #444;
+  background-color: #fff;
+}
+
+:root {
+  --azure: #FAFEFE;
+  --pattens-blue: #D2DEE7;
+  --medium-aquamarine: #4FD0AE;
+  --mountain-meadow: #26BF9E;
+  --cadet-blue: #45A9A9;
+  --san-marino: #526B97;
+  --jordy-blue: #75A6DA;
+}
+
+a {
+  color: var(--medium-aquamarine);
+}
+
+.unnoticed-a {
+  color: #67757c;
+}
+
+.unnoticed-a:hover {
+  text-decoration: none;
+  color: #67757c;
+}
+
+.nav-tabs .nav-link {
+  border-width: 0 !important;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+  color: inherit;
+  border-bottom-style: solid;
+  border-bottom-width: 1px !important;
+  border-bottom-color: var(--cadet-blue) !important;
+}
+
+.nav-link.active,
+.nav-link.active:focus,
+.nav-link.active:hover {
+  border-bottom-style: solid;
+  border-bottom-width: 2px !important;
+  border-bottom-color: var(--medium-aquamarine) !important;
+}
+
+.btn {
+  border-radius: 1.5em;
+}
+
+.btn-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--medium-aquamarine), var(--mountain-meadow));
+  border-color: var(--medium-aquamarine);
+  -webkit-box-shadow: 0px 3px 10px 1px rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.07);
+          box-shadow: 0px 3px 10px 1px rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.07);
+}
+
+.btn-primary:hover,
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: var(--cadet-blue);
+  border-color: var(--cadet-blue);
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(69, 169, 169, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(69, 169, 169, 0.5);
+}
+
+.btn-primary.focus,
+.btn-primary:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(79, 208, 174, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(79, 208, 174, 0.5);
+}
+
+.border-success {
+  border-color: var(--medium-aquamarine) !important;
+}
+
+.badge.badge-dark {
+  background-color: var(--jordy-blue) !important;
+}
+
+.badge.badge-success {
+  background-color: var(--cadet-blue) !important;
+}
+
+.btn.btn-outline-success {
+  color: var(--medium-aquamarine) !important;
+  border-color: var(--medium-aquamarine) !important;
+}
+
+.btn.btn-outline-success:hover {
+  color: var(--azure) !important;
+  background-color: var(--medium-aquamarine) !important;
+}
+
+.btn-outline-info {
+  color: var(--jordy-blue);
+  border-color: var(--jordy-blue) !important;
+}
+
+.btn-outline-info:hover {
+  color: var(--azure);
+  background-color: var(--jordy-blue) !important;
+}
+
+.btn-outline-info.focus,
+.btn-outline-info:focus,
+.btn-outline-info:not(:disabled):not(.disabled).active:focus,
+.btn-outline-info:not(:disabled):not(.disabled):active:focus,
+.show > .btn-outline-info.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(117, 166, 218, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(117, 166, 218, 0.5);
+}
+
+.btn-outline-info:not(:disabled):not(.disabled).active,
+.btn-outline-info:not(:disabled):not(.disabled):active,
+.show > .btn-outline-info.dropdown-toggle {
+  color: #fff !important;
+  background-color: var(--jordy-blue) !important;
+  border-color: var(--jordy-blue) !important;
+}
+
+.btn-info {
+  color: var(--azure);
+  background-color: var(--jordy-blue) !important;
+  border-color: var(--jordy-blue) !important;
+}
+
+.btn-info:hover {
+  background-color: var(--san-marino) !important;
+  border-color: var(--san-marino) !important;
+}
+
+.ribbon-warning {
+  background-color: var(--jordy-blue);
+}
+

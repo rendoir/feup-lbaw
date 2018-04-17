@@ -29,9 +29,7 @@
         crossorigin="anonymous">
 
   <!-- Styling  -->
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/style.css') }}" />
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/bootstrap-social.css') }}" />
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/styling-bootstrap.css') }}" />
+  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('app.css') }}" />
 
 </head>
 
