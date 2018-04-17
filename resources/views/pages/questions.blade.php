@@ -9,12 +9,12 @@
         <!-- Nav With Separators -->
         <div class="row mt-3">
             <div class="nav nav-tabs col-md-9" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new"
-                   aria-selected="true">New</a>
-                <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab" aria-controls="nav-hot" aria-selected="false">Hot</a>
-                <a class="nav-item nav-link" id="nav-voted-tab" data-toggle="tab" href="#nav-voted" role="tab" aria-controls="nav-voted"
-                   aria-selected="false">Most Voted</a>
-                <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active"
+                <a class="nav-item nav-link active" id="nav-new-tab" aria-controls="nav-new" aria-selected="true"
+                   href="@if(isset($type) && strcmp($type, 'recent') != 0){{ url('/questions/recent/0') }}@else{{ "#" }}@endif">Recent</a>
+                <a class="nav-item nav-link" id="nav-hot-tab" href="#nav-hot" aria-controls="nav-hot" aria-selected="false">Hot</a>
+                <a class="nav-item nav-link" id="nav-voted-tab" aria-controls="nav-voted" aria-selected="false"
+                   href="@if(isset($type) && strcmp($type, 'highly-voted') != 0){{ url('/questions/highly-voted/0') }}@else{{ "#" }}@endif">Highly Voted</a>
+                <a class="nav-item nav-link" id="nav-active-tab" href="#nav-active" role="tab" aria-controls="nav-active"
                    aria-selected="false">Active</a>
             </div>
         </div>
@@ -22,21 +22,41 @@
         <!-- Separators Contents -->
         <div class="row">
             <div class="tab-content col-md-9" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+                <div class="tab-pane fade @if (isset($type) && strcmp($type, 'recent')) {{ "show active" }} @endif" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
 
-                    @each('partials.question', $questions, 'question')
+                    @if (isset($type) && strcmp($type, 'recent'))
+                        @each('partials.question', $questions, 'question')
+                    @endif
 
                 </div>
                 <div class="tab-pane fade" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
 
-                </div>
-                <div class="tab-pane fade" id="nav-voted" role="tabpanel" aria-labelledby="nav-voted-tab">
 
-                    @each('partials.question', $most_voted, 'question')
+                </div>
+                <div class="tab-pane fade @if (isset($type) && strcmp($type, 'highly-voted')) {{ "show active" }} @endif" id="nav-voted" role="tabpanel" aria-labelledby="nav-voted-tab"
+                    @if (isset($type) && strcmp($type, 'highly-voted') == false) {{ 'href="/questions/highly-voted/0"' }} @endif>
+
+
+                @if (isset($type) && strcmp($type, 'highly-voted'))
+                        @each('partials.question', $questions, 'question')
+                    @endif
 
                 </div>
                 <div class="tab-pane fade" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
 
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a <?php 
+                            $url = Request::url();
+                            $page_number = intval(substr(strrchr($url, "/"), 1)) - 1;
+                            if($page_number >= 0)
+                                echo 'href="' . $page_number . '"';
+                        ?>>Previous Page</a>
+                    <a href="<?php 
+                            $url = Request::url();
+                            $page_number = intval(substr(strrchr($url, "/"), 1)) + 1;
+                            echo $page_number;
+                        ?>">Next Page</a>                    
                 </div>
             </div>
             <aside class="col-md-3 mb-3">

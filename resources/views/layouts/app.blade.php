@@ -99,7 +99,9 @@
               <div class="dropdown-divider"></div>
               <a href="account.html" class="dropdown-item" role="button">Settings</a>
               <div class="dropdown-divider"></div>
-              <a id="logout" class="dropdown-item">Log Out</a>
+              <form method="GET" action="{{ route('logout') }}">
+                <button id="login" type="submit" class="dropdown-item">Log out</button>
+              <form/>
             </div>
           </div>
 
