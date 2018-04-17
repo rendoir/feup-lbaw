@@ -10,14 +10,17 @@
         <div class="col-1 d-flex flex-column align-items-start">
             <div class="p-2 mt-3 mb-auto">
                 <i class="fas fa-trophy"></i>
-                <p class="text-center mb-0 w-100">7</p>
+                <p class="text-center mb-0 w-100"><?=$score?></p>
             </div>
         </div>
         <div class="col-11">
             <div class="card-body">
                 <p class="card-text">
                     <?=$content->content?>
-                    <span class="badge badge-light float-right mr-2 mt-3">Edited</span>
+
+                    @if ($message->was_edited())
+                        <span class="badge badge-light float-right mr-2 mt-3">Edited</span>
+                    @endif
                 </p>
             </div>
             <div class="card-footer bg-transparent d-flex justify-content-between">

@@ -131,9 +131,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-9">
-            @foreach($answers as $answer)
-                @include('partials.answer')
-            @endforeach
+            @each ('partials.answer', $answers, 'answer')
         </div>
         <!-- related questions -->
         <aside class="col-md-3 mt-3">

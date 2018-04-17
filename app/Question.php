@@ -30,4 +30,8 @@ class Question extends Model
                      ->orderBy('messages.score', 'DESC')->get();
     }
 
+    public function commentable() {
+        return $this->belongsTo('App\Commentable');
+    }
+
 }

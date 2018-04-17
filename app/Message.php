@@ -22,4 +22,10 @@ class Message extends Model
     public function get_author() {
         return User::find($this->author);
     }
+
+    public function was_edited() {
+        return ($this->hasMany(
+            'App\MessageVersion'
+        )->count() > 1);
+    }
 }
