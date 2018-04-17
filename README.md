@@ -20,10 +20,10 @@
 #### Database specification
 * A4: [Conceptual Data Model](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a4.md)
 * A5: [Relational Schema](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a5.md)
-* A6: [Integrity constraints, indexes, triggers, user functions and DB population](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a6.md)
+* A6: [Integrity constraints, indices, triggers, user functions and DB population](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a6.md)
 #### Architecture specification and Prototype
-* A7: ...
-* A8: ...
+* A7: [High-level architecture, privileges and web resources specification](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a7.md)
+* A8: [Vertical prototype](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a8.md)
 * A9: ...
 #### Product and Presentation
 * A10: ...
