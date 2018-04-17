@@ -48,4 +48,10 @@ Route::get('questions/highly-voted/{page_num}', function($page_num) {
     $questions = App\Question::HighlyVoted()->forPage($page_num, 25)->get();
 
     return view('pages/questions', ['questions' => $questions, 'type' => 'highly-voted']);
+
+Route::get('question/{id}', function($id) {
+
+    $question = App\Question::find($id);
+
+    return view('pages/question', ['question' => $question]);
 });
