@@ -124,36 +124,54 @@
             <span class="caret"></span>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
-            <form id="signin_form" class="px-4 py-3">
-              <div class="form-group">
-                <label for="exampleDropdownFormEmail1">Email address</label>
-                <input type="text" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+            <form id="signin_form" class="px-4 py-3" method="POST" action="{{ route('login') }}">
+              {{ csrf_field() }}
+              <div class="form-gruoup">
+                  <label for="email">E-mail</label>
+                  <input id="email" class="form-control" type="text" name="email"  placeholder="email@example.com" value="{{ old('email') }}" required autofocus>
+                  @if ($errors->has('email'))
+                      <span class="error">
+                          {{ $errors->first('email') }}
+                      </span>
+                  @endif
               </div>
+
               <div class="form-group">
-                <label for="exampleDropdownFormPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+                  <label for="password" >Password</label>
+                  <input id="password" class="form-control" type="password" name="password" placeholder="Password" required>
+                  @if ($errors->has('password'))
+                      <!-- TODO: Notification about login error -->
+                      <span class="error">
+                          {{ $errors->first('password') }}
+                      </span>
+                  @endif
               </div>
+
               <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                <label class="form-check-label" for="dropdownCheck">Remember me</label>
+                  <label>
+                      <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                  </label>
               </div>
-              <button id="login" type="button" class="btn btn-primary btn-signin">Sign in</button>
+
+              <button id="login" type="submit" class="btn btn-primary btn-signin">Sign in</button>
               <a class="btn btn-social btn-github" href="#">
-                <i class="fab fa-github"></i>
-                <div>Sign in with Github</div>
+                  <i class="fab fa-github"></i>
+                  <div>Sign in with Github</div>
               </a>
+
               <div class="mx-auto mt-1">
-                <div class="g-signin2" data-onsuccess="onSignIn" data-width="200" data-height="34" data-longtitle="true">button</div>
+                  <div class="g-signin2" data-onsuccess="onSignIn" data-width="200" data-height="34" data-longtitle="true">button</div>
               </div>
-            </form>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('register') }}">New around here? Sign up</a>
+          </form>
+
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ route('register') }}">New around here? Sign up</a>
           </div>
         </div>
 
         <!-- Sign up -->
         <div class="dropdown mx-2">
-          <a class="btn btn-primary" href="{{ route('register') }}" role="button">Sign Up</a>
+          <a class="btn btn-outline-primary" href="{{ route('register') }}" role="button">Sign Up</a>
         </div>
 
       <!-- END OF NAVBAR RIGHT-SIDE OPTIONS -->
