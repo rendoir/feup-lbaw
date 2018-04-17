@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 // Authentication
-//Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -34,7 +34,9 @@ Route::get('questions/{page_num?}', function($page_num = 0) {
     return view('pages/questions', ['questions' => $questions, 'most_voted' => $most_voted]);
 });
 
-Route::get('question/{id}', function($questiond_id) {
+Route::get('question/{id}', function($id) {
 
-    return view('pages/question', []);
+    $question = App\Question::find($id);
+
+    return view('pages/question', ['question' => $question]);
 });

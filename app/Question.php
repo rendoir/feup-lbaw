@@ -13,7 +13,7 @@ class Question extends Model
     }
 
     public function answers() {
-        return $this->hasMany('App\Answer');
+        return $this->hasMany('App\Answer')->get();
     }
 
     public function get_num_answers() {
