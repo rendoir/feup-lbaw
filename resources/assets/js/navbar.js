@@ -27,10 +27,16 @@ function sendRegisterRequest() {
 }
 
 function sendLogoutHandler() {
+    if (this.statusCode != 200) {
+        console.error("ERROR");
+    }
     window.location.reload(true);
 }
 
 function sendLoginHandler() {
+    if (this.statusCode != 200) {
+        console.error("ERROR");
+    }
     window.location.reload(true);
 }
 

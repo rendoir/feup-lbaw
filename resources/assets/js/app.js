@@ -7,4 +7,5 @@
 
 // require('./bootstrap');
 
-require('./navbar.js');
+// require('./navbar.js');
+require('./scroll.js');
