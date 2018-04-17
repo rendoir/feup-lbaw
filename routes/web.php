@@ -27,9 +27,14 @@ Route::get('about', function() {
 });
 
 Route::get('questions/{page_num?}', function($page_num = 0) {
-    
+
     $questions = App\Question::all()->forPage($page_num, 25);
-    $most_voted = App\Question::HighlyVoted()->forPage($page_num, 25)->get();
+    $most_voted = App\Question::HighlyVoted()->forPage($page_num, 25);
 
     return view('pages/questions', ['questions' => $questions, 'most_voted' => $most_voted]);
+});
+
+Route::get('question/{id}', function($questiond_id) {
+
+    return view('pages/question', []);
 });

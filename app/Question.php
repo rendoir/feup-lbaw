@@ -29,7 +29,7 @@ class Question extends Model
     public function scopeHighlyVoted($query) {
 
         return $query->join('messages', "messages.id", "questions.id")
-                     ->orderBy('messages.score', 'DESC');
+                     ->orderBy('messages.score', 'DESC')->get();
     }
 
 }
