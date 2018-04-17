@@ -19,27 +19,16 @@
 
   <!-- Font Awesome -->
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  <!--  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('font/fontawesome/css/fa-svg-with-js.css') }}}" /> -->
-  <!--  <script defer src="{{ asset('font/fontawesome/js/fontawesome-all.js') }}}"></script> -->
-
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 
   <!-- Bootstrap v4 CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
 
   <!-- Styling  -->
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/style.css') }}" />
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/bootstrap-social.css') }}" />
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/styling-bootstrap.css') }}" />
+  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/app.css') }}" />
 
 </head>
-
-<!--
-@if (Auth::check())
-  <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
-@endif
--->
 
 <body>
 <header class="sticky-top">
@@ -213,7 +202,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
-<script src="{{ asset('js/scroll.js') }}"" async defer></script>
 
 </body>
 

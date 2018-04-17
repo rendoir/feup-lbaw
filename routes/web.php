@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return redirect('login');
+    return redirect('questions');
 });
 
 // Authentication
