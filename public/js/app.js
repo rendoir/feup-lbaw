@@ -73,7 +73,7 @@ module.exports = __webpack_require__(2);
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 
 /**
@@ -84,11 +84,87 @@ module.exports = __webpack_require__(2);
 
 // require('./bootstrap');
 
+__webpack_require__(10);
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+ajax = __webpack_require__(11);
+
+function addEventListeners() {
+    var logout = document.querySelector('#logout');
+    if (logout != null) logout.addEventListener('click', sendLogoutRequest);
+
+    var login = document.querySelector('#login');
+    if (login != null) login.addEventListener('click', sendLoginRequest);
+}
+
+function sendLogoutRequest() {
+    ajax.sendAjaxRequest('get', 'logout', null, sendLogoutHandler);
+}
+
+function sendLoginRequest() {
+    var form = document.querySelector('#signin_form');
+    var email = form.querySelector('input[type=text]').value;
+    var password = form.querySelector('input[type=password]').value;
+    ajax.sendAjaxRequest('post', 'login', { email: email, password: password }, sendLoginHandler);
+}
+
+function sendRegisterRequest() {
+    var form = document.querySelector('#signin_form');
+    var email = form.querySelector('input[type=text]').value;
+    var password = form.querySelector('input[type=password]').value;
+    ajax.sendAjaxRequest('post', 'login', { email: email, password: password }, sendLoginHandler);
+}
+
+function sendLogoutHandler() {
+    window.location.reload(true);
+}
+
+function sendLoginHandler() {
+    window.location.reload(true);
+}
+
+window.addEventListener('load', addEventListeners);
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+function encodeForAjax(data) {
+    if (data == null) return null;
+    return Object.keys(data).map(function (k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
+    }).join('&');
+}
+
+function sendAjaxRequest(method, url, data, handler) {
+    var request = new XMLHttpRequest();
+
+    request.open(method, url, true);
+    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.addEventListener('load', handler);
+    request.send(encodeForAjax(data));
+}
+
+module.exports = {
+    sendAjaxRequest: sendAjaxRequest
+};
 
 /***/ })
 /******/ ]);

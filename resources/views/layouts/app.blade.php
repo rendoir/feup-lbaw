@@ -30,12 +30,6 @@
 
 </head>
 
-<!--
-@if (Auth::check())
-  <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
-@endif
--->
-
 <body>
 <header class="sticky-top">
   <div id="navbar" class="bg-light">
