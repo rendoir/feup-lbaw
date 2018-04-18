@@ -9,3 +9,5 @@
 
 // require('./navbar.js');
 require('./scroll.js');
+
+require('./comments.js');

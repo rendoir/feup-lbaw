@@ -55,3 +55,5 @@ Route::get('question/{id}', function($id) {
 
     return view('pages/question', ['question' => $question]);
 });
+
+Route::get('/{id}/comments', 'Question\CommentsController@getComments');

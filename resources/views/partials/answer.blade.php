@@ -4,10 +4,14 @@
     $author = $message->get_author();
     $score = $message->score;
 
-    $commentable = $answer->commentable;
+    $num_comments = $answer->commentable->get_num_comments();  
+
+    $comment = App\Comment::get()->first();
+    $message1 = $comment->message;
+    $content1 = $message->message_version;
 ?>
 <!-- Answer -->
-<div class="card my-3 question-answer-nlogged border-success">
+<div class="card my-3 question-answer-nlogged <? echo ($answer->id == $question->correct_answer? 'border-success' : '')?> ">
     <div class="row mx-0">
         <div class="col-1 d-flex flex-column align-items-start">
             <div class="p-2 mt-3 mb-auto">
@@ -34,32 +38,33 @@
                     <span class="badge badge-success"><?=$author->getBadge()?></span>
                 </div>
                 <div class="text-center m-auto">
-                    <a role="button" data-toggle="collapse" href="#AnswerComments<?=$i?>" aria-expanded="false" aria-controls="AnswerComments<?=$i?>">
-                        Show Comments
-                    </a>
+                    @if ($num_comments > 0)
+                        <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments<?=$i?>" aria-expanded="false" aria-controls="AnswerComments<?=$i?>">
+                            Show Comments
+                        </a>
+                    @endif
                 </div>
                 <div class="ml-auto">
-                    <p class="text-right mb-0"><?=$commentable->get_num_comments()?> comments</p>
+                    <p class="text-right mb-0"><?=$num_comments?> comments</p>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- COMMENTS -->
-    <div class="collapse" id="AnswerComments<?=$i?>">
+    @if ($num_comments > 0)
+    <div class="collapse answer-comments" id="AnswerComments<?=$i?>" data-message-id="{{$answer->id}}">
         <div class="card-footer comments-card">
             <div class="d-flex list-group list-group-flush">
                 <div class="list-group-item px-0 bg-transparent">
                     <div class="row mx-sm-0">
                         <div class="col-1 my-auto text-center">
-                            <p class="text-center mb-0 w-100">3</p>
+                            <p class="text-center mb-0 w-100">34</p>
                         </div>
                         <div class="col-11 my-1 pl-3">
-                            <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual elements
-                                of a graphic document or visual presentation. Replacing content with
-                                placeholder text allows designers to design the form of the content before
-                                the content itself has been produced.</p>
+                            <p class="px-2"><?= $content1->content?>
                             <p class="text-right discrete">
-                                AndreFCruz
+                                <?=$content1->author?>
                             </p>
                         </div>
                     </div>
@@ -109,5 +114,5 @@
             </div>
         </div>
     </div>
-    <!-- COMMENTS END -->
+    @endif
 </div>
