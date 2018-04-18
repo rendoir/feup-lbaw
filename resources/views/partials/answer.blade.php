@@ -5,10 +5,6 @@
     $score = $message->score;
 
     $num_comments = $answer->commentable->get_num_comments();  
-
-    $comment = App\Comment::get()->first();
-    $message1 = $comment->message;
-    $content1 = $message->message_version;
 ?>
 <!-- Answer -->
 <div class="card my-3 question-answer-nlogged <? echo ($answer->id == $question->correct_answer? 'border-success' : '')?> ">
@@ -53,66 +49,6 @@
 
     <!-- COMMENTS -->
     @if ($num_comments > 0)
-    <div class="collapse answer-comments" id="AnswerComments<?=$i?>" data-message-id="{{$answer->id}}">
-        <!--<div class="card-footer comments-card">
-            <div class="d-flex list-group list-group-flush">
-                <div class="list-group-item px-0 bg-transparent">
-                    <div class="row mx-sm-0">
-                        <div class="col-1 my-auto text-center">
-                            <p class="text-center mb-0 w-100">34</p>
-                        </div>
-                        <div class="col-11 my-1 pl-3">
-                            <p class="px-2">4
-                            <p class="text-right discrete">
-                                3
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item px-0 bg-transparent">
-                    <div class="row mx-sm-0">
-                        <div class="col-1 my-1 text-center">
-                            <p class="text-center mb-0 w-100">1</p>
-                        </div>
-                        <div class="col-11 my-1 pl-4">
-                            <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit
-                                dapibus.
-                            </p>
-                            <p class="text-right discrete">
-                                jflcarvalho
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item px-0 bg-transparent">
-                    <div class="row mx-sm-0">
-                        <div class="col-1 my-auto text-center">
-                            <p class="text-center mb-0 w-100">1</p>
-                        </div>
-                        <div class="col-11 my-auto pl-4">
-                            <p>This is a sample comment!! *Insert meme here*</p>
-                            <p class="text-right discrete">
-                                EdgarACarneiro
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item px-0 bg-transparent">
-                    <div class="row mx-sm-0">
-                        <div class="col-1 my-auto text-center">
-                            <p class="text-center mb-0 w-100">-1</p>
-                        </div>
-                        <div class="col-11 my-auto pl-4">
-                            <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
-                                hendrerit dapibus. Bada badu badumtsss.</p>
-                            <p class="text-right discrete">
-                                rendoir
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-    </div>
+    <div class="collapse answer-comments" id="AnswerComments<?=$i?>" data-message-id="{{$answer->id}}"></div>
     @endif
 </div>

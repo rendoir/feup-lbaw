@@ -16,7 +16,6 @@ function sendCommentsRequest() {
 
 function commentsHandler() {
     let response = JSON.parse(this.responseText);
-    //console.log(response);
 
     getCommentsHTML(response);
 }
@@ -26,10 +25,6 @@ function getCommentsHTML(comments) {
     // Direct comments container
     let secondDiv = document.createElement("div");
     secondDiv.class = "d-flex list-group list-group-flush";
-
-    console.log("SHITEHTIEH ");
-    console.log(comments);
-
 
     for (let i = 0; i < comments.length; ++i) {
 
@@ -74,8 +69,6 @@ function getCommentsHTML(comments) {
         secondDiv.appendChild(thirdDiv);
     }
 
-    console.log(secondDiv.innerHTML);
-
     let firstDiv = document.createElement("div");
     firstDiv.classList.add("card-footer");
     firstDiv.classList.add("comments-card");
@@ -84,22 +77,6 @@ function getCommentsHTML(comments) {
 
     let final = document.querySelector('.answer-comments');
     final.appendChild(firstDiv);
-
-
-    /*<div class="row mx-sm-0">
-        <div class="col-1 my-auto text-center">
-            <p class="text-center mb-0 w-100">3</p>
-        </div>
-        <div class="col-11 my-1 pl-3">
-            <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual elements
-                of a graphic document or visual presentation. Replacing content with
-                placeholder text allows designers to design the form of the content before
-                the content itself has been produced.</p>
-            <p class="text-right discrete">
-                AndreFCruz
-            </p>
-        </div>
-    </div>*/
 
 }
 
