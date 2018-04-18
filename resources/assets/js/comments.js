@@ -76,7 +76,10 @@ function getCommentsHTML(comments) {
     console.log(firstDiv.outerHTML);
 
     let final = document.querySelector('.answer-comments');
-    final.appendChild(firstDiv);
+    if (final.firstChild == null)
+        final.appendChild(firstDiv);
+    else
+        final.replaceChild(firstDiv, final.firstChild);
 
 }
 
