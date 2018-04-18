@@ -19,7 +19,8 @@ class CommentsController extends Controller
 
     public function getComments(Request $request, $id)
     {
-        $comment_ids = \App\Comment::where('id', $id)->get();
+        $commentable = \App\Answer::find($request->id)->commentable;
+        $comment_ids = $commentable->get_comments;
 
         $results = array();
 
@@ -29,7 +30,7 @@ class CommentsController extends Controller
 
             array_push($results, array(
                 "id" => $comment->id,
-                "author" => $content->get_author()->author,
+                "author" => $message->get_author()->username,
                 "score" => $message->score,
                 "was_edited" => $message->was_edited(),
                 "content" => array (

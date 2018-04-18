@@ -54,7 +54,7 @@
     <!-- COMMENTS -->
     @if ($num_comments > 0)
     <div class="collapse answer-comments" id="AnswerComments<?=$i?>" data-message-id="{{$answer->id}}">
-        <div class="card-footer comments-card">
+        <!--<div class="card-footer comments-card">
             <div class="d-flex list-group list-group-flush">
                 <div class="list-group-item px-0 bg-transparent">
                     <div class="row mx-sm-0">
@@ -62,9 +62,9 @@
                             <p class="text-center mb-0 w-100">34</p>
                         </div>
                         <div class="col-11 my-1 pl-3">
-                            <p class="px-2"><?= $content1->content?>
+                            <p class="px-2">4
                             <p class="text-right discrete">
-                                <?=$content1->author?>
+                                3
                             </p>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
     @endif
 </div>

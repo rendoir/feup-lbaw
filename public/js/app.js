@@ -119,59 +119,78 @@ function sendCommentsRequest() {
     var route = '/' + message_id + '/comments';
     console.log(route);
 
-    ajax.sendAjaxRequest('get', route, {}, commentsHandler);
+    ajax.sendAjaxRequest('get', route, { id: message_id }, commentsHandler);
 }
 
 function commentsHandler() {
-    if (this.statusCode != 200) {
-        console.error("ERROR");
-    }
-
     var response = JSON.parse(this.responseText);
-    console.log("SHITEIHTIE");
+    //console.log(response);
+
+    getCommentsHTML(response);
 }
 
-function getCommentsHTML() {
+function getCommentsHTML(comments) {
 
-    var paragraph = document.createElement("p");
-    paragraph.class = "text-center mb-0 w-100";
-    paragraph.innerHTML = "";
-
-    var votes = document.createElement("div");
-    votes.class = "col-1 my-auto text-center";
-    votes.appendChild(paragraph);
-
-    var content = document.createElement("p");
-    content.class = "px-2";
-    content.innerHTML = "";
-
-    var author = document.createElement("p");
-    author.class = "text-right discrete";
-    author.innerHTML = "";
-
-    var contentDiv = document.createElement("div");
-    contentDiv.class = "col-11 my-1 pl-3";
-    contentDiv.appendChild(content);
-    contentDiv.appendChild(author);
-
-    var forthDiv = document.createElement("div");
-    forthDiv.class = "row mx-sm-0";
-
-    ///////////
-
-    var thirdDiv = document.createElement("div");
-    thirdDiv.class = "d-flex list-group list-group-flush";
-
+    // Direct comments container
     var secondDiv = document.createElement("div");
-    secondDiv.class = "card-footer comments-card";
-    secondDiv.appendChild(thirdDiv);
+    secondDiv.class = "d-flex list-group list-group-flush";
+
+    console.log("SHITEHTIEH ");
+    console.log(comments);
+
+    for (var i = 0; i < comments.length; ++i) {
+
+        var paragraph = document.createElement("p");
+        paragraph.classList.add("text-center");
+        paragraph.classList.add("mb-0");
+        paragraph.classList.add("w-100");
+        paragraph.appendChild(document.createTextNode(comments[i].score));
+
+        var votes = document.createElement("div");
+        votes.classList.add("col-1");
+        votes.classList.add("my-auto");
+        votes.classList.add("text-center");
+        votes.appendChild(paragraph);
+
+        var content = document.createElement("p");
+        content.classList.add("px-2");
+        content.appendChild(document.createTextNode(comments[i].content.version));
+
+        var author = document.createElement("p");
+        author.classList.add("discrete");
+        author.classList.add("text-right");
+        author.appendChild(document.createTextNode(comments[i].author));
+
+        var contentDiv = document.createElement("div");
+        contentDiv.classList.add("pl-3");
+        contentDiv.classList.add("my-1");
+        contentDiv.classList.add("col-11");
+        contentDiv.appendChild(content);
+        contentDiv.appendChild(author);
+
+        var forthDiv = document.createElement("div");
+        forthDiv.classList.add("mx-sm-0");
+        forthDiv.classList.add("row");
+        forthDiv.appendChild(votes);
+        forthDiv.appendChild(contentDiv);
+
+        var thirdDiv = document.createElement("div");
+        thirdDiv.class = "list-group-item px-0 bg-transparent";
+        thirdDiv.appendChild(forthDiv);
+
+        secondDiv.appendChild(thirdDiv);
+    }
+
+    console.log(secondDiv.innerHTML);
 
     var firstDiv = document.createElement("div");
-    firstDiv.class = "card-footer comments-card";
+    firstDiv.classList.add("card-footer");
+    firstDiv.classList.add("comments-card");
     firstDiv.appendChild(secondDiv);
+    console.log(firstDiv.outerHTML);
 
-    var comments = document.querySelector('.answer-comments');
-    comments.appendChild(firstDiv);
+    var final = document.querySelector('.answer-comments');
+    final.appendChild(firstDiv);
 
     /*<div class="row mx-sm-0">
         <div class="col-1 my-auto text-center">
