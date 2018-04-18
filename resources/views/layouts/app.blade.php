@@ -145,13 +145,13 @@
               </div>
 
               <button id="login" type="submit" class="btn btn-primary btn-signin">Sign in</button>
-              <a class="btn btn-social btn-github" href="#">
+              <a class="btn btn-social btn-github btn-signin mt-0" href="#">
                   <i class="fab fa-github"></i>
                   <div>Sign in with Github</div>
               </a>
 
-              <div class="mx-auto mt-1">
-                  <div class="g-signin2" data-onsuccess="onSignIn" data-width="200" data-height="34" data-longtitle="true">button</div>
+              <div class="btn-signin">
+                  <div class="g-signin2" data-onsuccess="onSignIn" data-width="202" data-height="34" data-longtitle="true">button</div>
               </div>
           </form>
 
@@ -162,7 +162,7 @@
 
         <!-- Sign up -->
         <div class="dropdown mx-2">
-          <a class="btn btn-outline-primary" href="{{ route('register') }}" role="button">Sign Up</a>
+          <a class="btn btn-outline-success" href="{{ route('register') }}" role="button">Sign Up</a>
         </div>
 
       <!-- END OF NAVBAR RIGHT-SIDE OPTIONS -->
