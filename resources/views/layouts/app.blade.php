@@ -67,8 +67,8 @@
       <!-- START OF NAVBAR RIGHT-SIDE OPTIONS -->
       <div class="ml-auto-sm px-0 order-1 order-sm-2 d-flex justify-content-between justify-content-sm-end">
 
-        @if (Auth::check())
-          <!-- Notifications Dropdown -->
+      @if (Auth::check())
+        <!-- Notifications Dropdown -->
           <div class="dropdown mx-2">
                         <span class="big-icon" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="pt-1">
@@ -105,14 +105,14 @@
               <div class="dropdown-divider"></div>
               <form method="GET" action="{{ route('logout') }}">
                 <button id="login" type="submit" class="dropdown-item">Log out</button>
-              <form/>
+              </form>
             </div>
           </div>
 
-        </div>
+      </div>
 
-      @else
-        <!-- Sign In/Sign Up -->
+    @else
+      <!-- Sign In/Sign Up -->
         <div class="dropdown mx-2">
           <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
             Sign In
@@ -122,45 +122,45 @@
             <form id="signin_form" class="px-4 py-3" method="POST" action="{{ route('login') }}">
               {{ csrf_field() }}
               <div class="form-gruoup">
-                  <label for="email">E-mail</label>
-                  <input id="email" class="form-control" type="text" name="email"  placeholder="email@example.com" value="{{ old('email') }}" required autofocus>
-                  @if ($errors->has('email'))
-                      <span class="error">
+                <label for="email">E-mail</label>
+                <input id="email" class="form-control" type="text" name="email"  placeholder="email@example.com" value="{{ old('email') }}" required autofocus>
+                @if ($errors->has('email'))
+                  <span class="error">
                           {{ $errors->first('email') }}
                       </span>
-                  @endif
+                @endif
               </div>
 
               <div class="form-group">
-                  <label for="password" >Password</label>
-                  <input id="password" class="form-control" type="password" name="password" placeholder="Password" required>
-                  @if ($errors->has('password'))
-                      <!-- TODO: Notification about login error -->
-                      <span class="error">
+                <label for="password" >Password</label>
+                <input id="password" class="form-control" type="password" name="password" placeholder="Password" required>
+              @if ($errors->has('password'))
+                <!-- TODO: Notification about login error -->
+                  <span class="error">
                           {{ $errors->first('password') }}
                       </span>
-                  @endif
+                @endif
               </div>
 
               <div class="form-check">
-                  <label>
-                      <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                  </label>
+                <label>
+                  <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                </label>
               </div>
 
               <button id="login" type="submit" class="btn btn-primary btn-signin">Sign in</button>
               <a class="btn btn-social btn-github btn-signin mt-0" href="#">
-                  <i class="fab fa-github"></i>
-                  <div>Sign in with Github</div>
+                <i class="fab fa-github"></i>
+                <div>Sign in with Github</div>
               </a>
 
               <div class="btn-signin">
-                  <div class="g-signin2" data-onsuccess="onSignIn" data-width="202" data-height="34" data-longtitle="true">button</div>
+                <div class="g-signin2" data-onsuccess="onSignIn" data-width="202" data-height="34" data-longtitle="true">button</div>
               </div>
-          </form>
+            </form>
 
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{{ route('register') }}">New around here? Sign up</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ route('register') }}">New around here? Sign up</a>
           </div>
         </div>
 
@@ -169,7 +169,7 @@
           <a class="btn btn-outline-success" href="{{ route('register') }}" role="button">Sign Up</a>
         </div>
 
-      <!-- END OF NAVBAR RIGHT-SIDE OPTIONS -->
+        <!-- END OF NAVBAR RIGHT-SIDE OPTIONS -->
       @endif
 
     </nav>

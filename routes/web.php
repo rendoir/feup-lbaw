@@ -55,7 +55,7 @@ Route::get('questions/recent/{page_num}', function($page_num) {
     return view('pages/questions', ['questions' => $questions, 'type' => 'recent']);
 });
 
-Route::get('questions/hot/{page_num}', function($page_num) {
+Route::get('questions/hot/{page_num}', function($page_num) { // TODO
     $questions = App\Question::HighlyVoted()->forPage($page_num, 25);
     // TODO
     return view('pages/questions', ['questions' => $questions, 'type' => 'hot']);
@@ -65,6 +65,15 @@ Route::get('questions/highly-voted/{page_num}', function($page_num) {
     $questions = App\Question::HighlyVoted()->forPage($page_num, 25);
 
     return view('pages/questions', ['questions' => $questions, 'type' => 'highly-voted']);
+});
+
+Route::get('questions/active/{page_num}', function($page_num) {
+    $questions = App\Question::all()->where('correct_answer', 'is', 'NULL')
+        ->sortByDesc(function($question) {
+            return $question->message->message_version->creation_time;})
+        ->forPage($page_num, 25);
+
+    return view('pages/questions', ['questions' => $questions, 'type' => 'recent']);
 });
 
 Route::get('questions/{id}', function($question_id) {
