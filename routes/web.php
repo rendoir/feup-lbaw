@@ -68,12 +68,13 @@ Route::get('questions/highly-voted/{page_num}', function($page_num) {
 });
 
 Route::get('questions/active/{page_num}', function($page_num) {
-    $questions = App\Question::all()->where('correct_answer', 'is', 'NULL')
+    $questions = App\Question::all()
+        ->where('correct_answer', 'is', 'NULL')
         ->sortByDesc(function($question) {
             return $question->message->message_version->creation_time;})
         ->forPage($page_num, 25);
 
-    return view('pages/questions', ['questions' => $questions, 'type' => 'recent']);
+    return view('pages/questions', ['questions' => $questions, 'type' => 'active']);
 });
 
 Route::get('questions/{id}', function($question_id) {
