@@ -90,8 +90,8 @@ __webpack_require__(2);
 __webpack_require__(3);
 
 //Text Editor
-//require('./tablist.js');
-//require('./simplemde.js');
+// require('./tablist.js');
+// require('./simplemde.js');
 
 /***/ }),
 /* 2 */
