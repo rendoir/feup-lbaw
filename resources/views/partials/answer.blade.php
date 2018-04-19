@@ -12,13 +12,13 @@
         <div class="col-1 d-flex flex-column align-items-start">
             <div class="p-2 mt-3 mb-auto">
                 <i class="fas fa-trophy"></i>
-                <p class="text-center mb-0 w-100"><?=$score?></p>
+                <p class="text-center mb-0 w-100">{{$score}}</p>
             </div>
         </div>
         <div class="col-11">
             <div class="card-body">
                 <p class="card-text">
-                    <?=$content->content?>
+                    {{$content->content}}
 
                     @if ($message->was_edited())
                         <span class="badge badge-light float-right mr-2 mt-3">Edited</span>
@@ -30,18 +30,18 @@
                     <small class="text-muted">Created by - &nbsp</small>
                 </p>
                 <div class="mr-auto">
-                    <span><?=$author->username?></span>
-                    <span class="badge badge-success"><?=$author->getBadge()?></span>
+                    <span>{{$author->username}}</span>
+                    <span class="badge badge-success">{{$author->getBadge()}}</span>
                 </div>
                 <div class="text-center m-auto">
                     @if ($num_comments > 0)
-                        <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments<?=$i?>" aria-expanded="false" aria-controls="AnswerComments<?=$i?>">
+                        <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{$i}}" aria-expanded="false" aria-controls="AnswerComments{{$i}}">
                             Show Comments
                         </a>
                     @endif
                 </div>
                 <div class="ml-auto">
-                    <p class="text-right mb-0"><?=$num_comments?> comments</p>
+                    <p class="text-right mb-0">{{$num_comments}} comments</p>
                 </div>
             </div>
         </div>
@@ -49,6 +49,6 @@
 
     <!-- COMMENTS -->
     @if ($num_comments > 0)
-    <div class="collapse answer-comments" id="AnswerComments<?=$i?>" data-message-id="{{$answer->id}}"></div>
+        <div class="collapse answer-comments" id="AnswerComments{{$i}}" data-message-id="{{$answer->id}}"></div>
     @endif
 </div>
