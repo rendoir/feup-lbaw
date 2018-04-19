@@ -11,3 +11,7 @@
 require('./scroll.js');
 
 require('./comments.js');
+
+//Text Editor
+require('./tablist.js');
+require('./simplemde.js');

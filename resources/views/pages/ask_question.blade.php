@@ -12,7 +12,13 @@
             </h2>
         </div>
 
-        <section id="question-editor" class="mx-5">
+        <!-- Text editor -->
+        <section class="mx-5">
+          <script>
+            var simplemde = new SimpleMDE();
+          </script>
+        </section>
+
 
             <!-- Add tags and post buttons -->
             <div class="pt-4 pb-1 pl-3 ">
@@ -30,7 +36,6 @@
             <div class="text-right">
                 <a class="btn btn-lg btn-info my-4 mr-5 " href="question.html" role="button">Post your Question</a>
             </div>
-        </section>
 
     </section>
 
