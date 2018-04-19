@@ -8,30 +8,46 @@ class Question extends Model
 {
     public $timestamps = false;
 
-    public function message() {
+    public function message()
+    {
         return $this->hasOne('App\Message', 'id');
     }
 
-    public function answers() {
+    public function answers()
+    {
         return $this->hasMany('App\Answer')->get();
     }
 
-    public function get_num_answers() {
+    public function commentable()
+    {
+        return $this->hasOne('App\Commentable');
+    }
+
+    public function correct_answer()
+    {
+        return $this->belongsTo('App\Answer', 'correct_answer');
+    }
+
+    public function get_num_answers()
+    {
         return $this->answers()->count();
     }
 
-    public function hasCorrectAnswer() {
-        return $this->belongsTo('App\Answer', 'correct_answer')->first();
-    }
-
-    public function scopeHighlyVoted($query) {
-
+    public function scopeHighlyVoted($query)
+    {
         return $query->join('messages', "messages.id", "questions.id")
-                     ->orderBy('messages.score', 'DESC')->get();
+            ->orderBy('messages.score', 'DESC')->get();
     }
 
-    public function commentable() {
-        return $this->hasOne('App\Commentable');
+    public function scopeSearch($query, $search)
+    {
+        if (!$search) {
+            return $query;
+        }
+
+        return $query
+            ->whereRaw('title @@ to_tsquery(\'english\', ?)', [$search])
+            ->orderByRaw('ts_rank(title, to_tsquery(\'english\', ?)) DESC', [$search]);
     }
 
 }

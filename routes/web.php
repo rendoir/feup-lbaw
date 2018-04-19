@@ -11,8 +11,15 @@
 |
 */
 
+use Illuminate\Http\Request;
+
+
 Route::get('/', function () {
     return redirect('questions');
+});
+
+Route::get('questions', function() {
+    return redirect('questions/recent/0');
 });
 
 // Authentication
@@ -26,30 +33,32 @@ Route::get('about', function() {
     return view('pages/about');
 });
 
-
 Route::get('ask_question', function () {
     return view('pages/ask_question');
 });
-
+    
 Route::post('ask_question', 'Question\QuestionController@addQuestion');
 
+// Search questions with string query
+Route::get('questions/', function(Request $request) {
+    $query_string = $request->get('query');
+    $page_num = $request->get('page_num', 0);
+    $questions = App\Question::search($query_string)->forPage($page_num, 25);
 
-//Route::get('questions/{page_num?}', function($page_num = 0) {
-//
-//    $questions = App\Question::all()->forPage($page_num, 25);
-//    $most_voted = App\Question::HighlyVoted()->forPage($page_num, 25)->get();
-//
-//    return view('pages/questions', ['questions' => $questions, 'most_voted' => $most_voted]);
-//});
-
-Route::get('questions', function() {
-    return redirect('questions/recent/0');
+    return view('pages/questions', ['questions' => $questions, 'type' => 'search']);
 });
 
 Route::get('questions/recent/{page_num}', function($page_num) {
     $questions = App\Question::all()->forPage($page_num, 25);
+    // TODO check ordering
 
     return view('pages/questions', ['questions' => $questions, 'type' => 'recent']);
+});
+
+Route::get('questions/hot/{page_num}', function($page_num) {
+    $questions = App\Question::HighlyVoted()->forPage($page_num, 25);
+    // TODO
+    return view('pages/questions', ['questions' => $questions, 'type' => 'hot']);
 });
 
 Route::get('questions/highly-voted/{page_num}', function($page_num) {
@@ -58,10 +67,4 @@ Route::get('questions/highly-voted/{page_num}', function($page_num) {
     return view('pages/questions', ['questions' => $questions, 'type' => 'highly-voted']);
 });
 
-Route::get('question/{id}', function($id) {
-    $question = App\Question::find($id);
-
-    return view('pages/question', ['question' => $question]);
-});
-
-Route::get('/{id}/comments', 'Question\CommentsController@getComments');
+Route::get('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@getComments');
