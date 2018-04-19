@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <section class="container">
+    <section class="container>
 
         <!-- Nav With Separators -->
         <div class="row mt-3">
@@ -46,22 +46,22 @@
 
                 </div>
                 <div class="d-flex justify-content-between">
-                    <a <?php 
+                    <a <?php
                             $url = Request::url();
                             $page_number = intval(substr(strrchr($url, "/"), 1)) - 1;
                             if($page_number >= 0)
                                 echo 'href="' . $page_number . '"';
                         ?>>Previous Page</a>
-                    <span>Page Number: <?php 
+                    <span>Page Number: <?php
                             $url = Request::url();
                             $page_number = intval(substr(strrchr($url, "/"), 1));
                             echo $page_number;
                         ?></span>
-                    <a href="<?php 
+                    <a href="<?php
                             $url = Request::url();
                             $page_number = intval(substr(strrchr($url, "/"), 1)) + 1;
                             echo $page_number;
-                        ?>">Next Page</a>                    
+                        ?>">Next Page</a>
                 </div>
             </div>
             <aside class="col-md-3 mb-3">
