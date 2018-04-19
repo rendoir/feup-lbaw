@@ -41,8 +41,12 @@ Route::get('questions', function(Request $request) {
     $page_num = $request->get('page_num', 0);
     $questions = App\Question::Search($query_string)->forPage($page_num, 25);
 
+    // TODO check results
     Log::debug("Query string: " . $query_string);
     Log::debug("Page number: " . $page_num);
+    foreach ($questions as $q) {
+        Log::debug($q->id);
+    }
 
     return view('pages/questions', ['questions' => $questions, 'type' => 'search']);
 });
