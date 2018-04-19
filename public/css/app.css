@@ -230,12 +230,17 @@ main .row aside > div.aside-content {
 }
 
 body > header.sticky-top {
+  height: 72px;
   -webkit-transition: -webkit-box-shadow .25s;
   transition: -webkit-box-shadow .25s;
   transition: box-shadow .25s;
   transition: box-shadow .25s, -webkit-box-shadow .25s;
   -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);
           box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);
+}
+
+#navbar a.nav-item.nav-link.active {
+  padding-bottom: calc(0.5em - 2px);
 }
 
 .sticky-shadow {

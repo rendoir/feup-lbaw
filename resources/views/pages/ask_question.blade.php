@@ -14,8 +14,11 @@
 
         <!-- Text editor -->
         <section class="mx-5">
+          <textarea id="editor">
+          </textarea>
+
           <script>
-            var simplemde = new SimpleMDE();
+            var simplemde = new SimpleMDE({ element: document.getElementById("editor") });
           </script>
         </section>
 
