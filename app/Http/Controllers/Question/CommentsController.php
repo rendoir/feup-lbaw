@@ -17,9 +17,9 @@ class CommentsController extends Controller
     |
     */
 
-    public function getComments(Request $request, $id)
+    public function getComments(Request $request)
     {
-        $teste = $request->answer_id;
+        $teste = $request->message_id;
         $commentable = \App\Answer::find($teste)->commentable;
         $comment_ids = $commentable->get_comments;
 

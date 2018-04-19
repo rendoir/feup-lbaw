@@ -89,6 +89,10 @@ __webpack_require__(2);
 
 __webpack_require__(3);
 
+//Text Editor
+//require('./tablist.js');
+//require('./simplemde.js');
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
@@ -110,18 +114,16 @@ $(window).scroll(function () {
 ajax = __webpack_require__(4);
 
 function addEventListeners() {
-    var logout = document.querySelector('.show-comments');
-    if (logout != null) logout.addEventListener('click', sendCommentsRequest);
+    var comments = document.querySelector('.show-comments');
+    if (comments != null) comments.addEventListener('click', sendCommentsRequest);
 }
 
 function sendCommentsRequest() {
-    var message_id = document.querySelector('.answer-comments').getAttribute('data-message-id');
-    ajax.sendAjaxRequest('get', getCommentsURL(), { answer_id: message_id }, commentsHandler);
+    ajax.sendAjaxRequest('get', getCommentsURL(), {}, commentsHandler);
 }
 
 function getCommentsURL() {
     var message_id = document.querySelector('.answer-comments').getAttribute('data-message-id');
-    console.log(window.location.pathname + '/answers/' + message_id + '/comments');
 
     return window.location.pathname + '/answers/' + message_id + '/comments';
 }
@@ -129,10 +131,10 @@ function getCommentsURL() {
 function commentsHandler() {
     var response = JSON.parse(this.responseText);
 
-    getCommentsHTML(response);
+    createComments(response);
 }
 
-function getCommentsHTML(comments) {
+function createComments(comments) {
 
     // Direct comments container
     var secondDiv = document.createElement("div");
@@ -140,45 +142,39 @@ function getCommentsHTML(comments) {
 
     for (var i = 0; i < comments.length; ++i) {
 
-        var paragraph = document.createElement("p");
+        /*let paragraph = document.createElement("p");
         paragraph.classList.add("text-center");
-        paragraph.classList.add("mb-0");
+        paragraph.classList.add("mb-0"); 
         paragraph.classList.add("w-100");
         paragraph.appendChild(document.createTextNode(comments[i].score));
-
-        var votes = document.createElement("div");
+         let votes = document.createElement("div");
         votes.classList.add("col-1");
-        votes.classList.add("my-auto");
+        votes.classList.add("my-auto"); 
         votes.classList.add("text-center");
         votes.appendChild(paragraph);
-
-        var content = document.createElement("p");
+         let content = document.createElement("p");
         content.classList.add("px-2");
         content.appendChild(document.createTextNode(comments[i].content.version));
-
-        var author = document.createElement("p");
+         let author = document.createElement("p");
         author.classList.add("discrete");
         author.classList.add("text-right");
         author.appendChild(document.createTextNode(comments[i].author));
-
-        var contentDiv = document.createElement("div");
+         let contentDiv = document.createElement("div");
         contentDiv.classList.add("pl-3");
         contentDiv.classList.add("my-1");
         contentDiv.classList.add("col-11");
         contentDiv.appendChild(content);
         contentDiv.appendChild(author);
-
-        var forthDiv = document.createElement("div");
+         let forthDiv = document.createElement("div");
         forthDiv.classList.add("mx-sm-0");
         forthDiv.classList.add("row");
         forthDiv.appendChild(votes);
         forthDiv.appendChild(contentDiv);
-
-        var thirdDiv = document.createElement("div");
+         let thirdDiv = document.createElement("div");
         thirdDiv.class = "list-group-item px-0 bg-transparent";
-        thirdDiv.appendChild(forthDiv);
+        thirdDiv.appendChild(forthDiv);*/
 
-        secondDiv.appendChild(thirdDiv);
+        secondDiv.appendChild(createCommentHTML(comments[i]));
     }
 
     var firstDiv = document.createElement("div");
@@ -189,6 +185,50 @@ function getCommentsHTML(comments) {
 
     var final = document.querySelector('.answer-comments');
     if (final.firstChild == null) final.appendChild(firstDiv);else final.replaceChild(firstDiv, final.firstChild);
+}
+
+function createCommentHTML(comment) {
+
+    var paragraph = document.createElement("p");
+    paragraph.classList.add("text-center");
+    paragraph.classList.add("mb-0");
+    paragraph.classList.add("w-100");
+    paragraph.appendChild(document.createTextNode(comment.score));
+
+    var votes = document.createElement("div");
+    votes.classList.add("col-1");
+    votes.classList.add("my-auto");
+    votes.classList.add("text-center");
+    votes.appendChild(paragraph);
+
+    var content = document.createElement("p");
+    content.classList.add("px-2");
+    content.appendChild(document.createTextNode(comment.content.version));
+
+    var author = document.createElement("p");
+    author.classList.add("discrete");
+    author.classList.add("text-right");
+    author.appendChild(document.createTextNode(comment.author));
+
+    var contentDiv = document.createElement("div");
+    contentDiv.classList.add("pl-3");
+    contentDiv.classList.add("my-1");
+    contentDiv.classList.add("col-11");
+    contentDiv.appendChild(content);
+    contentDiv.appendChild(author);
+
+    var forthDiv = document.createElement("div");
+    forthDiv.classList.add("mx-sm-0");
+    forthDiv.classList.add("row");
+    forthDiv.appendChild(votes);
+    forthDiv.appendChild(contentDiv);
+
+    var thirdDiv = document.createElement("div");
+    thirdDiv.class = "list-group-item px-0 bg-transparent";
+    thirdDiv.appendChild(forthDiv);
+
+    //secondDiv.appendChild(thirdDiv);
+    return thirdDiv;
 }
 
 window.addEventListener('load', addEventListeners);
