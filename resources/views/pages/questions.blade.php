@@ -4,10 +4,10 @@
 
 @section('content')
 
-    <section class="container">
+    <section class="container pt-3">
 
         <!-- Nav With Separators -->
-        <div class="row mt-3">
+        <div class="row">
             <div class="nav nav-tabs col-md-9" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link @if(isset($type) && strcmp($type, 'recent') == 0){{"active"}}@endif" id="nav-new-tab" aria-controls="nav-new" aria-selected="true"
                    href="@if(isset($type) && strcmp($type, 'recent') != 0){{ url('/questions/recent/0') }}@else{{ "#" }}@endif">Recent</a>

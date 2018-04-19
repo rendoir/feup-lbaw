@@ -32,6 +32,8 @@ Route::get('about', function() {
 Route::get('ask_question', function () {
     return view('pages/ask_question');
 });
+    
+Route::post('ask_question', 'Question\QuestionController@addQuestion');
 
 // Search questions with string query
 Route::get('questions', function(Request $request) {
@@ -64,3 +66,11 @@ Route::get('questions/highly-voted/{page_num}', function($page_num) {
 
     return view('pages/questions', ['questions' => $questions, 'type' => 'highly-voted']);
 });
+
+Route::get('questions/{id}', function($question_id) {
+    $question = App\Question::find($question_id);
+
+    return view('pages/question', ['question' => $question]);
+});
+
+Route::get('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@getComments');
