@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <section class="container>
+    <section class="container">
 
         <!-- Nav With Separators -->
         <div class="row mt-3">
