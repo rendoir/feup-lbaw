@@ -89,10 +89,6 @@ __webpack_require__(2);
 
 __webpack_require__(3);
 
-//Text Editor
-// require('./tablist.js');
-// require('./simplemde.js');
-
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
@@ -141,43 +137,8 @@ function createComments(comments) {
     secondDiv.class = "d-flex list-group list-group-flush";
 
     for (var i = 0; i < comments.length; ++i) {
-
-        /*let paragraph = document.createElement("p");
-        paragraph.classList.add("text-center");
-        paragraph.classList.add("mb-0"); 
-        paragraph.classList.add("w-100");
-        paragraph.appendChild(document.createTextNode(comments[i].score));
-         let votes = document.createElement("div");
-        votes.classList.add("col-1");
-        votes.classList.add("my-auto"); 
-        votes.classList.add("text-center");
-        votes.appendChild(paragraph);
-         let content = document.createElement("p");
-        content.classList.add("px-2");
-        content.appendChild(document.createTextNode(comments[i].content.version));
-         let author = document.createElement("p");
-        author.classList.add("discrete");
-        author.classList.add("text-right");
-        author.appendChild(document.createTextNode(comments[i].author));
-         let contentDiv = document.createElement("div");
-        contentDiv.classList.add("pl-3");
-        contentDiv.classList.add("my-1");
-        contentDiv.classList.add("col-11");
-        contentDiv.appendChild(content);
-        contentDiv.appendChild(author);
-         let forthDiv = document.createElement("div");
-        forthDiv.classList.add("mx-sm-0");
-        forthDiv.classList.add("row");
-        forthDiv.appendChild(votes);
-        forthDiv.appendChild(contentDiv);
-         let thirdDiv = document.createElement("div");
-        thirdDiv.class = "list-group-item px-0 bg-transparent";
-        thirdDiv.appendChild(forthDiv);*/
-
         secondDiv.appendChild(createCommentHTML(comments[i]));
-    }
-
-    var firstDiv = document.createElement("div");
+    }var firstDiv = document.createElement("div");
     firstDiv.classList.add("card-footer");
     firstDiv.classList.add("comments-card");
     firstDiv.appendChild(secondDiv);
@@ -227,7 +188,6 @@ function createCommentHTML(comment) {
     thirdDiv.class = "list-group-item px-0 bg-transparent";
     thirdDiv.appendChild(forthDiv);
 
-    //secondDiv.appendChild(thirdDiv);
     return thirdDiv;
 }
 
