@@ -16,7 +16,7 @@
 <section id="question" class="sticky-top bg-light" class="sweet-grey">
     <div class="container py-3">
         <header class="border-bottom sticky-top">
-            <h3><?=$question->title?></h3>
+            <h3>{{$question->title}}</h3>
         </header>
     </div>
 </section>
@@ -24,7 +24,7 @@
     <div class="container">
         <main  class="row" style="overflow-y:auto">
             <div class="col-md-9 p-3">
-                <?=$content->content?>
+                {{$content->content}}
                 <!-- Question Comments -->
                 <div class="text-center">
                     <button class="btn btn-secundary my-4" type="button" data-toggle="collapse" data-target="#QuestionComments" aria-expanded="false"
@@ -102,11 +102,11 @@
                 <div>
                     <div>
                         <span class="font-weight-bold w-100">Answers: </span>
-                        <span class="w-100"><?=$num_answers?></span>
+                        <span class="w-100">{{$num_answers}}</span>
                     </div>
                     <div>
                         <span class="font-weight-bold w-100">Votes: </span>
-                        <span class="w-100"><?=$score?></span>
+                        <span class="w-100">{{$score}}</span>
                     </div>
                 </div>
 
@@ -116,8 +116,8 @@
                             <small>Created by - &nbsp</small>
                         </p>
                         <div class="mr-auto">
-                            <span><?=$author->username?></span>
-                            <span class="badge badge-success"><?=$author->getBadge()?></span>
+                            <span>{{$author->username}}</span>
+                            <span class="badge badge-success">{{$author->getBadge()}}</span>
                         </div>
                     </div>
                     <div>

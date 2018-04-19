@@ -15,10 +15,6 @@ use Illuminate\Http\Request;
 
 
 Route::get('/', function () {
-    return redirect('questions');
-});
-
-Route::get('questions', function() {
     return redirect('questions/recent/0');
 });
 
@@ -40,17 +36,21 @@ Route::get('ask_question', function () {
 Route::post('ask_question', 'Question\QuestionController@addQuestion');
 
 // Search questions with string query
-Route::get('questions/', function(Request $request) {
-    $query_string = $request->get('query');
+Route::get('questions', function(Request $request) {
+    $query_string = $request->get('search');
     $page_num = $request->get('page_num', 0);
-    $questions = App\Question::search($query_string)->forPage($page_num, 25);
+    $questions = App\Question::Search($query_string)->forPage($page_num, 25);
+
+    Log::debug("Query string: " . $query_string);
+    Log::debug("Page number: " . $page_num);
 
     return view('pages/questions', ['questions' => $questions, 'type' => 'search']);
 });
 
 Route::get('questions/recent/{page_num}', function($page_num) {
-    $questions = App\Question::all()->forPage($page_num, 25);
-    // TODO check ordering
+    $questions = App\Question::all()->sortByDesc(function($question) {
+        return $question->message->message_version->creation_time;
+    })->forPage($page_num, 25);
 
     return view('pages/questions', ['questions' => $questions, 'type' => 'recent']);
 });
