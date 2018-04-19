@@ -31,6 +31,9 @@ Route::get('ask_question', function () {
     return view('pages/ask_question');
 });
 
+Route::post('ask_question', 'Question\QuestionController@addQuestion');
+
+
 //Route::get('questions/{page_num?}', function($page_num = 0) {
 //
 //    $questions = App\Question::all()->forPage($page_num, 25);
