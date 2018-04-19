@@ -116,10 +116,14 @@ function addEventListeners() {
 
 function sendCommentsRequest() {
     var message_id = document.querySelector('.answer-comments').getAttribute('data-message-id');
-    var route = '/' + message_id + '/comments';
-    console.log(route);
+    ajax.sendAjaxRequest('get', getCommentsURL(), { answer_id: message_id }, commentsHandler);
+}
 
-    ajax.sendAjaxRequest('get', route, { id: message_id }, commentsHandler);
+function getCommentsURL() {
+    var message_id = document.querySelector('.answer-comments').getAttribute('data-message-id');
+    console.log(window.location.pathname + '/answers/' + message_id + '/comments');
+
+    return window.location.pathname + '/answers/' + message_id + '/comments';
 }
 
 function commentsHandler() {

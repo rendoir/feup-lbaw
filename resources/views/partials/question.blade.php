@@ -5,7 +5,7 @@
     $score = $message->score;
     $message_id = $message->id;
 ?>
-<a class="card my-3 question-card <?= ($question->hasCorrectAnswer() != null ? 'border-success' : '') ?>" href="{{ url('/question/' . $message_id) }}">
+<a class="card my-3 question-card <?= ($question->hasCorrectAnswer() != null ? 'border-success' : '') ?>" href="{{ url('/questions/' . $message_id) }}">
     <div class="row mx-0">
         <div class="col-sm-2 py-3 border-right rounded-left d-flex flex-column justify-content-around bg-light">
             <div>
