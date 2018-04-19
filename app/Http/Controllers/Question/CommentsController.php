@@ -19,7 +19,8 @@ class CommentsController extends Controller
 
     public function getComments(Request $request, $id)
     {
-        $commentable = \App\Answer::find($request->id)->commentable;
+        $teste = $request->answer_id;
+        $commentable = \App\Answer::find($teste)->commentable;
         $comment_ids = $commentable->get_comments;
 
         $results = array();

@@ -64,18 +64,3 @@ Route::get('questions/highly-voted/{page_num}', function($page_num) {
 
     return view('pages/questions', ['questions' => $questions, 'type' => 'highly-voted']);
 });
-
-Route::get('questions/active/{page_num}', function($page_num) {
-    $questions = App\Question::all()->where('correct_answer', '<>', '')->forPage($page_num, 25);
-    // TODO check ordering -> most recent unanswered questions ?
-
-    return view('pages/questions', ['questions' => $questions, 'type' => 'active']);
-});
-
-Route::get('question/{id}', function($id) {
-    $question = App\Question::find($id);
-
-    return view('pages/question', ['question' => $question]);
-});
-
-Route::get('/{id}/comments', 'Question\CommentsController@getComments');
