@@ -226,7 +226,7 @@ main .row aside > div.aside-content {
 }
 
 body > header.sticky-top {
-  height: 72px;
+  height: 100%;
   -webkit-transition: -webkit-box-shadow .25s;
   transition: -webkit-box-shadow .25s;
   transition: box-shadow .25s;

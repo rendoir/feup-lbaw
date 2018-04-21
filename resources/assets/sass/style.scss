@@ -13,8 +13,8 @@ main .row aside > div.aside-content {
     top: 8%;
 }
 
-body > header.sticky-top{
-    height: 72px;
+body > header.sticky-top {
+    height: 100%;
     transition: box-shadow .25s;
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);
 }
@@ -23,11 +23,11 @@ body > header.sticky-top{
     padding-bottom: calc(0.5em - 2px);
 }
 
-.sticky-shadow{
+.sticky-shadow {
     box-shadow: 0 8px 20px -9px rgba(0, 0, 0, 0.3) !important;
 }
 
-section#question{
+section#question {
     z-index: 1000;
     position: sticky;
     top: 94px;
