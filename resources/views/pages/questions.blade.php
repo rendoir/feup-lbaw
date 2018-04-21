@@ -63,9 +63,11 @@
 
                 </div>
 
+                <div class="search-content">
                 @if (isset($type) && strcmp($type, 'search') == 0)
                     @each('partials.question', $questions, 'question')
                 @endif
+                </div>
 
                 <div class="d-flex justify-content-between">
                     <a <?php

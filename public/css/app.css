@@ -344,23 +344,27 @@ nav {
   color: #445259;
 }
 
-.tab-pane a {
+.tab-pane a,
+.search-content a {
   color: inherit;
 }
 
-.tab-pane > a:hover {
+.tab-pane > a:hover,
+.search-content > a:hover {
   color: inherit;
   text-decoration: inherit;
 }
 
-.tab-pane > .card {
+.tab-pane > .card,
+.search-content > .card {
   -webkit-transition: -webkit-box-shadow 0.2s;
   transition: -webkit-box-shadow 0.2s;
   transition: box-shadow 0.2s;
   transition: box-shadow 0.2s, -webkit-box-shadow 0.2s;
 }
 
-.tab-pane > .card:hover {
+.tab-pane > .card:hover,
+.search-content > .card:hover {
   -webkit-box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.07), 0 0 20px 0 rgba(0, 0, 0, 0.07);
           box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.07), 0 0 20px 0 rgba(0, 0, 0, 0.07);
 }

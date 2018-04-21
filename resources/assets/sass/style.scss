@@ -118,21 +118,20 @@ nav {
     color: #445259;
 }
 
-.tab-pane a {
-    color: inherit;
-}
-
-.tab-pane > a:hover {
-    color: inherit;
-    text-decoration: inherit;
-}
-
-.tab-pane > .card {
-    transition: box-shadow 0.2s;
-}
-
-.tab-pane > .card:hover {
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.07), 0 0 20px 0 rgba(0, 0, 0, 0.07);
+.tab-pane, .search-content {
+    a {
+        color: inherit;
+    }
+    > a:hover {
+        color: inherit;
+        text-decoration: inherit;
+    }
+    > .card {
+        transition: box-shadow 0.2s;
+    }
+    > .card:hover {
+        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.07), 0 0 20px 0 rgba(0, 0, 0, 0.07);
+    }
 }
 
 .sweet-grey {
