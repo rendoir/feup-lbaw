@@ -39,7 +39,7 @@ Route::post('ask_question', 'Question\QuestionController@addQuestion');
 Route::get('questions', function(Request $request) {
     $query_string = $request->get('search');
     $page_num = $request->get('page_num', 0);
-    $questions = App\Question::search($query_string)->get();
+    $questions = App\Question::search($query_string)->get()->forPage($page_num, 25);
 
     return view('pages/questions', ['questions' => $questions, 'type' => 'search']);
 });

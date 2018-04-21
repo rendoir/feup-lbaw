@@ -39,9 +39,9 @@ class Question extends Model
             ->orderBy('messages.score', 'DESC')->get();
     }
 
-    public function scopeSearch($query, $search)
+    public function scopeSearch($query, $search, $categories = null)
     {
-        if (!$search) {
+        if (!$search && !$categories) {
             return $query;
         }
 
