@@ -52,7 +52,8 @@ CREATE TABLE commentables (
 CREATE TABLE questions (
     id BIGINT PRIMARY KEY REFERENCES commentables(id),
     title TEXT NOT NULL,
-    correct_answer BIGINT UNIQUE
+    correct_answer BIGINT UNIQUE,
+    search tsvector
 );
 
 CREATE TABLE answers (
@@ -161,8 +162,7 @@ CREATE INDEX message_author ON messages USING btree(author);
 CREATE INDEX notification_user ON notifications USING btree(user_id);
 
 CREATE INDEX category_name ON categories USING gin(to_tsvector('english', name));
-CREATE INDEX question_title ON questions USING gist(to_tsvector('english', title));
-
+CREATE INDEX question_title ON questions USING gin(search);
 
 -- Uniqueness Constraints for Case Insensitive Username and Email
 CREATE INDEX unique_lowercase_username ON users (lower(username));
@@ -189,6 +189,8 @@ DROP FUNCTION IF EXISTS gen_comment_notification();
 DROP FUNCTION IF EXISTS gen_answer_notification();
 DROP FUNCTION IF EXISTS gen_badge_notification();
 DROP FUNCTION IF EXISTS update_message_version();
+DROP FUNCTION IF EXISTS update_question_search();
+
 
 DROP TRIGGER IF EXISTS ban_message ON messages;
 DROP TRIGGER IF EXISTS check_correct ON questions;
@@ -210,6 +212,7 @@ DROP TRIGGER IF EXISTS gen_comment_notification ON comments;
 DROP TRIGGER IF EXISTS gen_answer_notification ON answers;
 DROP TRIGGER IF EXISTS gen_badge_notification ON badge_attainments;
 DROP TRIGGER IF EXISTS update_message_version ON message_versions;
+DROP TRIGGER IF EXISTS update_question_search_index ON questions;
 
 -- A message is banned when it exceeds the report limits
 CREATE FUNCTION ban_message() RETURNS TRIGGER AS $$
@@ -232,7 +235,9 @@ CREATE TRIGGER ban_message
 CREATE FUNCTION check_correct() RETURNS TRIGGER AS $$
   BEGIN
     IF NEW.correct_answer IS NOT NULL AND
-      NOT EXISTS (SELECT * FROM answers WHERE NEW.correct_answer = id AND NEW.id = question_id) THEN
+      NOT EXISTS (
+        SELECT * FROM answers
+        WHERE NEW.correct_answer = id AND NEW.id = question_id) THEN
         RAISE EXCEPTION 'An answer can only be marked as correct if it is an answer of the question';
     END IF;
     RETURN NEW;
@@ -582,3 +587,17 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER update_message_version
   AFTER INSERT ON message_versions
   FOR EACH ROW EXECUTE PROCEDURE update_message_version();
+
+-- Question.search includes FTS index of its title
+CREATE FUNCTION update_question_search() RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE questions
+    SET search = to_tsvector('english', NEW.title)
+    WHERE questions.id = NEW.id;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_question_search_index
+  AFTER INSERT OR UPDATE OF title ON questions
+  FOR EACH ROW EXECUTE PROCEDURE update_question_search();

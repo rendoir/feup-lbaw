@@ -46,8 +46,8 @@ class Question extends Model
         }
 
         return $query
-            ->whereRaw('title @@ to_tsquery(\'english\', ?)', [$search])
-            ->orderByRaw('ts_rank(title, to_tsquery(\'english\', ?)) DESC', [$search]);
+            ->whereRaw('search @@ plainto_tsquery(\'english\', ?)', [$search])
+            ->orderByRaw('ts_rank(search, plainto_tsquery(\'english\', ?)) DESC', [$search]);
     }
 
 }

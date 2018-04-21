@@ -38,8 +38,9 @@ Route::post('ask_question', 'Question\QuestionController@addQuestion');
 // Search questions with string query
 Route::get('questions', function(Request $request) {
     $query_string = $request->get('search');
+    $categories_ids = $request->get('categories');
     $page_num = $request->get('page_num', 0);
-    $questions = App\Question::Search($query_string)->forPage($page_num, 25);
+    $questions = App\Question::search($query_string)->get();
 
     // TODO check results
     Log::debug("Query string: " . $query_string);

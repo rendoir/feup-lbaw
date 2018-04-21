@@ -63,6 +63,10 @@
 
                 </div>
 
+                @if (isset($type) && strcmp($type, 'search') == 0)
+                    @each('partials.question', $questions, 'question')
+                @endif
+
                 <div class="d-flex justify-content-between">
                     <a <?php
                         $url = Request::url();
