@@ -4,38 +4,88 @@
 
 @section('content')
 
-    <section class="container">
+    <section class="container pt-3">
 
         <!-- Nav With Separators -->
-        <div class="row mt-3">
+        <div class="row">
             <div class="nav nav-tabs col-md-9" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new"
-                   aria-selected="true">New</a>
-                <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab" aria-controls="nav-hot" aria-selected="false">Hot</a>
-                <a class="nav-item nav-link" id="nav-voted-tab" data-toggle="tab" href="#nav-voted" role="tab" aria-controls="nav-voted"
-                   aria-selected="false">Most Voted</a>
-                <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active"
-                   aria-selected="false">Active</a>
+                <a class="nav-item nav-link @if(isset($type) && strcmp($type, 'recent') == 0){{"active"}}@endif" id="nav-new-tab" aria-controls="nav-new" aria-selected="true"
+                   href="@if(isset($type) && strcmp($type, 'recent') != 0){{ url('/questions/recent/0') }}@else{{ "#" }}@endif">Recent</a>
+                <a class="nav-item nav-link @if(isset($type) && strcmp($type, 'hot') == 0){{"active"}}@endif" id="nav-hot-tab" aria-controls="nav-hot" aria-selected="false"
+                   href="@if(isset($type) && strcmp($type, 'hot') != 0){{ url('/questions/hot/0') }}@else{{ "#" }}@endif">Hot</a>
+                <a class="nav-item nav-link @if(isset($type) && strcmp($type, 'highly-voted') == 0){{"active"}}@endif" id="nav-voted-tab" aria-controls="nav-voted" aria-selected="false"
+                   href="@if(isset($type) && strcmp($type, 'highly-voted') != 0){{ url('/questions/highly-voted/0') }}@else{{ "#" }}@endif">Highly Voted</a>
+                <a class="nav-item nav-link @if(isset($type) && strcmp($type, 'active') == 0){{"active"}}@endif" id="nav-active-tab" aria-controls="nav-active" aria-selected="false"
+                   href="@if(isset($type) && strcmp($type, 'active') != 0){{ url('/questions/active/0') }}@else{{ "#" }}@endif">Active</a>
+
             </div>
         </div>
 
         <!-- Separators Contents -->
         <div class="row">
             <div class="tab-content col-md-9" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'recent') == 0){{"show active"}}@endif" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab"
+                @if (isset($type) && strcmp($type, 'recent') == false) {{ 'href="/questions/recent/0"' }} @endif>
 
+                    @if (isset($type) && strcmp($type, 'recent') == 0)
+                        @each('partials.question', $questions, 'question')
+                    @endif
+
+                </div>
+
+                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'hot') == 0){{"show active"}}@endif" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab"
+                @if (isset($type) && strcmp($type, 'hot') == false) {{ 'href="/questions/hot/0"' }} @endif>
+
+
+                    @if (isset($type) && strcmp($type, 'hot') == 0)
+                        @each('partials.question', $questions, 'question')
+                    @endif
+
+                </div>
+
+                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'highly-voted') == 0){{"show active"}}@endif" id="nav-voted" role="tabpanel" aria-labelledby="nav-voted-tab"
+                @if (isset($type) && strcmp($type, 'highly-voted') == false) {{ 'href="/questions/highly-voted/0"' }} @endif>
+
+
+                    @if (isset($type) && strcmp($type, 'highly-voted') == 0)
+                        @each('partials.question', $questions, 'question')
+                    @endif
+
+                </div>
+
+                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'active') == 0){{"show active"}}@endif" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab"
+                @if (isset($type) && strcmp($type, 'active') == false) {{ 'href="/questions/active/0"' }} @endif>
+
+
+                    @if (isset($type) && strcmp($type, 'active') == 0)
+                        @each('partials.question', $questions, 'question')
+                    @endif
+
+                </div>
+
+                <div class="search-content">
+                @if (isset($type) && strcmp($type, 'search') == 0)
                     @each('partials.question', $questions, 'question')
-
-
+                @endif
                 </div>
-                <div class="tab-pane fade" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
 
-                </div>
-                <div class="tab-pane fade" id="nav-voted" role="tabpanel" aria-labelledby="nav-voted-tab">
-
-                </div>
-                <div class="tab-pane fade" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
-
+                <div class="d-flex justify-content-between">
+                    <a <?php
+                        $url = Request::url();
+                        $page_number = intval(substr(strrchr($url, "/"), 1)) - 1;
+                        if($page_number >= 0)
+                            echo 'href="' . $page_number . '"';
+                        ?>>Previous Page</a>
+                    <span>Page Number: <?php
+                        $url = Request::url();
+                        $page_number = intval(substr(strrchr($url, "/"), 1));
+                        echo $page_number;
+                        ?></span>
+                    <a href="<?php
+                    $url = Request::url();
+                    $page_number = intval(substr(strrchr($url, "/"), 1)) + 1;
+                    echo $page_number;
+                    ?>">Next Page</a>
                 </div>
             </div>
             <aside class="col-md-3 mb-3">
@@ -69,7 +119,7 @@
                     <div class="card">
                         <div class="card-body d-flex flex-column justify-content-center">
                             <h5 class="card-title">Have a Question?</h5>
-                            <form id="form_ask_question" name="ask_question">
+                            <form id="form_ask_question" name="ask_question" action="{{ url('ask_question') }}">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                                 </div>

@@ -11,8 +11,11 @@
 |
 */
 
+use Illuminate\Http\Request;
+
+
 Route::get('/', function () {
-    return redirect('login');
+    return redirect('questions/recent/0');
 });
 
 // Authentication
@@ -26,8 +29,55 @@ Route::get('about', function() {
     return view('pages/about');
 });
 
-Route::get('questions/{page_num?}', function($page_num = 0) {
-    $questions = App\Question::all()->forPage($page_num ,25);
-
-    return view('pages/questions', ['questions' => $questions]);
+Route::get('ask_question', function () {
+    return view('pages/ask_question');
 });
+    
+Route::post('ask_question', 'Question\QuestionController@addQuestion');
+
+// Search questions with string query
+Route::get('questions', function(Request $request) {
+    $query_string = $request->get('search');
+    $page_num = $request->get('page_num', 0);
+    $questions = App\Question::search($query_string)->get()->forPage($page_num, 25);
+
+    return view('pages/questions', ['questions' => $questions, 'type' => 'search']);
+});
+
+Route::get('questions/recent/{page_num}', function($page_num) {
+    $questions = App\Question::all()->sortByDesc(function($question) {
+        return $question->message->message_version->creation_time;
+    })->forPage($page_num, 25);
+
+    return view('pages/questions', ['questions' => $questions, 'type' => 'recent']);
+});
+
+Route::get('questions/hot/{page_num}', function($page_num) { // TODO
+    $questions = App\Question::HighlyVoted()->forPage($page_num, 25);
+    // TODO
+    return view('pages/questions', ['questions' => $questions, 'type' => 'hot']);
+});
+
+Route::get('questions/highly-voted/{page_num}', function($page_num) {
+    $questions = App\Question::HighlyVoted()->forPage($page_num, 25);
+
+    return view('pages/questions', ['questions' => $questions, 'type' => 'highly-voted']);
+});
+
+Route::get('questions/active/{page_num}', function($page_num) {
+    $questions = App\Question::all()
+        ->where('correct_answer', 'is', 'NULL')
+        ->sortByDesc(function($question) {
+            return $question->message->message_version->creation_time;})
+        ->forPage($page_num, 25);
+
+    return view('pages/questions', ['questions' => $questions, 'type' => 'active']);
+});
+
+Route::get('questions/{id}', function($question_id) {
+    $question = App\Question::find($question_id);
+
+    return view('pages/question', ['question' => $question]);
+});
+
+Route::get('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@getComments');

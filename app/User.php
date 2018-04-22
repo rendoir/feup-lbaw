@@ -34,4 +34,20 @@ class User extends Authenticatable
     {
         return $this->attributes['password_hash'];
     }
+
+    public function getBadgeAttainments() {
+        return $this->hasMany('App\BadgeAttainment');
+    }
+
+    public function getBadge() {
+        $attained_badges = $this->getBadgeAttainments()->first();
+
+        if ($attained_badges == null)
+            return null;
+
+        if (ModeratorBadge::find($attained_badges->badge_id) == null)
+            return 'Trusted';
+        else
+            return 'Moderator';
+    }
 }

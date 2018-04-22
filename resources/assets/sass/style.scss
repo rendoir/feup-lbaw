@@ -13,7 +13,21 @@ main .row aside > div.aside-content {
     top: 8%;
 }
 
-section#question{
+body > header.sticky-top {
+    height: 100%;
+    transition: box-shadow .25s;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);
+}
+
+#navbar a.nav-item.nav-link.active {
+    padding-bottom: calc(0.5em - 2px);
+}
+
+.sticky-shadow {
+    box-shadow: 0 8px 20px -9px rgba(0, 0, 0, 0.3) !important;
+}
+
+section#question {
     z-index: 1000;
     position: sticky;
     top: 94px;
@@ -104,21 +118,20 @@ nav {
     color: #445259;
 }
 
-.tab-pane a {
-    color: inherit;
-}
-
-.tab-pane > a:hover {
-    color: inherit;
-    text-decoration: inherit;
-}
-
-.tab-pane > .card {
-    transition: box-shadow 0.2s;
-}
-
-.tab-pane > .card:hover {
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.07), 0 0 20px 0 rgba(0, 0, 0, 0.07);
+.tab-pane, .search-content {
+    a {
+        color: inherit;
+    }
+    > a:hover {
+        color: inherit;
+        text-decoration: inherit;
+    }
+    > .card {
+        transition: box-shadow 0.2s;
+    }
+    > .card:hover {
+        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.07), 0 0 20px 0 rgba(0, 0, 0, 0.07);
+    }
 }
 
 .sweet-grey {
@@ -161,14 +174,14 @@ nav {
 }
 
 #jumbotron_about {
-    background-image: url("../img/paper.jpg");
+    background-image: url("../../../public/img/paper.jpg");
     /* background: linear-gradient(to bottom, rgb(0,150,136), rgba(0, 150, 136, 0.2)); */
     background-size: cover;
     height: 100%;
 }
 
 #jumbotron_signup {
-    background-image: url("../img/car_blurred_background.jpg");
+    background-image: url("../../../public/img/car_blurred_background.jpg");
     background-size: cover;
     height: 100%;
 }
