@@ -6,6 +6,7 @@ use App\Commentable;
 use App\Message;
 use App\MessageVersion;
 use App\Question;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -32,11 +33,12 @@ class QuestionController extends Controller
 
     public function addQuestion(Request $request)
     {
-        $message = Message::create([$request->author]);
-        $commentable = Commentable::create([$message->id]);
-        $question = Question::create([$commentable->id, $request->title]);
-        MessageVersion::create([$request->contentMessage, $message->id, \DateTime::ATOM]);
+        $user = User::find($request->author);
+        $message = Message::create(['author' => $user->id]);
+        $commentable = Commentable::create(['id' => $message->id]);
+        $question = Question::create(['id' => $commentable->id, 'title' => $request->title]);
+        MessageVersion::create(['content' => $request->messageContent, 'message_id' => $message->id]);
 
-        return $message->id;
+        return $question;
     }
 }
