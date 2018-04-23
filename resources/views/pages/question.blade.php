@@ -132,9 +132,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-9">
-            @for ($i = 0; $i < $num_answers; $i++)
-                @include('partials.answer', ['answer' => $answers[$i]])
-            @endfor
+            @foreach($answers as $answer)
+                @include('partials.answer', ['answer' => $answer])
+            @endforeach
         </div>
         <!-- related questions -->
         <aside class="col-md-3 mt-3">

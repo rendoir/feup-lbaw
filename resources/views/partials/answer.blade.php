@@ -1,4 +1,5 @@
 <?php
+    $id = $answer->id;
     $message = $answer->message;
     $content = $message->message_version;
     $author = $message->get_author();
@@ -7,7 +8,7 @@
     $num_comments = $answer->commentable->get_num_comments();  
 ?>
 <!-- Answer -->
-<div class="card my-3 question-answer-nlogged <? echo ($answer->id == $question->correct_answer? 'border-success' : '')?> ">
+<div class="card my-3 question-answer-nlogged <? echo ($id == $question->correct_answer? 'border-success' : '')?> ">
     <div class="row mx-0">
         <div class="col-1 d-flex flex-column align-items-start">
             <div class="p-2 mt-3 mb-auto">
@@ -35,7 +36,8 @@
                 </div>
                 <div class="text-center m-auto">
                     @if ($num_comments > 0)
-                        <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{$i}}" aria-expanded="false" aria-controls="AnswerComments{{$i}}">
+                        <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{$id}}" 
+                        aria-expanded="false" aria-controls="AnswerComments{{$id}}" data-message-id="{{$id}}">
                             Show Comments
                         </a>
                     @endif
@@ -47,8 +49,8 @@
         </div>
     </div>
 
-    <!-- COMMENTS -->
     @if ($num_comments > 0)
-        <div class="collapse answer-comments" id="AnswerComments{{$i}}" data-message-id="{{$answer->id}}"></div>
+        <!-- COMMENTS -->
+        <div class="collapse answer-comments" id="AnswerComments{{$id}}" data-message-id="{{$id}}"></div>
     @endif
 </div>

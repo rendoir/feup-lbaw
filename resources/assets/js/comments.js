@@ -2,17 +2,32 @@ ajax = require('./ajax.js');
 
 function addEventListeners() {
     let comments = document.querySelector('.show-comments');
-    if (comments != null)
-        comments.addEventListener('click', sendCommentsRequest);
+    if (comments == null)
+        return;
+    
+    let message_id = comments.getAttribute('data-message-id');
+    if (message_id == null)
+        return;
+
+    comments.addEventListener('click', function() {
+        sendCommentsRequest(message_id);
+    });
 }
 
-function sendCommentsRequest() {
-    ajax.sendAjaxRequest('get', getCommentsURL(), {}, commentsHandler);
+function sendCommentsRequest(message_id) {
+
+    let commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
+
+    // If area already expanded, its only closing, so not worth making ajax request
+    if (document.querySelector(commentSelector).classList.contains('show')) {
+        toggleShowMsg(message_id, true);
+        return;
+    }
+
+    ajax.sendAjaxRequest('get', getCommentsURL(message_id), {}, commentsHandler);
 }
 
-function getCommentsURL() {
-    let message_id = document.querySelector('.answer-comments').getAttribute('data-message-id');
-
+function getCommentsURL(message_id) {
     return window.location.pathname + '/answers/' + message_id + '/comments';
 }
 
@@ -35,13 +50,14 @@ function createComments(comments) {
     firstDiv.classList.add("card-footer");
     firstDiv.classList.add("comments-card");
     firstDiv.appendChild(secondDiv);
-    console.log(firstDiv.outerHTML);
 
     let final = document.querySelector('.answer-comments');
     if (final.firstChild == null)
         final.appendChild(firstDiv);
     else
         final.replaceChild(firstDiv, final.firstChild);
+
+    toggleShowMsg(final.getAttribute('data-message-id'), false);
 }
 
 function createCommentHTML(comment) {
@@ -87,5 +103,15 @@ function createCommentHTML(comment) {
     return thirdDiv;
 }
 
-window.addEventListener('load', addEventListeners);
+/**
+ * 
+ * @param {String} message_id 
+ * @param {boolean} show - If true, it's supposed to to 'Show Comments' , if false it's supposed to 'Hide Comments'
+ */
+function toggleShowMsg(message_id, show) {
+    let toggler = document.querySelector("a[aria-controls='AnswerComments" + message_id + "']");
 
+    toggler.innerHTML = (show ? "Show" : "Hide") + " Comments";
+}
+
+window.addEventListener('load', addEventListeners);
