@@ -131,20 +131,22 @@ function sendCommentsRequest(message_id) {
         return;
     }
 
-    ajax.sendAjaxRequest('get', getCommentsURL(message_id), {}, commentsHandler);
+    ajax.sendAjaxRequest('get', getCommentsURL(message_id), {}, function (data) {
+        commentsHandler(data.target, message_id);
+    });
 }
 
 function getCommentsURL(message_id) {
     return window.location.pathname + '/answers/' + message_id + '/comments';
 }
 
-function commentsHandler() {
-    var response = JSON.parse(this.responseText);
+function commentsHandler(response, message_id) {
+    var comments = JSON.parse(response.responseText);
 
-    createComments(response);
+    createComments(comments, message_id);
 }
 
-function createComments(comments) {
+function createComments(comments, message_id) {
 
     // Direct comments container
     var secondDiv = document.createElement("div");
@@ -157,10 +159,10 @@ function createComments(comments) {
     firstDiv.classList.add("comments-card");
     firstDiv.appendChild(secondDiv);
 
-    var final = document.querySelector('.answer-comments');
+    var final = document.querySelector(".answer-comments[data-message-id='" + message_id + "']");
     if (final.firstChild == null) final.appendChild(firstDiv);else final.replaceChild(firstDiv, final.firstChild);
 
-    toggleShowMsg(final.getAttribute('data-message-id'), false);
+    toggleShowMsg(message_id, false);
 }
 
 function createCommentHTML(comment) {
