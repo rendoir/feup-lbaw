@@ -12,15 +12,16 @@
             </h2>
         </div>
 
-        <!-- Text editor -->
-        <section class="mx-5">
-          <textarea id="editor">
-          </textarea>
+        <form action="javascript:questions.submit()">
 
-          <script>
-            var simplemde = new SimpleMDE({ element: document.getElementById("editor") });
-          </script>
-        </section>
+            <!-- Text editor -->
+            <section class="mx-5">
+              <textarea id="editor">
+              </textarea>
+              <script>
+                var simplemde = new SimpleMDE({ element: document.getElementById("editor") });
+              </script>
+            </section>
 
 
             <!-- Add tags and post buttons -->
@@ -37,9 +38,10 @@
             </div>
 
             <div class="text-right">
-                <a class="btn btn-lg btn-info my-4 mr-5 " href="question.html" role="button">Post your Question</a>
+                <input type="submit" class="btn btn-lg btn-info my-4 mr-5 " href="question.html" role="button">
             </div>
 
+        </form>
     </section>
 
 @endsection
