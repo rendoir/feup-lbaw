@@ -32,8 +32,8 @@ Route::get('about', function() {
 Route::get('ask_question', function () {
     return view('pages/ask_question');
 });
-    
-Route::post('ask_question', 'Question\QuestionController@addQuestion');
+
+Route::post('ask_question', 'Question\QuestionController@addQuestion')->name('ask_question');
 
 // Search questions with string query
 Route::get('questions', function(Request $request) {
