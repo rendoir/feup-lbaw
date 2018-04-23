@@ -40,6 +40,11 @@
                         aria-expanded="false" aria-controls="AnswerComments{{$id}}" data-message-id="{{$id}}">
                             Show Comments
                         </a>
+                    @elseif (Auth::Check())
+                    <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{$id}}" 
+                        aria-expanded="false" aria-controls="AnswerComments{{$id}}" data-message-id="{{$id}}">
+                            Add Comment
+                    </a>
                     @endif
                 </div>
                 <div class="ml-auto">
@@ -48,8 +53,23 @@
             </div>
         </div>
     </div>
-
-    @if ($num_comments > 0)
+    @if (Auth::check())
+        <!-- COMMENTS -->
+        <div class="collapse answer-comments" id="AnswerComments{{$id}}" data-message-id="{{$id}}">
+            <div class="card-footer comments-card px-0 px-sm-4">
+                <div class="d-flex list-group list-group-flush">
+                    <div class="list-group-item bg-transparent">
+                        <div class="input-group mt-3">
+                            <input class="form-control new-comment-content" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2" type="text" data-message-id="{{$id}}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success new-comment-submit" type="button" data-message-id="{{$id}}">Add Comment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @elseif ($num_comments > 0)
         <!-- COMMENTS -->
         <div class="collapse answer-comments" id="AnswerComments{{$id}}" data-message-id="{{$id}}"></div>
     @endif

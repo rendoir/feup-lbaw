@@ -1,3 +1,5 @@
+import { getCommentsURL } from './comments.js'
+
 export function viewCommentsRequest(message_id) {
 
     let commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
@@ -13,10 +15,6 @@ export function viewCommentsRequest(message_id) {
     });
 }
 
-function getCommentsURL(message_id) {
-    return window.location.pathname + '/answers/' + message_id + '/comments';
-}
-
 function commentsHandler(response, message_id) {
     let comments = JSON.parse(response.responseText);
 
@@ -24,6 +22,10 @@ function commentsHandler(response, message_id) {
 }
 
 function createComments(comments, message_id) {
+
+    //TODO - mby this should not be needed, handled outside and not after request
+    if (comments.length == 0)
+        return;
 
     // Direct comments container
     let secondDiv = document.createElement("div");

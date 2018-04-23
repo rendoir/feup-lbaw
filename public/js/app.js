@@ -60,107 +60,21 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
-
-function encodeForAjax(data) {
-    if (data == null) return null;
-    return Object.keys(data).map(function (k) {
-        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
-    }).join('&');
-}
-
-function sendAjaxRequest(method, url, data, handler) {
-    var request = new XMLHttpRequest();
-
-    request.open(method, url, true);
-    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.addEventListener('load', handler);
-    request.send(encodeForAjax(data));
-}
-
-module.exports = {
-    sendAjaxRequest: sendAjaxRequest
-};
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(2);
-module.exports = __webpack_require__(8);
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * First, we will load all of this project's Javascript utilities and other
- * dependencies. Then, we will be ready to develop a robust and powerful
- * application frontend using useful Laravel and JavaScript libraries.
- */
-
-// require('./bootstrap');
-
-// require('./navbar.js');
-
-questions = __webpack_require__(3);
-
-__webpack_require__(4);
-
-__webpack_require__(5);
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-ajax = __webpack_require__(0);
-
-function created(data) {
-    var reply = JSON.parse(data.target.response);
-    window.location.replace("http://localhost:8000/questions/" + reply.id);
-}
-
-function submit() {
-    ajax.sendAjaxRequest('POST', 'ask_question', { "title": "ola", "messageContent": "area", "author": 25 }, created);
-}
-
-module.exports = {
-    submit: submit
-};
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-$(window).scroll(function () {
-    var $heightScrolled = $(window).scrollTop();
-
-    if ($heightScrolled > 30) {
-        $('body > header.sticky-top').addClass("sticky-shadow");
-    } else if ($heightScrolled <= 0) {
-        $('body > header.sticky-top').removeClass("sticky-shadow");
-    }
-});
-
-/***/ }),
-/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["getCommentsURL"] = getCommentsURL;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(7);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-ajax = __webpack_require__(0);
+ajax = __webpack_require__(1);
 
 
 
@@ -218,7 +132,47 @@ function viewCommentsEventListener() {
 }
 
 function addCommentsEventListener() {
-    //TODO
+    var submitBtns = document.querySelectorAll('.new-comment-submit');
+    if (submitBtns == null) return;
+
+    var _loop2 = function _loop2(submitBtn) {
+
+        var message_id = submitBtn.getAttribute('data-message-id');
+        if (message_id == null) return {
+                v: void 0
+            };
+
+        submitBtn.addEventListener('click', function () {
+            Object(__WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */])(message_id);
+        });
+    };
+
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+        for (var _iterator2 = submitBtns[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var submitBtn = _step2.value;
+
+            var _ret2 = _loop2(submitBtn);
+
+            if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+        }
+    } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+            }
+        } finally {
+            if (_didIteratorError2) {
+                throw _iteratorError2;
+            }
+        }
+    }
 }
 
 function editCommentsEventListener() {
@@ -229,7 +183,98 @@ function removeCommentsEventListener() {
     //TODO
 }
 
+function getCommentsURL(message_id) {
+    return window.location.pathname + '/answers/' + message_id + '/comments';
+}
+
 window.addEventListener('load', addEventListeners);
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+function encodeForAjax(data) {
+    if (data == null) return null;
+    return Object.keys(data).map(function (k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
+    }).join('&');
+}
+
+function sendAjaxRequest(method, url, data, handler) {
+    var request = new XMLHttpRequest();
+
+    request.open(method, url, true);
+    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.addEventListener('load', handler);
+    request.send(encodeForAjax(data));
+}
+
+module.exports = {
+    sendAjaxRequest: sendAjaxRequest
+};
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(3);
+module.exports = __webpack_require__(8);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * First, we will load all of this project's Javascript utilities and other
+ * dependencies. Then, we will be ready to develop a robust and powerful
+ * application frontend using useful Laravel and JavaScript libraries.
+ */
+
+// require('./bootstrap');
+
+// require('./navbar.js');
+
+questions = __webpack_require__(4);
+
+__webpack_require__(5);
+
+__webpack_require__(0);
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+ajax = __webpack_require__(1);
+
+function created(data) {
+    var reply = JSON.parse(data.target.response);
+    window.location.replace("http://localhost:8000/questions/" + reply.id);
+}
+
+function submit() {
+    ajax.sendAjaxRequest('POST', 'ask_question', { "title": "ola", "messageContent": "area", "author": 25 }, created);
+}
+
+module.exports = {
+    submit: submit
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+$(window).scroll(function () {
+    var $heightScrolled = $(window).scrollTop();
+
+    if ($heightScrolled > 30) {
+        $('body > header.sticky-top').addClass("sticky-shadow");
+    } else if ($heightScrolled <= 0) {
+        $('body > header.sticky-top').removeClass("sticky-shadow");
+    }
+});
 
 /***/ }),
 /* 6 */
@@ -237,6 +282,9 @@ window.addEventListener('load', addEventListeners);
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = viewCommentsRequest;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(0);
+
+
 function viewCommentsRequest(message_id) {
 
     var commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
@@ -247,13 +295,9 @@ function viewCommentsRequest(message_id) {
         return;
     }
 
-    ajax.sendAjaxRequest('get', getCommentsURL(message_id), {}, function (data) {
+    ajax.sendAjaxRequest('get', Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["getCommentsURL"])(message_id), {}, function (data) {
         commentsHandler(data.target, message_id);
     });
-}
-
-function getCommentsURL(message_id) {
-    return window.location.pathname + '/answers/' + message_id + '/comments';
 }
 
 function commentsHandler(response, message_id) {
@@ -263,6 +307,9 @@ function commentsHandler(response, message_id) {
 }
 
 function createComments(comments, message_id) {
+
+    //TODO - mby this should not be needed, handled outside and not after request
+    if (comments.length == 0) return;
 
     // Direct comments container
     var secondDiv = document.createElement("div");
@@ -345,8 +392,18 @@ function toggleShowMsg(message_id, show) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export addCommentRequest */
-function addCommentRequest() {}
+/* harmony export (immutable) */ __webpack_exports__["a"] = addCommentRequest;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(0);
+
+
+function addCommentRequest(message_id) {
+
+    var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
+
+    console.log(message_id + "--" + document.querySelector(contentSelector).value);
+
+    console.log(Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["getCommentsURL"])(message_id));
+}
 
 /***/ }),
 /* 8 */

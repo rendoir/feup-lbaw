@@ -29,7 +29,20 @@ function viewCommentsEventListener() {
 }
 
 function addCommentsEventListener() {
-    //TODO
+    let submitBtns = document.querySelectorAll('.new-comment-submit');
+    if (submitBtns == null)
+        return;
+    
+    for (let submitBtn of submitBtns) {
+
+        let message_id = submitBtn.getAttribute('data-message-id');
+        if (message_id == null)
+            return;
+
+        submitBtn.addEventListener('click', function() {
+            addCommentRequest(message_id);
+        });
+    }
 }
 
 function editCommentsEventListener() {
@@ -38,6 +51,10 @@ function editCommentsEventListener() {
 
 function removeCommentsEventListener() {
     //TODO
+}
+
+export function getCommentsURL(message_id) {
+    return window.location.pathname + '/answers/' + message_id + '/comments';
 }
 
 window.addEventListener('load', addEventListeners);
