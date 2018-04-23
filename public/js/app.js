@@ -93,7 +93,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(2);
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(8);
 
 
 /***/ }),
@@ -152,23 +152,92 @@ $(window).scroll(function () {
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(7);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 ajax = __webpack_require__(0);
 
+
+
+
 function addEventListeners() {
-    var comments = document.querySelector('.show-comments');
-    if (comments == null) return;
 
-    var message_id = comments.getAttribute('data-message-id');
-    if (message_id == null) return;
-
-    comments.addEventListener('click', function () {
-        sendCommentsRequest(message_id);
-    });
+    viewCommentsEventListener();
+    addCommentsEventListener();
+    editCommentsEventListener();
+    removeCommentsEventListener();
 }
 
-function sendCommentsRequest(message_id) {
+function viewCommentsEventListener() {
+    var comments = document.querySelectorAll('.show-comments');
+    if (comments == null) return;
+
+    var _loop = function _loop(comment) {
+
+        var message_id = comment.getAttribute('data-message-id');
+        if (message_id == null) return {
+                v: void 0
+            };
+
+        comment.addEventListener('click', function () {
+            Object(__WEBPACK_IMPORTED_MODULE_0__viewComments_js__["a" /* viewCommentsRequest */])(message_id);
+        });
+    };
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = comments[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var comment = _step.value;
+
+            var _ret = _loop(comment);
+
+            if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+}
+
+function addCommentsEventListener() {
+    //TODO
+}
+
+function editCommentsEventListener() {
+    //TODO
+}
+
+function removeCommentsEventListener() {
+    //TODO
+}
+
+window.addEventListener('load', addEventListeners);
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = viewCommentsRequest;
+function viewCommentsRequest(message_id) {
 
     var commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
 
@@ -197,7 +266,9 @@ function createComments(comments, message_id) {
 
     // Direct comments container
     var secondDiv = document.createElement("div");
-    secondDiv.class = "d-flex list-group list-group-flush";
+    secondDiv.classList.add("d-flex");
+    secondDiv.classList.add("list-group");
+    secondDiv.classList.add("list-group-flush");
 
     for (var i = 0; i < comments.length; ++i) {
         secondDiv.appendChild(createCommentHTML(comments[i]));
@@ -206,7 +277,8 @@ function createComments(comments, message_id) {
     firstDiv.classList.add("comments-card");
     firstDiv.appendChild(secondDiv);
 
-    var final = document.querySelector(".answer-comments[data-message-id='" + message_id + "']");
+    var commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
+    var final = document.querySelector(commentSelector);
     if (final.firstChild == null) final.appendChild(firstDiv);else final.replaceChild(firstDiv, final.firstChild);
 
     toggleShowMsg(message_id, false);
@@ -249,7 +321,9 @@ function createCommentHTML(comment) {
     forthDiv.appendChild(contentDiv);
 
     var thirdDiv = document.createElement("div");
-    thirdDiv.class = "list-group-item px-0 bg-transparent";
+    thirdDiv.classList.add("list-group-item");
+    thirdDiv.classList.add("px-0");
+    thirdDiv.classList.add("bg-transparent");
     thirdDiv.appendChild(forthDiv);
 
     return thirdDiv;
@@ -266,13 +340,19 @@ function toggleShowMsg(message_id, show) {
     toggler.innerHTML = (show ? "Show" : "Hide") + " Comments";
 }
 
-window.addEventListener('load', addEventListeners);
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export addCommentRequest */
+function addCommentRequest() {}
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: Cannot find module 'node-sass'\n    at Function.Module._resolveFilename (module.js:469:15)\n    at Function.Module._load (module.js:417:25)\n    at Module.require (module.js:497:17)\n    at require (internal/module.js:20:19)\n    at Object.<anonymous> (/home/bayard/Github/lbaw1763/node_modules/sass-loader/lib/loader.js:3:14)\n    at Module._compile (module.js:570:32)\n    at Object.Module._extensions..js (module.js:579:10)\n    at Module.load (module.js:487:32)\n    at tryModuleLoad (module.js:446:12)\n    at Function.Module._load (module.js:438:3)\n    at Module.require (module.js:497:17)\n    at require (internal/module.js:20:19)\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:13:17)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:362:2)\n    at NormalModule.doBuild (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:182:3)\n    at NormalModule.build (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:275:15)\n    at Compilation.buildModule (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/Compilation.js:151:10)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:170:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:27:11)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:362:2)\n    at NormalModule.doBuild (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:182:3)\n    at NormalModule.build (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:275:15)\n    at Compilation.buildModule (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/Compilation.js:151:10)\n    at moduleFactory.create (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/Compilation.js:454:10)\n    at factory (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModuleFactory.js:243:5)\n    at applyPluginsAsyncWaterfall (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModuleFactory.js:94:13)\n    at /home/bayard/Github/lbaw1763/node_modules/tapable/lib/Tapable.js:268:11\n    at NormalModuleFactory.params.normalModuleFactory.plugin (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/CompatibilityPlugin.js:52:5)\n    at NormalModuleFactory.applyPluginsAsyncWaterfall (/home/bayard/Github/lbaw1763/node_modules/tapable/lib/Tapable.js:272:13)\n    at resolver (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModuleFactory.js:69:10)\n    at process.nextTick (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModuleFactory.js:196:7)\n    at _combinedTickCallback (internal/process/next_tick.js:73:7)");
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
