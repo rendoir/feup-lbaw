@@ -78,6 +78,6 @@ Route::get('questions/{id}', function($question_id) {
     $question = App\Question::find($question_id);
 
     return view('pages/question', ['question' => $question]);
-});
+})->name('question');
 
 Route::get('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@getComments');

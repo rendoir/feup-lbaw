@@ -9,6 +9,8 @@ use App\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 class QuestionController extends Controller
 {
@@ -19,46 +21,21 @@ class QuestionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Questions Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles getting all the comments regarding a message
-    |
-    */
 
     public function addQuestion(Request $request)
     {
-        print("HELLO QUESTION");
-        return;
-        /*
-        BEGIN TRANSACTION;
-        SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
-
-        DO $$
-        DECLARE
-          new_id INTEGER;
-        BEGIN
-          INSERT INTO messages (author) VALUES (1) RETURNING id INTO new_id;
-          INSERT INTO commentables (id) VALUES (new_id);
-          INSERT INTO questions (id, title) VALUES (new_id, 'my_title');
-          INSERT INTO message_versions (content, message_id) values ('my_content', new_id);
-        END $$;
-
-        COMMIT;
-        */
-
-        /*
-        $message = Message::create([$request->author]);
-        $commentable = Commentable::create([$message->id]);
-        $question = Question::create([$commentable->id, $request->title]);
-        MessageVersion::create([$request->contentMessage, $message->id, \DateTime::ATOM]);
-
-        return $message->id;
-        */
+        if (Auth::check()) {
+          $id = 0;
+          DB::transaction(function() use (&$request, &$id) {
+            DB::insert("INSERT INTO messages (author) VALUES (?)", [Auth::id()]);
+            $id = DB::getPdo()->lastInsertId();
+            DB::insert("INSERT INTO commentables (id) VALUES (?)", [$id]);
+            DB::insert("INSERT INTO questions (id, title) VALUES (?, ?)", [$id, $request->title]);
+            DB::insert("INSERT INTO message_versions (content, message_id) VALUES (?, ?)", [$request->content, $id]);
+          });
+          return redirect()->route('question', ['id' => $id]);
+        }
     }
 }
