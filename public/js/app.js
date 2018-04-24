@@ -400,9 +400,21 @@ function addCommentRequest(message_id) {
 
     var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
 
-    console.log(message_id + "--" + document.querySelector(contentSelector).value);
+    var contentNode = document.querySelector(contentSelector);
+    if (contentNode == null || contentNode.value == "") return;
 
-    console.log(Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["getCommentsURL"])(message_id));
+    var requestBody = {
+        "content": contentNode.value,
+        "author": 1,
+        "commentable": message_id
+    };
+
+    ajax.sendAjaxRequest('post', Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["getCommentsURL"])(message_id), requestBody, requestHandler);
+}
+
+//TODO
+function requestHandler() {
+    console.log(JSON.parse(this.responseText));
 }
 
 /***/ }),

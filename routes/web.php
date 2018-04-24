@@ -81,3 +81,4 @@ Route::get('questions/{id}', function($question_id) {
 });
 
 Route::get('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@getComments');
+Route::post('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@addComment');

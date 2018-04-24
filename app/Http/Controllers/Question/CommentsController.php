@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers\Question;
 
-use Closure;
+use App\Commentable;
+use App\Message;
+use App\MessageVersion;
+use App\Comment;
+use App\Answer;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -19,7 +24,7 @@ class CommentsController extends Controller
 
     public function getComments(Request $request)
     {
-        $commentable = \App\Answer::find($request->message_id)->commentable;
+        $commentable = Answer::find($request->message_id)->commentable;
         $comment_ids = $commentable->get_comments;
 
         $results = array();
@@ -47,5 +52,18 @@ class CommentsController extends Controller
                 "author" => ($content->moderator_id != null? $content->moderator_id : $content->author)
             )
         );
+    }
+
+
+    public function addComment(Request $request)
+    {
+        /*$user = User::find($request->author);
+        $commentable = Commentable::find($request->commentable);
+
+        $message = Message::create(['author' => $user->id]);
+        $comment = Comment::create(['id' => $message->id, 'commentable_id' => $commentable->id]);
+        $content = MessageVersion::create(['content' => $request->content, 'message_id' => $message->id]);
+*/
+        return $request->content;
     }
 }

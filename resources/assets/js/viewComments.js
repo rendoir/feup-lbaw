@@ -10,9 +10,11 @@ export function viewCommentsRequest(message_id) {
         return;
     }
 
-    ajax.sendAjaxRequest('get', getCommentsURL(message_id), {}, (data) => {
-        commentsHandler(data.target, message_id);
-    });
+    ajax.sendAjaxRequest(
+        'get', getCommentsURL(message_id), {}, (data) => {
+            commentsHandler(data.target, message_id);
+        }
+    );
 }
 
 function commentsHandler(response, message_id) {
