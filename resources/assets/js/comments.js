@@ -46,7 +46,20 @@ function addCommentsEventListener() {
 }
 
 function editCommentsEventListener() {
-    //TODO
+    let comments = document.querySelectorAll('.edit-comments');
+    if (comments == null)
+        return;
+    
+    for (let comment of comments) {
+
+        let message_id = comment.getAttribute('data-message-id');
+        if (message_id == null)
+            return;
+
+        comment.addEventListener('click', function() {
+            viewCommentsRequest(message_id);
+        });
+    }
 }
 
 function removeCommentsEventListener() {
