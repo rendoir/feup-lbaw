@@ -68,11 +68,196 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = createComments;
+/* harmony export (immutable) */ __webpack_exports__["a"] = createCommentHTML;
+/* harmony export (immutable) */ __webpack_exports__["c"] = getCommentsDropDown;
+/* harmony export (immutable) */ __webpack_exports__["d"] = getCommentsURL;
+function createComments(comments, message_id) {
+
+    //TODO - mby this should not be needed, handled outside and not after request
+    if (comments.length == 0) return;
+
+    // Direct comments container
+    var secondDiv = document.createElement("div");
+    secondDiv.classList.add("d-flex");
+    secondDiv.classList.add("list-group");
+    secondDiv.classList.add("list-group-flush");
+
+    for (var i = 0; i < comments.length; ++i) {
+        secondDiv.appendChild(createCommentHTML(comments[i]));
+    }var firstDiv = document.createElement("div");
+    firstDiv.classList.add("card-footer");
+    firstDiv.classList.add("comments-card");
+    firstDiv.appendChild(secondDiv);
+
+    var final = getCommentsDropDown(message_id);
+    if (final.firstChild == null) final.appendChild(firstDiv);else final.replaceChild(firstDiv, final.firstChild);
+
+    toggleShowMsg(message_id, false);
+}
+
+function createCommentHTML(comment) {
+
+    var paragraph = document.createElement("p");
+    paragraph.classList.add("text-center");
+    paragraph.classList.add("mb-0");
+    paragraph.classList.add("w-100");
+    paragraph.appendChild(document.createTextNode(comment.score));
+
+    var votes = document.createElement("div");
+    votes.classList.add("col-1");
+    votes.classList.add("my-auto");
+    votes.classList.add("text-center");
+    votes.appendChild(paragraph);
+
+    var content = document.createElement("p");
+    content.classList.add("px-2");
+    content.appendChild(document.createTextNode(comment.content.version));
+
+    var author = document.createElement("p");
+    author.classList.add("discrete");
+    author.classList.add("text-right");
+    author.appendChild(document.createTextNode(comment.author));
+
+    var contentDiv = document.createElement("div");
+    contentDiv.classList.add("pl-3");
+    contentDiv.classList.add("my-1");
+    contentDiv.classList.add("col-11");
+    contentDiv.appendChild(content);
+    contentDiv.appendChild(author);
+
+    var forthDiv = document.createElement("div");
+    forthDiv.classList.add("mx-sm-0");
+    forthDiv.classList.add("row");
+    forthDiv.appendChild(votes);
+    forthDiv.appendChild(contentDiv);
+
+    var thirdDiv = document.createElement("div");
+    thirdDiv.classList.add("list-group-item");
+    thirdDiv.classList.add("px-0");
+    thirdDiv.classList.add("bg-transparent");
+    thirdDiv.appendChild(forthDiv);
+
+    return thirdDiv;
+}
+
+function getCommentsDropDown(message_id) {
+    var commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
+    return document.querySelector(commentSelector);
+}
+
+function getCommentsURL(message_id) {
+    return window.location.pathname + '/answers/' + message_id + '/comments';
+}
+
+/**
+ * 
+ * @param {String} message_id 
+ * @param {boolean} show - If true, it's supposed to to 'Show Comments' , if false it's supposed to 'Hide Comments'
+ */
+function toggleShowMsg(message_id, show) {
+    var toggler = document.querySelector("a[aria-controls='AnswerComments" + message_id + "']");
+
+    toggler.innerHTML = (show ? "Show" : "Hide") + " Comments";
+}
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+function encodeForAjax(data) {
+    if (data == null) return null;
+    return Object.keys(data).map(function (k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
+    }).join('&');
+}
+
+function sendAjaxRequest(method, url, data, handler) {
+    var request = new XMLHttpRequest();
+
+    request.open(method, url, true);
+    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.addEventListener('load', handler);
+    request.send(encodeForAjax(data));
+}
+
+module.exports = {
+    sendAjaxRequest: sendAjaxRequest
+};
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(3);
+module.exports = __webpack_require__(9);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * First, we will load all of this project's Javascript utilities and other
+ * dependencies. Then, we will be ready to develop a robust and powerful
+ * application frontend using useful Laravel and JavaScript libraries.
+ */
+
+// require('./bootstrap');
+
+// require('./navbar.js');
+
+questions = __webpack_require__(4);
+
+__webpack_require__(5);
+
+__webpack_require__(6);
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+ajax = __webpack_require__(1);
+
+function created(data) {
+    var reply = JSON.parse(data.target.response);
+    window.location.replace("http://localhost:8000/questions/" + reply.id);
+}
+
+function submit() {
+    title = $("input[name ='title']")[0].value;
+    content = $("textarea[name='content']")[0].value;
+    ajax.sendAjaxRequest('POST', 'ask_question', { "title": title, "messageContent": content }, created);
+}
+
+module.exports = {
+    submit: submit
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+$(window).scroll(function () {
+    var $heightScrolled = $(window).scrollTop();
+
+    if ($heightScrolled > 30) {
+        $('body > header.sticky-top').addClass("sticky-shadow");
+    } else if ($heightScrolled <= 0) {
+        $('body > header.sticky-top').removeClass("sticky-shadow");
+    }
+});
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (immutable) */ __webpack_exports__["getCommentsURL"] = getCommentsURL;
-/* harmony export (immutable) */ __webpack_exports__["createCommentHTML"] = createCommentHTML;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(8);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 ajax = __webpack_require__(1);
@@ -184,153 +369,17 @@ function removeCommentsEventListener() {
     //TODO
 }
 
-function getCommentsURL(message_id) {
-    return window.location.pathname + '/answers/' + message_id + '/comments';
-}
-
-function createCommentHTML(comment) {
-
-    var paragraph = document.createElement("p");
-    paragraph.classList.add("text-center");
-    paragraph.classList.add("mb-0");
-    paragraph.classList.add("w-100");
-    paragraph.appendChild(document.createTextNode(comment.score));
-
-    var votes = document.createElement("div");
-    votes.classList.add("col-1");
-    votes.classList.add("my-auto");
-    votes.classList.add("text-center");
-    votes.appendChild(paragraph);
-
-    var content = document.createElement("p");
-    content.classList.add("px-2");
-    content.appendChild(document.createTextNode(comment.content.version));
-
-    var author = document.createElement("p");
-    author.classList.add("discrete");
-    author.classList.add("text-right");
-    author.appendChild(document.createTextNode(comment.author));
-
-    var contentDiv = document.createElement("div");
-    contentDiv.classList.add("pl-3");
-    contentDiv.classList.add("my-1");
-    contentDiv.classList.add("col-11");
-    contentDiv.appendChild(content);
-    contentDiv.appendChild(author);
-
-    var forthDiv = document.createElement("div");
-    forthDiv.classList.add("mx-sm-0");
-    forthDiv.classList.add("row");
-    forthDiv.appendChild(votes);
-    forthDiv.appendChild(contentDiv);
-
-    var thirdDiv = document.createElement("div");
-    thirdDiv.classList.add("list-group-item");
-    thirdDiv.classList.add("px-0");
-    thirdDiv.classList.add("bg-transparent");
-    thirdDiv.appendChild(forthDiv);
-
-    return thirdDiv;
-}
-
 window.addEventListener('load', addEventListeners);
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-function encodeForAjax(data) {
-    if (data == null) return null;
-    return Object.keys(data).map(function (k) {
-        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
-    }).join('&');
-}
-
-function sendAjaxRequest(method, url, data, handler) {
-    var request = new XMLHttpRequest();
-
-    request.open(method, url, true);
-    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.addEventListener('load', handler);
-    request.send(encodeForAjax(data));
-}
-
-module.exports = {
-    sendAjaxRequest: sendAjaxRequest
-};
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(3);
-module.exports = __webpack_require__(8);
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * First, we will load all of this project's Javascript utilities and other
- * dependencies. Then, we will be ready to develop a robust and powerful
- * application frontend using useful Laravel and JavaScript libraries.
- */
-
-// require('./bootstrap');
-
-// require('./navbar.js');
-
-questions = __webpack_require__(4);
-
-__webpack_require__(5);
-
-__webpack_require__(0);
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-ajax = __webpack_require__(1);
-
-function created(data) {
-    var reply = JSON.parse(data.target.response);
-    window.location.replace("http://localhost:8000/questions/" + reply.id);
-}
-
-function submit() {
-    title = $("input[name ='title']")[0].value;
-    content = $("textarea[name='content']")[0].value;
-    ajax.sendAjaxRequest('POST', 'ask_question', { "title": title, "messageContent": content }, created);
-}
-
-module.exports = {
-    submit: submit
-};
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-$(window).scroll(function () {
-    var $heightScrolled = $(window).scrollTop();
-
-    if ($heightScrolled > 30) {
-        $('body > header.sticky-top').addClass("sticky-shadow");
-    } else if ($heightScrolled <= 0) {
-        $('body > header.sticky-top').removeClass("sticky-shadow");
-    }
-});
-
-/***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = viewCommentsRequest;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
+
+
 
 
 
@@ -344,60 +393,27 @@ function viewCommentsRequest(message_id) {
         return;
     }
 
-    ajax.sendAjaxRequest('get', Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["getCommentsURL"])(message_id), {}, function (data) {
-        commentsHandler(data.target, message_id);
+    ajax.sendAjaxRequest('get', Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["d" /* getCommentsURL */])(message_id), {}, function (data) {
+        getCommentsHandler(data.target, message_id);
     });
 }
 
-function commentsHandler(response, message_id) {
+// Handler to the get comments request response
+function getCommentsHandler(response, message_id) {
     var comments = JSON.parse(response.responseText);
 
-    createComments(comments, message_id);
-}
-
-function createComments(comments, message_id) {
-
-    //TODO - mby this should not be needed, handled outside and not after request
-    if (comments.length == 0) return;
-
-    // Direct comments container
-    var secondDiv = document.createElement("div");
-    secondDiv.classList.add("d-flex");
-    secondDiv.classList.add("list-group");
-    secondDiv.classList.add("list-group-flush");
-
-    for (var i = 0; i < comments.length; ++i) {
-        secondDiv.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["createCommentHTML"])(comments[i]));
-    }var firstDiv = document.createElement("div");
-    firstDiv.classList.add("card-footer");
-    firstDiv.classList.add("comments-card");
-    firstDiv.appendChild(secondDiv);
-
-    var commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
-    var final = document.querySelector(commentSelector);
-    if (final.firstChild == null) final.appendChild(firstDiv);else final.replaceChild(firstDiv, final.firstChild);
-
-    toggleShowMsg(message_id, false);
-}
-
-/**
- * 
- * @param {String} message_id 
- * @param {boolean} show - If true, it's supposed to to 'Show Comments' , if false it's supposed to 'Hide Comments'
- */
-function toggleShowMsg(message_id, show) {
-    var toggler = document.querySelector("a[aria-controls='AnswerComments" + message_id + "']");
-
-    toggler.innerHTML = (show ? "Show" : "Hide") + " Comments";
+    Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])(comments, message_id);
 }
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = addCommentRequest;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
+
+
 
 
 
@@ -413,43 +429,24 @@ function addCommentRequest(message_id) {
         "commentable": message_id
     };
 
-    ajax.sendAjaxRequest('post', Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["getCommentsURL"])(message_id), requestBody, function (data) {
-        requestHandler(data.target, message_id);
+    ajax.sendAjaxRequest('post', Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["d" /* getCommentsURL */])(message_id), requestBody, function (data) {
+        addCommentHandler(data.target, message_id);
     });
 }
 
-//TODO
-function requestHandler(response, message_id) {
+// Handler to the add comment request response
+function addCommentHandler(response, message_id) {
     var newComment = JSON.parse(response.responseText);
 
-    var commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
-    var final = document.querySelector(commentSelector);
-    console.log(final.firstChild);
-    if (final.firstChild.nodeName != "#text") final.firstChild.firstChild.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["createCommentHTML"])(newComment));else {
-        var secondDiv = document.createElement("div");
-        secondDiv.classList.add("d-flex");
-        secondDiv.classList.add("list-group");
-        secondDiv.classList.add("list-group-flush");
-        secondDiv.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["createCommentHTML"])(newComment));
-
-        var firstDiv = document.createElement("div");
-        firstDiv.classList.add("card-footer");
-        firstDiv.classList.add("comments-card");
-        firstDiv.appendChild(secondDiv);
-
-        var _commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
-        var _final = document.querySelector(_commentSelector);
-        if (_final.firstChild == null) _final.appendChild(firstDiv);else _final.replaceChild(firstDiv, _final.firstChild);
-
-        toggleShowMsg(message_id, false);
-    }
+    var comments = Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id);
+    if (comments.firstChild.nodeName != "#text") comments.firstChild.firstChild.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment));else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])([newComment], message_id);
 }
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: Cannot find module 'node-sass'\n    at Function.Module._resolveFilename (module.js:469:15)\n    at Function.Module._load (module.js:417:25)\n    at Module.require (module.js:497:17)\n    at require (internal/module.js:20:19)\n    at Object.<anonymous> (/home/bayard/Github/lbaw1763/node_modules/sass-loader/lib/loader.js:3:14)\n    at Module._compile (module.js:570:32)\n    at Object.Module._extensions..js (module.js:579:10)\n    at Module.load (module.js:487:32)\n    at tryModuleLoad (module.js:446:12)\n    at Function.Module._load (module.js:438:3)\n    at Module.require (module.js:497:17)\n    at require (internal/module.js:20:19)\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:13:17)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:362:2)\n    at NormalModule.doBuild (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:182:3)\n    at NormalModule.build (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:275:15)\n    at Compilation.buildModule (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/Compilation.js:151:10)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:170:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:27:11)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:362:2)\n    at NormalModule.doBuild (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:182:3)\n    at NormalModule.build (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:275:15)\n    at Compilation.buildModule (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/Compilation.js:151:10)\n    at moduleFactory.create (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/Compilation.js:454:10)\n    at factory (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModuleFactory.js:243:5)\n    at applyPluginsAsyncWaterfall (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModuleFactory.js:94:13)\n    at /home/bayard/Github/lbaw1763/node_modules/tapable/lib/Tapable.js:268:11\n    at NormalModuleFactory.params.normalModuleFactory.plugin (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/CompatibilityPlugin.js:52:5)\n    at NormalModuleFactory.applyPluginsAsyncWaterfall (/home/bayard/Github/lbaw1763/node_modules/tapable/lib/Tapable.js:272:13)\n    at resolver (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModuleFactory.js:69:10)\n    at process.nextTick (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModuleFactory.js:196:7)\n    at _combinedTickCallback (internal/process/next_tick.js:73:7)");
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
