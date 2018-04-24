@@ -9,6 +9,8 @@ use App\Comment;
 use App\Answer;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
 class CommentsController extends Controller
@@ -57,13 +59,27 @@ class CommentsController extends Controller
 
     public function addComment(Request $request)
     {
-        /*$user = User::find($request->author);
-        $commentable = Commentable::find($request->commentable);
+        if (!Auth::check())
+            return;
 
-        $message = Message::create(['author' => $user->id]);
+        $user_id = Auth::id();
+        /*$commentable = Commentable::find($request->commentable);
+
+        $message = Message::create(['author' => $user]);
         $comment = Comment::create(['id' => $message->id, 'commentable_id' => $commentable->id]);
-        $content = MessageVersion::create(['content' => $request->content, 'message_id' => $message->id]);
-*/
-        return $request->content;
+        $content = MessageVersion::create(['content' => $request->content, 'message_id' => $message->id]);*/
+        
+        $comment_id = null;
+
+        DB::transaction(function() use (&$request, &$user_id, &$comment_id) {
+            DB::insert("INSERT INTO messages (author) VALUES (?)", [$user_id]);
+            $comment_id = DB::getPdo()->lastInsertId();
+            DB::insert("INSERT INTO comments (id, commentable_id) VALUES (?, ?)", [$comment_id, $request->commentable]);
+            DB::insert("INSERT INTO message_versions (content, message_id) values (?, ?)", [$request->content, $comment_id]);
+        });
+
+        return response()->json(
+            $this->getCommentJSON(Comment::find($comment_id))
+        );
     }
 }

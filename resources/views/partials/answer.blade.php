@@ -56,7 +56,7 @@
     @if (Auth::check())
         <!-- COMMENTS -->
         <div class="collapse answer-comments" id="AnswerComments{{$id}}" data-message-id="{{$id}}">
-            <div class="card-footer comments-card px-0 px-sm-4">
+            <div class="comment-creator card-footer comments-card px-0 px-sm-4">
                 <div class="d-flex list-group list-group-flush">
                     <div class="list-group-item bg-transparent">
                         <div class="input-group mt-3">

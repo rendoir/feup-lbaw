@@ -70,6 +70,7 @@
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["getCommentsURL"] = getCommentsURL;
+/* harmony export (immutable) */ __webpack_exports__["createCommentHTML"] = createCommentHTML;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(7);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -187,6 +188,51 @@ function getCommentsURL(message_id) {
     return window.location.pathname + '/answers/' + message_id + '/comments';
 }
 
+function createCommentHTML(comment) {
+
+    var paragraph = document.createElement("p");
+    paragraph.classList.add("text-center");
+    paragraph.classList.add("mb-0");
+    paragraph.classList.add("w-100");
+    paragraph.appendChild(document.createTextNode(comment.score));
+
+    var votes = document.createElement("div");
+    votes.classList.add("col-1");
+    votes.classList.add("my-auto");
+    votes.classList.add("text-center");
+    votes.appendChild(paragraph);
+
+    var content = document.createElement("p");
+    content.classList.add("px-2");
+    content.appendChild(document.createTextNode(comment.content.version));
+
+    var author = document.createElement("p");
+    author.classList.add("discrete");
+    author.classList.add("text-right");
+    author.appendChild(document.createTextNode(comment.author));
+
+    var contentDiv = document.createElement("div");
+    contentDiv.classList.add("pl-3");
+    contentDiv.classList.add("my-1");
+    contentDiv.classList.add("col-11");
+    contentDiv.appendChild(content);
+    contentDiv.appendChild(author);
+
+    var forthDiv = document.createElement("div");
+    forthDiv.classList.add("mx-sm-0");
+    forthDiv.classList.add("row");
+    forthDiv.appendChild(votes);
+    forthDiv.appendChild(contentDiv);
+
+    var thirdDiv = document.createElement("div");
+    thirdDiv.classList.add("list-group-item");
+    thirdDiv.classList.add("px-0");
+    thirdDiv.classList.add("bg-transparent");
+    thirdDiv.appendChild(forthDiv);
+
+    return thirdDiv;
+}
+
 window.addEventListener('load', addEventListeners);
 
 /***/ }),
@@ -285,6 +331,7 @@ $(window).scroll(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(0);
 
 
+
 function viewCommentsRequest(message_id) {
 
     var commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
@@ -318,7 +365,7 @@ function createComments(comments, message_id) {
     secondDiv.classList.add("list-group-flush");
 
     for (var i = 0; i < comments.length; ++i) {
-        secondDiv.appendChild(createCommentHTML(comments[i]));
+        secondDiv.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["createCommentHTML"])(comments[i]));
     }var firstDiv = document.createElement("div");
     firstDiv.classList.add("card-footer");
     firstDiv.classList.add("comments-card");
@@ -329,51 +376,6 @@ function createComments(comments, message_id) {
     if (final.firstChild == null) final.appendChild(firstDiv);else final.replaceChild(firstDiv, final.firstChild);
 
     toggleShowMsg(message_id, false);
-}
-
-function createCommentHTML(comment) {
-
-    var paragraph = document.createElement("p");
-    paragraph.classList.add("text-center");
-    paragraph.classList.add("mb-0");
-    paragraph.classList.add("w-100");
-    paragraph.appendChild(document.createTextNode(comment.score));
-
-    var votes = document.createElement("div");
-    votes.classList.add("col-1");
-    votes.classList.add("my-auto");
-    votes.classList.add("text-center");
-    votes.appendChild(paragraph);
-
-    var content = document.createElement("p");
-    content.classList.add("px-2");
-    content.appendChild(document.createTextNode(comment.content.version));
-
-    var author = document.createElement("p");
-    author.classList.add("discrete");
-    author.classList.add("text-right");
-    author.appendChild(document.createTextNode(comment.author));
-
-    var contentDiv = document.createElement("div");
-    contentDiv.classList.add("pl-3");
-    contentDiv.classList.add("my-1");
-    contentDiv.classList.add("col-11");
-    contentDiv.appendChild(content);
-    contentDiv.appendChild(author);
-
-    var forthDiv = document.createElement("div");
-    forthDiv.classList.add("mx-sm-0");
-    forthDiv.classList.add("row");
-    forthDiv.appendChild(votes);
-    forthDiv.appendChild(contentDiv);
-
-    var thirdDiv = document.createElement("div");
-    thirdDiv.classList.add("list-group-item");
-    thirdDiv.classList.add("px-0");
-    thirdDiv.classList.add("bg-transparent");
-    thirdDiv.appendChild(forthDiv);
-
-    return thirdDiv;
 }
 
 /**
@@ -396,6 +398,7 @@ function toggleShowMsg(message_id, show) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(0);
 
 
+
 function addCommentRequest(message_id) {
 
     var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
@@ -405,16 +408,39 @@ function addCommentRequest(message_id) {
 
     var requestBody = {
         "content": contentNode.value,
-        "author": 1,
         "commentable": message_id
     };
 
-    ajax.sendAjaxRequest('post', Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["getCommentsURL"])(message_id), requestBody, requestHandler);
+    ajax.sendAjaxRequest('post', Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["getCommentsURL"])(message_id), requestBody, function (data) {
+        requestHandler(data.target, message_id);
+    });
 }
 
 //TODO
-function requestHandler() {
-    console.log(JSON.parse(this.responseText));
+function requestHandler(response, message_id) {
+    var newComment = JSON.parse(response.responseText);
+
+    var commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
+    var final = document.querySelector(commentSelector);
+    console.log(final.firstChild);
+    if (final.firstChild.nodeName != "#text") final.firstChild.firstChild.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["createCommentHTML"])(newComment));else {
+        var secondDiv = document.createElement("div");
+        secondDiv.classList.add("d-flex");
+        secondDiv.classList.add("list-group");
+        secondDiv.classList.add("list-group-flush");
+        secondDiv.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["createCommentHTML"])(newComment));
+
+        var firstDiv = document.createElement("div");
+        firstDiv.classList.add("card-footer");
+        firstDiv.classList.add("comments-card");
+        firstDiv.appendChild(secondDiv);
+
+        var _commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
+        var _final = document.querySelector(_commentSelector);
+        if (_final.firstChild == null) _final.appendChild(firstDiv);else _final.replaceChild(firstDiv, _final.firstChild);
+
+        toggleShowMsg(message_id, false);
+    }
 }
 
 /***/ }),
