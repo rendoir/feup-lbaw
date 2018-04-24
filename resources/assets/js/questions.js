@@ -6,7 +6,9 @@ function created(data){
 }
 
 function submit() {
-    ajax.sendAjaxRequest('POST', 'ask_question', {"title": "ola", "messageContent": "area", "author": 25}, created);
+    title = $("input[name ='title']")[0].value;
+    content = $("textarea[name='content']")[0].value;
+    ajax.sendAjaxRequest('POST', 'ask_question', {"title": title, "messageContent": content}, created);
 }
 
 module.exports = {
