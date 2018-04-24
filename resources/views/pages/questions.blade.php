@@ -81,10 +81,12 @@
                         $page_number = intval(substr(strrchr($url, "/"), 1));
                         echo $page_number;
                         ?></span>
-                    <a href="<?php
+                    <a <?php
                     $url = Request::url();
                     $page_number = intval(substr(strrchr($url, "/"), 1)) + 1;
-                    echo $page_number;
+                    if ($has_next) {
+                        echo 'href="' . $page_number . '"';
+                    }
                     ?>">Next Page</a>
                 </div>
             </div>
