@@ -82,4 +82,14 @@ class CommentsController extends Controller
             $this->getCommentJSON(Comment::find($comment_id))
         );
     }
+
+    public function editComment(Request $request)
+    {
+        $comment = Comment::find($request->comment);
+
+        // Checking if the User can edit the comment
+        $this->authorize('edit', $comment);
+
+        // TODO
+    }
 }
