@@ -9,6 +9,9 @@ use App\Question;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 class QuestionController extends Controller
 {
@@ -19,26 +22,22 @@ class QuestionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Questions Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles getting all the comments regarding a message
-    |
-    */
 
     public function addQuestion(Request $request)
     {
-        $user = User::find($request->author);
-        $message = Message::create(['author' => $user->id]);
-        $commentable = Commentable::create(['id' => $message->id]);
-        $question = Question::create(['id' => $commentable->id, 'title' => $request->title]);
-        MessageVersion::create(['content' => $request->messageContent, 'message_id' => $message->id]);
-
-        return $question;
+        if (Auth::check()) {
+            $question = null;
+            DB::transaction(function() use (&$request, &$question) {
+                $user = User::find(Auth::id());
+                $message = Message::create(['author' => $user->id]);
+                $commentable = Commentable::create(['id' => $message->id]);
+                $question = Question::create(['id' => $commentable->id, 'title' => $request->title]);
+                MessageVersion::create(['content' => $request->messageContent, 'message_id' => $message->id]);
+            });
+            return $question;
+        }
+        return null;
     }
 }

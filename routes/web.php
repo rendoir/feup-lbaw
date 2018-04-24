@@ -34,8 +34,8 @@ Route::get('about', function() {
 Route::get('ask_question', function () {
     return view('pages/ask_question');
 });
-    
-Route::post('ask_question', 'Question\QuestionController@addQuestion');
+
+Route::post('ask_question', 'Question\QuestionController@addQuestion')->name('ask_question');
 
 // Search questions with string query
 Route::get('questions', function(Request $request) {
@@ -85,7 +85,7 @@ Route::get('questions/{id}', function($question_id) {
     $question = App\Question::find($question_id);
 
     return view('pages/question', ['question' => $question]);
-});
+})->name('question');
 
 Route::get('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@getComments');
 Route::post('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@addComment');

@@ -124,22 +124,11 @@
               <div class="form-gruoup">
                 <label for="email">E-mail</label>
                 <input id="email" class="form-control" type="text" name="email"  placeholder="email@example.com" value="{{ old('email') }}" required autofocus>
-                @if ($errors->has('email'))
-                  <span class="error">
-                          {{ $errors->first('email') }}
-                      </span>
-                @endif
               </div>
 
               <div class="form-group">
                 <label for="password" >Password</label>
                 <input id="password" class="form-control" type="password" name="password" placeholder="Password" required>
-              @if ($errors->has('password'))
-                <!-- TODO: Notification about login error -->
-                  <span class="error">
-                          {{ $errors->first('password') }}
-                      </span>
-                @endif
               </div>
 
               <div class="form-check">
@@ -174,8 +163,29 @@
 
     </nav>
   </div>
+  @if ($errors->isNotEmpty())
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <div class="container">
+        <div class="d-flex justify-content-between">
+          <div>
+            @if ($errors->has('name'))
+                {{ $errors->first('name') }}
+            @elseif ($errors->has('email'))
+                {{ $errors->first('email') }}
+            @elseif ($errors->has('password'))
+                {{ $errors->first('password') }}
+            @elseif ($errors->has('accept'))
+                {{ $errors->first('accept') }}
+            @endif
+          </div>
+          <button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  @endif
 </header>
-
 
 <main>
   @yield('content')
