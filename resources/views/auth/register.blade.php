@@ -39,7 +39,7 @@
                                     <input name="password_confirmation" type="password" class="form-control" id="confirm_password" placeholder="Password">
                                 </div>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="check">
+                                    <input name="accept" type="checkbox" class="form-check-input" id="check">
                                     <label class="form-check-label" for="check">I accept the terms and conditions.</label>
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-2 mx-auto">
