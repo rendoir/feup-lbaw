@@ -29,8 +29,11 @@
   <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/app.css') }}" />
 
   <!-- Editor -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
   <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+
+  <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css">
 
 </head>
 

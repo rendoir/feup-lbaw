@@ -26,12 +26,12 @@
         </div>
 
         <!-- Text editor -->
-        <section class="mx-5">
+        <section class="mx-5 main-content">
           <textarea id="editor" name="content">
           </textarea>
 
           <script>
-            var simplemde = new SimpleMDE({ element: document.getElementById("editor") });
+            var simplemde = new SimpleMDE({ element: document.getElementById("editor"), forceSync: true });
             simplemde.value("");
           </script>
         </section>
