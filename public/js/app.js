@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -73,6 +73,9 @@
 /* harmony export (immutable) */ __webpack_exports__["c"] = getCommentsDropDown;
 /* harmony export (immutable) */ __webpack_exports__["d"] = getCommentsURL;
 /* harmony export (immutable) */ __webpack_exports__["e"] = toggleShowMsg;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(2);
+
+
 function createComments(comments, message_id) {
 
     //TODO - mby this should not be needed, handled outside and not after request
@@ -95,6 +98,9 @@ function createComments(comments, message_id) {
     if (final.firstChild == null) final.appendChild(firstDiv);else final.replaceChild(firstDiv, final.firstChild);
 
     toggleShowMsg(message_id, false);
+
+    // Adding event listener freshly added html
+    Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["editCommentsEventListener"])();
 }
 
 function createCommentHTML(comment) {
@@ -150,7 +156,12 @@ function createSimpleCommentHTML(comment) {
 function createOwnCommentHTML(comment) {
 
     var content = document.createElement("p");
+    content.classList.add("editable-content");
     content.appendChild(document.createTextNode(comment.content.version));
+
+    var contentCommendId = document.createAttribute("data-message-id");
+    contentCommendId.value = comment.id;
+    content.setAttributeNode(contentCommendId);
 
     var score = document.createElement("p");
     score.classList.add("discrete");
@@ -181,6 +192,7 @@ function createOwnCommentHTML(comment) {
     editBtn.classList.add("discrete");
     editBtn.classList.add("mx-1");
     editBtn.classList.add("p-0");
+    editBtn.classList.add("edit-comments");
     editBtn.appendChild(editIcon);
 
     var editDataToggle = document.createAttribute("data-toggle");
@@ -198,6 +210,10 @@ function createOwnCommentHTML(comment) {
     var editOriginalTitle = document.createAttribute("data-original-title");
     editOriginalTitle.value = "Edit";
     editBtn.setAttributeNode(editOriginalTitle);
+
+    var dataCommentId = document.createAttribute("data-message-id");
+    dataCommentId.value = comment.id;
+    editBtn.setAttributeNode(dataCommentId);
 
     var deleteIcon = document.createElement("i");
     deleteIcon.classList.add("far");
@@ -310,79 +326,18 @@ module.exports = {
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(3);
-module.exports = __webpack_require__(9);
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * First, we will load all of this project's Javascript utilities and other
- * dependencies. Then, we will be ready to develop a robust and powerful
- * application frontend using useful Laravel and JavaScript libraries.
- */
-
-// require('./bootstrap');
-
-// require('./navbar.js');
-
-questions = __webpack_require__(4);
-
-__webpack_require__(5);
-
-__webpack_require__(6);
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-ajax = __webpack_require__(1);
-
-function created(data) {
-    var reply = JSON.parse(data.target.response);
-    window.location.replace("http://localhost:8000/questions/" + reply.id);
-}
-
-function submit() {
-    title = $("input[name ='title']")[0].value;
-    content = $("textarea[name='content']")[0].value;
-    ajax.sendAjaxRequest('POST', 'ask_question', { "title": title, "messageContent": content }, created);
-}
-
-module.exports = {
-    submit: submit
-};
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-$(window).scroll(function () {
-    var $heightScrolled = $(window).scrollTop();
-
-    if ($heightScrolled > 30) {
-        $('body > header.sticky-top').addClass("sticky-shadow");
-    } else if ($heightScrolled <= 0) {
-        $('body > header.sticky-top').removeClass("sticky-shadow");
-    }
-});
-
-/***/ }),
-/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(9);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 ajax = __webpack_require__(1);
+
 
 
 
@@ -391,12 +346,15 @@ function addEventListeners() {
 
     viewCommentsEventListener();
     addCommentsEventListener();
-    editCommentsEventListener();
     removeCommentsEventListener();
+
+    // Some event listeners are only added when the respective
+    // html elements triggering the events are created
 }
 
-function viewCommentsEventListener() {
-    var comments = document.querySelectorAll('.show-comments');
+function genericClickListener(selector, method) {
+
+    var comments = document.querySelectorAll(selector);
     if (comments == null) return;
 
     var _loop = function _loop(comment) {
@@ -407,7 +365,7 @@ function viewCommentsEventListener() {
             };
 
         comment.addEventListener('click', function () {
-            Object(__WEBPACK_IMPORTED_MODULE_0__viewComments_js__["a" /* viewCommentsRequest */])(message_id);
+            method(message_id);
         });
     };
 
@@ -439,92 +397,16 @@ function viewCommentsEventListener() {
     }
 }
 
+function viewCommentsEventListener() {
+    genericClickListener('.show-comments', __WEBPACK_IMPORTED_MODULE_0__viewComments_js__["a" /* viewCommentsRequest */]);
+}
+
 function addCommentsEventListener() {
-    var submitBtns = document.querySelectorAll('.new-comment-submit');
-    if (submitBtns == null) return;
-
-    var _loop2 = function _loop2(submitBtn) {
-
-        var message_id = submitBtn.getAttribute('data-message-id');
-        if (message_id == null) return {
-                v: void 0
-            };
-
-        submitBtn.addEventListener('click', function () {
-            Object(__WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */])(message_id);
-        });
-    };
-
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
-
-    try {
-        for (var _iterator2 = submitBtns[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var submitBtn = _step2.value;
-
-            var _ret2 = _loop2(submitBtn);
-
-            if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
-        }
-    } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                _iterator2.return();
-            }
-        } finally {
-            if (_didIteratorError2) {
-                throw _iteratorError2;
-            }
-        }
-    }
+    genericClickListener('.new-comment-submit', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */]);
 }
 
 function editCommentsEventListener() {
-    var comments = document.querySelectorAll('.edit-comments');
-    if (comments == null) return;
-
-    var _loop3 = function _loop3(comment) {
-
-        var message_id = comment.getAttribute('data-message-id');
-        if (message_id == null) return {
-                v: void 0
-            };
-
-        comment.addEventListener('click', function () {
-            Object(__WEBPACK_IMPORTED_MODULE_0__viewComments_js__["a" /* viewCommentsRequest */])(message_id);
-        });
-    };
-
-    var _iteratorNormalCompletion3 = true;
-    var _didIteratorError3 = false;
-    var _iteratorError3 = undefined;
-
-    try {
-        for (var _iterator3 = comments[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-            var comment = _step3.value;
-
-            var _ret3 = _loop3(comment);
-
-            if ((typeof _ret3 === 'undefined' ? 'undefined' : _typeof(_ret3)) === "object") return _ret3.v;
-        }
-    } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                _iterator3.return();
-            }
-        } finally {
-            if (_didIteratorError3) {
-                throw _iteratorError3;
-            }
-        }
-    }
+    genericClickListener('.edit-comments', __WEBPACK_IMPORTED_MODULE_2__editComment_js__["a" /* setEditMode */]);
 }
 
 function removeCommentsEventListener() {
@@ -532,6 +414,70 @@ function removeCommentsEventListener() {
 }
 
 window.addEventListener('load', addEventListeners);
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(4);
+module.exports = __webpack_require__(10);
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * First, we will load all of this project's Javascript utilities and other
+ * dependencies. Then, we will be ready to develop a robust and powerful
+ * application frontend using useful Laravel and JavaScript libraries.
+ */
+
+// require('./bootstrap');
+
+// require('./navbar.js');
+
+questions = __webpack_require__(5);
+
+__webpack_require__(6);
+
+__webpack_require__(2);
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+ajax = __webpack_require__(1);
+
+function created(data) {
+    var reply = JSON.parse(data.target.response);
+    window.location.replace("http://localhost:8000/questions/" + reply.id);
+}
+
+function submit() {
+    title = $("input[name ='title']")[0].value;
+    content = $("textarea[name='content']")[0].value;
+    ajax.sendAjaxRequest('POST', 'ask_question', { "title": title, "messageContent": content }, created);
+}
+
+module.exports = {
+    submit: submit
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+$(window).scroll(function () {
+    var $heightScrolled = $(window).scrollTop();
+
+    if ($heightScrolled > 30) {
+        $('body > header.sticky-top').addClass("sticky-shadow");
+    } else if ($heightScrolled <= 0) {
+        $('body > header.sticky-top').removeClass("sticky-shadow");
+    }
+});
 
 /***/ }),
 /* 7 */
@@ -609,6 +555,88 @@ function addCommentHandler(response, message_id) {
 
 /***/ }),
 /* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export edit */
+/* harmony export (immutable) */ __webpack_exports__["a"] = setEditMode;
+function edit(message_id) {
+
+    var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
+
+    var contentNode = document.querySelector(contentSelector);
+    if (contentNode == null || contentNode.value == "") return;
+
+    var requestBody = {
+        "content": contentNode.value,
+        "commentable": message_id
+    };
+
+    ajax.sendAjaxRequest('post', getCommentsURL(message_id), requestBody, function (data) {
+        addCommentHandler(data.target, message_id);
+    });
+}
+
+function setEditMode(message_id) {
+
+    var contentSelector = ".editable-content[data-message-id='" + message_id + "']";
+
+    var contentNode = document.querySelector(contentSelector);
+    if (contentNode == null) return;
+
+    var parentNode = contentNode.parentNode;
+    var content = contentNode.innerText;
+    parentNode.removeChild(contentNode);
+
+    var input = document.createElement("input");
+    input.classList.add('form-control');
+    input.value = content;
+
+    parentNode.insertBefore(input, parentNode.firstChild);
+
+    addKeyListeners(input, contentNode);
+}
+
+function addKeyListeners(inputNode, oldNode) {
+    inputNode.addEventListener('keyup', function (event) {
+
+        switch (event.keyCode) {
+            // ENTER was pressed
+            case 13:
+                // TODO - Request para edit a bdad
+
+                updatePreviousComment(inputNode, oldNode);
+                break;
+
+            // ESC was pressed 
+            case 27:
+                getPreviousComment(inputNode, oldNode);
+                return;
+        }
+    });
+}
+
+function updatePreviousComment(inputNode, updatedNode) {
+
+    var parentNode = inputNode.parentNode;
+    var content = inputNode.value;
+    parentNode.removeChild(inputNode);
+
+    updatedNode.innerText = content;
+
+    parentNode.insertBefore(updatedNode, parentNode.firstChild);
+}
+
+function getPreviousComment(inputNode, previousNode) {
+
+    var parentNode = inputNode.parentNode;
+    parentNode.removeChild(inputNode);
+
+    parentNode.insertBefore(previousNode, parentNode.firstChild);
+}
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -1,3 +1,5 @@
+import { editCommentsEventListener } from './comments.js'
+
 export function createComments(comments, message_id) {
 
     //TODO - mby this should not be needed, handled outside and not after request
@@ -25,6 +27,9 @@ export function createComments(comments, message_id) {
         final.replaceChild(firstDiv, final.firstChild);
 
     toggleShowMsg(message_id, false);
+
+    // Adding event listener freshly added html
+    editCommentsEventListener();
 }
 
 export function createCommentHTML(comment) {
@@ -82,7 +87,12 @@ function createSimpleCommentHTML(comment) {
 function createOwnCommentHTML(comment) {
 
     let content = document.createElement("p");
+    content.classList.add("editable-content");
     content.appendChild(document.createTextNode(comment.content.version));
+
+    let contentCommendId = document.createAttribute("data-message-id");
+    contentCommendId.value = comment.id;
+    content.setAttributeNode(contentCommendId);
 
     let score = document.createElement("p");
     score.classList.add("discrete");
@@ -113,6 +123,7 @@ function createOwnCommentHTML(comment) {
     editBtn.classList.add("discrete");
     editBtn.classList.add("mx-1");
     editBtn.classList.add("p-0");
+    editBtn.classList.add("edit-comments");
     editBtn.appendChild(editIcon);
 
     let editDataToggle = document.createAttribute("data-toggle");
@@ -130,6 +141,10 @@ function createOwnCommentHTML(comment) {
     let editOriginalTitle = document.createAttribute("data-original-title");
     editOriginalTitle.value = "Edit";
     editBtn.setAttributeNode(editOriginalTitle);
+
+    let dataCommentId = document.createAttribute("data-message-id");
+    dataCommentId.value = comment.id;
+    editBtn.setAttributeNode(dataCommentId);
 
     let deleteIcon = document.createElement("i");
     deleteIcon.classList.add("far");
