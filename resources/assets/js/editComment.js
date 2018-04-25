@@ -59,6 +59,15 @@ function requestEdition(inputNode, oldNode, comment_id) {
 }
 
 function editCommentHandler(response, inputNode, oldNode) {
+    if (response.status == 403) {
+        displayError("You have no permission to execute this action");
+        return;
+    }
+    else if (response.status != 200) {
+        displayError("Failed to edit the Comment");
+        return;
+    }
+
     let edittedComment = JSON.parse(response.responseText);
     oldNode.innerText = edittedComment.content.version;
     

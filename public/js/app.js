@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -79,7 +79,6 @@
 
 function createComments(comments, message_id) {
 
-    //TODO - mby this should not be needed, handled outside and not after request
     if (comments.length == 0) return;
 
     // Direct comments container
@@ -336,9 +335,9 @@ module.exports = {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(10);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 ajax = __webpack_require__(1);
@@ -422,14 +421,73 @@ window.addEventListener('load', addEventListeners);
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-__webpack_require__(4);
-module.exports = __webpack_require__(10);
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = displayError;
+function displayError(errorMessage) {
 
+    var forthDiv = document.createElement("div");
+
+    var span = document.createElement("span");
+    var ariaSpan = document.createAttribute("aria-hidden");
+    ariaSpan.value = "true";
+    span.setAttributeNode(ariaSpan);
+    span.innerText = errorMessage;
+
+    var button = document.createElement("button");
+    button.classList.add("close");
+    button.appendChild(span);
+
+    var typeBtn = document.createAttribute("type");
+    typeBtn.value = "button";
+    button.setAttributeNode(typeBtn);
+
+    var styleBtn = document.createAttribute("style");
+    styleBtn.value = "position: inherit; padding: inherit";
+    button.setAttributeNode(styleBtn);
+
+    var dismissBtn = document.createAttribute("data-dismiss");
+    dismissBtn.value = "alert";
+    button.setAttributeNode(dismissBtn);
+
+    var ariaBtn = document.createAttribute("aria-label");
+    ariaBtn.value = "Close";
+    button.setAttributeNode(ariaBtn);
+
+    var thirdDiv = document.createElement("div");
+    thirdDiv.classList.add("d-flex");
+    thirdDiv.classList.add("justify-content-between");
+    thirdDiv.appendChild(forthDiv);
+    thirdDiv.appendChild(button);
+
+    var secondDiv = document.createElement("div");
+    secondDiv.classList.add("container");
+    secondDiv.appendChild(thirdDiv);
+
+    var firstDiv = document.createElement("div");
+    firstDiv.classList.add("alert");
+    firstDiv.classList.add("alert-danger");
+    firstDiv.classList.add("alert-dismissible");
+    firstDiv.appendChild(secondDiv);
+
+    var roleDiv = document.createAttribute("role");
+    roleDiv.value = "alert";
+    firstDiv.setAttributeNode(roleDiv);
+
+    document.querySelector('header').appendChild(firstDiv);
+}
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(5);
+module.exports = __webpack_require__(11);
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -443,14 +501,14 @@ module.exports = __webpack_require__(10);
 
 // require('./navbar.js');
 
-questions = __webpack_require__(5);
+questions = __webpack_require__(6);
 
-__webpack_require__(6);
+__webpack_require__(7);
 
 __webpack_require__(2);
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ajax = __webpack_require__(1);
@@ -471,7 +529,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 $(window).scroll(function () {
@@ -485,12 +543,14 @@ $(window).scroll(function () {
 });
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = viewCommentsRequest;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(3);
+
 
 
 
@@ -512,18 +572,22 @@ function viewCommentsRequest(message_id) {
 
 // Handler to the get comments request response
 function getCommentsHandler(response, message_id) {
-    var comments = JSON.parse(response.responseText);
 
-    Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])(comments, message_id);
+    if (response.status == 200) {
+        var comments = JSON.parse(response.responseText);
+        Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])(comments, message_id);
+    } else Object(__WEBPACK_IMPORTED_MODULE_1__errors_js__["a" /* displayError */])("Failed to retrieve the requested Comments");
 }
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = addCommentRequest;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(3);
+
 
 
 
@@ -548,6 +612,14 @@ function addCommentRequest(message_id) {
 
 // Handler to the add comment request response
 function addCommentHandler(response, message_id) {
+    if (response.status == 403) {
+        Object(__WEBPACK_IMPORTED_MODULE_1__errors_js__["a" /* displayError */])("You have no permission to execute this action");
+        return;
+    } else if (response.status != 200) {
+        Object(__WEBPACK_IMPORTED_MODULE_1__errors_js__["a" /* displayError */])("Failed to add a new Comment");
+        return;
+    }
+
     var newComment = JSON.parse(response.responseText);
 
     var comments = Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id);
@@ -559,7 +631,7 @@ function addCommentHandler(response, message_id) {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -621,6 +693,14 @@ function requestEdition(inputNode, oldNode, comment_id) {
 }
 
 function editCommentHandler(response, inputNode, oldNode) {
+    if (response.status == 403) {
+        displayError("You have no permission to execute this action");
+        return;
+    } else if (response.status != 200) {
+        displayError("Failed to edit the Comment");
+        return;
+    }
+
     var edittedComment = JSON.parse(response.responseText);
     oldNode.innerText = edittedComment.content.version;
 
@@ -636,7 +716,7 @@ function getPreviousComment(inputNode, previousNode) {
 }
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -3,6 +3,7 @@ import { createCommentHTML } from './commentsUtils.js'
 import { getCommentsDropDown } from './commentsUtils.js'
 import { createComments } from './commentsUtils.js'
 import { toggleShowMsg } from './commentsUtils.js'
+import { displayError } from './errors.js';
 
 export function viewCommentsRequest(message_id) {
 
@@ -21,7 +22,10 @@ export function viewCommentsRequest(message_id) {
 
 // Handler to the get comments request response
 function getCommentsHandler(response, message_id) {
-    let comments = JSON.parse(response.responseText);
-
-    createComments(comments, message_id);
+    
+    if (response.status == 200) {
+        let comments = JSON.parse(response.responseText);
+        createComments(comments, message_id);
+    }
+    else displayError("Failed to retrieve the requested Comments"); 
 }
