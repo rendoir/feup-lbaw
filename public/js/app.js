@@ -555,7 +555,7 @@ function addCommentHandler(response, message_id) {
 
     // Cleaning input text
     var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
-    document.querySelector(contentSelector).nodeValue = "";
+    document.querySelector(contentSelector).value = "";
 }
 
 /***/ }),
@@ -622,9 +622,7 @@ function requestEdition(inputNode, oldNode, comment_id) {
 
 function editCommentHandler(response, inputNode, oldNode) {
     var edittedComment = JSON.parse(response.responseText);
-    console.log(edittedComment.content.version);
     oldNode.innerText = edittedComment.content.version;
-    console.log(oldNode);
 
     getPreviousComment(inputNode, oldNode);
 }

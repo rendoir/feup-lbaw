@@ -2,7 +2,6 @@ import { editCommentsEventListener } from './comments.js'
 
 export function createComments(comments, message_id) {
 
-    //TODO - mby this should not be needed, handled outside and not after request
     if (comments.length == 0)
         return;
 

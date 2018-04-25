@@ -64,20 +64,15 @@ class CommentsController extends Controller
         if (!Auth::check())
             return;
 
-        $user_id = Auth::id();
-        /*$commentable = Commentable::find($request->commentable);
-commentable
-        $message = Message::create(['author' => $user]);
-        $comment = Comment::create(['id' => $message->id, 'commentable_id' => $commentable->id]);
-        $content = MessageVersion::create(['content' => $request->content, 'message_id' => $message->id]);*/
-        
+        // Placeholder for the id of the comment that is going to be created
         $comment_id = null;
 
-        DB::transaction(function() use (&$request, &$user_id, &$comment_id) {
-            DB::insert("INSERT INTO messages (author) VALUES (?)", [$user_id]);
-            $comment_id = DB::getPdo()->lastInsertId();
+        DB::transaction(function() use (&$request, &$comment_id) {
+            $user_id = User::find(Auth::id())->id;
+            $comment_id = Message::create(['author' => $user_id])->id;
+            
             DB::insert("INSERT INTO comments (id, commentable_id) VALUES (?, ?)", [$comment_id, $request->commentable]);
-            DB::insert("INSERT INTO message_versions (content, message_id) values (?, ?)", [$request->content, $comment_id]);
+            MessageVersion::create(['content' => $request->content, 'message_id' => $comment_id]);
         });
 
         return response()->json(

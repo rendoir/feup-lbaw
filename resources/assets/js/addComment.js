@@ -37,5 +37,5 @@ function addCommentHandler(response, message_id) {
 
     // Cleaning input text
     let contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
-    document.querySelector(contentSelector).nodeValue = "";
+    document.querySelector(contentSelector).value = "";
 }
