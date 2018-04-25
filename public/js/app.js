@@ -72,7 +72,8 @@
 /* harmony export (immutable) */ __webpack_exports__["a"] = createCommentHTML;
 /* harmony export (immutable) */ __webpack_exports__["c"] = getCommentsDropDown;
 /* harmony export (immutable) */ __webpack_exports__["d"] = getCommentsURL;
-/* harmony export (immutable) */ __webpack_exports__["e"] = toggleShowMsg;
+/* harmony export (immutable) */ __webpack_exports__["e"] = getUniqueCommentURL;
+/* harmony export (immutable) */ __webpack_exports__["f"] = toggleShowMsg;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(2);
 
 
@@ -288,6 +289,10 @@ function getCommentsURL(message_id) {
     return window.location.pathname + '/answers/' + message_id + '/comments';
 }
 
+function getUniqueCommentURL(commentable_id, comment_id) {
+    return getCommentsURL(commentable_id) + '/' + comment_id;
+}
+
 /**
  * 
  * @param {String} message_id 
@@ -496,7 +501,7 @@ function viewCommentsRequest(message_id) {
 
     // If area already expanded, its only closing, so not worth making ajax request
     if (Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id).classList.contains('show')) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["e" /* toggleShowMsg */])(message_id, true);
+        Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["f" /* toggleShowMsg */])(message_id, true);
         return;
     }
 
@@ -558,28 +563,13 @@ function addCommentHandler(response, message_id) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export edit */
 /* harmony export (immutable) */ __webpack_exports__["a"] = setEditMode;
-function edit(message_id) {
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
 
-    var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
 
-    var contentNode = document.querySelector(contentSelector);
-    if (contentNode == null || contentNode.value == "") return;
+function setEditMode(comment_id) {
 
-    var requestBody = {
-        "content": contentNode.value,
-        "commentable": message_id
-    };
-
-    ajax.sendAjaxRequest('post', getCommentsURL(message_id), requestBody, function (data) {
-        addCommentHandler(data.target, message_id);
-    });
-}
-
-function setEditMode(message_id) {
-
-    var contentSelector = ".editable-content[data-message-id='" + message_id + "']";
+    var contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
 
     var contentNode = document.querySelector(contentSelector);
     if (contentNode == null) return;
@@ -594,18 +584,16 @@ function setEditMode(message_id) {
 
     parentNode.insertBefore(input, parentNode.firstChild);
 
-    addKeyListeners(input, contentNode);
+    addKeyListeners(input, contentNode, comment_id);
 }
 
-function addKeyListeners(inputNode, oldNode) {
+function addKeyListeners(inputNode, oldNode, comment_id) {
     inputNode.addEventListener('keyup', function (event) {
 
         switch (event.keyCode) {
             // ENTER was pressed
             case 13:
-                // TODO - Request para edit a bdad
-
-                updatePreviousComment(inputNode, oldNode);
+                requestEdition(inputNode, oldNode, comment_id);
                 break;
 
             // ESC was pressed 
@@ -616,15 +604,29 @@ function addKeyListeners(inputNode, oldNode) {
     });
 }
 
-function updatePreviousComment(inputNode, updatedNode) {
+function requestEdition(inputNode, oldNode, comment_id) {
 
-    var parentNode = inputNode.parentNode;
-    var content = inputNode.value;
-    parentNode.removeChild(inputNode);
+    var commentsGroup = inputNode.parentNode.parentNode.parentNode;
+    var answer_id = commentsGroup.parentNode.parentNode.getAttribute("data-message-id");
 
-    updatedNode.innerText = content;
+    var requestBody = {
+        "content": inputNode.value,
+        "commentable": answer_id,
+        "comment": comment_id
+    };
 
-    parentNode.insertBefore(updatedNode, parentNode.firstChild);
+    ajax.sendAjaxRequest('put', Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["e" /* getUniqueCommentURL */])(answer_id, comment_id), requestBody, function (data) {
+        editCommentHandler(data.target, inputNode, oldNode);
+    });
+}
+
+function editCommentHandler(response, inputNode, oldNode) {
+    var edittedComment = JSON.parse(response.responseText);
+    console.log(edittedComment.content.version);
+    oldNode.innerText = edittedComment.content.version;
+    console.log(oldNode);
+
+    getPreviousComment(inputNode, oldNode);
 }
 
 function getPreviousComment(inputNode, previousNode) {

@@ -1,26 +1,8 @@
-export function edit(message_id) {
+import { getUniqueCommentURL } from './commentsUtils.js'
 
-    let contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
+export function setEditMode(comment_id) {
 
-    let contentNode = document.querySelector(contentSelector);
-    if (contentNode == null || contentNode.value == "")
-        return;
-
-    let requestBody = {
-        "content": contentNode.value,
-        "commentable": message_id
-    };
-
-    ajax.sendAjaxRequest(
-        'post', getCommentsURL(message_id), requestBody, (data) => {
-            addCommentHandler(data.target, message_id);
-        }
-    );
-}
-
-export function setEditMode(message_id) {
-
-    let contentSelector = ".editable-content[data-message-id='" + message_id + "']";
+    let contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
 
     let contentNode = document.querySelector(contentSelector);
     if (contentNode == null)
@@ -36,10 +18,10 @@ export function setEditMode(message_id) {
 
     parentNode.insertBefore(input, parentNode.firstChild);
 
-    addKeyListeners(input, contentNode);
+    addKeyListeners(input, contentNode, comment_id);
 }
 
-function addKeyListeners(inputNode, oldNode) {
+function addKeyListeners(inputNode, oldNode, comment_id) {
     inputNode.addEventListener('keyup', function(event) {
         
         
@@ -47,9 +29,7 @@ function addKeyListeners(inputNode, oldNode) {
         {
             // ENTER was pressed
             case (13):
-                // TODO - Request para edit a bdad
-
-                updatePreviousComment(inputNode, oldNode);
+                requestEdition(inputNode, oldNode, comment_id);
                 break;
             
             // ESC was pressed 
@@ -60,15 +40,29 @@ function addKeyListeners(inputNode, oldNode) {
     });
 }
 
-function updatePreviousComment(inputNode, updatedNode) {
+function requestEdition(inputNode, oldNode, comment_id) {
 
-    let parentNode = inputNode.parentNode;
-    let content = inputNode.value;
-    parentNode.removeChild(inputNode);
+    let commentsGroup = inputNode.parentNode.parentNode.parentNode;
+    let answer_id = commentsGroup.parentNode.parentNode.getAttribute("data-message-id");
+
+    let requestBody = {
+        "content": inputNode.value,
+        "commentable": answer_id,
+        "comment": comment_id
+    };
+
+    ajax.sendAjaxRequest(
+        'put', getUniqueCommentURL(answer_id, comment_id), requestBody, (data) => {
+            editCommentHandler(data.target, inputNode, oldNode);
+        }
+    );
+}
+
+function editCommentHandler(response, inputNode, oldNode) {
+    let edittedComment = JSON.parse(response.responseText);
+    oldNode.innerText = edittedComment.content.version;
     
-    updatedNode.innerText = content;
-
-    parentNode.insertBefore(updatedNode, parentNode.firstChild);
+    getPreviousComment(inputNode, oldNode);
 }
 
 function getPreviousComment(inputNode, previousNode) {

@@ -66,7 +66,7 @@ class CommentsController extends Controller
 
         $user_id = Auth::id();
         /*$commentable = Commentable::find($request->commentable);
-
+commentable
         $message = Message::create(['author' => $user]);
         $comment = Comment::create(['id' => $message->id, 'commentable_id' => $commentable->id]);
         $content = MessageVersion::create(['content' => $request->content, 'message_id' => $message->id]);*/
@@ -88,10 +88,19 @@ class CommentsController extends Controller
     public function editComment(Request $request)
     {
         $comment = Comment::find($request->comment);
+        $message = $comment->message;
 
         // Checking if the User can edit the comment
-        $this->authorize('edit', $comment);
+        $this->authorize('edit', $message);
 
-        // TODO
+        $message_version = $message->message_version;
+
+        // Updating content
+        $message_version->content = $request->content;
+        $message_version->save();
+
+        return response()->json(
+            $this->getCommentJSON($comment)
+        );
     }
 }

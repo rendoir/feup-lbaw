@@ -33,10 +33,10 @@ class MessagePolicy
      * @param  \App\User  $user
      * @return bool
      */
-    public function create(User $user)
+    /*public function create(User $user)
     {
         return ($user->id != null);
-    }
+    }*/
 
     /**
      * Determines if a given user can edit the given message
@@ -47,7 +47,7 @@ class MessagePolicy
      */
     public function edit(User $user, Message $message)
     {
-        return $user->id == $message->get_author()->id;
+        return $user->id === $message->get_author()->id;
     }
 
     /**
@@ -59,6 +59,6 @@ class MessagePolicy
      */
     public function delete(User $user, Message $message)
     {
-        return $user->id == $message->get_author()->id;
+        return $user->id === $message->get_author()->id;
     }
 }
