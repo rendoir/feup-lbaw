@@ -24,7 +24,7 @@
     <div class="container">
         <main  class="row" style="overflow-y:auto">
             <div class="col-md-9 p-3">
-                <div class="markdown main-content">{{$content->content}}</div>
+                <div class="markdown main-content" style="visibility: hidden">{{$content->content}}</div>
                 <!-- Question Comments -->
                 <div class="text-center">
                     <button class="btn btn-secundary my-4" type="button" data-toggle="collapse" data-target="#QuestionComments" aria-expanded="false"
