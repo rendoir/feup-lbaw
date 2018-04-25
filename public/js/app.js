@@ -293,8 +293,8 @@ function getUniqueCommentURL(commentable_id, comment_id) {
 }
 
 /**
- * 
- * @param {String} message_id 
+ *
+ * @param {String} message_id
  * @param {boolean} show - If true, it's supposed to to 'Show Comments' , if false it's supposed to 'Hide Comments'
  */
 function toggleShowMsg(message_id, show) {
@@ -515,7 +515,7 @@ ajax = __webpack_require__(1);
 
 function created(data) {
     var reply = JSON.parse(data.target.response);
-    window.location.replace("http://localhost:8000/questions/" + reply.id);
+    window.location = "questions/" + reply.id;
 }
 
 function submit() {
@@ -668,7 +668,7 @@ function addKeyListeners(inputNode, oldNode, comment_id) {
                 requestEdition(inputNode, oldNode, comment_id);
                 break;
 
-            // ESC was pressed 
+            // ESC was pressed
             case 27:
                 getPreviousComment(inputNode, oldNode);
                 return;

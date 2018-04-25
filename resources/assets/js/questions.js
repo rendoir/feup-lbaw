@@ -2,7 +2,7 @@ ajax = require("./ajax.js");
 
 function created(data){
     let reply = JSON.parse(data.target.response)
-    window.location.replace("http://localhost:8000/questions/" + reply.id);
+    window.location = "questions/" + reply.id;
 }
 
 function submit() {
