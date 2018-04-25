@@ -42,12 +42,14 @@ class CommentsController extends Controller
     {
         $message = $comment->message;
         $content = $message->message_version;
+        $author = $message->get_author();
 
         return array(
             "id" => $comment->id,
-            "author" => $message->get_author()->username,
+            "author" => $author->username,
             "score" => $message->score,
             "was_edited" => $message->was_edited(),
+            "is_owner" => ($author->id == Auth::id()),
             "content" => array (
                 "version" => $content->content,
                 "creation_time" => $content->creation_time,

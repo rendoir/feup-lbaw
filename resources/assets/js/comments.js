@@ -46,7 +46,7 @@ function addCommentsEventListener() {
 }
 
 function editCommentsEventListener() {
-    let comments = document.querySelectorAll('.edit-comments');
+let comments = document.querySelectorAll('.edit-comments');
     if (comments == null)
         return;
     

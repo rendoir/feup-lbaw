@@ -72,6 +72,7 @@
 /* harmony export (immutable) */ __webpack_exports__["a"] = createCommentHTML;
 /* harmony export (immutable) */ __webpack_exports__["c"] = getCommentsDropDown;
 /* harmony export (immutable) */ __webpack_exports__["d"] = getCommentsURL;
+/* harmony export (immutable) */ __webpack_exports__["e"] = toggleShowMsg;
 function createComments(comments, message_id) {
 
     //TODO - mby this should not be needed, handled outside and not after request
@@ -97,6 +98,11 @@ function createComments(comments, message_id) {
 }
 
 function createCommentHTML(comment) {
+
+    return comment.is_owner ? createOwnCommentHTML(comment) : createSimpleCommentHTML(comment);
+}
+
+function createSimpleCommentHTML(comment) {
 
     var paragraph = document.createElement("p");
     paragraph.classList.add("text-center");
@@ -135,6 +141,122 @@ function createCommentHTML(comment) {
     var thirdDiv = document.createElement("div");
     thirdDiv.classList.add("list-group-item");
     thirdDiv.classList.add("px-0");
+    thirdDiv.classList.add("bg-transparent");
+    thirdDiv.appendChild(forthDiv);
+
+    return thirdDiv;
+}
+
+function createOwnCommentHTML(comment) {
+
+    var content = document.createElement("p");
+    content.appendChild(document.createTextNode(comment.content.version));
+
+    var score = document.createElement("p");
+    score.classList.add("discrete");
+    score.classList.add("mr-2");
+    score.appendChild(document.createTextNode(comment.score));
+
+    var trophyIcon = document.createElement("pi");
+    trophyIcon.classList.add("fas");
+    trophyIcon.classList.add("fa-trophy");
+
+    var trophy = document.createElement("span");
+    trophy.classList.add("discrete");
+    trophy.classList.add("mx-1");
+    trophy.appendChild(trophyIcon);
+
+    var separator = document.createElement("span");
+    separator.classList.add("discrete");
+    separator.classList.add("mx-2");
+    separator.appendChild(document.createTextNode("│"));
+
+    var editIcon = document.createElement("i");
+    editIcon.classList.add("fas");
+    editIcon.classList.add("fa-pencil-alt");
+
+    var editBtn = document.createElement("button");
+    editBtn.classList.add("btn");
+    editBtn.classList.add("btn-link");
+    editBtn.classList.add("discrete");
+    editBtn.classList.add("mx-1");
+    editBtn.classList.add("p-0");
+    editBtn.appendChild(editIcon);
+
+    var editDataToggle = document.createAttribute("data-toggle");
+    editDataToggle.value = "tooltip";
+    editBtn.setAttributeNode(editDataToggle);
+
+    var editDataPlacement = document.createAttribute("data-placement");
+    editDataPlacement.value = "top";
+    editBtn.setAttributeNode(editDataPlacement);
+
+    var editTitle = document.createAttribute("title");
+    editTitle.value = " ";
+    editBtn.setAttributeNode(editTitle);
+
+    var editOriginalTitle = document.createAttribute("data-original-title");
+    editOriginalTitle.value = "Edit";
+    editBtn.setAttributeNode(editOriginalTitle);
+
+    var deleteIcon = document.createElement("i");
+    deleteIcon.classList.add("far");
+    deleteIcon.classList.add("fa-trash-alt");
+
+    var deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("btn");
+    deleteBtn.classList.add("btn-link");
+    deleteBtn.classList.add("discrete");
+    deleteBtn.classList.add("mx-1");
+    deleteBtn.classList.add("p-0");
+    deleteBtn.appendChild(deleteIcon);
+
+    var deleteDataToggle = document.createAttribute("data-toggle");
+    deleteDataToggle.value = "tooltip";
+    deleteBtn.setAttributeNode(deleteDataToggle);
+
+    var deleteDataPlacement = document.createAttribute("data-placement");
+    deleteDataPlacement.value = "top";
+    deleteBtn.setAttributeNode(deleteDataPlacement);
+
+    var deleteTitle = document.createAttribute("title");
+    deleteTitle.value = " ";
+    deleteBtn.setAttributeNode(deleteTitle);
+
+    var deleteOriginalTitle = document.createAttribute("data-original-title");
+    deleteOriginalTitle.value = "Delete";
+    deleteBtn.setAttributeNode(deleteOriginalTitle);
+
+    var authorBtns = document.createElement("small");
+    authorBtns.classList.add("my-auto");
+    authorBtns.appendChild(editBtn);
+    authorBtns.appendChild(deleteBtn);
+
+    var author = document.createElement("p");
+    author.classList.add("discrete");
+    author.classList.add("ml-auto");
+    author.appendChild(document.createTextNode(comment.author));
+
+    var info = document.createElement("div");
+    info.classList.add("d-flex");
+    info.classList.add("flex-wrap");
+    info.classList.add("mt-3");
+    info.appendChild(score);
+    info.appendChild(trophy);
+    info.appendChild(separator);
+    info.appendChild(authorBtns);
+    info.appendChild(author);
+
+    var forthDiv = document.createElement("div");
+    forthDiv.classList.add("mx-sm-0");
+    forthDiv.appendChild(content);
+    forthDiv.appendChild(info);
+
+    var thirdDiv = document.createElement("div");
+    thirdDiv.classList.add("list-group-item");
+    thirdDiv.classList.add("ml-5");
+    thirdDiv.classList.add("pl-5");
+    thirdDiv.classList.add("pr-3");
     thirdDiv.classList.add("bg-transparent");
     thirdDiv.appendChild(forthDiv);
 
@@ -362,7 +484,47 @@ function addCommentsEventListener() {
 }
 
 function editCommentsEventListener() {
-    //TODO
+    var comments = document.querySelectorAll('.edit-comments');
+    if (comments == null) return;
+
+    var _loop3 = function _loop3(comment) {
+
+        var message_id = comment.getAttribute('data-message-id');
+        if (message_id == null) return {
+                v: void 0
+            };
+
+        comment.addEventListener('click', function () {
+            Object(__WEBPACK_IMPORTED_MODULE_0__viewComments_js__["a" /* viewCommentsRequest */])(message_id);
+        });
+    };
+
+    var _iteratorNormalCompletion3 = true;
+    var _didIteratorError3 = false;
+    var _iteratorError3 = undefined;
+
+    try {
+        for (var _iterator3 = comments[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            var comment = _step3.value;
+
+            var _ret3 = _loop3(comment);
+
+            if ((typeof _ret3 === 'undefined' ? 'undefined' : _typeof(_ret3)) === "object") return _ret3.v;
+        }
+    } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                _iterator3.return();
+            }
+        } finally {
+            if (_didIteratorError3) {
+                throw _iteratorError3;
+            }
+        }
+    }
 }
 
 function removeCommentsEventListener() {
@@ -383,13 +545,12 @@ window.addEventListener('load', addEventListeners);
 
 
 
+
 function viewCommentsRequest(message_id) {
 
-    var commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
-
     // If area already expanded, its only closing, so not worth making ajax request
-    if (document.querySelector(commentSelector).classList.contains('show')) {
-        toggleShowMsg(message_id, true);
+    if (Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id).classList.contains('show')) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["e" /* toggleShowMsg */])(message_id, true);
         return;
     }
 
@@ -440,6 +601,10 @@ function addCommentHandler(response, message_id) {
 
     var comments = Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id);
     if (comments.firstChild.nodeName != "#text") comments.firstChild.firstChild.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment));else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])([newComment], message_id);
+
+    // Cleaning input text
+    var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
+    document.querySelector(contentSelector).nodeValue = "";
 }
 
 /***/ }),

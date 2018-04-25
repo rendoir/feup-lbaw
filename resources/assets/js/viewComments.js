@@ -2,13 +2,12 @@ import { getCommentsURL } from './commentsUtils.js'
 import { createCommentHTML } from './commentsUtils.js'
 import { getCommentsDropDown } from './commentsUtils.js'
 import { createComments } from './commentsUtils.js'
+import { toggleShowMsg } from './commentsUtils.js'
 
 export function viewCommentsRequest(message_id) {
 
-    let commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
-
     // If area already expanded, its only closing, so not worth making ajax request
-    if (document.querySelector(commentSelector).classList.contains('show')) {
+    if (getCommentsDropDown(message_id).classList.contains('show')) {
         toggleShowMsg(message_id, true);
         return;
     }
