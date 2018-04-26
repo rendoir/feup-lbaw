@@ -27,6 +27,7 @@ class QuestionController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except([
+            'showQueriedQuestions',
             'showRecentQuestions',
             'showHotQuestions',
             'showHighlyVotedQuestions',
@@ -45,13 +46,24 @@ class QuestionController extends Controller
                 $question = Question::create(['id' => $commentable->id, 'title' => $request->title]);
                 MessageVersion::create(['content' => $request->messageContent, 'message_id' => $message->id]);
             });
-            return $question;
+            return redirect()->route('question', ['id' => $question->id]);
         }
-        return null;
+        return redirect('\ask_question');
     }
 
     public function showAskQuestionForm() {
         return view('pages.ask_question');
+    }
+
+    public function showQueriedQuestions(Request $request) {
+        $query_string = $request->get('search');
+        $questions = Question::search($query_string)->paginate(NUM_PER_PAGE);
+        $questions->appends(['search' => $query_string]);
+
+        return view('pages.questions', [
+            'questions' => $questions,
+            'type' => 'search'
+        ]);
     }
 
     public function showRecentQuestions() {
@@ -60,21 +72,21 @@ class QuestionController extends Controller
             ->orderByDesc('creation_time')
             ->paginate(NUM_PER_PAGE);
 
-        return view('pages/questions',
+        return view('pages.questions',
             ['questions' => $questions, 'type' => 'recent']);
     }
 
     public function showHotQuestions() { // TODO order by most answers
         $questions = Question::paginate(NUM_PER_PAGE);
 
-        return view('pages/questions',
+        return view('pages.questions',
             ['questions' => $questions, 'type' => 'hot']);
     }
 
     public function showHighlyVotedQuestions() {
         $questions = Question::HighlyVoted()->paginate(NUM_PER_PAGE);
 
-        return view('pages/questions',
+        return view('pages.questions',
             ['questions' => $questions, 'type' => 'highly-voted']);
     }
 
@@ -85,7 +97,7 @@ class QuestionController extends Controller
             ->orderByDesc('creation_time')
             ->paginate(NUM_PER_PAGE);
 
-        return view('pages/questions',
+        return view('pages.questions',
             ['questions' => $questions, 'type' => 'active']);
     }
 

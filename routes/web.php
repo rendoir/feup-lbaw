@@ -11,11 +11,9 @@
 |
 */
 
-use Illuminate\Http\Request;
-
 
 Route::get('/', function () {
-    return redirect('questions/recent/1');
+    return redirect(route('recent_questions'));
 });
 
 // Authentication
@@ -29,16 +27,7 @@ Route::get('404', 'HomeController@error')->name('404');
 
 
 // Search questions with string query
-Route::get('questions', function(Request $request) {
-    $query_string = $request->get('search');
-    $page_num = $request->get('page_num', 1);
-    $questions = App\Question::search($query_string)->get()->forPage($page_num, 10);
-
-    return view('pages/questions', [
-            'questions' => $questions,
-            'type' => 'search'
-    ]);
-});
+Route::get('questions', 'Question\QuestionController@showQueriedQuestions');
 
 Route::get('questions/recent', 'Question\QuestionController@showRecentQuestions')->name('recent_questions'); // Most recent
 Route::get('questions/hot', 'Question\QuestionController@showHotQuestions')->name('hot_questions'); // Most answers
@@ -53,3 +42,6 @@ Route::post('ask_question', 'Question\QuestionController@addQuestion')->name('as
 Route::get('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@getComments');
 Route::post('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@addComment');
 Route::put('questions/{id}/answers/{answer_id}/comments/{comment_id}', 'Question\CommentsController@editComment');
+
+// Categories
+Route::get('tags', 'TagsController@showAllTags');

@@ -6,7 +6,7 @@
 
     <section class="container">
 
-      <form method="post" action="javascript:questions.submit()">
+      <form method="post" action="/ask_question">
          {{ csrf_field() }}
 
         <div class="pt-4 pb-3 pl-3">
@@ -27,7 +27,7 @@
 
         <!-- Text editor -->
         <section class="main-content">
-          <textarea id="editor" name="content">
+          <textarea id="editor" name="messageContent">
           </textarea>
 
           <style>
