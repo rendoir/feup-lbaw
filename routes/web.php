@@ -42,3 +42,6 @@ Route::post('ask_question', 'Question\QuestionController@addQuestion')->name('as
 Route::get('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@getComments');
 Route::post('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@addComment');
 Route::put('questions/{id}/answers/{answer_id}/comments/{comment_id}', 'Question\CommentsController@editComment');
+
+// Categories
+Route::get('tags', 'TagsController@showAllTags');
