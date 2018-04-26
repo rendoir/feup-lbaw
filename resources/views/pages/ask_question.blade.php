@@ -66,7 +66,6 @@
                   border-top: 1px solid #ddd;
               }
 
-
               @media all and (min-width: 800px) {
                   .CodeMirror.cm-s-paper.CodeMirror-wrap  { order: 1; flex: 1 50%; }
                   .editor-preview-side.editor-preview-active-side { order: 2; flex: 1 50%; border-left: 1px solid #ddd; border-top: none; }
@@ -152,7 +151,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Tags</span>
             </div>
-            <input type="text" name="tags" class="form-control" aria-label="Username" aria-describedby="basic-addon1" data-role="tagsinput" hidden>
+            <input type="text" name="tags" class="form-control d-flex align-items-center py-0" data-role="tagsinput" style="display: none !important;">
         </div>
 
         <div class="text-right">
