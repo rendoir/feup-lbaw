@@ -335,9 +335,9 @@ module.exports = {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(11);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 ajax = __webpack_require__(1);
@@ -483,7 +483,7 @@ function displayError(errorMessage) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(5);
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(12);
 
 
 /***/ }),
@@ -502,8 +502,9 @@ module.exports = __webpack_require__(11);
 // require('./navbar.js');
 
 questions = __webpack_require__(6);
-
 __webpack_require__(7);
+
+__webpack_require__(8);
 
 __webpack_require__(2);
 
@@ -532,6 +533,31 @@ module.exports = {
 /* 7 */
 /***/ (function(module, exports) {
 
+decodeHTML = function decodeHTML(html) {
+		var txt = document.createElement('textarea');
+		txt.innerHTML = html;
+		return txt.value;
+};
+
+function applyMarkdown() {
+		window.addEventListener("load", function () {
+				var markdown_content = document.querySelectorAll(".markdown");
+				var instance = new Object();
+				instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+				for (var i = 0; i < markdown_content.length; i++) {
+						markdown_content[i].style.visibility = "visible";
+						var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown_content[i].innerHTML));
+						markdown_content[i].innerHTML = bound();
+				}
+		});
+}
+
+applyMarkdown();
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
 $(window).scroll(function () {
     var $heightScrolled = $(window).scrollTop();
 
@@ -543,7 +569,7 @@ $(window).scroll(function () {
 });
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -579,7 +605,7 @@ function getCommentsHandler(response, message_id) {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -630,7 +656,7 @@ function addCommentHandler(response, message_id) {
 }
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -715,7 +741,7 @@ function getPreviousComment(inputNode, previousNode) {
 }
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
