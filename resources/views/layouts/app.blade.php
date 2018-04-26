@@ -42,7 +42,7 @@
   <div id="navbar" class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-light container">
       <!-- Logo -->
-      <a class="navbar-brand py-0 order-0 mr-0 mr-sm-3"href="{{ url('questions/recent/1') }}">
+      <a class="navbar-brand py-0 order-0 mr-0 mr-sm-3"href="{{ url('questions') }}">
         <img src="{{ asset('img/logo.png') }}" width="40" height="40" class="d-inline-block align-center" alt="">
         <span>SegFault</span>
       </a>
