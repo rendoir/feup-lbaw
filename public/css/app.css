@@ -1145,6 +1145,8 @@ tags > div {
 tags > div > input {
   display: block;
   min-width: 130px;
+  color: gray;
+  background-color: white;
 }
 
 tags > div > input:focus {

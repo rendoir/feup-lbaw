@@ -170,7 +170,12 @@ tags{
     ///////////////////////////////////////////
     // Holds the placeholder & the tags input
     > div{ display:inline-block; min-width:10px; margin:$tagMargin; padding:$tagPad; position:relative; vertical-align:top;
-        > input{ display:block; min-width:130px;
+        > input{
+            display:block;
+            min-width:130px;
+            color: gray;
+            background-color: white;
+
             &:focus{ outline:none; }
 
             &.placeholder{
