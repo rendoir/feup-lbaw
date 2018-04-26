@@ -15,3 +15,5 @@ require('./question.js');
 require('./scroll.js');
 
 require('./comments.js');
+
+require('./tagify.js');
