@@ -62,6 +62,7 @@ class QuestionController extends Controller
 
         return view('pages.questions', [
             'questions' => $questions,
+            'request' => $request,
             'type' => 'search'
         ]);
     }
