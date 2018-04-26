@@ -158,12 +158,13 @@ Tagify.prototype = {
         pattern: "", // pattern to validate input by
         callbacks: {}, // exposed callbacks object to be triggered on certain events
         duplicates: false, // flag - allow tuplicate tags
-        enforceWhitelist: false, // flag - should ONLY use tags allowed in whitelist
+        enforceWhitelist: true, // flag - should ONLY use tags allowed in whitelist
         autocomplete: true, // flag - show native suggeestions list as you type
-        whitelist: [], // is this list has any items, then only allow tags from this list
+        whitelist: ["Python", "OpenGL", "C", "CSS", "GLSL", "PHP", "Computer Graphics", "Vulkan", "DirectX",
+            "Neural Networks", "C++", "Prolog", "SQL", "Javascript", "Java", "Artificial Intelligence", "HTML"],   // is this list has any items, then only allow tags from this list
         blacklist: [], // a list of non-allowed tags
         maxTags: Infinity, // maximum number of tags
-        suggestionsMinChars: 2, // minimum characters to input to see sugegstions list
+        suggestionsMinChars: 1, // minimum characters to input to see sugegstions list
         maxSuggestions: 10
     },
 
