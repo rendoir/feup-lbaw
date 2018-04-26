@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -293,8 +293,8 @@ function getUniqueCommentURL(commentable_id, comment_id) {
 }
 
 /**
- *
- * @param {String} message_id
+ * 
+ * @param {String} message_id 
  * @param {boolean} show - If true, it's supposed to to 'Show Comments' , if false it's supposed to 'Hide Comments'
  */
 function toggleShowMsg(message_id, show) {
@@ -335,9 +335,9 @@ module.exports = {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(9);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 ajax = __webpack_require__(1);
@@ -421,6 +421,255 @@ window.addEventListener('load', addEventListeners);
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(4);
+module.exports = __webpack_require__(10);
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * First, we will load all of this project's Javascript utilities and other
+ * dependencies. Then, we will be ready to develop a robust and powerful
+ * application frontend using useful Laravel and JavaScript libraries.
+ */
+
+// require('./bootstrap');
+
+// require('./navbar.js');
+
+questions = __webpack_require__(5);
+
+__webpack_require__(6);
+
+__webpack_require__(2);
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+ajax = __webpack_require__(1);
+
+function created(data) {
+    var reply = JSON.parse(data.target.response);
+    window.location = "questions/" + reply.id;
+}
+
+function submit() {
+    title = $("input[name ='title']")[0].value;
+    content = $("textarea[name='content']")[0].value;
+    ajax.sendAjaxRequest('POST', 'ask_question', { "title": title, "messageContent": content }, created);
+}
+
+module.exports = {
+    submit: submit
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+$(window).scroll(function () {
+    var $heightScrolled = $(window).scrollTop();
+
+    if ($heightScrolled > 30) {
+        $('body > header.sticky-top').addClass("sticky-shadow");
+    } else if ($heightScrolled <= 0) {
+        $('body > header.sticky-top').removeClass("sticky-shadow");
+    }
+});
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = viewCommentsRequest;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(18);
+
+
+
+
+
+
+function viewCommentsRequest(message_id) {
+
+    // If area already expanded, its only closing, so not worth making ajax request
+    if (Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id).classList.contains('show')) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["f" /* toggleShowMsg */])(message_id, true);
+        return;
+    }
+
+    ajax.sendAjaxRequest('get', Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["d" /* getCommentsURL */])(message_id), {}, function (data) {
+        getCommentsHandler(data.target, message_id);
+    });
+}
+
+// Handler to the get comments request response
+function getCommentsHandler(response, message_id) {
+
+    if (response.status == 200) {
+        var comments = JSON.parse(response.responseText);
+        Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])(comments, message_id);
+    } else Object(__WEBPACK_IMPORTED_MODULE_1__errors_js__["a" /* displayError */])("Failed to retrieve the requested Comments");
+}
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = addCommentRequest;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(18);
+
+
+
+
+
+
+function addCommentRequest(message_id) {
+
+    var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
+
+    var contentNode = document.querySelector(contentSelector);
+    if (contentNode == null || contentNode.value == "") return;
+
+    var requestBody = {
+        "content": contentNode.value,
+        "commentable": message_id
+    };
+
+    ajax.sendAjaxRequest('post', Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["d" /* getCommentsURL */])(message_id), requestBody, function (data) {
+        addCommentHandler(data.target, message_id);
+    });
+}
+
+// Handler to the add comment request response
+function addCommentHandler(response, message_id) {
+    if (response.status == 403) {
+        Object(__WEBPACK_IMPORTED_MODULE_1__errors_js__["a" /* displayError */])("You have no permission to execute this action");
+        return;
+    } else if (response.status != 200) {
+        Object(__WEBPACK_IMPORTED_MODULE_1__errors_js__["a" /* displayError */])("Failed to add a new Comment");
+        return;
+    }
+
+    var newComment = JSON.parse(response.responseText);
+
+    var comments = Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id);
+    if (comments.firstChild.nodeName != "#text") comments.firstChild.firstChild.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment));else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])([newComment], message_id);
+
+    // Cleaning input text
+    var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
+    document.querySelector(contentSelector).value = "";
+}
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = setEditMode;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
+
+
+function setEditMode(comment_id) {
+
+    var contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
+
+    var contentNode = document.querySelector(contentSelector);
+    if (contentNode == null) return;
+
+    var parentNode = contentNode.parentNode;
+    var content = contentNode.innerText;
+    parentNode.removeChild(contentNode);
+
+    var input = document.createElement("input");
+    input.classList.add('form-control');
+    input.value = content;
+
+    parentNode.insertBefore(input, parentNode.firstChild);
+
+    addKeyListeners(input, contentNode, comment_id);
+}
+
+function addKeyListeners(inputNode, oldNode, comment_id) {
+    inputNode.addEventListener('keyup', function (event) {
+
+        switch (event.keyCode) {
+            // ENTER was pressed
+            case 13:
+                requestEdition(inputNode, oldNode, comment_id);
+                break;
+
+            // ESC was pressed 
+            case 27:
+                getPreviousComment(inputNode, oldNode);
+                return;
+        }
+    });
+}
+
+function requestEdition(inputNode, oldNode, comment_id) {
+
+    var commentsGroup = inputNode.parentNode.parentNode.parentNode;
+    var answer_id = commentsGroup.parentNode.parentNode.getAttribute("data-message-id");
+
+    var requestBody = {
+        "content": inputNode.value,
+        "commentable": answer_id,
+        "comment": comment_id
+    };
+
+    ajax.sendAjaxRequest('put', Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["e" /* getUniqueCommentURL */])(answer_id, comment_id), requestBody, function (data) {
+        editCommentHandler(data.target, inputNode, oldNode);
+    });
+}
+
+function editCommentHandler(response, inputNode, oldNode) {
+    if (response.status == 403) {
+        displayError("You have no permission to execute this action");
+        return;
+    } else if (response.status != 200) {
+        displayError("Failed to edit the Comment");
+        return;
+    }
+
+    var edittedComment = JSON.parse(response.responseText);
+    oldNode.innerText = edittedComment.content.version;
+
+    getPreviousComment(inputNode, oldNode);
+}
+
+function getPreviousComment(inputNode, previousNode) {
+
+    var parentNode = inputNode.parentNode;
+    parentNode.removeChild(inputNode);
+
+    parentNode.insertBefore(previousNode, parentNode.firstChild);
+}
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -477,270 +726,6 @@ function displayError(errorMessage) {
 
     document.querySelector('header').appendChild(firstDiv);
 }
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(5);
-module.exports = __webpack_require__(11);
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * First, we will load all of this project's Javascript utilities and other
- * dependencies. Then, we will be ready to develop a robust and powerful
- * application frontend using useful Laravel and JavaScript libraries.
- */
-
-// require('./bootstrap');
-
-// require('./navbar.js');
-
-questions = __webpack_require__(6);
-
-__webpack_require__(7);
-
-__webpack_require__(2);
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-ajax = __webpack_require__(1);
-
-function created(data) {
-    var reply = JSON.parse(data.target.response);
-    window.location = "questions/" + reply.id;
-}
-
-function submit() {
-    title = $("input[name ='title']")[0].value;
-    content = $("textarea[name='content']")[0].value;
-    ajax.sendAjaxRequest('POST', 'ask_question', { "title": title, "messageContent": content }, created);
-}
-
-decodeHTML = function (html) {
-	var txt = document.createElement('textarea');
-	txt.innerHTML = html;
-	return txt.value;
-};
-
-function applyMarkdown() {
-  window.addEventListener("load", function() {
-    let markdown_content = document.querySelectorAll(".markdown");
-		let instance = new Object();
-		instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
-    for(let i = 0; i < markdown_content.length; i++) {
-			markdown_content[i].style.visibility = "visible";
-      let bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown_content[i].innerHTML));
-      markdown_content[i].innerHTML = bound();
-    }
-  });
-}
-
-applyMarkdown();
-
-module.exports = {
-    submit: submit
-};
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-$(window).scroll(function () {
-    var $heightScrolled = $(window).scrollTop();
-
-    if ($heightScrolled > 30) {
-        $('body > header.sticky-top').addClass("sticky-shadow");
-    } else if ($heightScrolled <= 0) {
-        $('body > header.sticky-top').removeClass("sticky-shadow");
-    }
-});
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = viewCommentsRequest;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(3);
-
-
-
-
-
-
-
-function viewCommentsRequest(message_id) {
-
-    // If area already expanded, its only closing, so not worth making ajax request
-    if (Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id).classList.contains('show')) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["f" /* toggleShowMsg */])(message_id, true);
-        return;
-    }
-
-    ajax.sendAjaxRequest('get', Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["d" /* getCommentsURL */])(message_id), {}, function (data) {
-        getCommentsHandler(data.target, message_id);
-    });
-}
-
-// Handler to the get comments request response
-function getCommentsHandler(response, message_id) {
-
-    if (response.status == 200) {
-        var comments = JSON.parse(response.responseText);
-        Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])(comments, message_id);
-    } else Object(__WEBPACK_IMPORTED_MODULE_1__errors_js__["a" /* displayError */])("Failed to retrieve the requested Comments");
-}
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = addCommentRequest;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(3);
-
-
-
-
-
-
-function addCommentRequest(message_id) {
-
-    var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
-
-    var contentNode = document.querySelector(contentSelector);
-    if (contentNode == null || contentNode.value == "") return;
-
-    var requestBody = {
-        "content": contentNode.value,
-        "commentable": message_id
-    };
-
-    ajax.sendAjaxRequest('post', Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["d" /* getCommentsURL */])(message_id), requestBody, function (data) {
-        addCommentHandler(data.target, message_id);
-    });
-}
-
-// Handler to the add comment request response
-function addCommentHandler(response, message_id) {
-    if (response.status == 403) {
-        Object(__WEBPACK_IMPORTED_MODULE_1__errors_js__["a" /* displayError */])("You have no permission to execute this action");
-        return;
-    } else if (response.status != 200) {
-        Object(__WEBPACK_IMPORTED_MODULE_1__errors_js__["a" /* displayError */])("Failed to add a new Comment");
-        return;
-    }
-
-    var newComment = JSON.parse(response.responseText);
-
-    var comments = Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id);
-    if (comments.firstChild.nodeName != "#text") comments.firstChild.firstChild.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment));else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])([newComment], message_id);
-
-    // Cleaning input text
-    var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
-    document.querySelector(contentSelector).value = "";
-}
-
-/***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = setEditMode;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
-
-
-function setEditMode(comment_id) {
-
-    var contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
-
-    var contentNode = document.querySelector(contentSelector);
-    if (contentNode == null) return;
-
-    var parentNode = contentNode.parentNode;
-    var content = contentNode.innerText;
-    parentNode.removeChild(contentNode);
-
-    var input = document.createElement("input");
-    input.classList.add('form-control');
-    input.value = content;
-
-    parentNode.insertBefore(input, parentNode.firstChild);
-
-    addKeyListeners(input, contentNode, comment_id);
-}
-
-function addKeyListeners(inputNode, oldNode, comment_id) {
-    inputNode.addEventListener('keyup', function (event) {
-
-        switch (event.keyCode) {
-            // ENTER was pressed
-            case 13:
-                requestEdition(inputNode, oldNode, comment_id);
-                break;
-
-            // ESC was pressed
-            case 27:
-                getPreviousComment(inputNode, oldNode);
-                return;
-        }
-    });
-}
-
-function requestEdition(inputNode, oldNode, comment_id) {
-
-    var commentsGroup = inputNode.parentNode.parentNode.parentNode;
-    var answer_id = commentsGroup.parentNode.parentNode.getAttribute("data-message-id");
-
-    var requestBody = {
-        "content": inputNode.value,
-        "commentable": answer_id,
-        "comment": comment_id
-    };
-
-    ajax.sendAjaxRequest('put', Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["e" /* getUniqueCommentURL */])(answer_id, comment_id), requestBody, function (data) {
-        editCommentHandler(data.target, inputNode, oldNode);
-    });
-}
-
-function editCommentHandler(response, inputNode, oldNode) {
-    if (response.status == 403) {
-        displayError("You have no permission to execute this action");
-        return;
-    } else if (response.status != 200) {
-        displayError("Failed to edit the Comment");
-        return;
-    }
-
-    var edittedComment = JSON.parse(response.responseText);
-    oldNode.innerText = edittedComment.content.version;
-
-    getPreviousComment(inputNode, oldNode);
-}
-
-function getPreviousComment(inputNode, previousNode) {
-
-    var parentNode = inputNode.parentNode;
-    parentNode.removeChild(inputNode);
-
-    parentNode.insertBefore(previousNode, parentNode.firstChild);
-}
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

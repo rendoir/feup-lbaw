@@ -1,5 +1,4 @@
 import { getCommentsURL } from './commentsUtils.js'
-import { createCommentHTML } from './commentsUtils.js'
 import { getCommentsDropDown } from './commentsUtils.js'
 import { createComments } from './commentsUtils.js'
 import { toggleShowMsg } from './commentsUtils.js'
