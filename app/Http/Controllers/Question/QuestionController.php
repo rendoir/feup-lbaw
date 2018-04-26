@@ -27,6 +27,7 @@ class QuestionController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except([
+            'showQueriedQuestions',
             'showRecentQuestions',
             'showHotQuestions',
             'showHighlyVotedQuestions',
@@ -54,27 +55,38 @@ class QuestionController extends Controller
         return view('pages.ask_question');
     }
 
+    public function showQueriedQuestions(Request $request) {
+        $query_string = $request->get('search');
+        $questions = Question::search($query_string)->paginate(NUM_PER_PAGE);
+        $questions->appends(['search' => $query_string]);
+
+        return view('pages.questions', [
+            'questions' => $questions,
+            'type' => 'search'
+        ]);
+    }
+
     public function showRecentQuestions() {
         $questions = Question::join('messages', 'messages.id', '=', 'questions.id')
             ->join('message_versions', 'message_versions.id', '=', 'messages.latest_version')
             ->orderByDesc('creation_time')
             ->paginate(NUM_PER_PAGE);
 
-        return view('pages/questions',
+        return view('pages.questions',
             ['questions' => $questions, 'type' => 'recent']);
     }
 
     public function showHotQuestions() { // TODO order by most answers
         $questions = Question::paginate(NUM_PER_PAGE);
 
-        return view('pages/questions',
+        return view('pages.questions',
             ['questions' => $questions, 'type' => 'hot']);
     }
 
     public function showHighlyVotedQuestions() {
         $questions = Question::HighlyVoted()->paginate(NUM_PER_PAGE);
 
-        return view('pages/questions',
+        return view('pages.questions',
             ['questions' => $questions, 'type' => 'highly-voted']);
     }
 
@@ -85,7 +97,7 @@ class QuestionController extends Controller
             ->orderByDesc('creation_time')
             ->paginate(NUM_PER_PAGE);
 
-        return view('pages/questions',
+        return view('pages.questions',
             ['questions' => $questions, 'type' => 'active']);
     }
 

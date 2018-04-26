@@ -25,7 +25,7 @@
         <div class="row">
             <div class="tab-content col-md-9" id="nav-tabContent">
                 <div class="tab-pane fade @if(isset($type) && strcmp($type, 'recent') == 0){{"show active"}}@endif" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab"
-                @if (isset($type) && strcmp($type, 'recent') == false) {{ 'href="/questions/recent/1"' }} @endif>
+                @if (isset($type) && strcmp($type, 'recent') == false) {{ 'href="' . route('recent_questions') .'"' }} @endif>
 
                     @if (isset($type) && strcmp($type, 'recent') == 0)
                         @each('partials.question', $questions, 'question')
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="tab-pane fade @if(isset($type) && strcmp($type, 'hot') == 0){{"show active"}}@endif" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab"
-                @if (isset($type) && strcmp($type, 'hot') == false) {{ 'href="/questions/hot/1"' }} @endif>
+                @if (isset($type) && strcmp($type, 'hot') == false) {{ 'href="' . route('hot_questions') .'"' }} @endif>
 
 
                     @if (isset($type) && strcmp($type, 'hot') == 0)
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="tab-pane fade @if(isset($type) && strcmp($type, 'highly-voted') == 0){{"show active"}}@endif" id="nav-voted" role="tabpanel" aria-labelledby="nav-voted-tab"
-                @if (isset($type) && strcmp($type, 'highly-voted') == false) {{ 'href="/questions/highly-voted/1"' }} @endif>
+                @if (isset($type) && strcmp($type, 'highly-voted') == false) {{ 'href="' . route('highly_voted_questions') .'"' }} @endif>
 
 
                     @if (isset($type) && strcmp($type, 'highly-voted') == 0)
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="tab-pane fade @if(isset($type) && strcmp($type, 'active') == 0){{"show active"}}@endif" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab"
-                @if (isset($type) && strcmp($type, 'active') == false) {{ 'href="/questions/active/1"' }} @endif>
+                @if (isset($type) && strcmp($type, 'active') == false) {{ 'href="' . route('active_questions') .'"' }} @endif>
 
 
                     @if (isset($type) && strcmp($type, 'active') == 0)
