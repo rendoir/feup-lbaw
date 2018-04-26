@@ -29,8 +29,11 @@
   <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('css/app.css') }}" />
 
   <!-- Editor -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
   <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+
+  <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css">
 
 </head>
 
@@ -39,7 +42,7 @@
   <div id="navbar" class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-light container">
       <!-- Logo -->
-      <a class="navbar-brand py-0 order-0 mr-0 mr-sm-3"href="{{ url('questions/recent/0') }}">
+      <a class="navbar-brand py-0 order-0 mr-0 mr-sm-3"href="{{ url('questions/recent/1') }}">
         <img src="{{ asset('img/logo.png') }}" width="40" height="40" class="d-inline-block align-center" alt="">
         <span>SegFault</span>
       </a>
@@ -51,7 +54,7 @@
       </button>
       <div class="collapse navbar-collapse order-sm-1 ml-3" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="{{ url('questions/recent/0') }}">Questions
+          <a class="nav-item nav-link active" href="{{ url('questions/recent/1') }}">Questions
             <span class="sr-only">(current)</span>
           </a>
           <a class="nav-item nav-link" href="{{ url('tags') }}">Categories</a>
@@ -124,22 +127,11 @@
               <div class="form-gruoup">
                 <label for="email">E-mail</label>
                 <input id="email" class="form-control" type="text" name="email"  placeholder="email@example.com" value="{{ old('email') }}" required autofocus>
-                @if ($errors->has('email'))
-                  <span class="error">
-                          {{ $errors->first('email') }}
-                      </span>
-                @endif
               </div>
 
               <div class="form-group">
                 <label for="password" >Password</label>
                 <input id="password" class="form-control" type="password" name="password" placeholder="Password" required>
-              @if ($errors->has('password'))
-                <!-- TODO: Notification about login error -->
-                  <span class="error">
-                          {{ $errors->first('password') }}
-                      </span>
-                @endif
               </div>
 
               <div class="form-check">
@@ -174,8 +166,29 @@
 
     </nav>
   </div>
+  @if ($errors->isNotEmpty())
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <div class="container">
+        <div class="d-flex justify-content-between">
+          <div>
+            @if ($errors->has('name'))
+                {{ $errors->first('name') }}
+            @elseif ($errors->has('email'))
+                {{ $errors->first('email') }}
+            @elseif ($errors->has('password'))
+                {{ $errors->first('password') }}
+            @elseif ($errors->has('accept'))
+                {{ $errors->first('accept') }}
+            @endif
+          </div>
+          <button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  @endif
 </header>
-
 
 <main>
   @yield('content')

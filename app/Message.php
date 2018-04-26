@@ -7,6 +7,10 @@ use App\User;
 
 class Message extends Model
 {
+    protected $fillable = ['author'];
+
+    public $timestamps = false;
+
     public function message_version() {
         return $this->belongsTo('App\MessageVersion', 'latest_version');
     }

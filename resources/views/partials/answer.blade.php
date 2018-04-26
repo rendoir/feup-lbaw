@@ -1,4 +1,5 @@
 <?php
+    $id = $answer->id;
     $message = $answer->message;
     $content = $message->message_version;
     $author = $message->get_author();
@@ -7,7 +8,7 @@
     $num_comments = $answer->commentable->get_num_comments();  
 ?>
 <!-- Answer -->
-<div class="card my-3 question-answer-nlogged <? echo ($answer->id == $question->correct_answer? 'border-success' : '')?> ">
+<div class="card my-3 question-answer-nlogged <? echo ($id == $question->correct_answer? 'border-success' : '')?> ">
     <div class="row mx-0">
         <div class="col-1 d-flex flex-column align-items-start">
             <div class="p-2 mt-3 mb-auto">
@@ -35,9 +36,15 @@
                 </div>
                 <div class="text-center m-auto">
                     @if ($num_comments > 0)
-                        <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{$i}}" aria-expanded="false" aria-controls="AnswerComments{{$i}}">
+                        <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{$id}}" 
+                        aria-expanded="false" aria-controls="AnswerComments{{$id}}" data-message-id="{{$id}}">
                             Show Comments
                         </a>
+                    @elseif (Auth::Check())
+                    <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{$id}}" 
+                        aria-expanded="false" aria-controls="AnswerComments{{$id}}" data-message-id="{{$id}}">
+                            Add Comment
+                    </a>
                     @endif
                 </div>
                 <div class="ml-auto">
@@ -46,9 +53,24 @@
             </div>
         </div>
     </div>
-
-    <!-- COMMENTS -->
-    @if ($num_comments > 0)
-        <div class="collapse answer-comments" id="AnswerComments{{$i}}" data-message-id="{{$answer->id}}"></div>
+    @if (Auth::check())
+        <!-- COMMENTS -->
+        <div class="collapse answer-comments" id="AnswerComments{{$id}}" data-message-id="{{$id}}">
+            <div class="comment-creator card-footer comments-card px-0 px-sm-4">
+                <div class="d-flex list-group list-group-flush">
+                    <div class="list-group-item bg-transparent">
+                        <div class="input-group mt-3">
+                            <input class="form-control new-comment-content" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2" type="text" data-message-id="{{$id}}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success new-comment-submit" type="button" data-message-id="{{$id}}">Add Comment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @elseif ($num_comments > 0)
+        <!-- COMMENTS -->
+        <div class="collapse answer-comments" id="AnswerComments{{$id}}" data-message-id="{{$id}}"></div>
     @endif
 </div>
