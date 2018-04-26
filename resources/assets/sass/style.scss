@@ -157,7 +157,6 @@ nav {
 #question-body {
     overflow: hidden;
     transition: max-height 1s;
-    max-height: 70vh;
 }
 
 #ask-sign-in {
@@ -323,7 +322,7 @@ nav {
     .mb-sm-n-100{
         margin-bottom: -100%;
     }
-    
+
     section#question{
         top: 56px;
     }
@@ -435,7 +434,7 @@ nav {
         flex-direction: column !important;
         text-align: center;
     }
-    
+
     /* About page */
     .team-sentences {
         display: none;

@@ -17,29 +17,29 @@
                                     <label for="username">
                                         <small>Username</small>
                                     </label>
-                                    <input name="name" type="text" class="form-control" id="username" placeholder="Your username here">
+                                    <input name="name" type="text" class="form-control" id="username" placeholder="Your username here" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">
                                         <small>Email address</small>
                                     </label>
-                                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Your email here">
+                                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Your email here" required>
                                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">
                                         <small>Password</small>
                                     </label>
-                                    <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+                                    <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="confirm_password">
                                         <small>Confirm Password</small>
                                     </label>
-                                    <input name="password_confirmation" type="password" class="form-control" id="confirm_password" placeholder="Password">
+                                    <input name="password_confirmation" type="password" class="form-control" id="confirm_password" placeholder="Password" required>
                                 </div>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="check">
+                                    <input name="accept" type="checkbox" class="form-check-input" id="check" required>
                                     <label class="form-check-label" for="check">I accept the terms and conditions.</label>
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-2 mx-auto">
