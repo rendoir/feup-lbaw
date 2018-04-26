@@ -12,5 +12,3 @@
 questions = require('./questions.js');
 
 require('./scroll.js');
-
-require('./comments.js');

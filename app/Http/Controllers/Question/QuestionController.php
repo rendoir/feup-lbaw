@@ -36,8 +36,8 @@ class QuestionController extends Controller
                 $question = Question::create(['id' => $commentable->id, 'title' => $request->title]);
                 MessageVersion::create(['content' => $request->messageContent, 'message_id' => $message->id]);
             });
-            return $question;
+            return redirect()->route('question', ['id' => $question->id]);
         }
-        return null;
+        return redirect('\ask_question');
     }
 }
