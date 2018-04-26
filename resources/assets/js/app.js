@@ -8,6 +8,7 @@
 // require('./bootstrap');
 
 // require('./navbar.js');
+require('./bootstrap-tagsinput.js');
 
 questions = require('./questions.js');
 
