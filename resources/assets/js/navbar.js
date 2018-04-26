@@ -1,4 +1,4 @@
-ajax = require('./ajax.js');
+var ajax = require('./ajax.js');
 
 function addEventListeners() {
     let logout = document.querySelector('#logout');
