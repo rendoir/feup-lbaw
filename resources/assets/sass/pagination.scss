@@ -1,3 +1,14 @@
 .pagination {
-  color: var(--medium-aquamarine);
+  color: var(--cadet-blue);
+  padding-left: calc((100% - 494px) /2);
+
+  .page-link {
+    color: inherit;
+  }
+
+  .page-item.active .page-link {
+    color: white;
+    background-color: var(--cadet-blue);
+    border-color: var(--cadet-blue);
+  }
 }

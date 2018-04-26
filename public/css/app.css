@@ -926,6 +926,17 @@ nav {
 }
 
 .pagination {
-  color: var(--medium-aquamarine);
+  color: var(--cadet-blue);
+  padding-left: calc((100% - 494px) /2);
+}
+
+.pagination .page-link {
+  color: inherit;
+}
+
+.pagination .page-item.active .page-link {
+  color: white;
+  background-color: var(--cadet-blue);
+  border-color: var(--cadet-blue);
 }
 
