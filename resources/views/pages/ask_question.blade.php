@@ -152,7 +152,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Tags</span>
             </div>
-            <input type="text" name="tags" class="form-control" placeholder="#nodejs #html5 #css" aria-label="Username" aria-describedby="basic-addon1" pattern="(#\w+ ?\s*)*" data-role="tagsinput">
+            <input type="text" name="tags" class="form-control" aria-label="Username" aria-describedby="basic-addon1" data-role="tagsinput" hidden>
         </div>
 
         <div class="text-right">
