@@ -42,7 +42,7 @@
               }
 
               .editor-toolbar {
-                  border-bottom: 1px solid #bbb;
+                  border-bottom: 1px solid #ddd;
                   border-top-style: none;
                   border-left-style: none;
                   border-right-style: none;
@@ -58,26 +58,27 @@
                   position: initial;
                   display: inline-block;
                   min-height: 320px;
+                  border-top: 1px solid #ddd;
+                  background-color: #eee;
               }
 
               .editor-statusbar {
-                  border-top: 1px solid #bbb;
+                  border-top: 1px solid #ddd;
               }
 
 
               @media all and (min-width: 800px) {
                   .CodeMirror.cm-s-paper.CodeMirror-wrap  { order: 1; flex: 1 50%; }
-                  .editor-preview-side.editor-preview-active-side { order: 2; flex: 1 50%; }
+                  .editor-preview-side.editor-preview-active-side { order: 2; flex: 1 50%; border-left: 1px solid #ddd; border-top: none; }
                   .editor-statusbar  { order: 3; }
               }
           </style>
 
           <script>
-            var simplemde = new SimpleMDE({ element: document.getElementById("editor"), forceSync: true, toolbar: ["bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list", "ordered-list", "link", "image", "table", "horizontal-rule", "preview",
+            var simplemde = new SimpleMDE({ renderingConfig: { codeSyntaxHighlighting: true}, element: document.getElementById("editor"), forceSync: true, toolbar: ["bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list", "ordered-list", "link", "image", "table", "horizontal-rule", "preview",
           		{
           			name: "side-by-side",
-          			action: function customFunction(editor){
-            				console.log("MY CUSTOM");
+          			action: function customPreview(editor){
                     var cm = editor.codemirror;
                   	var wrapper = cm.getWrapperElement();
                     var main = document.querySelector(".main-content");
@@ -134,7 +135,7 @@
                   	// Refresh to fix selection being off (#309)
                   cm.refresh();
           			},
-          			className: "fa fa-columns no-disable no-mobile",
+          			className: "fa fa-columns no-disable",
           			title: "Toggle Side by Side",
           		}]});
             simplemde.value("");

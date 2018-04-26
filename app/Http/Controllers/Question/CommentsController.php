@@ -24,6 +24,10 @@ class CommentsController extends Controller
     |
     */
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getComments(Request $request)
     {
         $commentable = Answer::find($request->message_id)->commentable;
@@ -38,6 +42,10 @@ class CommentsController extends Controller
     }
 
 
+    /**
+     * @param $comment
+     * @return array
+     */
     private function getCommentJSON($comment)
     {
         $message = $comment->message;
@@ -59,6 +67,10 @@ class CommentsController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|void
+     */
     public function addComment(Request $request)
     {
         if (!Auth::check())
@@ -72,7 +84,7 @@ class CommentsController extends Controller
             $comment_id = Message::create(['author' => $user_id])->id;
             
             DB::insert("INSERT INTO comments (id, commentable_id) VALUES (?, ?)", [$comment_id, $request->commentable]);
-            MessageVersion::create(['content' => $request->content, 'message_id' => $comment_id]);
+            MessageVersion::create(['content' => $request->input('content'), 'message_id' => $comment_id]);
         });
 
         return response()->json(
@@ -80,6 +92,11 @@ class CommentsController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function editComment(Request $request)
     {
         $comment = Comment::find($request->comment);
@@ -91,7 +108,7 @@ class CommentsController extends Controller
         $message_version = $message->message_version;
 
         // Updating content
-        $message_version->content = $request->content;
+        $message_version->content = $request->input('content');
         $message_version->save();
 
         return response()->json(

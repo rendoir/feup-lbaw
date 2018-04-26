@@ -10,5 +10,6 @@
 // require('./navbar.js');
 
 questions = require('./questions.js');
+require('./question.js');
 
 require('./scroll.js');
