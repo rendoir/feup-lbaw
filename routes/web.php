@@ -43,8 +43,11 @@ Route::get('questions', function(Request $request) {
     $page_num = $request->get('page_num', 1);
     $questions = App\Question::search($query_string)->get()->forPage($page_num, NUM_PER_PAGE);
 
-    return view('pages/questions',
-        ['questions' => $questions, 'type' => 'search', 'has_next' => (count($questions) == NUM_PER_PAGE)]);
+    return view('pages/questions', [
+            'questions' => $questions,
+            'type' => 'search',
+            'has_next' => (count($questions) == NUM_PER_PAGE)
+    ]);
 });
 
 // The most recent questions

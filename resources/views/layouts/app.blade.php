@@ -62,7 +62,8 @@
 
         <!-- Search Bar -->
         <form class="form-inline" method="GET" action="{{ url('questions') }}">
-          <input class="form-control mx-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
+          <input class="form-control mx-sm-2" type="text" name="search" placeholder="Search" aria-label="Search"
+          @if(isset($request) && $request->has('search')) <?php echo 'value="' . htmlspecialchars($_GET['search']) . '"' ?> @endif>
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
