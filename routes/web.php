@@ -21,21 +21,14 @@ Route::get('/', function () {
 });
 
 // Authentication
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
+Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
-Route::get('about', function() {
-    return view('pages/about');
-});
+Route::get('about', 'HomeController@about')->name('about');
+Route::get('404', 'HomeController@error')->name('404');
 
-Route::get('ask_question', function () {
-    return view('pages/ask_question');
-});
-
-Route::post('ask_question', 'Question\QuestionController@addQuestion')->name('ask_question');
 
 // Search questions with string query
 Route::get('questions', function(Request $request) {
@@ -71,31 +64,14 @@ Route::get('questions/hot/{page_num}', function($page_num) {
         ['questions' => $questions, 'type' => 'hot', 'has_next' => (count($questions) == NUM_PER_PAGE)]);
 });
 
-// Questions with the highest score
-Route::get('questions/highly-voted/{page_num}', function($page_num) {
-    $questions = App\Question::HighlyVoted()->forPage($page_num, NUM_PER_PAGE);
 
-    return view('pages/questions',
-        ['questions' => $questions, 'type' => 'highly-voted', 'has_next' => (count($questions) == NUM_PER_PAGE)]);
-});
+Route::get('questions/highly-voted', 'Question\QuestionController@showHighlyVotedQuestions'); // Highest score
+Route::get('questions/active', 'Question\QuestionController@showActiveQuestions'); // Unanswered
 
-// Unanswered questions
-Route::get('questions/active/{page_num}', function($page_num) {
-    $questions = App\Question::all()
-        ->where('correct_answer','')
-        ->sortByDesc(function($question) {
-            return $question->message->message_version->creation_time;})
-        ->forPage($page_num, NUM_PER_PAGE);
+Route::get('questions/{id}', 'Question\QuestionController@showQuestionPage')->name('question');
+Route::get('ask_question', 'Question\QuestionController@showAskQuestionForm')->name('ask_question_form');
+Route::post('ask_question', 'Question\QuestionController@addQuestion')->name('ask_question');
 
-    return view('pages/questions',
-        ['questions' => $questions, 'type' => 'active', 'has_next' => (count($questions) == NUM_PER_PAGE)]);
-});
-
-Route::get('questions/{id}', function($question_id) {
-    $question = App\Question::find($question_id);
-
-    return view('pages/question', ['question' => $question]);
-})->name('question');
 
 Route::get('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@getComments');
 Route::post('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@addComment');

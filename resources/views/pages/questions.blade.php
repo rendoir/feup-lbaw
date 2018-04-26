@@ -70,24 +70,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <a <?php
-                        $url = Request::url();
-                        $page_number = intval(substr(strrchr($url, "/"), 1)) - 1;
-                        if($page_number > 0)
-                            echo 'href="' . $page_number . '"';
-                        ?>>Previous Page</a>
-                    <span>Page Number: <?php
-                        $url = Request::url();
-                        $page_number = intval(substr(strrchr($url, "/"), 1));
-                        echo $page_number;
-                        ?></span>
-                    <a <?php
-                    $url = Request::url();
-                    $page_number = intval(substr(strrchr($url, "/"), 1)) + 1;
-                    if ($has_next) {
-                        echo 'href="' . $page_number . '"';
-                    }
-                    ?>">Next Page</a>
+                    {{ $questions->links() }}
                 </div>
             </div>
             <aside class="col-md-3 mb-3">
