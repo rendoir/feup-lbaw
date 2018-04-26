@@ -925,3 +925,7 @@ nav {
   --jordy-blue: #75A6DA;
 }
 
+.pagination {
+  color: var(--medium-aquamarine);
+}
+

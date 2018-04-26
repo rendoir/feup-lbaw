@@ -69,7 +69,9 @@
                 @endif
                 </div>
 
-                {{ $questions->links() }}
+                <div class="centered">
+                {{ $questions->links('partials.pagination') }}
+                </div>
             </div>
             <aside class="col-md-3 mb-3">
                 <div class="aside-content  pt-3">
