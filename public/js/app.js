@@ -666,6 +666,18 @@ function addCommentHandler(response, message_id) {
 
 function setEditMode(comment_id) {
 
+    var view = [{
+        title: "Joe"
+    }, {
+        title: "jhon"
+    }, {
+        title: "marie"
+    }, {
+        title: "fuck"
+    }];
+
+    var output = Mustache.render("{{title}} spends {{calc}}", view);
+
     var contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
 
     var contentNode = document.querySelector(contentSelector);
