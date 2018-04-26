@@ -78,8 +78,7 @@
             var simplemde = new SimpleMDE({ renderingConfig: { codeSyntaxHighlighting: true}, element: document.getElementById("editor"), forceSync: true, toolbar: ["bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list", "ordered-list", "link", "image", "table", "horizontal-rule", "preview",
           		{
           			name: "side-by-side",
-          			action: function customFunction(editor){
-            				console.log("MY CUSTOM");
+          			action: function customPreview(editor){
                     var cm = editor.codemirror;
                   	var wrapper = cm.getWrapperElement();
                     var main = document.querySelector(".main-content");
@@ -136,7 +135,7 @@
                   	// Refresh to fix selection being off (#309)
                   cm.refresh();
           			},
-          			className: "fa fa-columns no-disable no-mobile",
+          			className: "fa fa-columns no-disable",
           			title: "Toggle Side by Side",
           		}]});
             simplemde.value("");
