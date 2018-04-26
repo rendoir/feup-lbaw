@@ -47,6 +47,7 @@ Route::get('questions', function(Request $request) {
         ['questions' => $questions, 'type' => 'search', 'has_next' => (count($questions) == NUM_PER_PAGE)]);
 });
 
+// The most recent questions
 Route::get('questions/recent/{page_num}', function($page_num) {
     $questions = App\Question::all()->sortByDesc(function($question) {
         return $question->message->message_version->creation_time;
@@ -56,13 +57,18 @@ Route::get('questions/recent/{page_num}', function($page_num) {
         ['questions' => $questions, 'type' => 'recent', 'has_next' => (count($questions) == NUM_PER_PAGE)]);
 });
 
-Route::get('questions/hot/{page_num}', function($page_num) { // TODO
-    $questions = App\Question::HighlyVoted()->forPage($page_num, NUM_PER_PAGE);
-    // TODO
+// Questions with the most answers
+Route::get('questions/hot/{page_num}', function($page_num) {
+    $questions = App\Question::all()
+        ->sortByDesc(function($question) {
+            return $question->get_num_answers();
+        })
+        ->forPage($page_num, NUM_PER_PAGE);
     return view('pages/questions',
         ['questions' => $questions, 'type' => 'hot', 'has_next' => (count($questions) == NUM_PER_PAGE)]);
 });
 
+// Questions with the highest score
 Route::get('questions/highly-voted/{page_num}', function($page_num) {
     $questions = App\Question::HighlyVoted()->forPage($page_num, NUM_PER_PAGE);
 
@@ -70,6 +76,7 @@ Route::get('questions/highly-voted/{page_num}', function($page_num) {
         ['questions' => $questions, 'type' => 'highly-voted', 'has_next' => (count($questions) == NUM_PER_PAGE)]);
 });
 
+// Unanswered questions
 Route::get('questions/active/{page_num}', function($page_num) {
     $questions = App\Question::all()
         ->where('correct_answer','')
