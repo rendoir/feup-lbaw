@@ -18,6 +18,7 @@ export function setEditMode(comment_id) {
 
     parentNode.insertBefore(input, parentNode.firstChild);
 
+    addKeyListeners(input, contentNode, comment_id);
 }
 
 function addKeyListeners(inputNode, oldNode, comment_id) {
