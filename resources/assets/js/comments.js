@@ -42,6 +42,15 @@ export function editCommentsEventListener() {
     genericClickListener('.edit-comments', setEditMode);
 }
 
+export function addSingleCommentEventListener(message_id) {
+    
+    let comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
+
+    comment.addEventListener('click', function() {
+        setEditMode(message_id);
+    });
+}
+
 function removeCommentsEventListener() {
     //TODO
 }

@@ -162,6 +162,7 @@ module.exports = {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
+/* harmony export (immutable) */ __webpack_exports__["addSingleCommentEventListener"] = addSingleCommentEventListener;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(12);
@@ -236,6 +237,15 @@ function addCommentsEventListener() {
 
 function editCommentsEventListener() {
     genericClickListener('.edit-comments', __WEBPACK_IMPORTED_MODULE_2__editComment_js__["a" /* setEditMode */]);
+}
+
+function addSingleCommentEventListener(message_id) {
+
+    var comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
+
+    comment.addEventListener('click', function () {
+        Object(__WEBPACK_IMPORTED_MODULE_2__editComment_js__["a" /* setEditMode */])(message_id);
+    });
 }
 
 function removeCommentsEventListener() {
@@ -315,6 +325,7 @@ module.exports = __webpack_require__(13);
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(1);
 __webpack_require__(6);
 __webpack_require__(7);
 __webpack_require__(8);
@@ -918,6 +929,14 @@ function addTags() {
     var input = document.querySelector('input[name=tags]');
     if (input == null) return;
     var tagify = new Tagify(input);
+    var tags = document.querySelector('tags.form-control');
+    var placeholder = tags.querySelector('div input');
+    placeholder.addEventListener("focus", function () {
+        console.log("text focus");tags.focus();
+    });
+    tags.addEventListener("focus", function () {
+        console.log("tags focus");
+    });
 }
 
 addTags();
@@ -1607,7 +1626,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /* harmony export (immutable) */ __webpack_exports__["a"] = addCommentRequest;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__comments_js__ = __webpack_require__(2);
 var ajax = __webpack_require__(1);
+
 
 
 
@@ -1645,7 +1666,13 @@ function addCommentHandler(response, message_id) {
     var newComment = JSON.parse(response.responseText);
 
     var comments = Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id);
-    if (comments.firstChild.nodeName != "#text") comments.firstElementChild.firstElementChild.firstElementChild.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment));else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])([newComment], message_id);
+    if (comments.firstChild.nodeName != "#text") {
+        comments.firstElementChild.firstElementChild.firstElementChild.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment));
+        Object(__WEBPACK_IMPORTED_MODULE_2__comments_js__["addSingleCommentEventListener"])(newComment.id);
+    } else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])({ 'comments': [newComment] }, message_id);
+
+    // Adding eventListeners to created comment
+
 
     // Cleaning input text
     var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
