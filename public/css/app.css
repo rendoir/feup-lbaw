@@ -209,6 +209,10 @@ a {
   background-color: var(--jordy-blue);
 }
 
+.bg-light {
+  background-color: #F3F4F6 !important;
+}
+
 body {
   background: #fff;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;

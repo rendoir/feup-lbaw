@@ -189,6 +189,7 @@
       </div>
     </div>
   @endif
+  @yield('question-title')
 </header>
 
 <main>

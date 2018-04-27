@@ -2,24 +2,27 @@
 
 @section('title', 'Main')
 
-@section('content')
-
 <?php
-    $message = $question->message;
-    $content = $message->message_version;
-    $author = $message->get_author();
-    $score = $message->score;
-    $answers = $question->answers();
-    $num_answers = $question->get_num_answers();
+$message = $question->message;
+$content = $message->message_version;
+$author = $message->get_author();
+$score = $message->score;
+$answers = $question->answers();
+$num_answers = $question->get_num_answers();
 ?>
 
-<section id="question" class="sticky-top bg-light" class="sweet-grey">
-    <div class="container py-3">
-        <header class="border-bottom sticky-top">
-            <h3>{{$question->title}}</h3>
-        </header>
-    </div>
-</section>
+@section('question-title')
+    <section id="question" class="sweet-grey">
+        <div class="container py-3">
+            <header class="border-bottom sticky-top">
+                <h3>{{$question->title}}</h3>
+            </header>
+        </div>
+    </section>
+@endsection
+
+@section('content')
+
 <section id="question-body" class="sweet-grey">
     <div class="container">
         <main  class="row" style="overflow-y:auto">
