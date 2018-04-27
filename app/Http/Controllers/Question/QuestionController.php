@@ -93,8 +93,8 @@ class QuestionController extends Controller
 
     public function showActiveQuestions() {
         $questions = Question::whereRaw('correct_answer IS NULL')
-            ->join('messages', 'messages.id', '=', 'questions.id')
-            ->join('message_versions', 'message_versions.id', '=', 'messages.latest_version')
+            ->join('message_versions', 'questions.id', '=', 'message_versions.message_id')
+            ->join('messages', 'messages.id', '=', 'message_versions.message_id')
             ->orderByDesc('creation_time')
             ->paginate(NUM_PER_PAGE);
 
