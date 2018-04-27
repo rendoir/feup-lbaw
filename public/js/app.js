@@ -68,7 +68,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
-module.exports = __webpack_require__(5);
+module.exports = __webpack_require__(6);
 
 
 /***/ }),
@@ -78,9 +78,35 @@ module.exports = __webpack_require__(5);
 __webpack_require__(2);
 __webpack_require__(3);
 __webpack_require__(4);
+__webpack_require__(5);
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+function encodeForAjax(data) {
+    if (data == null) return null;
+    return Object.keys(data).map(function (k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
+    }).join('&');
+}
+
+function sendAjaxRequest(method, url, data, handler) {
+    var request = new XMLHttpRequest();
+
+    request.open(method, url, true);
+    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.addEventListener('load', handler);
+    request.send(encodeForAjax(data));
+}
+
+module.exports = {
+    sendAjaxRequest: sendAjaxRequest
+};
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 decodeHTML = function decodeHTML(html) {
@@ -105,7 +131,7 @@ function applyMarkdown() {
 applyMarkdown();
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 $(window).scroll(function () {
@@ -119,7 +145,7 @@ $(window).scroll(function () {
 });
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 function Tagify(input, settings) {
@@ -677,12 +703,20 @@ function addTags() {
     var input = document.querySelector('input[name=tags]');
     if (input == null) return;
     var tagify = new Tagify(input);
+    var tags = document.querySelector('tags.form-control');
+    var placeholder = tags.querySelector('div input');
+    placeholder.addEventListener("focus", function () {
+        console.log("text focus");tags.focus();
+    });
+    tags.addEventListener("focus", function () {
+        console.log("tags focus");
+    });
 }
 
 addTags();
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
