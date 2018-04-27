@@ -69,7 +69,7 @@ class QuestionController extends Controller
 
     public function showRecentQuestions() {
         $questions = Question::join('message_versions', 'questions.id', '=', 'message_versions.message_id')
-        ->join('messages', 'messages.id', '=', 'message_versions.message_id')
+        ->join('messages', 'messages.latest_version', '=', 'message_versions.id')
         ->orderByDesc('creation_time')
         ->paginate(NUM_PER_PAGE);
 
@@ -94,7 +94,7 @@ class QuestionController extends Controller
     public function showActiveQuestions() {
         $questions = Question::whereRaw('correct_answer IS NULL')
             ->join('message_versions', 'questions.id', '=', 'message_versions.message_id')
-            ->join('messages', 'messages.id', '=', 'message_versions.message_id')
+            ->join('messages', 'messages.latest_version', '=', 'message_versions.id')
             ->orderByDesc('creation_time')
             ->paginate(NUM_PER_PAGE);
 
