@@ -585,6 +585,8 @@ function getCommentsHandler(response, message_id) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = addCommentRequest;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(3);
+var ajax = __webpack_require__(1);
+
 
 
 
@@ -635,6 +637,8 @@ function addCommentHandler(response, message_id) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = setEditMode;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
+var ajax = __webpack_require__(1);
+
 
 
 function setEditMode(comment_id) {

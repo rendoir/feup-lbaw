@@ -1,3 +1,5 @@
+var ajax = require('./ajax.js');
+
 import { getCommentsURL } from './commentsUtils.js'
 import { createCommentHTML } from './commentsUtils.js'
 import { getCommentsDropDown } from './commentsUtils.js'

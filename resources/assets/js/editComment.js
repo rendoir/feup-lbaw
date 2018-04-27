@@ -1,3 +1,5 @@
+var ajax = require('./ajax.js');
+
 import { getUniqueCommentURL } from './commentsUtils.js'
 
 export function setEditMode(comment_id) {

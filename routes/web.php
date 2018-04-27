@@ -34,7 +34,7 @@ Route::get('questions/hot', 'Question\QuestionController@showHotQuestions')->nam
 Route::get('questions/highly-voted', 'Question\QuestionController@showHighlyVotedQuestions')->name('highly_voted_questions'); // Highest score
 Route::get('questions/active', 'Question\QuestionController@showActiveQuestions')->name('active_questions'); // Unanswered
 
-Route::get('questions/{id}', 'Question\QuestionController@showQuestionPage')->name('question');
+Route::get('questions/{id}', 'Question\QuestionController@showQuestionPage')->name('questions');
 Route::get('ask_question', 'Question\QuestionController@showAskQuestionForm')->name('ask_question_form');
 Route::post('ask_question', 'Question\QuestionController@addQuestion')->name('ask_question');
 
