@@ -84,10 +84,9 @@ function createComments(response, message_id) {
     if (response.comments.length == 0) return;
 
     var template = document.querySelector("template.comments").innerHTML;
-    var tester = Mustache.render(template, response);
-
     var placeholder = document.createElement("span");
-    placeholder.innerHTML = tester;
+
+    placeholder.innerHTML = Mustache.render(template, response);;
 
     var final = getCommentsDropDown(message_id);
     if (final.firstChild == null) final.appendChild(placeholder);else final.replaceChild(placeholder, final.firstChild);
@@ -100,178 +99,11 @@ function createComments(response, message_id) {
 
 function createCommentHTML(comment) {
 
-    return comment.is_owner ? createOwnCommentHTML(comment) : createSimpleCommentHTML(comment);
-}
+    var template = document.querySelector("template.comment").innerHTML;
+    var placeholder = document.createElement("span");
 
-function createSimpleCommentHTML(comment) {
-
-    var paragraph = document.createElement("p");
-    paragraph.classList.add("text-center");
-    paragraph.classList.add("mb-0");
-    paragraph.classList.add("w-100");
-    paragraph.appendChild(document.createTextNode(comment.score));
-
-    var votes = document.createElement("div");
-    votes.classList.add("col-1");
-    votes.classList.add("my-auto");
-    votes.classList.add("text-center");
-    votes.appendChild(paragraph);
-
-    var content = document.createElement("p");
-    content.classList.add("px-2");
-    content.appendChild(document.createTextNode(comment.content.version));
-
-    var author = document.createElement("p");
-    author.classList.add("discrete");
-    author.classList.add("text-right");
-    author.appendChild(document.createTextNode(comment.author));
-
-    var contentDiv = document.createElement("div");
-    contentDiv.classList.add("pl-3");
-    contentDiv.classList.add("my-1");
-    contentDiv.classList.add("col-11");
-    contentDiv.appendChild(content);
-    contentDiv.appendChild(author);
-
-    var forthDiv = document.createElement("div");
-    forthDiv.classList.add("mx-sm-0");
-    forthDiv.classList.add("row");
-    forthDiv.appendChild(votes);
-    forthDiv.appendChild(contentDiv);
-
-    var thirdDiv = document.createElement("div");
-    thirdDiv.classList.add("list-group-item");
-    thirdDiv.classList.add("px-0");
-    thirdDiv.classList.add("bg-transparent");
-    thirdDiv.appendChild(forthDiv);
-
-    return thirdDiv;
-}
-
-function createOwnCommentHTML(comment) {
-
-    var content = document.createElement("p");
-    content.classList.add("editable-content");
-    content.appendChild(document.createTextNode(comment.content.version));
-
-    var contentCommendId = document.createAttribute("data-message-id");
-    contentCommendId.value = comment.id;
-    content.setAttributeNode(contentCommendId);
-
-    var score = document.createElement("p");
-    score.classList.add("discrete");
-    score.classList.add("mr-2");
-    score.appendChild(document.createTextNode(comment.score));
-
-    var trophyIcon = document.createElement("pi");
-    trophyIcon.classList.add("fas");
-    trophyIcon.classList.add("fa-trophy");
-
-    var trophy = document.createElement("span");
-    trophy.classList.add("discrete");
-    trophy.classList.add("mx-1");
-    trophy.appendChild(trophyIcon);
-
-    var separator = document.createElement("span");
-    separator.classList.add("discrete");
-    separator.classList.add("mx-2");
-    separator.appendChild(document.createTextNode("│"));
-
-    var editIcon = document.createElement("i");
-    editIcon.classList.add("fas");
-    editIcon.classList.add("fa-pencil-alt");
-
-    var editBtn = document.createElement("button");
-    editBtn.classList.add("btn");
-    editBtn.classList.add("btn-link");
-    editBtn.classList.add("discrete");
-    editBtn.classList.add("mx-1");
-    editBtn.classList.add("p-0");
-    editBtn.classList.add("edit-comments");
-    editBtn.appendChild(editIcon);
-
-    var editDataToggle = document.createAttribute("data-toggle");
-    editDataToggle.value = "tooltip";
-    editBtn.setAttributeNode(editDataToggle);
-
-    var editDataPlacement = document.createAttribute("data-placement");
-    editDataPlacement.value = "top";
-    editBtn.setAttributeNode(editDataPlacement);
-
-    var editTitle = document.createAttribute("title");
-    editTitle.value = " ";
-    editBtn.setAttributeNode(editTitle);
-
-    var editOriginalTitle = document.createAttribute("data-original-title");
-    editOriginalTitle.value = "Edit";
-    editBtn.setAttributeNode(editOriginalTitle);
-
-    var dataCommentId = document.createAttribute("data-message-id");
-    dataCommentId.value = comment.id;
-    editBtn.setAttributeNode(dataCommentId);
-
-    var deleteIcon = document.createElement("i");
-    deleteIcon.classList.add("far");
-    deleteIcon.classList.add("fa-trash-alt");
-
-    var deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("btn");
-    deleteBtn.classList.add("btn-link");
-    deleteBtn.classList.add("discrete");
-    deleteBtn.classList.add("mx-1");
-    deleteBtn.classList.add("p-0");
-    deleteBtn.appendChild(deleteIcon);
-
-    var deleteDataToggle = document.createAttribute("data-toggle");
-    deleteDataToggle.value = "tooltip";
-    deleteBtn.setAttributeNode(deleteDataToggle);
-
-    var deleteDataPlacement = document.createAttribute("data-placement");
-    deleteDataPlacement.value = "top";
-    deleteBtn.setAttributeNode(deleteDataPlacement);
-
-    var deleteTitle = document.createAttribute("title");
-    deleteTitle.value = " ";
-    deleteBtn.setAttributeNode(deleteTitle);
-
-    var deleteOriginalTitle = document.createAttribute("data-original-title");
-    deleteOriginalTitle.value = "Delete";
-    deleteBtn.setAttributeNode(deleteOriginalTitle);
-
-    var authorBtns = document.createElement("small");
-    authorBtns.classList.add("my-auto");
-    authorBtns.appendChild(editBtn);
-    authorBtns.appendChild(deleteBtn);
-
-    var author = document.createElement("p");
-    author.classList.add("discrete");
-    author.classList.add("ml-auto");
-    author.appendChild(document.createTextNode(comment.author));
-
-    var info = document.createElement("div");
-    info.classList.add("d-flex");
-    info.classList.add("flex-wrap");
-    info.classList.add("mt-3");
-    info.appendChild(score);
-    info.appendChild(trophy);
-    info.appendChild(separator);
-    info.appendChild(authorBtns);
-    info.appendChild(author);
-
-    var forthDiv = document.createElement("div");
-    forthDiv.classList.add("mx-sm-0");
-    forthDiv.appendChild(content);
-    forthDiv.appendChild(info);
-
-    var thirdDiv = document.createElement("div");
-    thirdDiv.classList.add("list-group-item");
-    thirdDiv.classList.add("ml-5");
-    thirdDiv.classList.add("pl-5");
-    thirdDiv.classList.add("pr-3");
-    thirdDiv.classList.add("bg-transparent");
-    thirdDiv.appendChild(forthDiv);
-
-    return thirdDiv;
+    placeholder.innerHTML = Mustache.render(template, comment);
+    return placeholder;
 }
 
 function getCommentsDropDown(message_id) {
@@ -612,7 +444,7 @@ function addCommentHandler(response, message_id) {
     var newComment = JSON.parse(response.responseText);
 
     var comments = Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id);
-    if (comments.firstChild.nodeName != "#text") comments.firstChild.firstChild.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment));else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])([newComment], message_id);
+    if (comments.firstChild.nodeName != "#text") comments.firstElementChild.firstElementChild.firstElementChild.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment));else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])([newComment], message_id);
 
     // Cleaning input text
     var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";

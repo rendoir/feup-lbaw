@@ -20,7 +20,7 @@
     {{#is_owner}}
     <div class="list-group-item ml-5 pl-5 pr-3 bg-transparent">
         <div class="mx-sm-0">
-            <p class="editable-content" data-message-id="{{comment.id}}">
+            <p class="editable-content" data-message-id="{{id}}">
                 {{content.version}}
             </p>
             <div class="d-flex flex-wrap mt-3">
@@ -30,7 +30,7 @@
                 </span>
                 <span class="discrete mx-2">│</span>
                 <small class="my-auto">
-                    <button class="btn btn-link discrete mx-1 p-0 edit-comments" data-toggle="tooltip" data-placement="top" title=" " data-original-title="Edit" data-message-id="{{comment.id}}">
+                    <button class="btn btn-link discrete mx-1 p-0 edit-comments" data-toggle="tooltip" data-placement="top" title=" " data-original-title="Edit" data-message-id="{{id}}">
                         <i class="fas fa-pencil-alt"></i>
                     </button>
                     <button class="btn btn-link discrete mx-1 p-0" data-toggle="tooltip" data-placement="top" title=" " data-original-title="Delete">
