@@ -26,7 +26,6 @@ export function setEditMode(comment_id) {
 function addKeyListeners(inputNode, oldNode, comment_id) {
     inputNode.addEventListener('keyup', function(event) {
         
-        
         switch(event.keyCode)
         {
             // ENTER was pressed
