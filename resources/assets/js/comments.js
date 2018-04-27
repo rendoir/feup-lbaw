@@ -6,7 +6,6 @@ function addEventListeners() {
     
     viewCommentsEventListener();
     addCommentsEventListener();
-    removeCommentsEventListener();
 
     // Some event listeners are only added when the respective
     // html elements triggering the events are created
@@ -59,10 +58,6 @@ function addCommentsEventListener() {
     genericEnterListener('.new-comment-content', addCommentRequest);
 }
 
-export function editCommentsEventListener() {
-    genericClickListener('.edit-comments', setEditMode);
-}
-
 export function addSingleCommentEventListener(message_id) {
     
     let comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
@@ -72,8 +67,12 @@ export function addSingleCommentEventListener(message_id) {
     });
 }
 
+export function editCommentsEventListener() {
+    genericClickListener('.edit-comments', setEditMode);
+}
+
 function removeCommentsEventListener() {
-    //TODO
+    genericClickListener('.delete-comments', deleteCommentRequest);
 }
 
 window.addEventListener('load', addEventListeners);

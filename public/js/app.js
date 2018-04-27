@@ -161,8 +161,8 @@ module.exports = {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
 /* harmony export (immutable) */ __webpack_exports__["addSingleCommentEventListener"] = addSingleCommentEventListener;
+/* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(12);
@@ -176,7 +176,6 @@ function addEventListeners() {
 
     viewCommentsEventListener();
     addCommentsEventListener();
-    removeCommentsEventListener();
 
     // Some event listeners are only added when the respective
     // html elements triggering the events are created
@@ -283,10 +282,6 @@ function addCommentsEventListener() {
     genericEnterListener('.new-comment-content', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */]);
 }
 
-function editCommentsEventListener() {
-    genericClickListener('.edit-comments', __WEBPACK_IMPORTED_MODULE_2__editComment_js__["a" /* setEditMode */]);
-}
-
 function addSingleCommentEventListener(message_id) {
 
     var comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
@@ -296,8 +291,12 @@ function addSingleCommentEventListener(message_id) {
     });
 }
 
+function editCommentsEventListener() {
+    genericClickListener('.edit-comments', __WEBPACK_IMPORTED_MODULE_2__editComment_js__["a" /* setEditMode */]);
+}
+
 function removeCommentsEventListener() {
-    //TODO
+    genericClickListener('.delete-comments', deleteCommentRequest);
 }
 
 window.addEventListener('load', addEventListeners);

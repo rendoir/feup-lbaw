@@ -577,6 +577,15 @@ nav {
           box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.07), 0 0 20px 0 rgba(0, 0, 0, 0.07);
 }
 
+.modal-header,
+.modal-footer {
+  background-color: #f3f4f6;
+}
+
+.modal-content {
+  border-color: var(--cadet-blue);
+}
+
 /*************************************************/
 
 /************** Responsive Design ****************/
