@@ -1,19 +1,8 @@
+var ajax = require('./ajax.js');
+
 import { getUniqueCommentURL } from './commentsUtils.js'
 
 export function setEditMode(comment_id) {
-
-    var view = [{
-            title: "Joe"
-        }, {
-            title: "jhon"  
-        }, {
-            title: "marie"  
-        }, {
-            title: "fuck"  
-        }
-    ];
-      
-      var output = Mustache.render("{{title}} spends {{calc}}", view);
 
     let contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
 

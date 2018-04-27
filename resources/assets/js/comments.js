@@ -1,5 +1,3 @@
-ajax = require('./ajax.js');
-
 import { viewCommentsRequest } from './viewComments.js'
 import { addCommentRequest } from './addComment.js'
 import { setEditMode } from './editComment.js'

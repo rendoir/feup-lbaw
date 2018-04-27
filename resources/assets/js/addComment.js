@@ -1,3 +1,5 @@
+var ajax = require('./ajax.js');
+
 import { getCommentsURL } from './commentsUtils.js'
 import { createCommentHTML } from './commentsUtils.js'
 import { getCommentsDropDown } from './commentsUtils.js'
@@ -39,9 +41,12 @@ function addCommentHandler(response, message_id) {
 
     let comments = getCommentsDropDown(message_id);
     if (comments.firstChild.nodeName != "#text")
-        comments.firstChild.firstChild.appendChild(
-            createCommentHTML(newComment)
-        );
+        comments.firstElementChild
+                .firstElementChild
+                .firstElementChild
+                .appendChild(
+                    createCommentHTML(newComment)
+                );
     else
         createComments([newComment], message_id);
 

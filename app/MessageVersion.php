@@ -10,6 +10,7 @@ class MessageVersion extends Model
 
     public $timestamps = false;
 
+
     public static function boot()
     {
         parent::boot();
@@ -18,4 +19,5 @@ class MessageVersion extends Model
             $model->creation_time = $model->freshTimestamp();
         });
     }
+
 }
