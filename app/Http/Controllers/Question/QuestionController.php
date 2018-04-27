@@ -42,8 +42,8 @@ class QuestionController extends Controller
             DB::transaction(function() use (&$request, &$question) {
                 $user = User::find(Auth::id());
                 $message = Message::create(['author' => $user->id]);
-                $commentable = Commentable::create(['id' => $message->id]);
-                $question = Question::create(['id' => $commentable->id, 'title' => $request->title]);
+                Commentable::create(['id' => $message->id]);
+                $question = Question::create(['id' => $message->id, 'title' => $request->title]);
                 MessageVersion::create(['content' => $request->messageContent, 'message_id' => $message->id]);
             });
             return redirect()->route('questions', ['id' => $question->id]);
@@ -68,10 +68,10 @@ class QuestionController extends Controller
     }
 
     public function showRecentQuestions() {
-        $questions = Question::join('messages', 'messages.id', '=', 'questions.id')
-            ->join('message_versions', 'message_versions.id', '=', 'messages.latest_version')
-            ->orderByDesc('creation_time')
-            ->paginate(NUM_PER_PAGE);
+        $questions = Question::join('message_versions', 'questions.id', '=', 'message_versions.message_id')
+        ->join('messages', 'messages.id', '=', 'message_versions.message_id')
+        ->orderByDesc('creation_time')
+        ->paginate(NUM_PER_PAGE);
 
         return view('pages.questions',
             ['questions' => $questions, 'type' => 'recent']);
