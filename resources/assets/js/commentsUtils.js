@@ -1,7 +1,10 @@
+var Mustache = require('mustache');
+
 import { editCommentsEventListener } from './comments.js'
 
-export function createComments(comments, message_id) {
+export function createComments(response, message_id) {
 
+    let comments = response.comments;
     if (comments.length == 0)
         return;
 
@@ -11,8 +14,10 @@ export function createComments(comments, message_id) {
     secondDiv.classList.add("list-group");
     secondDiv.classList.add("list-group-flush");
 
-    for (let i = 0; i < comments.length; ++i)
-        secondDiv.appendChild(createCommentHTML(comments[i]));
+    //for (let i = 0; i < comments.length; ++i)
+    //    secondDiv.appendChild(createCommentHTML(comments[i]));
+    let templte = document.querySelector("template.normalComment");
+    secondDiv.innerHTML = Mustache.render(template, comments);
 
     let firstDiv = document.createElement("div");
     firstDiv.classList.add("card-footer");
@@ -39,6 +44,8 @@ export function createCommentHTML(comment) {
 }
 
 function createSimpleCommentHTML(comment) {
+
+
 
     let paragraph = document.createElement("p");
     paragraph.classList.add("text-center");

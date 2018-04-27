@@ -33,12 +33,13 @@ class CommentsController extends Controller
         $commentable = Answer::find($request->message_id)->commentable;
         $comment_ids = $commentable->get_comments;
 
-        $results = array();
+        $comments = array();
 
         foreach ($comment_ids as $comment)
-            array_push($results, $this->getCommentJSON($comment));
-
-        return response()->json($results);
+            array_push($comments, $this->getCommentJSON($comment));
+        
+        $result = array("comments" => $comments);
+        return response()->json($result);
     }
 
 
