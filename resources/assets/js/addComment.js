@@ -5,6 +5,7 @@ import { createCommentHTML } from './commentsUtils.js'
 import { getCommentsDropDown } from './commentsUtils.js'
 import { createComments } from './commentsUtils.js'
 import { displayError } from './errors.js';
+import { addSingleCommentEventListener } from './comments.js';
 
 export function addCommentRequest(message_id) {
 
@@ -40,15 +41,17 @@ function addCommentHandler(response, message_id) {
     let newComment = JSON.parse(response.responseText);
 
     let comments = getCommentsDropDown(message_id);
-    if (comments.firstChild.nodeName != "#text")
+    if (comments.firstChild.nodeName != "#text") {
         comments.firstElementChild
                 .firstElementChild
                 .firstElementChild
                 .appendChild(
                     createCommentHTML(newComment)
                 );
+        addSingleCommentEventListener(newComment.id);
+    }
     else
-        createComments([newComment], message_id);
+        createComments({'comments': [newComment]}, message_id);
 
     // Cleaning input text
     let contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
