@@ -53,9 +53,6 @@ function addCommentHandler(response, message_id) {
     else
         createComments({'comments': [newComment]}, message_id);
 
-    // Adding eventListeners to created comment
-
-
     // Cleaning input text
     let contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
     document.querySelector(contentSelector).value = "";

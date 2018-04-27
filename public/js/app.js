@@ -227,12 +227,60 @@ function genericClickListener(selector, method) {
     }
 }
 
+function genericEnterListener(selector, method) {
+
+    var comments = document.querySelectorAll(selector);
+    if (comments == null) return;
+
+    var _loop2 = function _loop2(comment) {
+
+        var message_id = comment.getAttribute('data-message-id');
+        if (message_id == null) return {
+                v: void 0
+            };
+
+        comment.addEventListener('keyup', function (event) {
+            if (event.keyCode == 13) {
+                method(message_id);
+            }
+        });
+    };
+
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+        for (var _iterator2 = comments[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var comment = _step2.value;
+
+            var _ret2 = _loop2(comment);
+
+            if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+        }
+    } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+            }
+        } finally {
+            if (_didIteratorError2) {
+                throw _iteratorError2;
+            }
+        }
+    }
+}
+
 function viewCommentsEventListener() {
     genericClickListener('.show-comments', __WEBPACK_IMPORTED_MODULE_0__viewComments_js__["a" /* viewCommentsRequest */]);
 }
 
 function addCommentsEventListener() {
     genericClickListener('.new-comment-submit', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */]);
+    genericEnterListener('.new-comment-content', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */]);
 }
 
 function editCommentsEventListener() {
@@ -1670,9 +1718,6 @@ function addCommentHandler(response, message_id) {
         comments.firstElementChild.firstElementChild.firstElementChild.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment));
         Object(__WEBPACK_IMPORTED_MODULE_2__comments_js__["addSingleCommentEventListener"])(newComment.id);
     } else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])({ 'comments': [newComment] }, message_id);
-
-    // Adding eventListeners to created comment
-
 
     // Cleaning input text
     var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";

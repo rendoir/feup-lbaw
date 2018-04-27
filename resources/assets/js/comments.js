@@ -30,12 +30,33 @@ function genericClickListener(selector, method) {
     }
 }
 
+function genericEnterListener(selector, method) {
+    
+    let comments = document.querySelectorAll(selector);
+    if (comments == null)
+        return;
+    
+    for (let comment of comments) {
+
+        let message_id = comment.getAttribute('data-message-id');
+        if (message_id == null)
+            return;
+
+        comment.addEventListener('keyup', function(event) {
+            if (event.keyCode == 13) {
+                method(message_id);
+            }
+        });
+    }
+}
+
 function viewCommentsEventListener() {
     genericClickListener('.show-comments', viewCommentsRequest);
 }
 
 function addCommentsEventListener() {
     genericClickListener('.new-comment-submit', addCommentRequest);
+    genericEnterListener('.new-comment-content', addCommentRequest);
 }
 
 export function editCommentsEventListener() {
