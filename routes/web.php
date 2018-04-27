@@ -16,6 +16,10 @@ Route::get('/', function () {
     return redirect(route('recent_questions'));
 });
 
+Route::get('login', function () {
+    return redirect(route('recent_questions'));
+});
+
 // Authentication
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
@@ -45,3 +49,4 @@ Route::put('questions/{id}/answers/{answer_id}/comments/{comment_id}', 'Question
 
 // Categories
 Route::get('tags', 'TagsController@showAllTags');
+Route::get('tag_list', 'TagsController@getAllTags');

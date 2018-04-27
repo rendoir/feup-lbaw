@@ -63,7 +63,7 @@ CREATE TABLE answers (
 
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    name TEXT NOT NULL UNIQUE,
     description TEXT,
     num_posts INTEGER DEFAULT 0 NOT NULL
 );

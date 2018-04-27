@@ -419,7 +419,9 @@ $(window).scroll(function () {
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(1);
 
 function Tagify(input, settings) {
     // protection
@@ -459,7 +461,7 @@ Tagify.prototype = {
         duplicates: false, // flag - allow tuplicate tags
         enforceWhitelist: true, // flag - should ONLY use tags allowed in whitelist
         autocomplete: true, // flag - show native suggeestions list as you type
-        whitelist: ["Python", "OpenGL", "C", "CSS", "GLSL", "PHP", "Computer Graphics", "Vulkan", "DirectX", "Neural Networks", "C++", "Prolog", "SQL", "Javascript", "Java", "Artificial Intelligence", "HTML"], // is this list has any items, then only allow tags from this list
+        whitelist: [], // is this list has any items, then only allow tags from this list
         blacklist: [], // a list of non-allowed tags
         maxTags: Infinity, // maximum number of tags
         suggestionsMinChars: 1, // minimum characters to input to see sugegstions list
@@ -617,7 +619,7 @@ Tagify.prototype = {
             }
             if (e.key == "Escape") {
                 e.target.value = '';
-                e.target.blur();
+                //e.target.blur();
             }
             if (e.key == "Enter") {
                 e.preventDefault(); // solves Chrome bug - http://stackoverflow.com/a/20398191/104380
@@ -975,14 +977,14 @@ Tagify.prototype = {
 function addTags() {
     var input = document.querySelector('input[name=tags]');
     if (input == null) return;
-    var tagify = new Tagify(input);
-    var tags = document.querySelector('tags.form-control');
-    var placeholder = tags.querySelector('div input');
-    placeholder.addEventListener("focus", function () {
-        console.log("text focus");tags.focus();
-    });
-    tags.addEventListener("focus", function () {
-        console.log("tags focus");
+    ajax.sendAjaxRequest("get", "tag_list", {}, function (event) {
+        var request = event.target;
+        var response = JSON.parse(request.response);
+        var tag_list = [];
+        for (var i = 0; i < response.length; i++) {
+            tag_list.push(response[i].name);
+        }
+        var tagify = new Tagify(input, { whitelist: tag_list });
     });
 }
 
@@ -1814,7 +1816,7 @@ function getPreviousComment(inputNode, previousNode) {
 /* 13 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleBuildError: Module build failed: \n}\n^\n      Invalid CSS after \"}\": expected \"}\", was \"\"\n      in /home/edgar/Documents/University/lbaw1763/resources/assets/sass/style.scss (line 489, column 2)\n    at runLoaders (/home/edgar/Documents/University/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/edgar/Documents/University/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/edgar/Documents/University/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/edgar/Documents/University/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (/home/edgar/Documents/University/lbaw1763/node_modules/sass-loader/lib/loader.js:55:13)\n    at Object.done [as callback] (/home/edgar/Documents/University/lbaw1763/node_modules/neo-async/async.js:7974:18)\n    at options.error (/home/edgar/Documents/University/lbaw1763/node_modules/node-sass/lib/index.js:294:32)");
 
 /***/ })
 /******/ ]);

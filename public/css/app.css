@@ -577,6 +577,7 @@ nav {
           box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.07), 0 0 20px 0 rgba(0, 0, 0, 0.07);
 }
 
+<<<<<<< HEAD
 .modal-header,
 .modal-footer {
   background-color: #f3f4f6;
@@ -584,6 +585,10 @@ nav {
 
 .modal-content {
   border-color: var(--cadet-blue);
+=======
+.alert:not(:last-child) {
+  margin: 0;
+>>>>>>> 708d5b5d9caa228b2f1479b5ee6c149200fcb590
 }
 
 /*************************************************/
