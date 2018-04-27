@@ -45,3 +45,4 @@ Route::put('questions/{id}/answers/{answer_id}/comments/{comment_id}', 'Question
 
 // Categories
 Route::get('tags', 'TagsController@showAllTags');
+Route::get('tag_list', 'TagsController@getAllTags');

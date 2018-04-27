@@ -362,7 +362,9 @@ $(window).scroll(function () {
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(1);
 
 function Tagify(input, settings) {
     // protection
@@ -402,7 +404,7 @@ Tagify.prototype = {
         duplicates: false, // flag - allow tuplicate tags
         enforceWhitelist: true, // flag - should ONLY use tags allowed in whitelist
         autocomplete: true, // flag - show native suggeestions list as you type
-        whitelist: ["Python", "OpenGL", "C", "CSS", "GLSL", "PHP", "Computer Graphics", "Vulkan", "DirectX", "Neural Networks", "C++", "Prolog", "SQL", "Javascript", "Java", "Artificial Intelligence", "HTML"], // is this list has any items, then only allow tags from this list
+        whitelist: [], // is this list has any items, then only allow tags from this list
         blacklist: [], // a list of non-allowed tags
         maxTags: Infinity, // maximum number of tags
         suggestionsMinChars: 1, // minimum characters to input to see sugegstions list
@@ -560,7 +562,7 @@ Tagify.prototype = {
             }
             if (e.key == "Escape") {
                 e.target.value = '';
-                e.target.blur();
+                //e.target.blur();
             }
             if (e.key == "Enter") {
                 e.preventDefault(); // solves Chrome bug - http://stackoverflow.com/a/20398191/104380
@@ -918,14 +920,14 @@ Tagify.prototype = {
 function addTags() {
     var input = document.querySelector('input[name=tags]');
     if (input == null) return;
-    var tagify = new Tagify(input);
-    var tags = document.querySelector('tags.form-control');
-    var placeholder = tags.querySelector('div input');
-    placeholder.addEventListener("focus", function () {
-        console.log("text focus");tags.focus();
-    });
-    tags.addEventListener("focus", function () {
-        console.log("tags focus");
+    ajax.sendAjaxRequest("get", "tag_list", {}, function (event) {
+        var request = event.target;
+        var response = JSON.parse(request.response);
+        var tag_list = [];
+        for (var i = 0; i < response.length; i++) {
+            tag_list.push(response[i].name);
+        }
+        var tagify = new Tagify(input, { whitelist: tag_list });
     });
 }
 
