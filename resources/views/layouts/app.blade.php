@@ -168,26 +168,18 @@
     </nav>
   </div>
   @if ($errors->isNotEmpty())
-    <div class="alert alert-danger alert-dismissible" role="alert">
-      <div class="container">
-        <div class="d-flex justify-content-between">
-          <div>
-            @if ($errors->has('name'))
-                {{ $errors->first('name') }}
-            @elseif ($errors->has('email'))
-                {{ $errors->first('email') }}
-            @elseif ($errors->has('password'))
-                {{ $errors->first('password') }}
-            @elseif ($errors->has('accept'))
-                {{ $errors->first('accept') }}
-            @endif
+        @foreach ($errors->all() as $error)
+          <div class="alert alert-danger alert-dismissible" role="alert">
+            <div class="container">
+              <div class="d-flex justify-content-between">
+                <div>{{ $error }}</div>
+                <button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
           </div>
-          <button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      </div>
-    </div>
+        @endforeach
   @endif
   @yield('question-title')
 </header>
