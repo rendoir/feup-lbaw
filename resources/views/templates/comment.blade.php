@@ -1,6 +1,7 @@
 @verbatim
-<template class="normalComment">
-    {{#comments}}
+<template class="comment">
+
+    {{^is_owner}}
     <div class="list-group-item px-0 bg-transparent">
         <div class="mx-sm-0 row">
             <div class="col-1 my-auto text-center">
@@ -14,11 +15,9 @@
             </div>
         </div>
     </div>
-    {{/comments}}
-</template>
+    {{/is_owner}}
 
-<template class="selfComment">
-    {{#comments}}
+    {{#is_owner}}
     <div class="list-group-item ml-5 pl-5 pr-3 bg-transparent">
         <div class="mx-sm-0">
             <p class="editable-content" data-message-id="{{comment.id}}">
@@ -42,6 +41,7 @@
             </div>
         </div>
     </div>
-    {{/comments}}
+    {{/is_owner}}
+    
 </template>
 @endverbatim

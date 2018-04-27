@@ -4,35 +4,24 @@ import { editCommentsEventListener } from './comments.js'
 
 export function createComments(response, message_id) {
 
-    let comments = response.comments;
-    if (comments.length == 0)
+    if (response.comments.length == 0)
         return;
 
-    // Direct comments container
-    let secondDiv = document.createElement("div");
-    secondDiv.classList.add("d-flex");
-    secondDiv.classList.add("list-group");
-    secondDiv.classList.add("list-group-flush");
+    let template = document.querySelector("template.comments").innerHTML;
+    let tester = Mustache.render(template, response);
 
-    //for (let i = 0; i < comments.length; ++i)
-    //    secondDiv.appendChild(createCommentHTML(comments[i]));
-    let templte = document.querySelector("template.normalComment");
-    secondDiv.innerHTML = Mustache.render(template, comments);
-
-    let firstDiv = document.createElement("div");
-    firstDiv.classList.add("card-footer");
-    firstDiv.classList.add("comments-card");
-    firstDiv.appendChild(secondDiv);
+    let placeholder = document.createElement("span");
+    placeholder.innerHTML = tester;
 
     let final = getCommentsDropDown(message_id);
     if (final.firstChild == null)
-        final.appendChild(firstDiv);
+        final.appendChild(placeholder);
     else
-        final.replaceChild(firstDiv, final.firstChild);
+        final.replaceChild(placeholder, final.firstChild);
 
     toggleShowMsg(message_id, false);
 
-    // Adding event listener freshly added html
+    // Adding event listener to freshly added html
     editCommentsEventListener();
 }
 

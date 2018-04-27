@@ -151,6 +151,7 @@
     </div>
 </div>
 
+@include('templates.comments')
 @include('templates.comment')
 
 @endsection

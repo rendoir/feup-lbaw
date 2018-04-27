@@ -81,31 +81,20 @@ var Mustache = __webpack_require__(21);
 
 function createComments(response, message_id) {
 
-    var comments = response.comments;
-    if (comments.length == 0) return;
+    if (response.comments.length == 0) return;
 
-    // Direct comments container
-    var secondDiv = document.createElement("div");
-    secondDiv.classList.add("d-flex");
-    secondDiv.classList.add("list-group");
-    secondDiv.classList.add("list-group-flush");
+    var template = document.querySelector("template.comments").innerHTML;
+    var tester = Mustache.render(template, response);
 
-    //for (let i = 0; i < comments.length; ++i)
-    //    secondDiv.appendChild(createCommentHTML(comments[i]));
-    var templte = document.querySelector("template.normalComment");
-    secondDiv.innerHTML = Mustache.render(template, comments);
-
-    var firstDiv = document.createElement("div");
-    firstDiv.classList.add("card-footer");
-    firstDiv.classList.add("comments-card");
-    firstDiv.appendChild(secondDiv);
+    var placeholder = document.createElement("span");
+    placeholder.innerHTML = tester;
 
     var final = getCommentsDropDown(message_id);
-    if (final.firstChild == null) final.appendChild(firstDiv);else final.replaceChild(firstDiv, final.firstChild);
+    if (final.firstChild == null) final.appendChild(placeholder);else final.replaceChild(placeholder, final.firstChild);
 
     toggleShowMsg(message_id, false);
 
-    // Adding event listener freshly added html
+    // Adding event listener to freshly added html
     Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["editCommentsEventListener"])();
 }
 
