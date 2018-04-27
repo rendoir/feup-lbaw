@@ -575,6 +575,10 @@ function addTags() {
   let input = document.querySelector('input[name=tags]');
   if(input == null) return;
   let tagify = new Tagify( input );
+  let tags = document.querySelector('tags.form-control');
+  let placeholder = tags.querySelector('div input');
+  placeholder.addEventListener("focus", function() { console.log("text focus"); tags.focus(); });
+  tags.addEventListener("focus", function() { console.log("tags focus"); });
 }
 
 addTags();

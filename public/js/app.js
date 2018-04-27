@@ -325,6 +325,7 @@ module.exports = __webpack_require__(13);
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(1);
 __webpack_require__(6);
 __webpack_require__(7);
 __webpack_require__(8);
@@ -928,6 +929,14 @@ function addTags() {
     var input = document.querySelector('input[name=tags]');
     if (input == null) return;
     var tagify = new Tagify(input);
+    var tags = document.querySelector('tags.form-control');
+    var placeholder = tags.querySelector('div input');
+    placeholder.addEventListener("focus", function () {
+        console.log("text focus");tags.focus();
+    });
+    tags.addEventListener("focus", function () {
+        console.log("tags focus");
+    });
 }
 
 addTags();
