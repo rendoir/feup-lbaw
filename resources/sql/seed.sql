@@ -46,19 +46,19 @@ CREATE TABLE messages (
 );
 
 CREATE TABLE commentables (
-    id BIGINT PRIMARY KEY REFERENCES messages(id)
+    id BIGINT PRIMARY KEY REFERENCES messages(id) ON DELETE CASCADE
 );
 
 CREATE TABLE questions (
-    id BIGINT PRIMARY KEY REFERENCES commentables(id),
+    id BIGINT PRIMARY KEY REFERENCES commentables(id) ON DELETE CASCADE,
     title TEXT NOT NULL,
     correct_answer BIGINT UNIQUE,
     search tsvector
 );
 
 CREATE TABLE answers (
-    id BIGINT PRIMARY KEY REFERENCES commentables(id),
-    question_id BIGINT NOT NULL REFERENCES questions(id)
+    id BIGINT PRIMARY KEY REFERENCES commentables(id) ON DELETE CASCADE,
+    question_id BIGINT NOT NULL REFERENCES questions(id) ON DELETE CASCADE
 );
 
 CREATE TABLE categories (
@@ -69,7 +69,7 @@ CREATE TABLE categories (
 );
 
 CREATE TABLE questions_categories (
-    question_id BIGINT REFERENCES questions(id),
+    question_id BIGINT REFERENCES questions(id) ON DELETE CASCADE,
     category_id INTEGER REFERENCES categories(id),
     PRIMARY KEY (question_id, category_id)
 );
@@ -142,7 +142,7 @@ ALTER TABLE questions
   ADD FOREIGN KEY (correct_answer) REFERENCES answers(id) ON UPDATE CASCADE;
 
 ALTER TABLE messages
-  ADD FOREIGN KEY (latest_version) REFERENCES message_versions(id) ON UPDATE CASCADE;
+  ADD FOREIGN KEY (latest_version) REFERENCES message_versions(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 DROP INDEX IF EXISTS comment_commentable CASCADE;
