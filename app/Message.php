@@ -32,4 +32,8 @@ class Message extends Model
             $this->hasMany('App\MessageVersion')->count() > 1
         );
     }
+
+    public function get_versions() {
+        return $this->hasMany('App\MessageVersion');
+    }
 }

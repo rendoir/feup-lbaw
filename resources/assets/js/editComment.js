@@ -61,11 +61,11 @@ function requestEdition(inputNode, oldNode, comment_id) {
 
 function editCommentHandler(response, inputNode, oldNode) {
     if (response.status == 403) {
-        displayError("You have no permission to execute this action");
+        displayError("You have no permission to edit this comment");
         return;
     }
     else if (response.status != 200) {
-        displayError("Failed to edit the Comment");
+        displayError("Failed to edit the comment");
         return;
     }
 

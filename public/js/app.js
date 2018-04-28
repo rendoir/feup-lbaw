@@ -166,7 +166,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(13);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 
@@ -380,7 +380,7 @@ function displayError(errorMessage) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(5);
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(14);
 
 
 /***/ }),
@@ -1806,10 +1806,10 @@ function requestEdition(inputNode, oldNode, comment_id) {
 
 function editCommentHandler(response, inputNode, oldNode) {
     if (response.status == 403) {
-        displayError("You have no permission to execute this action");
+        displayError("You have no permission to edit this comment");
         return;
     } else if (response.status != 200) {
-        displayError("Failed to edit the Comment");
+        displayError("Failed to edit the comment");
         return;
     }
 
@@ -1829,53 +1829,62 @@ function getPreviousComment(inputNode, previousNode) {
 
 /***/ }),
 /* 13 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = removeComment;
-function removeComment(comment) {
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils__ = __webpack_require__(0);
+var ajax = __webpack_require__(1);
+
+
+
+function removeComment(commentTrashBtn) {
 
     var deleteBtn = document.querySelector('#delete-comment');
     if (deleteBtn == null) return;
 
-    var comment_id = comment.getAttribute("data-message-id");
+    var comment_id = commentTrashBtn.getAttribute("data-message-id");
     if (comment_id == null) return;
 
+    var comment = commentTrashBtn.parentNode.parentNode.parentNode;
+    var commentsGroup = comment.parentNode.parentNode.parentNode;
+    var answer_id = commentsGroup.parentNode.parentNode.getAttribute("data-message-id");
+
     deleteBtn.addEventListener('click', function () {
-        removeCommentRequest(comment_id, comment);
+        removeCommentRequest(comment_id, answer_id, comment.parentNode);
     });
 }
 
-function removeCommentRequest(comment_id, commentNode) {
-    console.log("Pintou" + comment_id);
+function removeCommentRequest(comment_id, answer_id, commentNode) {
 
     var requestBody = {
-        "comment": comment_id
+        "comment": comment_id,
+        "commentable": answer_id
     };
 
-    /*ajax.sendAjaxRequest(
-        'delete', getCommentsURL(message_id), requestBody, (data) => {
-            addCommentHandler(data.target, comment);
-        }
-    );*/ // TODO
+    ajax.sendAjaxRequest('delete', Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils__["e" /* getUniqueCommentURL */])(answer_id, comment_id), requestBody, function (data) {
+        removeCommentHandler(data.target, commentNode);
+    });
 }
 
 function removeCommentHandler(response, commentNode) {
-    // TODO
+    if (response.status == 403) {
+        displayError("You have no permission to delete this comment");
+        return;
+    } else if (response.status != 200) {
+        displayError("Failed to delete the comment");
+        return;
+    }
+
+    var parentNode = commentNode.parentNode;
+    parentNode.removeChild(commentNode);
 }
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

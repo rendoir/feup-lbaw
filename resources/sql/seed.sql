@@ -75,14 +75,14 @@ CREATE TABLE questions_categories (
 );
 
 CREATE TABLE comments (
-    id BIGINT PRIMARY KEY REFERENCES messages(id),
+    id BIGINT PRIMARY KEY REFERENCES messages(id) ON DELETE CASCADE,
     commentable_id BIGINT NOT NULL REFERENCES commentables(id)
 );
 
 CREATE TABLE message_versions (
     id BIGSERIAL PRIMARY KEY,
     content TEXT NOT NULL,
-    message_id BIGINT NOT NULL REFERENCES messages(id),
+    message_id BIGINT NOT NULL REFERENCES messages(id) ON DELETE CASCADE,
     creation_time TIMESTAMP NOT NULL DEFAULT now(),
     moderator_id BIGINT REFERENCES moderators(id)
 );

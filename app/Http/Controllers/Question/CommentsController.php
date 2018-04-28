@@ -116,4 +116,30 @@ class CommentsController extends Controller
             $this->getCommentJSON($comment)
         );
     }
+
+    public function deleteComment(Request $request)
+    {
+        $comment = Comment::find($request->comment);
+        $message = $comment->message;
+
+        // Checking if the User can delete the comment
+        $this->authorize('delete', $message);
+
+        //DB::transaction( function() use (&$comment, &$message) {
+        DB::transaction( function() use (&$message) {
+            $message->delete();
+        });
+
+            // Getting all the history of the comment
+         //   $versions = $message->get_versions();
+
+           // foreach ($versions as $version) {
+            //    $version->delete();
+           // }
+
+            //$message->delete();
+        //});
+
+        return response()->json(Comment::find($request->comment));
+    }
 }
