@@ -132,7 +132,7 @@ $num_answers = $question->get_num_answers();
     </div>
 </section>
 
-<div class="container">
+<section class="container">
     <div class="row">
         <div class="col-md-9">
             @foreach($answers as $answer)
@@ -152,10 +152,10 @@ $num_answers = $question->get_num_answers();
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <!-- Comments' modal -->
-<div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentModalLabel" style="padding-right: 13px; display: block;">
+<div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -169,8 +169,8 @@ $num_answers = $question->get_num_answers();
                 The process is irreversible.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Delete</button>
-                <button type="button" class="btn btn-primary">Cancel</button>
+                <button id="delete-comment" type="button" class="btn btn-outline-danger" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>

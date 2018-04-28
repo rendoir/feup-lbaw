@@ -36,8 +36,8 @@
                             <button class="btn btn-link discrete mx-1 p-0 edit-comments" data-toggle="tooltip" data-placement="top" title=" " data-original-title="Edit" data-message-id='{{id}}'>
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-                            <button class="btn btn-link discrete mx-1 p-0" data-toggle="tooltip" data-placement="top" title=" " data-original-title="Delete">
-                                <i class="far fa-trash-alt"></i>
+                            <button class="btn btn-link discrete mx-1 p-0" data-toggle="modal" href="#deleteCommentModal" data-message-id='{{id}}'>
+                                <i class="far fa-trash-alt" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i>
                             </button>
                         </small>
                         <p class="discrete ml-auto">{{author}}</p>

@@ -166,7 +166,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(21);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 
 
 
@@ -176,6 +178,7 @@ function addEventListeners() {
 
     viewCommentsEventListener();
     addCommentsEventListener();
+    removeCommentsEventListener();
 
     // Some event listeners are only added when the respective
     // html elements triggering the events are created
@@ -296,7 +299,19 @@ function editCommentsEventListener() {
 }
 
 function removeCommentsEventListener() {
-    genericClickListener('.delete-comments', deleteCommentRequest);
+
+    $('#deleteCommentModal').on('show.bs.modal', function (e) {
+        Object(__WEBPACK_IMPORTED_MODULE_3__removeComment_js__["a" /* removeComment */])($(e.relatedTarget)[0]);
+    });
+
+    /* 
+    let deleteModal = document.querySelector('#deleteCommentModal');
+    if (deleteModal == null)
+        return;
+     deleteModal.addEventListener('show.bs.modal', function(e) {
+        console.log(e.relatedTarget);
+    });
+    */
 }
 
 window.addEventListener('load', addEventListeners);
@@ -1817,6 +1832,50 @@ function getPreviousComment(inputNode, previousNode) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = removeComment;
+function removeComment(comment) {
+
+    var deleteBtn = document.querySelector('#delete-comment');
+    if (deleteBtn == null) return;
+
+    var comment_id = comment.getAttribute("data-message-id");
+    if (comment_id == null) return;
+
+    deleteBtn.addEventListener('click', function () {
+        removeCommentRequest(comment_id, comment);
+    });
+}
+
+function removeCommentRequest(comment_id, commentNode) {
+    console.log("Pintou" + comment_id);
+
+    var requestBody = {
+        "comment": comment_id
+    };
+
+    /*ajax.sendAjaxRequest(
+        'delete', getCommentsURL(message_id), requestBody, (data) => {
+            addCommentHandler(data.target, comment);
+        }
+    );*/ // TODO
+}
+
+function removeCommentHandler(response, commentNode) {
+    // TODO
+}
 
 /***/ })
 /******/ ]);

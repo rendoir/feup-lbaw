@@ -1,11 +1,13 @@
 import { viewCommentsRequest } from './viewComments.js'
 import { addCommentRequest } from './addComment.js'
 import { setEditMode } from './editComment.js'
+import { removeComment } from './removeComment.js';
 
 function addEventListeners() {
     
     viewCommentsEventListener();
     addCommentsEventListener();
+    removeCommentsEventListener()
 
     // Some event listeners are only added when the respective
     // html elements triggering the events are created
@@ -72,7 +74,20 @@ export function editCommentsEventListener() {
 }
 
 function removeCommentsEventListener() {
-    genericClickListener('.delete-comments', deleteCommentRequest);
+
+    $('#deleteCommentModal').on('show.bs.modal', function (e) {
+        removeComment($(e.relatedTarget)[0]);
+    });
+
+    /* 
+    let deleteModal = document.querySelector('#deleteCommentModal');
+    if (deleteModal == null)
+        return;
+
+    deleteModal.addEventListener('show.bs.modal', function(e) {
+        console.log(e.relatedTarget);
+    });
+    */
 }
 
 window.addEventListener('load', addEventListeners);
