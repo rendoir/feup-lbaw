@@ -45,9 +45,7 @@ function addCommentHandler(response, message_id) {
         comments.firstElementChild
                 .firstElementChild
                 .firstElementChild
-                .appendChild(
-                    createCommentHTML(newComment)
-                );
+                .innerHTML += createCommentHTML(newComment);
         addSingleCommentEventListener(newComment.id);
     }
     else

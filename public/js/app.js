@@ -86,7 +86,7 @@ function createComments(response, message_id) {
     var template = document.querySelector("template.comments").innerHTML;
     var placeholder = document.createElement("span");
 
-    placeholder.innerHTML = Mustache.render(template, response);;
+    placeholder.innerHTML = Mustache.render(template, response);
 
     var final = getCommentsDropDown(message_id);
     if (final.firstChild == null) final.appendChild(placeholder);else final.replaceChild(placeholder, final.firstChild);
@@ -100,10 +100,8 @@ function createComments(response, message_id) {
 function createCommentHTML(comment) {
 
     var template = document.querySelector("template.comment").innerHTML;
-    var placeholder = document.createElement("span");
 
-    placeholder.innerHTML = Mustache.render(template, comment);
-    return placeholder;
+    return Mustache.render(template, comment);
 }
 
 function getCommentsDropDown(message_id) {
@@ -1731,7 +1729,7 @@ function addCommentHandler(response, message_id) {
 
     var comments = Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id);
     if (comments.firstChild.nodeName != "#text") {
-        comments.firstElementChild.firstElementChild.firstElementChild.appendChild(Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment));
+        comments.firstElementChild.firstElementChild.firstElementChild.innerHTML += Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment);
         Object(__WEBPACK_IMPORTED_MODULE_2__comments_js__["addSingleCommentEventListener"])(newComment.id);
     } else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])({ 'comments': [newComment] }, message_id);
 

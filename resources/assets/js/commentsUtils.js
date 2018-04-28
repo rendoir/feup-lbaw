@@ -10,7 +10,7 @@ export function createComments(response, message_id) {
     let template = document.querySelector("template.comments").innerHTML;
     let placeholder = document.createElement("span");
 
-    placeholder.innerHTML = Mustache.render(template, response);;
+    placeholder.innerHTML = Mustache.render(template, response);
 
     let final = getCommentsDropDown(message_id);
     if (final.firstChild == null)
@@ -27,10 +27,8 @@ export function createComments(response, message_id) {
 export function createCommentHTML(comment) {
 
     let template = document.querySelector("template.comment").innerHTML;
-    let placeholder = document.createElement("span");
 
-    placeholder.innerHTML =  Mustache.render(template, comment);
-    return placeholder;
+    return Mustache.render(template, comment);
 }
 
 export function getCommentsDropDown(message_id) {
