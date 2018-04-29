@@ -69,7 +69,7 @@ function editCommentHandler(response, inputNode, oldNode) {
         return;
     }
 
-    let edittedComment = JSON.parse(response.responseText);
+    let edittedComment = JSON.parse(response.responseText).comment;
     oldNode.innerText = edittedComment.content.version;
     
     getPreviousComment(inputNode, oldNode);

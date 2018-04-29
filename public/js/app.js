@@ -79,7 +79,7 @@ var Mustache = __webpack_require__(10);
 
 
 
-function createComments(response, message_id) {
+function createComments(response, message_id, isAuthenticated) {
 
     if (response.comments.length == 0) return;
 
@@ -97,7 +97,7 @@ function createComments(response, message_id) {
     Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["editCommentsEventListener"])();
 }
 
-function createCommentHTML(comment) {
+function createCommentHTML(comment, isAuthenticated) {
 
     var template = document.querySelector("template.comment").innerHTML;
 
@@ -1036,8 +1036,8 @@ function viewCommentsRequest(message_id) {
 function getCommentsHandler(response, message_id) {
 
     if (response.status == 200) {
-        var comments = JSON.parse(response.responseText);
-        Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])(comments, message_id);
+        var responseJSON = JSON.parse(response.responseText);
+        Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])(responseJSON, message_id, responseJSON.is_authenticated);
     } else Object(__WEBPACK_IMPORTED_MODULE_1__errors_js__["a" /* displayError */])("Failed to retrieve the requested Comments");
 }
 
@@ -1725,13 +1725,14 @@ function addCommentHandler(response, message_id) {
         return;
     }
 
-    var newComment = JSON.parse(response.responseText);
+    var responseJSON = JSON.parse(response.responseText);
+    var newComment = responseJSON.comment;
 
     var comments = Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id);
     if (comments.firstChild.nodeName != "#text") {
-        comments.firstElementChild.firstElementChild.firstElementChild.innerHTML += Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment);
+        comments.firstElementChild.firstElementChild.firstElementChild.innerHTML += Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment, responseJSON.is_authenticated);
         Object(__WEBPACK_IMPORTED_MODULE_2__comments_js__["addSingleCommentEventListener"])(newComment.id);
-    } else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])({ 'comments': [newComment] }, message_id);
+    } else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])({ 'comments': [newComment] }, message_id, responseJSON.is_authenticated);
 
     // Cleaning input text
     var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
@@ -1811,7 +1812,7 @@ function editCommentHandler(response, inputNode, oldNode) {
         return;
     }
 
-    var edittedComment = JSON.parse(response.responseText);
+    var edittedComment = JSON.parse(response.responseText).comment;
     oldNode.innerText = edittedComment.content.version;
 
     getPreviousComment(inputNode, oldNode);

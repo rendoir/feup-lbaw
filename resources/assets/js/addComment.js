@@ -38,18 +38,19 @@ function addCommentHandler(response, message_id) {
         return;
     }
 
-    let newComment = JSON.parse(response.responseText);
+    let responseJSON = JSON.parse(response.responseText);
+    let newComment = responseJSON.comment;
 
     let comments = getCommentsDropDown(message_id);
     if (comments.firstChild.nodeName != "#text") {
         comments.firstElementChild
                 .firstElementChild
                 .firstElementChild
-                .innerHTML += createCommentHTML(newComment);
+                .innerHTML += createCommentHTML(newComment, responseJSON.is_authenticated);
         addSingleCommentEventListener(newComment.id);
     }
     else
-        createComments({'comments': [newComment]}, message_id);
+        createComments({'comments': [newComment]}, message_id, responseJSON.is_authenticated);
 
     // Cleaning input text
     let contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";

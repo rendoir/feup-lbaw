@@ -38,7 +38,7 @@ class CommentsController extends Controller
         foreach ($comment_ids as $comment)
             array_push($comments, $this->getCommentJSON($comment));
         
-        $result = array("comments" => $comments);
+        $result = array("comments" => $comments, "is_authenticated" => Auth::check());
         return response()->json($result);
     }
 
@@ -75,7 +75,9 @@ class CommentsController extends Controller
     public function addComment(Request $request)
     {
         if (!Auth::check())
-            return;
+            return response()->json(
+                array("is_authenticated" => false)
+            );
 
         // Placeholder for the id of the comment that is going to be created
         $comment_id = null;
@@ -89,7 +91,10 @@ class CommentsController extends Controller
         });
 
         return response()->json(
-            $this->getCommentJSON(Comment::find($comment_id))
+            array(
+                "comment" => $this->getCommentJSON(Comment::find($comment_id)),
+                "is_authenticated" => true
+            )
         );
     }
 
@@ -113,7 +118,10 @@ class CommentsController extends Controller
         $message_version->save();
 
         return response()->json(
-            $this->getCommentJSON($comment)
+            array(
+                "comment" => $this->getCommentJSON($comment),
+                "is_authenticated" => true
+            )
         );
     }
 

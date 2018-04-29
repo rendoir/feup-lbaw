@@ -2,7 +2,7 @@ var Mustache = require('mustache');
 
 import { editCommentsEventListener } from './comments.js'
 
-export function createComments(response, message_id) {
+export function createComments(response, message_id, isAuthenticated) {
 
     if (response.comments.length == 0)
         return;
@@ -24,7 +24,7 @@ export function createComments(response, message_id) {
     editCommentsEventListener();
 }
 
-export function createCommentHTML(comment) {
+export function createCommentHTML(comment, isAuthenticated) {
 
     let template = document.querySelector("template.comment").innerHTML;
 
