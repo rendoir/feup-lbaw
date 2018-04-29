@@ -31,7 +31,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE moderators (
-    id BIGINT PRIMARY KEY REFERENCES users(id)
+    id BIGINT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE messages (
@@ -40,7 +40,7 @@ CREATE TABLE messages (
     num_reports SMALLINT DEFAULT 0 NOT NULL,
     is_banned BOOLEAN DEFAULT FALSE,
     latest_version BIGINT,
-    author BIGINT NOT NULL REFERENCES users(id)
+    author BIGINT NOT NULL REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE commentables (
@@ -68,13 +68,13 @@ CREATE TABLE categories (
 
 CREATE TABLE questions_categories (
     question_id BIGINT REFERENCES questions(id) ON DELETE CASCADE,
-    category_id INTEGER REFERENCES categories(id),
+    category_id INTEGER REFERENCES categories(id) ON DELETE CASCADE,
     PRIMARY KEY (question_id, category_id)
 );
 
 CREATE TABLE comments (
     id BIGINT PRIMARY KEY REFERENCES messages(id) ON DELETE CASCADE,
-    commentable_id BIGINT NOT NULL REFERENCES commentables(id)
+    commentable_id BIGINT NOT NULL REFERENCES commentables(id) ON DELETE CASCADE
 );
 
 CREATE TABLE message_versions (
@@ -82,19 +82,19 @@ CREATE TABLE message_versions (
     content TEXT NOT NULL,
     message_id BIGINT NOT NULL REFERENCES messages(id) ON DELETE CASCADE,
     creation_time TIMESTAMP NOT NULL DEFAULT now(),
-    moderator_id BIGINT REFERENCES moderators(id)
+    moderator_id BIGINT REFERENCES moderators(id) ON DELETE SET NULL
 );
 
 CREATE TABLE votes (
-    message_id BIGINT NOT NULL REFERENCES messages(id),
-    user_id BIGINT NOT NULL REFERENCES users(id),
+    message_id BIGINT NOT NULL REFERENCES messages(id) ON DELETE CASCADE,
+    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE SET NULL,
     positive BOOLEAN NOT NULL,
     PRIMARY KEY (message_id, user_id)
 );
 
 CREATE TABLE reports (
-    message_id BIGINT NOT NULL REFERENCES messages(id),
-    user_id BIGINT NOT NULL REFERENCES users(id),
+    message_id BIGINT NOT NULL REFERENCES messages(id) ON DELETE CASCADE,
+    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE SET NULL,
     PRIMARY KEY (message_id, user_id)
 );
 
@@ -108,29 +108,29 @@ CREATE TABLE notifications (
     id BIGSERIAL PRIMARY KEY,
     "date" TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    user_id BIGINT NOT NULL REFERENCES users(id)
+    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE commentable_notifications (
-    id BIGINT PRIMARY KEY REFERENCES notifications(id),
-    notified_msg BIGINT NOT NULL REFERENCES commentables(id),
-    trigger_msg BIGINT NOT NULL REFERENCES messages(id)
+    id BIGINT PRIMARY KEY REFERENCES notifications(id) ON DELETE CASCADE,
+    notified_msg BIGINT NOT NULL REFERENCES commentables(id) ON DELETE CASCADE,
+    trigger_msg BIGINT NOT NULL REFERENCES messages(id) ON DELETE CASCADE
 );
 
 CREATE TABLE badge_notifications (
-    id BIGINT PRIMARY KEY REFERENCES notifications(id),
-    badge_id BIGINT NOT NULL REFERENCES badges(id)
+    id BIGINT PRIMARY KEY REFERENCES notifications(id) ON DELETE CASCADE,
+    badge_id BIGINT NOT NULL REFERENCES badges(id) ON DELETE CASCADE
 );
 
 CREATE TABLE badge_attainments (
-    user_id BIGINT NOT NULL REFERENCES users(id),
-    badge_id SMALLINT NOT NULL REFERENCES badges(id),
+    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    badge_id SMALLINT NOT NULL REFERENCES badges(id) ON DELETE CASCADE,
     attainment_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     PRIMARY KEY (user_id, badge_id)
 );
 
 ALTER TABLE questions
-  ADD FOREIGN KEY (correct_answer) REFERENCES answers(id) ON UPDATE CASCADE;
+  ADD FOREIGN KEY (correct_answer) REFERENCES answers(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 ALTER TABLE messages
   ADD FOREIGN KEY (latest_version) REFERENCES message_versions(id) ON UPDATE CASCADE ON DELETE RESTRICT;
