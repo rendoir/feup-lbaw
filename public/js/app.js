@@ -79,7 +79,7 @@ var Mustache = __webpack_require__(10);
 
 
 
-function createComments(response, message_id, isAuthenticated) {
+function createComments(response, message_id) {
 
     if (response.comments.length == 0) return;
 
@@ -97,7 +97,7 @@ function createComments(response, message_id, isAuthenticated) {
     Object(__WEBPACK_IMPORTED_MODULE_0__comments_js__["editCommentsEventListener"])();
 }
 
-function createCommentHTML(comment, isAuthenticated) {
+function createCommentHTML(comment) {
 
     var template = document.querySelector("template.comment").innerHTML;
 
@@ -1037,7 +1037,7 @@ function getCommentsHandler(response, message_id) {
 
     if (response.status == 200) {
         var responseJSON = JSON.parse(response.responseText);
-        Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])(responseJSON, message_id, responseJSON.is_authenticated);
+        Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])(responseJSON, message_id);
     } else Object(__WEBPACK_IMPORTED_MODULE_1__errors_js__["a" /* displayError */])("Failed to retrieve the requested Comments");
 }
 
@@ -1730,9 +1730,9 @@ function addCommentHandler(response, message_id) {
 
     var comments = Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id);
     if (comments.firstChild.nodeName != "#text") {
-        comments.firstElementChild.firstElementChild.firstElementChild.innerHTML += Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(newComment, responseJSON.is_authenticated);
+        comments.firstElementChild.firstElementChild.firstElementChild.innerHTML += Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(responseJSON);
         Object(__WEBPACK_IMPORTED_MODULE_2__comments_js__["addSingleCommentEventListener"])(newComment.id);
-    } else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])({ 'comments': [newComment] }, message_id, responseJSON.is_authenticated);
+    } else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])({ 'comments': [newComment], 'is_authenticated': responseJSON.is_authenticated }, message_id);
 
     // Cleaning input text
     var contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";

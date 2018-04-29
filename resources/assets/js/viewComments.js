@@ -26,7 +26,7 @@ function getCommentsHandler(response, message_id) {
     
     if (response.status == 200) {
         let responseJSON = JSON.parse(response.responseText);
-        createComments(responseJSON, message_id, responseJSON.is_authenticated);
+        createComments(responseJSON, message_id);
     }
     else displayError("Failed to retrieve the requested Comments"); 
 }

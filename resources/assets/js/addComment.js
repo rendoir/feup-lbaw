@@ -46,11 +46,11 @@ function addCommentHandler(response, message_id) {
         comments.firstElementChild
                 .firstElementChild
                 .firstElementChild
-                .innerHTML += createCommentHTML(newComment, responseJSON.is_authenticated);
+                .innerHTML += createCommentHTML(responseJSON);
         addSingleCommentEventListener(newComment.id);
     }
     else
-        createComments({'comments': [newComment]}, message_id, responseJSON.is_authenticated);
+        createComments({'comments': [newComment], 'is_authenticated': responseJSON.is_authenticated}, message_id);
 
     // Cleaning input text
     let contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
