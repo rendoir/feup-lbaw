@@ -14,8 +14,6 @@ DROP TABLE IF EXISTS comments CASCADE;
 DROP TABLE IF EXISTS message_versions CASCADE;
 DROP TABLE IF EXISTS votes CASCADE;
 DROP TABLE IF EXISTS badges CASCADE;
-DROP TABLE IF EXISTS moderator_badges CASCADE;
-DROP TABLE IF EXISTS trusted_badges CASCADE;
 DROP TABLE IF EXISTS notifications CASCADE;
 DROP TABLE IF EXISTS commentable_notifications CASCADE;
 DROP TABLE IF EXISTS badge_notifications CASCADE;
@@ -102,15 +100,8 @@ CREATE TABLE reports (
 
 CREATE TABLE badges (
     id SERIAL PRIMARY KEY,
+    name TEXT UNIQUE NOT NULL,
     description TEXT NOT NULL
-);
-
-CREATE TABLE moderator_badges (
-    id INTEGER PRIMARY KEY REFERENCES badges(id)
-);
-
-CREATE TABLE trusted_badges (
-    id INTEGER PRIMARY KEY REFERENCES badges(id)
 );
 
 CREATE TABLE notifications (
@@ -409,7 +400,7 @@ CREATE FUNCTION award_trusted() RETURNS TRIGGER AS $$
     SELECT INTO answer_author author
       FROM messages
       WHERE messages.id = NEW.correct_answer;
-    SELECT INTO trusted_id id FROM trusted_badges;
+    SELECT INTO trusted_id id FROM badges WHERE name = 'trusted';
     IF NOT EXISTS
       (SELECT *
         FROM badge_attainments
@@ -436,8 +427,8 @@ CREATE FUNCTION award_moderator_reputation() RETURNS TRIGGER AS $$
   DECLARE moderator_id SMALLINT;
   DECLARE trusted_id SMALLINT;
   BEGIN
-    SELECT INTO moderator_id id FROM moderator_badges;
-    SELECT INTO trusted_id id FROM trusted_badges;
+    SELECT INTO moderator_id id FROM badges WHERE name = 'moderator';
+    SELECT INTO trusted_id id FROM badges WHERE name = 'trusted';
     IF NOT EXISTS
       (SELECT *
         FROM badge_attainments
@@ -463,8 +454,8 @@ CREATE FUNCTION award_moderator_trusted() RETURNS TRIGGER AS $$
   DECLARE trusted_id SMALLINT;
   DECLARE rep REAL;
   BEGIN
-    SELECT INTO moderator_id id FROM moderator_badges;
-    SELECT INTO trusted_id id FROM trusted_badges;
+    SELECT INTO moderator_id id FROM badges WHERE name = 'moderator';
+    SELECT INTO trusted_id id FROM badges WHERE name = 'trusted';
     SELECT INTO rep reputation FROM users WHERE users.id = NEW.user_id;
     IF NEW.badge_id = trusted_id
     AND NOT EXISTS

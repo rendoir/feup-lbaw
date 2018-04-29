@@ -40,14 +40,16 @@ class User extends Authenticatable
     }
 
     public function getBadge() {
-        $attained_badges = $this->getBadgeAttainments()->first();
+        $trusted = Badge::where('name', 'trusted')->first();
+        $moderator = Badge::where('name', 'moderator')->first();
 
-        if ($attained_badges == null)
-            return null;
+        if($trusted == null || $moderator == null)
+          return null;
 
-        if (ModeratorBadge::find($attained_badges->badge_id) == null)
-            return 'Trusted';
-        else
-            return 'Moderator';
+        if (BadgeAttainment::where([['user_id', $this->id], ['badge_id', $moderator->id]])->first() != null)
+          return 'Moderator';
+        if (BadgeAttainment::where([['user_id', $this->id], ['badge_id', $trusted->id]])->first() != null)
+          return 'Trusted';
+        return null;
     }
 }

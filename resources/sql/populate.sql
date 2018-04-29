@@ -1,7 +1,5 @@
-insert into badges (id, description) values (1, 'trusted');
-insert into badges (id, description) values (2, 'moderator');
-insert into trusted_badges (id) values (1);
-insert into moderator_badges (id) values (2);
+insert into badges (id, name, description) values (1, 'trusted', 'The trusted badge is awarded when you have correctly answered 50 or more questions.');
+insert into badges (id, name, description) values (2, 'moderator', 'The moderator badge is awarded when you have reached 500 reputation points and earned the trusted badge.');
 
 insert into users (username, email, password_hash, biography) values ('amccoy0', 'gvonasek0@chronoengine.com', '02ace4092b6f92206d476c5f36e4157b1936f6773d3d527aa13a8a93f13ba7ab', 'Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.');
 insert into users (username, email, password_hash, biography) values ('aechlin1', 'lzarfat1@cornell.edu', '579ae84b65c53e18971fa19395866bfaa3ee5b47e31beeac097add011c902e9f', 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.');
