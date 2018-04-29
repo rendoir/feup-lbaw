@@ -89,7 +89,9 @@ function createComments(response, message_id) {
     placeholder.innerHTML = Mustache.render(template, response);
 
     var final = getCommentsDropDown(message_id);
-    if (final.firstChild == null) final.appendChild(placeholder);else final.replaceChild(placeholder, final.firstChild);
+    var child = final.firstElementChild;
+
+    if (child.classList.contains('comment-creator')) final.insertBefore(placeholder, child);else final.replaceChild(placeholder, final.firstChild);
 
     toggleShowMsg(message_id, false);
 
@@ -1729,8 +1731,10 @@ function addCommentHandler(response, message_id) {
     var newComment = responseJSON.comment;
 
     var comments = Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["c" /* getCommentsDropDown */])(message_id);
-    if (comments.firstChild.nodeName != "#text") {
-        comments.firstElementChild.firstElementChild.firstElementChild.innerHTML += Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(responseJSON);
+    var commentsSection = comments.firstElementChild;
+
+    if (!commentsSection.classList.contains('comment-creator')) {
+        commentsSection.firstElementChild.firstElementChild.innerHTML += Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["a" /* createCommentHTML */])(responseJSON);
         Object(__WEBPACK_IMPORTED_MODULE_2__comments_js__["addSingleCommentEventListener"])(newComment.id);
     } else Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])({ 'comments': [newComment], 'is_authenticated': responseJSON.is_authenticated }, message_id);
 
@@ -1875,8 +1879,13 @@ function removeCommentHandler(response, commentNode) {
         return;
     }
 
-    var parentNode = commentNode.parentNode;
-    parentNode.removeChild(commentNode);
+    var dadNode = commentNode.parentNode;
+
+    if (commentNode.nextElementSibling == null && commentNode.previousElementSibling == null) {
+
+        var ancestorNode = dadNode.parentNode.parentNode;
+        ancestorNode.parentNode.removeChild(ancestorNode);
+    } else dadNode.removeChild(commentNode);
 }
 
 /***/ }),

@@ -45,6 +45,14 @@ function removeCommentHandler(response, commentNode) {
         return;
     }
 
-    let parentNode = commentNode.parentNode;
-    parentNode.removeChild(commentNode);
+    let dadNode = commentNode.parentNode;
+
+    if ((commentNode.nextElementSibling == null) &&
+        (commentNode.previousElementSibling == null)) {
+
+        let ancestorNode = dadNode.parentNode.parentNode;
+        ancestorNode.parentNode.removeChild(ancestorNode);
+    }
+    else
+        dadNode.removeChild(commentNode);
 }

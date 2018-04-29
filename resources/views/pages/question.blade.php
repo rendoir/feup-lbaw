@@ -177,6 +177,5 @@ $num_answers = $question->get_num_answers();
 </div>
 
 @include('templates.comments')
-@include('templates.comment')
 
 @endsection

@@ -13,8 +13,10 @@ export function createComments(response, message_id) {
     placeholder.innerHTML = Mustache.render(template, response);
 
     let final = getCommentsDropDown(message_id);
-    if (final.firstChild == null)
-        final.appendChild(placeholder);
+    let child = final.firstElementChild;
+
+    if (child.classList.contains('comment-creator'))
+        final.insertBefore(placeholder, child);
     else
         final.replaceChild(placeholder, final.firstChild);
 

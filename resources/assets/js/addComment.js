@@ -42,9 +42,10 @@ function addCommentHandler(response, message_id) {
     let newComment = responseJSON.comment;
 
     let comments = getCommentsDropDown(message_id);
-    if (comments.firstChild.nodeName != "#text") {
-        comments.firstElementChild
-                .firstElementChild
+    let commentsSection = comments.firstElementChild;
+
+    if (!commentsSection.classList.contains('comment-creator')) {
+        commentsSection.firstElementChild
                 .firstElementChild
                 .innerHTML += createCommentHTML(responseJSON);
         addSingleCommentEventListener(newComment.id);
