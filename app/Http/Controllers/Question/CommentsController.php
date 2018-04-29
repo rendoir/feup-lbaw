@@ -111,11 +111,15 @@ class CommentsController extends Controller
         // Checking if the User can edit the comment
         $this->authorize('edit', $message);
 
-        $message_version = $message->message_version;
+        // Placeholder for the version of the comment that is going to be created
+        $version = null;
 
-        // Updating content
-        $message_version->content = $request->input('content');
-        $message_version->save();
+        DB::transaction(function() use (&$version, &$request, &$message) {
+            $version = MessageVersion::create(['content' => $request->input('content'), 'message_id' => $message->id]);
+        });
+
+        $message->latest_version = $version->id;
+        $message->save();
 
         return response()->json(
             array(
