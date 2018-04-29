@@ -16,9 +16,7 @@ Route::get('/', function () {
     return redirect(route('recent_questions'));
 });
 
-Route::get('login', function () {
-    return redirect(route('recent_questions'));
-});
+//Route::get('login', 'Auth\LoginController@loginForm')->name('login_form');
 
 // Authentication
 Route::post('login', 'Auth\LoginController@login')->name('login');
@@ -51,3 +49,5 @@ Route::delete('questions/{id}/answers/{answer_id}/comments/{comment_id}', 'Quest
 // Categories
 Route::get('tags', 'TagsController@showAllTags');
 Route::get('tag_list', 'TagsController@getAllTags');
+
+Auth::routes();
