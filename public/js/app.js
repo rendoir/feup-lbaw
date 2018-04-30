@@ -91,7 +91,11 @@ function createComments(response, message_id) {
     var final = getCommentsDropDown(message_id);
     var child = final.firstElementChild;
 
-    if (child == null || child.classList.contains('comment-creator')) final.insertBefore(placeholder, child);else final.replaceChild(placeholder, final.firstChild);
+    // child can either be a comment or the comment-adder or null,
+    // if there are no comments and the user is not authenticated
+    if (child == null || child.classList.contains('comment-creator')) {
+        final.insertBefore(placeholder, child);
+    } else final.replaceChild(placeholder, child);
 
     toggleShowMsg(message_id, false);
 
@@ -380,7 +384,7 @@ function displayError(errorMessage) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(5);
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(15);
 
 
 /***/ }),
@@ -392,6 +396,7 @@ __webpack_require__(6);
 __webpack_require__(7);
 __webpack_require__(8);
 __webpack_require__(2);
+__webpack_require__(14);
 
 /***/ }),
 /* 6 */
@@ -1890,6 +1895,14 @@ function removeCommentHandler(response, commentNode) {
 
 /***/ }),
 /* 14 */
+/***/ (function(module, exports) {
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

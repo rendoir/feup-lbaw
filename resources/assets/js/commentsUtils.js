@@ -15,10 +15,13 @@ export function createComments(response, message_id) {
     let final = getCommentsDropDown(message_id);
     let child = final.firstElementChild;
 
-    if (child == null || child.classList.contains('comment-creator'))
+    // child can either be a comment or the comment-adder or null,
+    // if there are no comments and the user is not authenticated
+    if (child == null || child.classList.contains('comment-creator')) {
         final.insertBefore(placeholder, child);
+    }
     else
-        final.replaceChild(placeholder, final.firstChild);
+        final.replaceChild(placeholder, child);
 
     toggleShowMsg(message_id, false);
 
