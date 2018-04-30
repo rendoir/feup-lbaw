@@ -70,7 +70,8 @@
               <div class="dropdown-divider"></div>
               <a href="account.html" class="dropdown-item" role="button">Settings</a>
               <div class="dropdown-divider"></div>
-              <form method="GET" action="{{ route('logout') }}">
+              <form method="POST" action="{{ route('logout') }}">
+                {{ csrf_field() }}
                 <button id="login" type="submit" class="dropdown-item">Log out</button>
               </form>
             </div>
