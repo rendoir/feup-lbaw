@@ -158,12 +158,12 @@
       © 2018 SegFault
     </div>
     <div class="col text-center">
-      <a class="" href="index.html">
+      <a class="" href="{{ route('about') }}">
         <img src="{{ asset('img/logo.png') }}" width="50" height="50" class="d-inline-block align-center" alt="Segfault Logo">
       </a>
     </div>
     <div class="col text-right">
-      <a class="nav-link" href="about.html">
+      <a class="nav-item" href="{{ route('about') }}">
         About us
       </a>
     </div>
