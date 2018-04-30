@@ -15,7 +15,7 @@ export function createComments(response, message_id) {
     let final = getCommentsDropDown(message_id);
     let child = final.firstElementChild;
 
-    if (child.classList.contains('comment-creator'))
+    if (child == null || child.classList.contains('comment-creator'))
         final.insertBefore(placeholder, child);
     else
         final.replaceChild(placeholder, final.firstChild);

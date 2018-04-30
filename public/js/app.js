@@ -91,7 +91,7 @@ function createComments(response, message_id) {
     var final = getCommentsDropDown(message_id);
     var child = final.firstElementChild;
 
-    if (child.classList.contains('comment-creator')) final.insertBefore(placeholder, child);else final.replaceChild(placeholder, final.firstChild);
+    if (child == null || child.classList.contains('comment-creator')) final.insertBefore(placeholder, child);else final.replaceChild(placeholder, final.firstChild);
 
     toggleShowMsg(message_id, false);
 
