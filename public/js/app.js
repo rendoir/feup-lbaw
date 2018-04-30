@@ -384,7 +384,7 @@ function displayError(errorMessage) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(5);
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(15);
 
 
 /***/ }),
@@ -396,7 +396,7 @@ __webpack_require__(6);
 __webpack_require__(7);
 __webpack_require__(8);
 __webpack_require__(2);
-__webpack_require__(22);
+__webpack_require__(14);
 
 /***/ }),
 /* 6 */
@@ -1897,22 +1897,15 @@ function removeCommentHandler(response, commentNode) {
 /* 14 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */
-/***/ (function(module, exports) {
-
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
