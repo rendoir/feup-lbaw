@@ -58,7 +58,7 @@ a:focus {
 a:hover {
   text-decoration: none;
   color: #6a7dfe;
-  background: linear-gradient(to right, #21d4fd, #b721ff);
+  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine));
 }
 
 /*---------------------------------------------*/
@@ -253,7 +253,7 @@ iframe {
   transition: all 0.4s;
 
   background: #6a7dfe;
-  background: linear-gradient(to right, #21d4fd, #b721ff);
+  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine));
 }
 
 .focus-input100::after {
@@ -317,12 +317,12 @@ iframe {
 
 .btn-show-pass:hover {
   color: #6a7dfe;
-  background: linear-gradient(to right, #21d4fd, #b721ff);
+  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine));
 }
 
 .btn-show-pass.active {
   color: #6a7dfe;
-  background: linear-gradient(to right, #21d4fd, #b721ff);
+  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine));
 }
 
 
@@ -356,7 +356,7 @@ iframe {
   width: 300%;
   height: 100%;
   background: #a64bf4;
-  background: linear-gradient(to right, #21d4fd, #b721ff, #21d4fd, #b721ff);
+  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine), var(--jordy-blue), var(--medium-aquamarine));
   top: 0;
   left: -100%;
 

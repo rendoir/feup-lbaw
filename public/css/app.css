@@ -1266,8 +1266,8 @@ a:focus {
 a:hover {
   text-decoration: none;
   color: #6a7dfe;
-  background: -webkit-gradient(linear, left top, right top, from(#21d4fd), to(#b721ff));
-  background: linear-gradient(to right, #21d4fd, #b721ff);
+  background: -webkit-gradient(linear, right top, left top, from(var(--jordy-blue)), to(var(--medium-aquamarine)));
+  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine));
 }
 
 /*---------------------------------------------*/
@@ -1513,8 +1513,8 @@ iframe {
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
   background: #6a7dfe;
-  background: -webkit-gradient(linear, left top, right top, from(#21d4fd), to(#b721ff));
-  background: linear-gradient(to right, #21d4fd, #b721ff);
+  background: -webkit-gradient(linear, right top, left top, from(var(--jordy-blue)), to(var(--medium-aquamarine)));
+  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine));
 }
 
 .focus-input100::after {
@@ -1572,14 +1572,14 @@ iframe {
 
 .btn-show-pass:hover {
   color: #6a7dfe;
-  background: -webkit-gradient(linear, left top, right top, from(#21d4fd), to(#b721ff));
-  background: linear-gradient(to right, #21d4fd, #b721ff);
+  background: -webkit-gradient(linear, right top, left top, from(var(--jordy-blue)), to(var(--medium-aquamarine)));
+  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine));
 }
 
 .btn-show-pass.active {
   color: #6a7dfe;
-  background: -webkit-gradient(linear, left top, right top, from(#21d4fd), to(#b721ff));
-  background: linear-gradient(to right, #21d4fd, #b721ff);
+  background: -webkit-gradient(linear, right top, left top, from(var(--jordy-blue)), to(var(--medium-aquamarine)));
+  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine));
 }
 
 /*------------------------------------------------------------------
@@ -1613,8 +1613,8 @@ iframe {
   width: 300%;
   height: 100%;
   background: #a64bf4;
-  background: -webkit-gradient(linear, left top, right top, from(#21d4fd), color-stop(#b721ff), color-stop(#21d4fd), to(#b721ff));
-  background: linear-gradient(to right, #21d4fd, #b721ff, #21d4fd, #b721ff);
+  background: -webkit-gradient(linear, right top, left top, from(var(--jordy-blue)), color-stop(var(--medium-aquamarine)), color-stop(var(--jordy-blue)), to(var(--medium-aquamarine)));
+  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine), var(--jordy-blue), var(--medium-aquamarine));
   top: 0;
   left: -100%;
   -webkit-transition: all 0.4s;
