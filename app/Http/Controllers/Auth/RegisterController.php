@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -21,13 +22,6 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/questions';
 
     /**
      * Create a new controller instance.
@@ -69,4 +63,32 @@ class RegisterController extends Controller
             'password_hash' => bcrypt($data['password']),
         ]);
     }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        if(!session()->has('from')) {
+            session()->put('from', url()->previous());
+        }
+
+        return view('auth.register');
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        return session()->has('from') ?
+            redirect(session()->pull('from')) : redirect()->intended($this->redirectPath());
+    }
+
 }

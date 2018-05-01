@@ -14,7 +14,7 @@
 					</span>
 
                     <div class="wrap-input100 validate-input {{ $errors->has('email') ? ' has-error' : '' }}" data-validate = "Valid email is: a@b.c">
-                        <input id="email" type="email" class="input100" name="email" value="{{ old('email') }}" required autofocus>
+                        <input id="email" type="text" class="input100" name="email" value="{{ old('email') }}" required autofocus>
 
                         @if ($errors->has('email'))
                         <span class="help-block">
@@ -61,8 +61,6 @@
         </div>
     </div>
 
-
-    <div id="dropDownSelect1"></div>
 
     {{--<div class="container">--}}
     {{--<div class="row">--}}

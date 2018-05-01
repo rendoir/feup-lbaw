@@ -16,13 +16,13 @@ Route::get('/', function () {
     return redirect(route('recent_questions'));
 });
 
-//Route::get('login', 'Auth\LoginController@loginForm')->name('login_form');
+
+Route::get('/home', function () {
+    return redirect(route('recent_questions'));
+});
 
 // Authentication
-Route::post('login', 'Auth\LoginController@login')->name('login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
+Auth::routes();
 
 Route::get('about', 'HomeController@about')->name('about');
 Route::get('404', 'HomeController@error')->name('404');
@@ -60,4 +60,3 @@ Route::get('tag_list', 'TagsController@getAllTags');
 Route::get('profile', 'ProfileController@showProfile');
 Route::post('profile/image/edit', 'ProfileController@imageUpload');
 
-Auth::routes();
