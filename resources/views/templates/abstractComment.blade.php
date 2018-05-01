@@ -47,11 +47,15 @@
         <p>
             {{content.version}}
         </p>
-        <div class="d-flex flex-wrap mt-3">
-            <p class="discrete mr-2">{{score}}</p>
-            <a class="discrete mr-1" href="#">UpVote</a>
-            <span class="mx-1 discrete">•</span>
-            <a class="discrete mr-2" href="#">DownVote</a>
+        <div class="d-flex flex-wrap mt-3"> 
+            <!--<p class="discrete mr-3">{{score}}</p>-->
+            <btn class="btn btn-link discrete mr-1 p-0">
+                <i class="fas fa-arrow-up p-0"></i>
+            </btn>
+            <span class="mx-2 discrete">{{score}}</span>
+            <btn class="btn btn-link discrete ml-1 mr-2 p-0">
+                <i class="fas fa-arrow-down p-0"></i>
+            </btn>
             <span class="ml-1 mr-2 discrete">│</span>
             <small class="my-auto">
                 <btn class="btn btn-link discrete p-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Report" data-message-id='{{id}}'>
