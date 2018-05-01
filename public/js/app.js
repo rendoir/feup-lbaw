@@ -1917,6 +1917,7 @@ $(function () {
 function saveChangesEvent() {
   var save_changes = document.querySelector("#save_changes");
   var select_image = document.querySelector("input[name=image]");
+  var profile_img = document.querySelector("img.profile_img");
   if (save_changes == null || select_image == null) return;
   save_changes.addEventListener("click", function () {
     if (select_image.files.length == 0) return;
@@ -1927,7 +1928,8 @@ function saveChangesEvent() {
 
     var request = new XMLHttpRequest();
     request.addEventListener('load', function (event) {
-      console.log("HEUHEUHEUEHUEHEUHEUEHU");
+      var response = this.responseText;
+      profile_img.src = response + '?time=' + performance.now();
     });
 
     request.open('POST', 'profile/image/edit', true);
