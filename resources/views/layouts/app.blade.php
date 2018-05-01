@@ -66,7 +66,7 @@
                             <img class="rounded-circle" src="{{ asset('img/img-profile-icon.jpg') }}" alt="profile picture">
                         </span>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-options">
-              <a href="own-profile.html" class="dropdown-item" role="button">Profile</a>
+              <a href="{{ route('profile') }}" class="dropdown-item" role="button">Profile</a>
               <div class="dropdown-divider"></div>
               <a href="account.html" class="dropdown-item" role="button">Settings</a>
               <div class="dropdown-divider"></div>

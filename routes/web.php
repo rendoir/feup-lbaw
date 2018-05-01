@@ -57,6 +57,6 @@ Route::get('tags', 'TagsController@showAllTags');
 Route::get('tag_list', 'TagsController@getAllTags');
 
 //Profile
-Route::get('profile', 'ProfileController@showProfile');
+Route::get('profile', 'ProfileController@showProfile')->name('profile');
 Route::post('profile/image/edit', 'ProfileController@imageUpload');
 
