@@ -1,7 +1,7 @@
 @extends('layouts.head')
 
 @section('body')
-    <div class="limiter">
+    <div id="login-page" class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
                 <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">

@@ -1229,59 +1229,68 @@ tags > div > span {
   src: url(/fonts/Poppins-SemiBold.ttf?e63b93dfac2600782654e2b87910d681);
 }
 
-/*//////////////////////////////////////////////////////////////////
-[ RESTYLE TAG ]*/
+#login-page {
+  /*//////////////////////////////////////////////////////////////////
+  [ RESTYLE TAG ]*/
+  /*---------------------------------------------*/
+  /*---------------------------------------------*/
+  /*---------------------------------------------*/
+  /*---------------------------------------------*/
+  /*//////////////////////////////////////////////////////////////////
+  [ Utility ]*/
+  /*//////////////////////////////////////////////////////////////////
+  [ login ]*/
+  /*------------------------------------------------------------------
+  [ Form ]*/
+  /*------------------------------------------------------------------
+  [ Input ]*/
+  /*---------------------------------------------*/
+  /*---------------------------------------------*/
+  /*------------------------------------------------------------------
+  [ Button ]*/
+  /*------------------------------------------------------------------
+  [ Responsive ]*/
+  /*------------------------------------------------------------------
+  [ Alert validate ]*/
+}
 
-* {
+#login-page * {
   margin: 0px;
   padding: 0px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
 
-body,
-html {
+#login-page body,
+#login-page html {
   height: 100%;
   font-family: Poppins-Regular, sans-serif;
 }
 
-/*---------------------------------------------*/
-
-a {
+#login-page a {
   font-family: Poppins-Regular;
   font-size: 14px;
   line-height: 1.7;
   color: #666666;
   margin: 0px;
-  transition: all 0.4s;
   -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
+  transition: all 0.4s;
 }
 
-a:focus {
+#login-page a:focus {
   outline: none !important;
 }
 
-a:hover {
-  text-decoration: none;
-  color: #6a7dfe;
-  background: -webkit-gradient(linear, right top, left top, from(var(--jordy-blue)), to(var(--medium-aquamarine)));
-  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine));
-}
-
-/*---------------------------------------------*/
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+#login-page h1,
+#login-page h2,
+#login-page h3,
+#login-page h4,
+#login-page h5,
+#login-page h6 {
   margin: 0px;
 }
 
-p {
+#login-page p {
   font-family: Poppins-Regular;
   font-size: 14px;
   line-height: 1.7;
@@ -1289,135 +1298,61 @@ p {
   margin: 0px;
 }
 
-ul,
-li {
+#login-page ul,
+#login-page li {
   margin: 0px;
   list-style-type: none;
 }
 
-/*---------------------------------------------*/
-
-input {
+#login-page input {
   outline: none;
   border: none;
 }
 
-textarea {
+#login-page textarea {
   outline: none;
   border: none;
 }
 
-textarea:focus,
-input:focus {
+#login-page textarea:focus,
+#login-page input:focus {
   border-color: transparent !important;
 }
 
-input:focus::-webkit-input-placeholder {
-  color: transparent;
-}
-
-input:focus:-moz-placeholder {
-  color: transparent;
-}
-
-input:focus::-moz-placeholder {
-  color: transparent;
-}
-
-input:focus:-ms-input-placeholder {
-  color: transparent;
-}
-
-textarea:focus::-webkit-input-placeholder {
-  color: transparent;
-}
-
-textarea:focus:-moz-placeholder {
-  color: transparent;
-}
-
-textarea:focus::-moz-placeholder {
-  color: transparent;
-}
-
-textarea:focus:-ms-input-placeholder {
-  color: transparent;
-}
-
-input::-webkit-input-placeholder {
-  color: #adadad;
-}
-
-input:-moz-placeholder {
-  color: #adadad;
-}
-
-input::-moz-placeholder {
-  color: #adadad;
-}
-
-input:-ms-input-placeholder {
-  color: #adadad;
-}
-
-textarea::-webkit-input-placeholder {
-  color: #adadad;
-}
-
-textarea:-moz-placeholder {
-  color: #adadad;
-}
-
-textarea::-moz-placeholder {
-  color: #adadad;
-}
-
-textarea:-ms-input-placeholder {
-  color: #adadad;
-}
-
-/*---------------------------------------------*/
-
-button {
+#login-page button {
   outline: none !important;
   border: none;
   background: transparent;
 }
 
-button:hover {
+#login-page button:hover {
   cursor: pointer;
 }
 
-iframe {
+#login-page iframe {
   border: none !important;
 }
 
-/*//////////////////////////////////////////////////////////////////
-[ Utility ]*/
-
-.txt1 {
+#login-page .txt1 {
   font-family: Poppins-Regular;
   font-size: 13px;
   color: #666666;
   line-height: 1.5;
 }
 
-.txt2 {
+#login-page .txt2 {
   font-family: Poppins-Regular;
   font-size: 13px;
   color: #333333;
   line-height: 1.5;
 }
 
-/*//////////////////////////////////////////////////////////////////
-[ login ]*/
-
-.limiter {
+#login-page .limiter {
   width: 100%;
   margin: 0 auto;
 }
 
-.container-login100 {
+#login-page .container-login100 {
   width: 100%;
   min-height: 100vh;
   display: -webkit-box;
@@ -1435,27 +1370,21 @@ iframe {
   background: #f2f2f2;
 }
 
-.wrap-login100 {
+#login-page .wrap-login100 {
   width: 390px;
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
   padding: 77px 55px 33px 55px;
-  box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
 }
 
-/*------------------------------------------------------------------
-[ Form ]*/
-
-.login100-form {
+#login-page .login100-form {
   width: 100%;
 }
 
-.login100-form-title {
+#login-page .login100-form-title {
   display: block;
   font-family: Poppins-Bold;
   font-size: 30px;
@@ -1464,21 +1393,18 @@ iframe {
   text-align: center;
 }
 
-.login100-form-title i {
+#login-page .login100-form-title i {
   font-size: 60px;
 }
 
-/*------------------------------------------------------------------
-[ Input ]*/
-
-.wrap-input100 {
+#login-page .wrap-input100 {
   width: 100%;
   position: relative;
   border-bottom: 2px solid #adadad;
   margin-bottom: 37px;
 }
 
-.input100 {
+#login-page .input100 {
   font-family: Poppins-Regular;
   font-size: 15px;
   color: #555555;
@@ -1490,9 +1416,7 @@ iframe {
   padding: 0 5px;
 }
 
-/*---------------------------------------------*/
-
-.focus-input100 {
+#login-page .focus-input100 {
   position: absolute;
   display: block;
   width: 100%;
@@ -1502,7 +1426,7 @@ iframe {
   pointer-events: none;
 }
 
-.focus-input100::before {
+#login-page .focus-input100::before {
   content: "";
   display: block;
   position: absolute;
@@ -1517,7 +1441,7 @@ iframe {
   background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine));
 }
 
-.focus-input100::after {
+#login-page .focus-input100::after {
   font-family: Poppins-Regular;
   font-size: 15px;
   color: #999999;
@@ -1533,25 +1457,23 @@ iframe {
   transition: all 0.4s;
 }
 
-.input100:focus + .focus-input100::after {
+#login-page .input100:focus + .focus-input100::after {
   top: -15px;
 }
 
-.input100:focus + .focus-input100::before {
+#login-page .input100:focus + .focus-input100::before {
   width: 100%;
 }
 
-.has-val.input100 + .focus-input100::after {
+#login-page .has-val.input100 + .focus-input100::after {
   top: -15px;
 }
 
-.has-val.input100 + .focus-input100::before {
+#login-page .has-val.input100 + .focus-input100::before {
   width: 100%;
 }
 
-/*---------------------------------------------*/
-
-.btn-show-pass {
+#login-page .btn-show-pass {
   font-size: 15px;
   color: #999999;
   display: -webkit-box;
@@ -1570,22 +1492,7 @@ iframe {
   transition: all 0.4s;
 }
 
-.btn-show-pass:hover {
-  color: #6a7dfe;
-  background: -webkit-gradient(linear, right top, left top, from(var(--jordy-blue)), to(var(--medium-aquamarine)));
-  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine));
-}
-
-.btn-show-pass.active {
-  color: #6a7dfe;
-  background: -webkit-gradient(linear, right top, left top, from(var(--jordy-blue)), to(var(--medium-aquamarine)));
-  background: linear-gradient(to left, var(--jordy-blue), var(--medium-aquamarine));
-}
-
-/*------------------------------------------------------------------
-[ Button ]*/
-
-.container-login100-form-btn {
+#login-page .container-login100-form-btn {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1597,7 +1504,7 @@ iframe {
   padding-top: 13px;
 }
 
-.wrap-login100-form-btn {
+#login-page .wrap-login100-form-btn {
   width: 100%;
   display: block;
   position: relative;
@@ -1607,7 +1514,7 @@ iframe {
   margin: 0 auto;
 }
 
-.login100-form-bgbtn {
+#login-page .login100-form-bgbtn {
   position: absolute;
   z-index: -1;
   width: 300%;
@@ -1621,7 +1528,7 @@ iframe {
   transition: all 0.4s;
 }
 
-.login100-form-btn {
+#login-page .login100-form-btn {
   font-family: Poppins-Medium;
   font-size: 15px;
   color: #fff;
@@ -1641,27 +1548,21 @@ iframe {
   height: 50px;
 }
 
-.wrap-login100-form-btn:hover .login100-form-bgbtn {
+#login-page .wrap-login100-form-btn:hover .login100-form-bgbtn {
   left: 0;
 }
 
-/*------------------------------------------------------------------
-[ Responsive ]*/
-
 @media (max-width: 576px) {
-  .wrap-login100 {
+  #login-page .wrap-login100 {
     padding: 77px 15px 33px 15px;
   }
 }
 
-/*------------------------------------------------------------------
-[ Alert validate ]*/
-
-.validate-input {
+#login-page .validate-input {
   position: relative;
 }
 
-.alert-validate::before {
+#login-page .alert-validate::before {
   content: attr(data-validate);
   position: absolute;
   max-width: 70%;
@@ -1671,7 +1572,7 @@ iframe {
   padding: 4px 25px 4px 10px;
   top: 50%;
   -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
+          transform: translateY(-50%);
   right: 0px;
   pointer-events: none;
   font-family: Poppins-Regular;
@@ -1685,7 +1586,7 @@ iframe {
   transition: opacity 0.4s;
 }
 
-.alert-validate::after {
+#login-page .alert-validate::after {
   content: "\F06A";
   font-family: FontAwesome;
   font-size: 16px;
@@ -1695,17 +1596,17 @@ iframe {
   background-color: #fff;
   top: 50%;
   -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
+          transform: translateY(-50%);
   right: 5px;
 }
 
-.alert-validate:hover:before {
+#login-page .alert-validate:hover:before {
   visibility: visible;
   opacity: 1;
 }
 
 @media (max-width: 992px) {
-  .alert-validate::before {
+  #login-page .alert-validate::before {
     visibility: visible;
     opacity: 1;
   }
