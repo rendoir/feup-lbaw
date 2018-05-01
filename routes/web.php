@@ -56,4 +56,8 @@ Route::delete('questions/{id}/comments/{comment_id}', 'Question\CommentsControll
 Route::get('tags', 'TagsController@showAllTags');
 Route::get('tag_list', 'TagsController@getAllTags');
 
+//Profile
+Route::get('profile', 'ProfileController@showProfile');
+Route::post('imageUpload', ['as'=>'imageUpload','uses'=>'ProfileController@imageUpload']);
+
 Auth::routes();
