@@ -17,10 +17,10 @@
       </button>
       <div class="collapse navbar-collapse order-sm-1 ml-3" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="{{ url('questions/recent/1') }}">Questions
+          <a class="nav-item nav-link @if(strcmp(Request::segment(1), 'questions') == 0) <?="active"?>  @endif" href="{{ route('recent_questions') }}">Questions
             <span class="sr-only">(current)</span>
           </a>
-          <a class="nav-item nav-link" href="{{ url('tags') }}">Categories</a>
+          <a class="nav-item nav-link @if(strcmp(Request::segment(1), 'tags') == 0) <?="active"?>  @endif" href="{{ url('tags') }}">Categories</a>
         </div>
 
         <!-- Search Bar -->
