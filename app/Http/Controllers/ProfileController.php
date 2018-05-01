@@ -39,7 +39,7 @@ class ProfileController extends Controller
       ]);
 
       $image = $request->file('image');
-      $input['imagename'] = Auth::id() . '.' . $image->getClientOriginalExtension();
+      $input['imagename'] = Auth::id();
       $destinationPath = public_path('/profiles');
       $image->move($destinationPath, $input['imagename']);
 
