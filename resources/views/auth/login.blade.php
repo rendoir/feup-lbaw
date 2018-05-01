@@ -56,6 +56,12 @@
                             Sign Up
                         </a>
                     </div>
+
+                    <div class="text-center p-t-115">
+                        <a class="btn btn-link txt1" href="{{ route('password.request') }}">
+                        Forgot Your Password?
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
