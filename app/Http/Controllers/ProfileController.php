@@ -25,11 +25,11 @@ class ProfileController extends Controller
       ]);
 
       $image = $request->file('image');
-      $input['imagename'] = Auth::id() . time() . '.' . $image->getClientOriginalExtension();
+      $input['imagename'] = Auth::id() . '_' . time() . '.' . $image->getClientOriginalExtension();
       $destinationPath = public_path('/images');
       $image->move($destinationPath, $input['imagename']);
 
-      return back()->with('success','Image Upload successful');
+      //return back()->with('success','Image Upload successful');
     }
 
 }

@@ -392,7 +392,7 @@ function displayError(errorMessage) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(5);
-module.exports = __webpack_require__(15);
+module.exports = __webpack_require__(16);
 
 
 /***/ }),
@@ -405,6 +405,7 @@ __webpack_require__(7);
 __webpack_require__(8);
 __webpack_require__(2);
 __webpack_require__(14);
+__webpack_require__(15);
 
 /***/ }),
 /* 6 */
@@ -1911,6 +1912,35 @@ $(function () {
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports) {
+
+function saveChangesEvent() {
+  var save_changes = document.querySelector("#save_changes");
+  var select_image = document.querySelector("input[name=image]");
+  if (save_changes == null || select_image == null) return;
+  save_changes.addEventListener("click", function () {
+    if (select_image.files.length == 0) return;
+
+    var image = select_image.files[0];
+
+    var form_data = new FormData();
+
+    var request = new XMLHttpRequest();
+    request.addEventListener('load', function (event) {
+      console.log("HEUHEUHEUEHUEHEUHEUEHU");
+    });
+
+    request.open('POST', 'profile/image/edit', true);
+    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+    form_data.append('image', image);
+    request.send(form_data);
+  });
+}
+
+saveChangesEvent();
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

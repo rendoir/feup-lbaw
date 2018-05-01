@@ -58,6 +58,6 @@ Route::get('tag_list', 'TagsController@getAllTags');
 
 //Profile
 Route::get('profile', 'ProfileController@showProfile');
-Route::post('imageUpload', ['as'=>'imageUpload','uses'=>'ProfileController@imageUpload']);
+Route::post('profile/image/edit', 'ProfileController@imageUpload');
 
 Auth::routes();

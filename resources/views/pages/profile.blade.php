@@ -4,10 +4,8 @@
 
 @section('content')
 
-<form method="POST" action="{{ route('imageUpload') }}" enctype="multipart/form-data">
-   {{ csrf_field() }}
-    <input type="file" name="image">
-    <button type="submit" class="btn btn-success">Upload Image</button>
-</form>
+{{ csrf_field() }}
+<label class="btn">Select Image<input type="file" name="image" hidden></label>
+<button id="save_changes" class="btn btn-success">Save Changes</button>
 
 @endsection
