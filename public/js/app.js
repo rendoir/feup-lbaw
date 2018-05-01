@@ -1932,7 +1932,7 @@ function saveChangesEvent() {
       if (this.status == 200) profile_img.src = response + '?time=' + performance.now();else window.location.replace('login');
     });
 
-    request.open('POST', 'profile/image/edit', true);
+    request.open('POST', 'users/edit/image', true);
     request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
     form_data.append('image', image);
     request.send(form_data);

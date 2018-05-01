@@ -7,12 +7,26 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
+use App\User;
+
 class ProfileController extends Controller
 {
-    function showProfile($username = null) {
+    function getProfile($username = null) {
       if($username === null)
-        return redirect(route('profile', ['username' => Auth::user()->username]));
-      else return view('pages.profile');
+        if(Auth::check())
+          return redirect(route('profile', ['username' => Auth::user()->username]));
+        else return redirect(route('404'));
+
+      $user = User::where('username', $username)->first();
+      if($user != null)
+        return view('pages.profile', ['username' => $user->username]);
+      else return redirect(route('404'));
+    }
+
+    function getEditProfile($username) {
+      if(!Auth::check())
+        return redirect('login');
+      return view('pages.edit_profile');
     }
 
     public function imageUpload(Request $request)
