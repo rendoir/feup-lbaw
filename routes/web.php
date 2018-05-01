@@ -57,6 +57,6 @@ Route::get('tags', 'TagsController@showAllTags');
 Route::get('tag_list', 'TagsController@getAllTags');
 
 //Profile
-Route::get('users/{username}/edit', 'ProfileController@getEditProfile')->name('edit_profile');
 Route::get('users/{username?}', 'ProfileController@getProfile')->name('profile');
+Route::get('users/{username}/edit', 'ProfileController@getEditProfile')->name('edit_profile');
 Route::post('users/edit/image', 'ProfileController@imageUpload');

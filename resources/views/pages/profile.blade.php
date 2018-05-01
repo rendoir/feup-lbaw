@@ -104,7 +104,7 @@
                         </div>
                     </div>
                     <div class="py-3">
-                        <a href="{{ route('edit_profile', ['username' => $username]) }}" role="button" class="btn btn-primary w-80">
+                        <a href="{{ route('edit_profile', ['username' => $user->username]) }}" role="button" class="btn btn-primary w-80">
                             <span class="pr-1">
                                 <i class="far fa-edit"></i>
                             </span>

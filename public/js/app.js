@@ -1929,10 +1929,10 @@ function saveChangesEvent() {
     var request = new XMLHttpRequest();
     request.addEventListener('load', function (event) {
       var response = this.responseText;
-      if (this.status == 200) profile_img.src = response + '?time=' + performance.now();else window.location.replace('login');
+      if (this.status == 200) profile_img.src = response + '?time=' + performance.now();else window.location.replace('/login');
     });
 
-    request.open('POST', 'users/edit/image', true);
+    request.open('POST', '/users/edit/image', true);
     request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
     form_data.append('image', image);
     request.send(form_data);

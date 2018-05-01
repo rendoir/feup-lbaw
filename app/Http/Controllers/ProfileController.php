@@ -19,7 +19,7 @@ class ProfileController extends Controller
 
       $user = User::where('username', $username)->first();
       if($user != null)
-        return view('pages.profile', ['username' => $user->username]);
+        return view('pages.profile', ['user' => $user]);
       else return redirect(route('404'));
     }
 
@@ -43,7 +43,7 @@ class ProfileController extends Controller
       $destinationPath = public_path('/profiles');
       $image->move($destinationPath, $input['imagename']);
 
-      return 'profiles/' . $input['imagename'];
+      return '/profiles\/' . $input['imagename'];
     }
 
 }
