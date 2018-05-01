@@ -28,9 +28,9 @@ class CommentsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getComments(Request $request)
+    public function getAnswerComments(Request $request)
     {
-        $commentable = Answer::find($request->message_id)->commentable;
+        $commentable = Answer::find($request->answer_id)->commentable;
         $comment_ids = $commentable->get_comments;
 
         $comments = array();

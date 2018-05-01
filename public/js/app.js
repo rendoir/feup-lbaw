@@ -131,7 +131,15 @@ function getUniqueCommentURL(commentable_id, comment_id) {
 function toggleShowMsg(message_id, show) {
     var toggler = document.querySelector("a[aria-controls='AnswerComments" + message_id + "']");
 
-    toggler.innerHTML = (show ? "Show" : "Hide") + " Comments";
+    if (!show) {
+        toggler.innerHTML = "Hide Comments";
+        return;
+    }
+
+    var numComments = toggler.parentNode.nextElementSibling.firstElementChild;
+    var value = numComments.innerText.split(" ")[0];
+
+    toggler.innerHTML = value > 0 ? "Show Comments" : "Add Comment";
 }
 
 /***/ }),

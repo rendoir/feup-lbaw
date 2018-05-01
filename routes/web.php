@@ -41,10 +41,16 @@ Route::get('ask_question', 'Question\QuestionController@showAskQuestionForm')->n
 Route::post('ask_question', 'Question\QuestionController@addQuestion')->name('ask_question');
 
 // Comments
-Route::get('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@getComments');
-Route::post('questions/{id}/answers/{message_id}/comments', 'Question\CommentsController@addComment');
+// Comments on Answers
+Route::get('questions/{id}/answers/{answer_id}/comments', 'Question\CommentsController@getAnswerComments');
+Route::post('questions/{id}/answers/{answer_id}/comments', 'Question\CommentsController@addComment');
 Route::put('questions/{id}/answers/{answer_id}/comments/{comment_id}', 'Question\CommentsController@editComment');
 Route::delete('questions/{id}/answers/{answer_id}/comments/{comment_id}', 'Question\CommentsController@deleteComment');
+//Comments on Questions
+Route::get('questions/{id}/comments', 'Question\CommentsController@getQuestionComments');
+Route::post('questions/{id}/comments', 'Question\CommentsController@addComment');
+Route::put('questions/{id}/comments/{comment_id}', 'Question\CommentsController@editComment');
+Route::delete('questions/{id}/comments/{comment_id}', 'Question\CommentsController@deleteComment');
 
 // Categories
 Route::get('tags', 'TagsController@showAllTags');
