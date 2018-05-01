@@ -22,13 +22,6 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/questions/recent/0';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -44,5 +37,50 @@ class LoginController extends Controller
         $password = $request->get("password");
         return [filter_var($email_or_username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username' => $email_or_username,
                 'password' => $password];
+    }
+
+    /**
+     * Attempt to log the user into the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function attemptLogin(Request $request)
+    {
+        if(!session()->has('from')){
+            session()->put('from', url()->previous());
+        }
+
+        return $this->guard()->attempt(
+            $this->credentials($request), $request->filled('remember')
+        );
+    }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        return session()->has('from') ?
+            redirect(session()->pull('from')) : redirect()->intended($this->redirectPath());
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect(url()->previous());
     }
 }

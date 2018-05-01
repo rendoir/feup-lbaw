@@ -9,7 +9,7 @@ function addEventListeners() {
 }
 
 function sendLogoutRequest() {
-    ajax.sendAjaxRequest('get', 'logout', null, sendLogoutHandler);
+    ajax.sendAjaxRequest('post', 'logout', null, sendLogoutHandler);
 }
 
 function sendLoginRequest() {
