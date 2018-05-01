@@ -15,7 +15,9 @@ function saveChangesEvent() {
     let request = new XMLHttpRequest();
     request.addEventListener('load', function(event) {
       let response = this.responseText;
-      profile_img.src = response + '?time=' + performance.now();
+      if(this.status == 200)
+        profile_img.src = response + '?time=' + performance.now();
+      else window.location.replace('login');
     });
 
     request.open('POST', 'profile/image/edit', true);
