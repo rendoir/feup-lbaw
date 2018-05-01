@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    function showProfile() {
-        return view('pages.profile');
+    function showProfile($username = null) {
+      if($username === null)
+        return redirect(route('profile', ['username' => Auth::user()->username]));
+      else return view('pages.profile');
     }
 
     public function imageUpload(Request $request)
