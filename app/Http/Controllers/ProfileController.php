@@ -29,7 +29,7 @@ class ProfileController extends Controller
       $destinationPath = public_path('/images');
       $image->move($destinationPath, $input['imagename']);
 
-      //return back()->with('success','Image Upload successful');
+      return 'images/' . $input['imagename'];
     }
 
 }
