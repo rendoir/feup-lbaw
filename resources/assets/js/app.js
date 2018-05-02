@@ -5,4 +5,5 @@ require('./tagify.js');
 require('./comments.js');
 require('./tooltip.js');
 require('./profile.js');
-require('./bootstrap.js');
+
+require('./notifications.js');
