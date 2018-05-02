@@ -60,12 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */,
-/* 1 */
+/* 0 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -75,8 +74,8 @@
 /* harmony export (immutable) */ __webpack_exports__["d"] = getCommentsURL;
 /* harmony export (immutable) */ __webpack_exports__["e"] = getUniqueCommentURL;
 /* harmony export (immutable) */ __webpack_exports__["f"] = toggleShowMsg;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(3);
-var Mustache = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(2);
+var Mustache = __webpack_require__(10);
 
 
 
@@ -144,7 +143,7 @@ function toggleShowMsg(message_id, show) {
 }
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports) {
 
 function encodeForAjax(data) {
@@ -169,17 +168,17 @@ module.exports = {
 };
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["addSingleCommentEventListener"] = addSingleCommentEventListener;
 /* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(13);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 
@@ -330,8 +329,7 @@ function removeCommentsEventListener() {
 window.addEventListener('load', addEventListeners);
 
 /***/ }),
-/* 4 */,
-/* 5 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -390,34 +388,29 @@ function displayError(errorMessage) {
 }
 
 /***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(12);
-module.exports = __webpack_require__(46);
+__webpack_require__(5);
+module.exports = __webpack_require__(19);
 
 
 /***/ }),
-/* 12 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(1);
+__webpack_require__(6);
+__webpack_require__(7);
+__webpack_require__(8);
 __webpack_require__(2);
-__webpack_require__(13);
 __webpack_require__(14);
 __webpack_require__(15);
-__webpack_require__(3);
-__webpack_require__(21);
-__webpack_require__(22);
 
-__webpack_require__(58);
+__webpack_require__(16);
 
 /***/ }),
-/* 13 */
+/* 6 */
 /***/ (function(module, exports) {
 
 decodeHTML = function decodeHTML(html) {
@@ -442,7 +435,7 @@ function applyMarkdown() {
 applyMarkdown();
 
 /***/ }),
-/* 14 */
+/* 7 */
 /***/ (function(module, exports) {
 
 $(window).scroll(function () {
@@ -456,10 +449,10 @@ $(window).scroll(function () {
 });
 
 /***/ }),
-/* 15 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ajax = __webpack_require__(2);
+var ajax = __webpack_require__(1);
 
 function Tagify(input, settings) {
     // protection
@@ -795,8 +788,15 @@ Tagify.prototype = {
     /**
      * make sure the tag, or words in it, is not in the blacklist
      */
-    isTagWhitelisted: function isTagWhitelisted(v) {
-        return this.settings.whitelist.indexOf(v) != -1;
+    isTagWhitelisted: function isTagWhitelisted(tagData) {
+        var index = this.settings.whitelist.findIndex(function (item) {
+            return tagData.value.toLowerCase() === item.toLowerCase();
+        });
+        if (index != -1) {
+            tagData.value = this.settings.whitelist[index];
+            return true;
+        }
+        return false;
     },
 
     /**
@@ -881,14 +881,14 @@ Tagify.prototype = {
             }
 
             // check if the tag is allowed by the rules set
-            tagAllowed = !this.isTagBlacklisted(value) && (!this.settings.enforceWhitelist || this.isTagWhitelisted(value)) && !maxTagsExceed;
+            tagAllowed = !this.isTagBlacklisted(value) && (!this.settings.enforceWhitelist || this.isTagWhitelisted(tagData)) && !maxTagsExceed;
 
             // Check against blacklist & whitelist (if enforced)
             if (!tagAllowed) {
                 tagData.class = tagData.class ? tagData.class + " tagify--notAllowed" : "tagify--notAllowed";
 
                 // broadcast why the tag was not allowed
-                if (maxTagsExceed) eventName__error = 'maxTagsExceed';else if (this.isTagBlacklisted(value)) eventName__error = 'blacklisted';else if (this.settings.enforceWhitelist && !this.isTagWhitelisted(value)) eventName__error = 'notWhitelisted';
+                if (maxTagsExceed) eventName__error = 'maxTagsExceed';else if (this.isTagBlacklisted(value)) eventName__error = 'blacklisted';else if (this.settings.enforceWhitelist && !this.isTagWhitelisted(tagData)) eventName__error = 'notWhitelisted';
 
                 this.trigger(eventName__error, { value: value, index: this.value.length });
 
@@ -1029,14 +1029,14 @@ function addTags() {
 addTags();
 
 /***/ }),
-/* 16 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = viewCommentsRequest;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(5);
-var ajax = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(3);
+var ajax = __webpack_require__(1);
 
 
 
@@ -1067,7 +1067,7 @@ function getCommentsHandler(response, message_id) {
 }
 
 /***/ }),
-/* 17 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -1706,15 +1706,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 18 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = addCommentRequest;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__comments_js__ = __webpack_require__(3);
-var ajax = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__comments_js__ = __webpack_require__(2);
+var ajax = __webpack_require__(1);
 
 
 
@@ -1767,13 +1767,13 @@ function addCommentHandler(response, message_id) {
 }
 
 /***/ }),
-/* 19 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = setEditMode;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(1);
-var ajax = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
+var ajax = __webpack_require__(1);
 
 
 
@@ -1854,13 +1854,13 @@ function getPreviousComment(inputNode, previousNode) {
 }
 
 /***/ }),
-/* 20 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = removeComment;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils__ = __webpack_require__(1);
-var ajax = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils__ = __webpack_require__(0);
+var ajax = __webpack_require__(1);
 
 
 
@@ -1912,7 +1912,7 @@ function removeCommentHandler(response, commentNode) {
 }
 
 /***/ }),
-/* 21 */
+/* 14 */
 /***/ (function(module, exports) {
 
 $(function () {
@@ -1920,7 +1920,7 @@ $(function () {
 });
 
 /***/ }),
-/* 22 */
+/* 15 */
 /***/ (function(module, exports) {
 
 function saveChangesEvent() {
@@ -1951,52 +1951,12 @@ function saveChangesEvent() {
 saveChangesEvent();
 
 /***/ }),
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -2006,7 +1966,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-window.Pusher = __webpack_require__(60);
+window.Pusher = __webpack_require__(18);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
@@ -2016,7 +1976,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 });
 
 /***/ }),
-/* 59 */
+/* 17 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -2814,7 +2774,7 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 60 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -7000,6 +6960,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

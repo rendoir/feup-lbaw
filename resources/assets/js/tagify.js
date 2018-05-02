@@ -356,8 +356,13 @@ Tagify.prototype = {
     /**
      * make sure the tag, or words in it, is not in the blacklist
      */
-    isTagWhitelisted : function(v){
-        return this.settings.whitelist.indexOf(v) != -1;
+    isTagWhitelisted : function(tagData){
+      let index = this.settings.whitelist.findIndex(item => tagData.value.toLowerCase() === item.toLowerCase());
+      if(index != -1) {
+          tagData.value = this.settings.whitelist[index];
+          return true;
+      }
+      return false;
     },
 
     /**
@@ -442,7 +447,7 @@ Tagify.prototype = {
             }
 
             // check if the tag is allowed by the rules set
-            tagAllowed = !this.isTagBlacklisted(value) && (!this.settings.enforceWhitelist || this.isTagWhitelisted(value)) && !maxTagsExceed;
+            tagAllowed = !this.isTagBlacklisted(value) && (!this.settings.enforceWhitelist || this.isTagWhitelisted(tagData)) && !maxTagsExceed;
 
             // Check against blacklist & whitelist (if enforced)
             if( !tagAllowed ){
@@ -451,7 +456,7 @@ Tagify.prototype = {
                 // broadcast why the tag was not allowed
                 if( maxTagsExceed )                                                        eventName__error = 'maxTagsExceed';
                 else if( this.isTagBlacklisted(value) )                                    eventName__error = 'blacklisted';
-                else if( this.settings.enforceWhitelist && !this.isTagWhitelisted(value) ) eventName__error = 'notWhitelisted';
+                else if( this.settings.enforceWhitelist && !this.isTagWhitelisted(tagData) ) eventName__error = 'notWhitelisted';
 
                 this.trigger(eventName__error, {value:value, index:this.value.length});
 
