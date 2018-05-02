@@ -407,6 +407,7 @@ __webpack_require__(2);
 __webpack_require__(14);
 __webpack_require__(15);
 __webpack_require__(28);
+__webpack_require__(29);
 
 /***/ }),
 /* 6 */
@@ -2007,6 +2008,30 @@ function addEventListeners() {
         }
     }
 }
+
+/***/ }),
+/* 29 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+throw new Error("Cannot find module \"laravel-echo\"");
+/**
+ * Echo exposes an expressive API for subscribing to channels and listening
+ * for events that are broadcast by Laravel. Echo and event broadcasting
+ * allows your team to easily build robust real-time web applications.
+ */
+
+
+
+window.Pusher = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"pusher-js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
+  broadcaster: 'pusher',
+  key: 'your-pusher-key',
+  cluster: 'eu',
+  encrypted: true
+});
 
 /***/ })
 /******/ ]);
