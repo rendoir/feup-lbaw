@@ -392,7 +392,7 @@ function displayError(errorMessage) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(5);
-module.exports = __webpack_require__(19);
+module.exports = __webpack_require__(20);
 
 
 /***/ }),
@@ -406,8 +406,8 @@ __webpack_require__(8);
 __webpack_require__(2);
 __webpack_require__(14);
 __webpack_require__(15);
-
 __webpack_require__(16);
+__webpack_require__(17);
 
 /***/ }),
 /* 6 */
@@ -1952,11 +1952,60 @@ saveChangesEvent();
 
 /***/ }),
 /* 16 */
+/***/ (function(module, exports) {
+
+addEventListeners();
+
+function addEventListeners() {
+    var inputs = document.querySelectorAll(".input100");
+
+    var _loop = function _loop(input) {
+        console.log(input);
+
+        var placeholder = input.placeholder;
+
+        input.addEventListener('focus', function () {
+            input.placeholder = "";
+        });
+
+        input.addEventListener('blur', function () {
+            if (input.value == "") input.placeholder = placeholder;
+        });
+    };
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = inputs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var input = _step.value;
+
+            _loop(input);
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+}
+
+/***/ }),
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -1966,17 +2015,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-window.Pusher = __webpack_require__(18);
+window.Pusher = __webpack_require__(19);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: 'your-pusher-key',
+  key: '***REMOVED***',
   cluster: 'eu',
   encrypted: true
 });
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -2774,7 +2823,7 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -6962,7 +7011,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
