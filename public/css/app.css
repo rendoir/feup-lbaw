@@ -1447,6 +1447,7 @@ tags > div > span {
   color: #999999;
   line-height: 1.2;
   content: attr(data-placeholder);
+  opacity: 0;
   display: block;
   width: 100%;
   position: absolute;
@@ -1458,6 +1459,7 @@ tags > div > span {
 }
 
 #login-page .input100:focus + .focus-input100::after {
+  opacity: 1;
   top: -15px;
 }
 

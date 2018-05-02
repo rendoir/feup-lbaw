@@ -14,7 +14,7 @@
 					</span>
 
                     <div class="wrap-input100 validate-input {{ $errors->has('email') ? ' has-error' : '' }}" data-validate = "Valid email is: a@b.c">
-                        <input id="email" type="text" class="input100" name="email" value="{{ old('email') }}" required autofocus>
+                        <input id="email" type="text" class="input100" name="email" value="{{ old('email') }}" placeholder="Email" required autofocus>
 
                         @if ($errors->has('email'))
                         <span class="help-block">
@@ -28,7 +28,7 @@
 						<span class="btn-show-pass">
 							<i class="zmdi zmdi-eye"></i>
 						</span>
-                        <input id="password" type="password" class="input100" name="password" required>
+                        <input id="password" type="password" class="input100" name="password" placeholder="Password" required>
 
                         @if ($errors->has('password'))
                         <span class="help-block">

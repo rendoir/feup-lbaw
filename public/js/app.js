@@ -413,7 +413,7 @@ __webpack_require__(15);
 __webpack_require__(3);
 __webpack_require__(21);
 __webpack_require__(22);
-
+__webpack_require__(62);
 __webpack_require__(61);
 
 /***/ }),
@@ -7001,6 +7001,55 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   cluster: 'eu',
   encrypted: true
 });
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports) {
+
+addEventListeners();
+
+function addEventListeners() {
+    var inputs = document.querySelectorAll(".input100");
+
+    var _loop = function _loop(input) {
+        console.log(input);
+
+        var placeholder = input.placeholder;
+
+        input.addEventListener('focus', function () {
+            input.placeholder = "";
+        });
+
+        input.addEventListener('blur', function () {
+            if (input.value == "") input.placeholder = placeholder;
+        });
+    };
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = inputs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var input = _step.value;
+
+            _loop(input);
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+}
 
 /***/ })
 /******/ ]);
