@@ -6,4 +6,4 @@ require('./comments.js');
 require('./tooltip.js');
 require('./profile.js');
 
-require('./notifications.js');
+require('./set_up_notifications.js');
