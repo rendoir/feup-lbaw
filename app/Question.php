@@ -49,7 +49,7 @@ class Question extends Model
 
         return $query
             ->whereRaw('search @@ to_tsquery(\'english\', replace(plainto_tsquery(\'english\', ?)::text, \'&\', \'|\'))', [$search])
-            ->orderByRaw('ts_rank(search, plainto_tsquery(\'english\', ?)) DESC', [$search]);
+            ->orderByRaw('ts_rank(search, to_tsquery(\'english\', replace(plainto_tsquery(\'english\', ?)::text, \'&\', \'|\'))) DESC', [$search]);
     }
 
     public function categories()
