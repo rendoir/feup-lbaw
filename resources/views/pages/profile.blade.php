@@ -7,18 +7,13 @@
 <div class="row">
     <section class="col-md-9 px-0 px-sm-3 mt-5">
         <div class="card mb-5">
-            <img class="card-img-top" height="350px" src="assets/img/bg-profile.jpg" alt="Card image cap">
+            <img class="card-img-top" height="350px" src="/backgrounds/<?=$user->id?>" alt="Card image cap">
             <div class="card-body text-center pb-3">
                 <div>
-                    <img class="rounded-circle img-profile-big" src="assets/img/img-profile.jpg" alt="UserImage">
+                    <img class="rounded-circle img-profile-big" src="/profiles/<?=$user->id?>" alt="UserImage">
                 </div>
-                <h2 class="card-text my-3">António Almeida</h2>
-                <p>
-                    Morbi mollis, eros eget sodales tempor, augue mi aliquet nisi, tempor placerat augue arcu sed odio. Aliquam orci urna, porta
-                    vel quam quis, aliquam faucibus ante. Curabitur eleifend ut orci sit amet blandit. Curabitur
-                    placerat ante tortor, ac volutpat nulla tempus vitae. Donec scelerisque ipsum eu tempus congue.
-                    Vestibulum varius est sapien, in gravida tortor euismod eget.
-                </p>
+                <h2 class="card-text my-3"><?=$user->username?></h2>
+                <p><?=$user->biography != null ? $user->biography : 'Apparently, this user prefers to keep an air of mystery about them.'?></p>
             </div>
         </div>
 

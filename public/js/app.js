@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,7 +75,7 @@
 /* harmony export (immutable) */ __webpack_exports__["e"] = getUniqueCommentURL;
 /* harmony export (immutable) */ __webpack_exports__["f"] = toggleShowMsg;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(2);
-var Mustache = __webpack_require__(10);
+var Mustache = __webpack_require__(16);
 
 
 
@@ -175,10 +175,10 @@ module.exports = {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["addSingleCommentEventListener"] = addSingleCommentEventListener;
 /* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(19);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 
@@ -329,7 +329,8 @@ function removeCommentsEventListener() {
 window.addEventListener('load', addEventListeners);
 
 /***/ }),
-/* 3 */
+/* 3 */,
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -388,29 +389,29 @@ function displayError(errorMessage) {
 }
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(5);
-module.exports = __webpack_require__(20);
-
-
-/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(1);
 __webpack_require__(6);
-__webpack_require__(7);
-__webpack_require__(8);
-__webpack_require__(2);
-__webpack_require__(14);
-__webpack_require__(15);
-__webpack_require__(16);
-__webpack_require__(17);
+module.exports = __webpack_require__(26);
+
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(1);
+__webpack_require__(7);
+__webpack_require__(8);
+__webpack_require__(9);
+__webpack_require__(2);
+__webpack_require__(20);
+__webpack_require__(21);
+__webpack_require__(22);
+__webpack_require__(23);
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports) {
 
 decodeHTML = function decodeHTML(html) {
@@ -435,7 +436,7 @@ function applyMarkdown() {
 applyMarkdown();
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 $(window).scroll(function () {
@@ -449,7 +450,7 @@ $(window).scroll(function () {
 });
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(1);
@@ -491,7 +492,7 @@ Tagify.prototype = {
         callbacks: {}, // exposed callbacks object to be triggered on certain events
         duplicates: false, // flag - allow tuplicate tags
         enforceWhitelist: true, // flag - should ONLY use tags allowed in whitelist
-        autocomplete: true, // flag - show native suggeestions list as you type
+        autocomplete: false, // flag - show native suggeestions list as you type
         whitelist: [], // is this list has any items, then only allow tags from this list
         blacklist: [], // a list of non-allowed tags
         maxTags: Infinity, // maximum number of tags
@@ -684,6 +685,28 @@ Tagify.prototype = {
                     this.DOM.input.parentNode.appendChild(this.DOM.datalist);
                 }
             }
+
+            /*let suggestions = document.querySelector('ul.suggestions');
+            //Remove outdated suggestions
+            if(suggestions != null) {
+              suggestions.parentNode.removeChild(suggestions);
+            }
+            //Add new suggestions
+            if(showSuggestions) {
+              let tags = document.querySelector('tags').parentNode;
+              suggestions = document.createElement('ul');
+              suggestions.className = "suggestions";
+              tags.appendChild(suggestions);
+              let pattern = new RegExp(e.target.value, 'i');
+              for(let i = 0; i < this.settings.whitelist.length; i++) {
+                if(pattern.test(this.settings.whitelist[i])) {
+                  let suggestion = document.createElement('li');
+                  suggestion.innerHTML = this.settings.whitelist[i];
+                  suggestion.className = "suggestion";
+                  suggestions.appendChild(suggestion);
+                }
+              }
+            }*/
         },
 
         onPaste: function onPaste(e) {
@@ -1029,13 +1052,18 @@ function addTags() {
 addTags();
 
 /***/ }),
-/* 9 */
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = viewCommentsRequest;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(4);
 var ajax = __webpack_require__(1);
 
 
@@ -1067,7 +1095,7 @@ function getCommentsHandler(response, message_id) {
 }
 
 /***/ }),
-/* 10 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -1706,13 +1734,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 11 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = addCommentRequest;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__errors_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__comments_js__ = __webpack_require__(2);
 var ajax = __webpack_require__(1);
 
@@ -1767,7 +1795,7 @@ function addCommentHandler(response, message_id) {
 }
 
 /***/ }),
-/* 12 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1854,7 +1882,7 @@ function getPreviousComment(inputNode, previousNode) {
 }
 
 /***/ }),
-/* 13 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1912,7 +1940,7 @@ function removeCommentHandler(response, commentNode) {
 }
 
 /***/ }),
-/* 14 */
+/* 20 */
 /***/ (function(module, exports) {
 
 $(function () {
@@ -1920,13 +1948,13 @@ $(function () {
 });
 
 /***/ }),
-/* 15 */
+/* 21 */
 /***/ (function(module, exports) {
 
 function saveChangesEvent() {
   var save_changes = document.querySelector("#save_changes");
-  var select_image = document.querySelector("input[name=image]");
-  var profile_img = document.querySelector("img.profile_img");
+  var select_image = document.querySelector("#input_profile");
+  var profile_img = document.querySelector("img.img-profile-big");
   if (save_changes == null || select_image == null) return;
   save_changes.addEventListener("click", function () {
     if (select_image.files.length == 0) return;
@@ -1951,7 +1979,7 @@ function saveChangesEvent() {
 saveChangesEvent();
 
 /***/ }),
-/* 16 */
+/* 22 */
 /***/ (function(module, exports) {
 
 addEventListeners();
@@ -2000,12 +2028,12 @@ function addEventListeners() {
 }
 
 /***/ }),
-/* 17 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -2015,7 +2043,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-window.Pusher = __webpack_require__(19);
+window.Pusher = __webpack_require__(25);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
@@ -2025,7 +2053,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 });
 
 /***/ }),
-/* 18 */
+/* 24 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -2823,7 +2851,7 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 19 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -7011,7 +7039,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 20 */
+/* 26 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

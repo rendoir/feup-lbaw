@@ -38,7 +38,7 @@ Tagify.prototype = {
         callbacks           : {},         // exposed callbacks object to be triggered on certain events
         duplicates          : false,      // flag - allow tuplicate tags
         enforceWhitelist    : true,      // flag - should ONLY use tags allowed in whitelist
-        autocomplete        : true,       // flag - show native suggeestions list as you type
+        autocomplete        : false,       // flag - show native suggeestions list as you type
         whitelist           : [],         // is this list has any items, then only allow tags from this list
         blacklist           : [],         // a list of non-allowed tags
         maxTags             : Infinity,   // maximum number of tags
@@ -252,6 +252,29 @@ Tagify.prototype = {
                     this.DOM.input.parentNode.appendChild(this.DOM.datalist)
                 }
             }
+
+            /*let suggestions = document.querySelector('ul.suggestions');
+            //Remove outdated suggestions
+            if(suggestions != null) {
+              suggestions.parentNode.removeChild(suggestions);
+            }
+            //Add new suggestions
+            if(showSuggestions) {
+              let tags = document.querySelector('tags').parentNode;
+              suggestions = document.createElement('ul');
+              suggestions.className = "suggestions";
+              tags.appendChild(suggestions);
+              let pattern = new RegExp(e.target.value, 'i');
+              for(let i = 0; i < this.settings.whitelist.length; i++) {
+                if(pattern.test(this.settings.whitelist[i])) {
+                  let suggestion = document.createElement('li');
+                  suggestion.innerHTML = this.settings.whitelist[i];
+                  suggestion.className = "suggestion";
+                  suggestions.appendChild(suggestion);
+                }
+              }
+            }*/
+
         },
 
         onPaste : function(e){
