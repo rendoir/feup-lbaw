@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\File;
 
 class User extends Authenticatable
 {
@@ -51,5 +52,12 @@ class User extends Authenticatable
         if (BadgeAttainment::where([['user_id', $this->id], ['badge_id', $trusted->id]])->first() != null)
           return 'Trusted';
         return null;
+    }
+
+    public function getImage($type) {
+      $name = '/' . $type . 's/' . $this->id;
+      if(File::exists(public_path() . $name))
+        return ($name);
+      else return '/' . $type . 's/default';
     }
 }

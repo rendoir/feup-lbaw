@@ -3,6 +3,7 @@
 @section('title', 'Edit Profile')
 
 @section('content')
+<main class="container">
         <div class="row">
 
             <!-- Main body container -->
@@ -24,11 +25,11 @@
                         </div>
                     </div>
                 </div>
-                <img id="bg-img" class="card-img-top" height="350px" src="<?=File::exists(public_path() . '/backgrounds/' . $user->id) ? ('/backgrounds/' . $user->id) : '/backgrounds/default'?>" alt="Card image cap">
+                <img id="bg-img" class="card-img-top" height="350px" src="<?=$user->getImage('background')?>" alt="Card image cap">
 
                 <div class="card-body text-center pb-3">
                     <div>
-                        <img id="p-img" class="rounded-circle img-profile-big" src="<?=File::exists(public_path() . '/profiles/' . $user->id) ? ('/profiles/' . $user->id) : '/profiles/default'?>" alt="UserImage">
+                        <img id="p-img" class="rounded-circle img-profile-big" src="<?=$user->getImage('profile')?>" alt="UserImage">
                     </div>
 
                     <!-- Edit profile picture button -->
@@ -102,4 +103,5 @@
                 </div>
             </aside>
         </div>
+</main>
 @endsection

@@ -29,7 +29,7 @@ class ProfileController extends Controller
       return view('pages.edit_profile', ['user' => Auth::user()]);
     }
 
-    public function profileImageUpload(Request $request)
+    public function imageUpload(Request $request, $type)
     {
       if(!Auth::check())
         return response()->setStatusCode(403);
@@ -39,27 +39,11 @@ class ProfileController extends Controller
       ]);
 
       $image = $request->file('image');
-      $input['imagename'] = Auth::id();
-      $destinationPath = public_path('/profiles');
-      $image->move($destinationPath, $input['imagename']);
+      $name = Auth::id();
+      $path = '/' . $type . 's';
+      $full_path = public_path($path);
+      $image->move($full_path, $name);
 
-      return '/profiles/' . $input['imagename'];
-    }
-
-    public function backgroundImageUpload(Request $request)
-    {
-      if(!Auth::check())
-        return response()->setStatusCode(403);
-
-      $this->validate($request, [
-          'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-      ]);
-
-      $image = $request->file('image');
-      $input['imagename'] = Auth::id();
-      $destinationPath = public_path('/backgrounds');
-      $image->move($destinationPath, $input['imagename']);
-
-      return '/backgrounds/' . $input['imagename'];
+      return $path . '/' . $name;
     }
 }

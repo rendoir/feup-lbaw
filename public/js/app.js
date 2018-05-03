@@ -1906,12 +1906,14 @@ $(function () {
 /* 15 */
 /***/ (function(module, exports) {
 
-function uploadProfileImage() {
-  var save_changes = document.querySelector("#p-save");
-  var select_image = document.querySelector("#p-input");
-  var profile_img = document.querySelector("#p-img");
+function uploadImage(abbr, type) {
+  var save_changes = document.querySelector("#" + abbr + "-save");
+  var select_image = document.querySelector("#" + abbr + "-input");
+  var profile_img = document.querySelector("#" + abbr + "-img");
   if (save_changes == null || select_image == null) return;
-  save_changes.addEventListener("click", function () {
+  save_changes.addEventListener("click", function (e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
     if (select_image.files.length == 0) return;
 
     var image = select_image.files[0];
@@ -1924,41 +1926,15 @@ function uploadProfileImage() {
       if (this.status == 200) profile_img.src = response + '?time=' + performance.now();else window.location.replace('/login');
     });
 
-    request.open('POST', '/users/edit/profile_image', true);
+    request.open('POST', '/users/edit/image/' + type, true);
     request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
     form_data.append('image', image);
     request.send(form_data);
   });
 }
 
-uploadProfileImage();
-
-function uploadBackgroundImage() {
-  var save_changes = document.querySelector("#bg-save");
-  var select_image = document.querySelector("#bg-input");
-  var profile_img = document.querySelector("#bg-img");
-  if (save_changes == null || select_image == null) return;
-  save_changes.addEventListener("click", function () {
-    if (select_image.files.length == 0) return;
-
-    var image = select_image.files[0];
-
-    var form_data = new FormData();
-
-    var request = new XMLHttpRequest();
-    request.addEventListener('load', function (event) {
-      var response = this.responseText;
-      if (this.status == 200) profile_img.src = response + '?time=' + performance.now();else window.location.replace('/login');
-    });
-
-    request.open('POST', '/users/edit/background_image', true);
-    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-    form_data.append('image', image);
-    request.send(form_data);
-  });
-}
-
-uploadBackgroundImage();
+uploadImage('bg', 'background');
+uploadImage('p', 'profile');
 
 /***/ }),
 /* 16 */
