@@ -1969,7 +1969,9 @@ function addEventListeners() {
         });
 
         input.addEventListener('blur', function () {
-            if (input.value == "") input.placeholder = placeholder;
+            setTimeout(function () {
+                if (input.value == "") input.placeholder = placeholder;
+            }, 200);
         });
     };
 

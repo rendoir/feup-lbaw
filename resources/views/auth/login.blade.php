@@ -14,7 +14,7 @@
 					</span>
 
                     <div class="wrap-input100 validate-input {{ $errors->has('email') ? ' has-error' : '' }}" data-validate = "Valid email is: a@b.c">
-                        <input id="email" type="text" class="input100" name="email" value="{{ old('email') }}" placeholder="Email" required autofocus>
+                        <input id="email" type="text" class="input100" name="email" value="{{ old('email') }}" placeholder="Email" required>
 
                         @if ($errors->has('email'))
                         <span class="help-block">
