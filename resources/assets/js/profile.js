@@ -1,7 +1,7 @@
 function saveChangesEvent() {
-  let save_changes = document.querySelector("#save_changes");
-  let select_image = document.querySelector("#input_profile");
-  let profile_img = document.querySelector("img.img-profile-big");
+  let save_changes = document.querySelector("#p-save");
+  let select_image = document.querySelector("#p-input");
+  let profile_img = document.querySelector("#p-img");
   if(save_changes == null || select_image == null)
     return;
   save_changes.addEventListener("click", function() {
@@ -20,7 +20,7 @@ function saveChangesEvent() {
       else window.location.replace('/login');
     });
 
-    request.open('POST', '/users/edit/image', true);
+    request.open('POST', '/users/edit/profile_image', true);
     request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
     form_data.append('image', image);
     request.send(form_data);

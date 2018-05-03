@@ -26,10 +26,10 @@ class ProfileController extends Controller
     function getEditProfile($username) {
       if(!Auth::check())
         return redirect('login');
-      return view('pages.edit_profile');
+      return view('pages.edit_profile', ['user' => Auth::user()]);
     }
 
-    public function imageUpload(Request $request)
+    public function profileImageUpload(Request $request)
     {
       if(!Auth::check())
         return response()->setStatusCode(403);

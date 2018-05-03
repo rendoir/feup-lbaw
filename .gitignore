@@ -3,6 +3,7 @@
 /public/storage
 /public/images
 /public/profiles
+/public/backgrounds
 /storage/*.key
 /vendor
 /.idea

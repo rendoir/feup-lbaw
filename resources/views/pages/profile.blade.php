@@ -7,10 +7,10 @@
 <div class="row">
     <section class="col-md-9 px-0 px-sm-3 mt-5">
         <div class="card mb-5">
-            <img class="card-img-top" height="350px" src="/backgrounds/<?=$user->id?>" alt="Card image cap">
+            <img class="card-img-top" height="350px" src="<?=File::exists(public_path() . '/backgrounds/' . $user->id) ? ('/backgrounds/' . $user->id) : '/backgrounds/default'?>" alt="Card image cap">
             <div class="card-body text-center pb-3">
                 <div>
-                    <img class="rounded-circle img-profile-big" src="/profiles/<?=$user->id?>" alt="UserImage">
+                    <img class="rounded-circle img-profile-big" src="<?=File::exists(public_path() . '/profiles/' . $user->id) ? ('/profiles/' . $user->id) : '/profiles/default'?>" alt="UserImage">
                 </div>
                 <h2 class="card-text my-3"><?=$user->username?></h2>
                 <p><?=$user->biography != null ? $user->biography : 'Apparently, this user prefers to keep an air of mystery about them.'?></p>
