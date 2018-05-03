@@ -180,7 +180,7 @@ DROP FUNCTION IF EXISTS gen_comment_notification();
 DROP FUNCTION IF EXISTS gen_answer_notification();
 DROP FUNCTION IF EXISTS gen_badge_notification();
 DROP FUNCTION IF EXISTS update_message_version();
-DROP FUNCTION IF EXISTS update_question_search();
+DROP FUNCTION IF EXISTS update_question_title_search();
 
 
 DROP TRIGGER IF EXISTS ban_message ON messages;
@@ -203,7 +203,7 @@ DROP TRIGGER IF EXISTS gen_comment_notification ON comments;
 DROP TRIGGER IF EXISTS gen_answer_notification ON answers;
 DROP TRIGGER IF EXISTS gen_badge_notification ON badge_attainments;
 DROP TRIGGER IF EXISTS update_message_version ON message_versions;
-DROP TRIGGER IF EXISTS update_question_search_index ON questions;
+DROP TRIGGER IF EXISTS update_question_title_search_index ON questions;
 
 -- A message is banned when it exceeds the report limits
 CREATE FUNCTION ban_message() RETURNS TRIGGER AS $$
@@ -579,16 +579,39 @@ CREATE TRIGGER update_message_version
   AFTER INSERT ON message_versions
   FOR EACH ROW EXECUTE PROCEDURE update_message_version();
 
--- Question.search includes FTS index of its title
-CREATE FUNCTION update_question_search() RETURNS TRIGGER AS $$
+-- Question.search includes FTS index of its title and content
+CREATE FUNCTION update_question_title_search() RETURNS TRIGGER AS $$
 BEGIN
   UPDATE questions
-    SET search = to_tsvector('english', NEW.title)
+    SET search =
+      setweight(to_tsvector('english', NEW.title), 'A')  ||
+      (SELECT setweight(to_tsvector('english', COALESCE(content, '')), 'B')
+        FROM questions, messages, message_versions
+        WHERE questions.id = messages.id AND
+              messages.latest_version = message_versions.id
+        LIMIT 1
+        )
     WHERE questions.id = NEW.id;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER update_question_search_index
+CREATE TRIGGER update_question_title_search_index
   AFTER INSERT OR UPDATE OF title ON questions
-  FOR EACH ROW EXECUTE PROCEDURE update_question_search();
+  FOR EACH ROW EXECUTE PROCEDURE update_question_title_search();
+
+
+CREATE FUNCTION update_question_content_search() RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE questions
+    SET search =
+      setweight(to_tsvector('english', questions.title), 'A')  ||
+      setweight(to_tsvector('english', NEW.content), 'B')
+    WHERE questions.id = NEW.message_id;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_question_content_search_index
+  AFTER INSERT ON message_versions
+  FOR EACH ROW EXECUTE PROCEDURE update_question_content_search();
