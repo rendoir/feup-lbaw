@@ -41,7 +41,7 @@ Tagify.prototype = {
         autocomplete        : true,       // flag - show native suggeestions list as you type
         whitelist           : [],         // is this list has any items, then only allow tags from this list
         blacklist           : [],         // a list of non-allowed tags
-        maxTags             : Infinity,   // maximum number of tags
+        maxTags             : 5,   // maximum number of tags
         suggestionsMinChars : 1,          // minimum characters to input to see sugegstions list
         maxSuggestions      : 10
     },
@@ -490,6 +490,7 @@ Tagify.prototype = {
                 else{
                     // update state
                     that.value.push(tagData);
+                    console.log(tagData);
                     that.update();
                     that.trigger('add', that.extend({}, tagData, {index:that.value.length, tag:tagElm}));
 
