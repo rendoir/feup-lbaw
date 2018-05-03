@@ -26,10 +26,10 @@ class ProfileController extends Controller
     function getEditProfile($username) {
       if(!Auth::check())
         return redirect('login');
-      return view('pages.edit_profile');
+      return view('pages.edit_profile', ['user' => Auth::user()]);
     }
 
-    public function imageUpload(Request $request)
+    public function profileImageUpload(Request $request)
     {
       if(!Auth::check())
         return response()->setStatusCode(403);
@@ -43,7 +43,23 @@ class ProfileController extends Controller
       $destinationPath = public_path('/profiles');
       $image->move($destinationPath, $input['imagename']);
 
-      return '/profiles\/' . $input['imagename'];
+      return '/profiles/' . $input['imagename'];
     }
 
+    public function backgroundImageUpload(Request $request)
+    {
+      if(!Auth::check())
+        return response()->setStatusCode(403);
+
+      $this->validate($request, [
+          'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+      ]);
+
+      $image = $request->file('image');
+      $input['imagename'] = Auth::id();
+      $destinationPath = public_path('/backgrounds');
+      $image->move($destinationPath, $input['imagename']);
+
+      return '/backgrounds/' . $input['imagename'];
+    }
 }

@@ -2,10 +2,8 @@
 
 @section('title', 'Edit Profile')
 
-{{ csrf_field() }}
-
 @section('content')
-<div class="row">
+        <div class="row">
 
             <!-- Main body container -->
             <section class="col-md-9 px-0 px-sm-3 mt-5">
@@ -14,21 +12,23 @@
                         aria-expanded="false">
                         Update your background picture
                     </button>
+                    <div class="dropdown-menu mt-2 mb-0 p-0" aria-labelledby="dropdownMenuButton">
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="input_profile">
-                                <label class="custom-file-label" for="input_profile">Choose file</label>
+                                <input type="file" class="custom-file-input" id="bg-input">
+                                <label class="custom-file-label" for="bg-input">Choose file</label>
                             </div>
                             <div class="input-group-append">
-                                <button class="input-group-text" id="save_changes">Upload</span>
+                                <span class="input-group-text" id="bg-save">Upload</span>
                             </div>
                         </div>
+                    </div>
                 </div>
-                <img class="card-img-top" height="350px" src="assets/img/bg-profile.jpg" alt="Card image cap">
+                <img id="bg-img" class="card-img-top" height="350px" src="<?=File::exists(public_path() . '/backgrounds/' . $user->id) ? ('/backgrounds/' . $user->id) : '/backgrounds/default'?>" alt="Card image cap">
 
                 <div class="card-body text-center pb-3">
                     <div>
-                        <img class="rounded-circle img-profile-big" src="assets/img/img-profile.jpg" alt="UserImage">
+                        <img id="p-img" class="rounded-circle img-profile-big" src="<?=File::exists(public_path() . '/profiles/' . $user->id) ? ('/profiles/' . $user->id) : '/profiles/default'?>" alt="UserImage">
                     </div>
 
                     <!-- Edit profile picture button -->
@@ -39,23 +39,18 @@
                     <div class="dropdown-menu mt-1 mb-0 p-0 b-0 edit-profile-menu" aria-labelledby="dropdownMenuButton">
                         <div class="input-group m-auto">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="inputGroupFile02">
-                                <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                                <input type="file" class="custom-file-input" id="p-input">
+                                <label class="custom-file-label" for="p-input">Choose file</label>
                             </div>
                             <div class="input-group-append">
-                                <span class="input-group-text" id="">Upload</span>
+                                <span class="input-group-text" id="p-save">Upload</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="input-group my-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="">Username</span>
-                        </div>
-                        <input type="text" class="form-control profile-name" value="António Almeida">
-                    </div>
+                    <h2 class="card-text my-3"><?=$user->username?></h2>
                     <div class="input-group">
-                        <textarea class="form-control profile-textarea" aria-label="With textarea">Morbi mollis, eros eget sodales tempor, augue mi aliquet nisi, tempor placerat augue arcu sed odio. Aliquam orci urna, portavel quam quis, aliquam faucibus ante. Curabitur eleifend ut orci sit amet blandit. Curabitur placeratnte tortor, ac volutpat nulla tempus vitae. Donec scelerisque ipsum eu tempus congue. Vestibulum variusest sapien, in gravida tortor euismod eget.</textarea>
+                        <textarea class="form-control profile-textarea" aria-label="With textarea"><?=$user->biography != null ? $user->biography : 'Write something about yourself!'?></textarea>
                     </div>
                 </div>
 
@@ -106,7 +101,5 @@
                     </div>
                 </div>
             </aside>
-
         </div>
-
 @endsection
