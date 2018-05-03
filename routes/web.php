@@ -29,16 +29,16 @@ Route::get('404', 'HomeController@error')->name('404');
 
 
 // Search questions with string query
-Route::get('questions', 'Question\QuestionController@showQueriedQuestions');
+Route::get('questions', 'Question\QuestionsController@showQueriedQuestions');
 
-Route::get('questions/recent', 'Question\QuestionController@showRecentQuestions')->name('recent_questions'); // Most recent
-Route::get('questions/hot', 'Question\QuestionController@showHotQuestions')->name('hot_questions'); // Most answers
-Route::get('questions/highly-voted', 'Question\QuestionController@showHighlyVotedQuestions')->name('highly_voted_questions'); // Highest score
-Route::get('questions/active', 'Question\QuestionController@showActiveQuestions')->name('active_questions'); // Unanswered
+Route::get('questions/recent', 'Question\QuestionsController@showRecentQuestions')->name('recent_questions'); // Most recent
+Route::get('questions/hot', 'Question\QuestionsController@showHotQuestions')->name('hot_questions'); // Most answers
+Route::get('questions/highly-voted', 'Question\QuestionsController@showHighlyVotedQuestions')->name('highly_voted_questions'); // Highest score
+Route::get('questions/active', 'Question\QuestionsController@showActiveQuestions')->name('active_questions'); // Unanswered
 
-Route::get('questions/{id}', 'Question\QuestionController@showQuestionPage')->name('questions');
-Route::get('ask_question', 'Question\QuestionController@showAskQuestionForm')->name('ask_question_form');
-Route::post('ask_question', 'Question\QuestionController@addQuestion')->name('ask_question');
+Route::get('questions/{id}', 'Question\QuestionsController@showQuestionPage')->name('questions');
+Route::get('ask_question', 'Question\QuestionsController@showAskQuestionForm')->name('ask_question_form');
+Route::post('ask_question', 'Question\QuestionsController@addQuestion')->name('ask_question');
 
 // Comments
 // Comments on Answers
@@ -60,3 +60,27 @@ Route::get('tag_list', 'TagsController@getAllTags');
 Route::get('users/{username?}', 'ProfileController@getProfile')->name('profile');
 Route::get('users/{username}/edit', 'ProfileController@getEditProfile')->name('edit_profile');
 Route::post('users/edit/image', 'ProfileController@imageUpload');
+
+
+// Testing Notifications' Server
+Route::get('test/notifications-view', function() {
+    return view('notifications_test');
+});
+
+Route::get('test/notifications-hello-world', function() {
+  require __DIR__ . '/../vendor/autoload.php';
+
+  $options = array(
+    'cluster' => 'eu',
+    'encrypted' => true
+  );
+  $pusher = new Pusher\Pusher(
+    '***REMOVED***',
+    '***REMOVED***',
+    '***REMOVED***',
+    $options
+  );
+
+  $data['message'] = 'hello world';
+  $pusher->trigger('my-channel', 'my-event', $data);
+});

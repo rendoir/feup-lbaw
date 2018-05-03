@@ -17,7 +17,7 @@ use Illuminate\Http\RedirectResponse;
 
 const NUM_PER_PAGE = 10;
 
-class QuestionController extends Controller
+class QuestionsController extends Controller
 {
     protected $redirectTo = '/';
 

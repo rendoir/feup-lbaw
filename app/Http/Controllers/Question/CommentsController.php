@@ -70,7 +70,7 @@ class CommentsController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function addComment(Request $request)
     {

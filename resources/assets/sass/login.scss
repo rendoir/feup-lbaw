@@ -220,6 +220,7 @@
     line-height: 1.2;
 
     content: attr(data-placeholder);
+    opacity: 0;
     display: block;
     width: 100%;
     position: absolute;
@@ -231,6 +232,7 @@
   }
 
   .input100:focus + .focus-input100::after {
+    opacity: 1;
     top: -15px;
   }
 
