@@ -24,11 +24,11 @@
                         </div>
                     </div>
                 </div>
-                <img id="bg-img" class="card-img-top" height="350px" src="/backgrounds/<?=$user->id?>" alt="Card image cap">
+                <img id="bg-img" class="card-img-top" height="350px" src="<?=File::exists(public_path() . '/backgrounds/' . $user->id) ? ('/backgrounds/' . $user->id) : '/backgrounds/default'?>" alt="Card image cap">
 
                 <div class="card-body text-center pb-3">
                     <div>
-                        <img id="p-img" class="rounded-circle img-profile-big" src="/profiles/<?=$user->id?>" alt="UserImage">
+                        <img id="p-img" class="rounded-circle img-profile-big" src="<?=File::exists(public_path() . '/profiles/' . $user->id) ? ('/profiles/' . $user->id) : '/profiles/default'?>" alt="UserImage">
                     </div>
 
                     <!-- Edit profile picture button -->

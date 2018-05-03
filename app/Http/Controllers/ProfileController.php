@@ -43,7 +43,23 @@ class ProfileController extends Controller
       $destinationPath = public_path('/profiles');
       $image->move($destinationPath, $input['imagename']);
 
-      return '/profiles\/' . $input['imagename'];
+      return '/profiles/' . $input['imagename'];
     }
 
+    public function backgroundImageUpload(Request $request)
+    {
+      if(!Auth::check())
+        return response()->setStatusCode(403);
+
+      $this->validate($request, [
+          'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+      ]);
+
+      $image = $request->file('image');
+      $input['imagename'] = Auth::id();
+      $destinationPath = public_path('/backgrounds');
+      $image->move($destinationPath, $input['imagename']);
+
+      return '/backgrounds/' . $input['imagename'];
+    }
 }
