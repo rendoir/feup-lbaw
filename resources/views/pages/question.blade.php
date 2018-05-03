@@ -124,7 +124,7 @@ $num_answers = $question->get_num_answers();
                         </div>
                     </div>
                     <div>
-                        @each('partials.category', $message->categories, 'category')
+                        @each('partials.category', $question->categories, 'category')
                     </div>
                 </div>
             </div>
@@ -177,5 +177,6 @@ $num_answers = $question->get_num_answers();
 </div>
 
 @include('templates.comments')
+@include('templates.errors')
 
 @endsection

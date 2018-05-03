@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Question;
 
+use App\Category;
 use App\Commentable;
 use App\Message;
 use App\MessageVersion;
 use App\Question;
+use App\QuestionsCategory;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -45,6 +47,11 @@ class QuestionsController extends Controller
                 Commentable::create(['id' => $message->id]);
                 $question = Question::create(['id' => $message->id, 'title' => $request->title]);
                 MessageVersion::create(['content' => $request->messageContent, 'message_id' => $message->id]);
+                $tags = explode(',', $request->tags);
+                foreach ($tags as $tag){
+                    $tagModel = Category::where('name', $tag)->first();
+                    $question->categories()->attach($tagModel->id);
+                }
             });
             return redirect()->route('questions', ['id' => $question->id]);
         }

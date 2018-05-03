@@ -36,7 +36,7 @@
                     <span class="badge badge-success">{{$author->getBadge()}}</span>
                 </div>
                 <div>
-                    @each('partials.category', $message->categories, 'category')
+                    @each('partials.category', $question->categories, 'category')
                 </div>
             </div>
         </div>

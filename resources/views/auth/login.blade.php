@@ -13,14 +13,9 @@
 						<i class="zmdi zmdi-font"></i>
 					</span>
 
-                    <div class="wrap-input100 validate-input {{ $errors->has('email') ? ' has-error' : '' }}" data-validate = "Valid email is: a@b.c">
-                        <input id="email" type="text" class="input100" name="email" value="{{ old('email') }}" placeholder="Email" required autofocus>
 
-                        @if ($errors->has('email'))
-                        <span class="help-block">
-                        <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                        @endif
+                    <div class="wrap-input100 validate-input {{ $errors->has('email') ? ' has-error' : '' }}" data-validate = "Valid email is: a@b.c">
+                        <input id="email" type="text" class="input100" name="email" value="{{ old('email') }}" placeholder="Email" required>
                         <span class="focus-input100" data-placeholder="Email"></span>
                     </div>
 
@@ -29,14 +24,20 @@
 							<i class="zmdi zmdi-eye"></i>
 						</span>
                         <input id="password" type="password" class="input100" name="password" placeholder="Password" required>
+                        <span class="focus-input100" data-placeholder="Password"></span>
+                    </div>
 
-                        @if ($errors->has('password'))
+                    @if ($errors->has('email'))
+                        <span class="help-block">
+                        <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif
+
+                    @if ($errors->has('password'))
                         <span class="help-block">
                         <strong>{{ $errors->first('password') }}</strong>
                         </span>
-                        @endif
-                        <span class="focus-input100" data-placeholder="Password"></span>
-                    </div>
+                    @endif
 
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">

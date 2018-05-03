@@ -52,4 +52,14 @@ class Question extends Model
             ->orderByRaw('ts_rank(search, plainto_tsquery(\'english\', ?)) DESC', [$search]);
     }
 
+    public function categories()
+    {
+        return $this->belongsToMany(
+            'App\Category',
+            'questions_categories',
+            'question_id',
+            'category_id'
+        );
+    }
+
 }

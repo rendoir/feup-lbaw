@@ -1,4 +1,4 @@
-var ajax = require('./ajax.js');
+var ajax = require('../ajax.js');
 
 import { getUniqueCommentURL } from './commentsUtils.js'
 
