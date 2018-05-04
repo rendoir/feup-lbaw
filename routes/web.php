@@ -60,6 +60,7 @@ Route::get('tag_list', 'TagsController@getAllTags');
 Route::get('users/{username?}', 'ProfileController@getProfile')->name('profile');
 Route::get('users/{username}/edit', 'ProfileController@getEditProfile')->name('edit_profile');
 Route::post('users/edit/image/{type}', 'ProfileController@imageUpload');
+Route::post('users/edit/biography', 'ProfileController@editBiography');
 
 // Testing Notifications' Server
 Route::get('test/notifications-view', function() {

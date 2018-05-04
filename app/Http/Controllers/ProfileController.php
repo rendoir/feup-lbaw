@@ -46,4 +46,13 @@ class ProfileController extends Controller
 
       return $path . '/' . $name;
     }
+
+    public function editBiography(Request $request) {
+      if(!Auth::check())
+        return response()->setStatusCode(403);
+
+      $user = Auth::user();
+      $user->biography = $request->biography;
+      $user->save();
+    }
 }

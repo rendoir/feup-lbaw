@@ -20,7 +20,7 @@
                             </div>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="bg-input">
-                                <label class="custom-file-label" for="bg-input">Choose file</label>
+                                <label id="bg-label" class="custom-file-label" for="bg-input">Choose file</label>
                             </div>
                         </div>
                     </div>
@@ -44,24 +44,27 @@
                             </div>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="p-input">
-                                <label class="custom-file-label" for="p-input">Choose file</label>
+                                <label id="p-label" class="custom-file-label" for="p-input">Choose file</label>
                             </div>
                         </div>
                     </div>
 
                     <h2 class="card-text my-3"><?=$user->username?></h2>
-                    <div class="input-group">
-                        <textarea class="form-control profile-textarea" aria-label="With textarea"><?=$user->biography != null ? $user->biography : 'Write something about yourself!'?></textarea>
-                    </div>
                 </div>
 
-                <div class="text-center mt-3 mb-5">
-                    <a href="own-profile.html" role="button" class="btn btn-primary">
-                        <span class="pr-1">
-                            <i class="far fa-save"></i>
-                        </span>
-                        Save Changes
-                    </a>
+                <!-- Edit biography -->
+                <div class="card border-0">
+                  <div class="input-group">
+                      <textarea id="bio-input" class="form-control profile-textarea" aria-label="With textarea" placeholder="<?=$user->biography == null ? 'Write something about yourself!' : ''?>"><?=$user->biography != null ? $user->biography : ''?></textarea>
+                  </div>
+                  <div class="text-center mt-3 mb-5">
+                      <button id="bio-save" class="btn btn-primary">
+                          <span class="pr-1">
+                              <i class="far fa-save"></i>
+                          </span>
+                          Save Biography
+                      </a>
+                  </div>
                 </div>
             </section>
 

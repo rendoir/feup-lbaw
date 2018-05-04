@@ -1904,7 +1904,9 @@ $(function () {
 
 /***/ }),
 /* 15 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(1);
 
 function uploadImage(abbr, type) {
   var save_changes = document.querySelector("#" + abbr + "-save");
@@ -1938,6 +1940,18 @@ function uploadImage(abbr, type) {
 
 uploadImage('bg', 'background');
 uploadImage('p', 'profile');
+
+function editBiography() {
+  var bio_save = document.querySelector("#bio-save");
+  if (bio_save == null) return;
+  bio_save.addEventListener("click", function (e) {
+    var bio_input = document.querySelector("#bio-input");
+    if (bio_input == null) return;
+    ajax.sendAjaxRequest('POST', '/users/edit/biography', { biography: bio_input.value });
+  });
+}
+
+editBiography();
 
 /***/ }),
 /* 16 */
