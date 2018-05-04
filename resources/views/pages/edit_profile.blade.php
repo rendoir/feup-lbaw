@@ -15,12 +15,12 @@
                     </button>
                     <div class="dropdown-menu mt-2 mb-0 p-0" aria-labelledby="dropdownMenuButton">
                         <div class="input-group">
+                            <div id="bg-save" class="input-group-prepend">
+                                <span class="input-group-text">Upload</span>
+                            </div>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="bg-input">
                                 <label class="custom-file-label" for="bg-input">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="bg-save">Upload</span>
                             </div>
                         </div>
                     </div>
@@ -39,12 +39,12 @@
                     </button>
                     <div class="dropdown-menu mt-1 mb-0 p-0 b-0 edit-profile-menu" aria-labelledby="dropdownMenuButton">
                         <div class="input-group m-auto">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="p-save">Upload</span>
+                            </div>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="p-input">
                                 <label class="custom-file-label" for="p-input">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="p-save">Upload</span>
                             </div>
                         </div>
                     </div>

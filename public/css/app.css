@@ -567,6 +567,10 @@ nav {
   width: 40%;
 }
 
+.input-group-text {
+  cursor: pointer;
+}
+
 .box-shadow {
   -webkit-box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.07), 0 0 20px 0 rgba(0, 0, 0, 0.07);
           box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.07), 0 0 20px 0 rgba(0, 0, 0, 0.07);

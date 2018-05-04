@@ -1910,10 +1910,13 @@ function uploadImage(abbr, type) {
   var save_changes = document.querySelector("#" + abbr + "-save");
   var select_image = document.querySelector("#" + abbr + "-input");
   var profile_img = document.querySelector("#" + abbr + "-img");
+
   if (save_changes == null || select_image == null) return;
+
   save_changes.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopImmediatePropagation();
+
     if (select_image.files.length == 0) return;
 
     var image = select_image.files[0];
