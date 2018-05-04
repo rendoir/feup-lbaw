@@ -533,6 +533,11 @@ nav {
   top: 1rem;
 }
 
+#profile-options img {
+  width: 1.5em;
+  height: 1.5em;
+}
+
 .profile-textarea {
   resize: none;
   height: 12rem;

@@ -63,7 +63,7 @@
           <!-- Options Dropdown-->
           <div class="dropdown px-1">
                         <span class="big-icon mx-2" id="profile-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="rounded-circle" src="{{ asset('img/img-profile-icon.jpg') }}" alt="profile picture">
+                            <img class="rounded-circle" src="<?=Auth::user()->getImage('profile')?>" alt="profile picture">
                         </span>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-options">
               <a href="{{ route('profile') }}" class="dropdown-item" role="button">Profile</a>
