@@ -964,6 +964,10 @@ nav {
           flex-flow: row wrap;
 }
 
+.main-content.display-content {
+  border: 0;
+}
+
 .main-content > * {
   -webkit-box-flex: 1;
       -ms-flex: 1 100%;
