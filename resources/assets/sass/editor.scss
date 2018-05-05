@@ -159,6 +159,10 @@
 	flex-flow: row wrap;
 }
 
+.main-content.display-content {
+	border: 0;
+}
+
 .main-content > * {
 	flex: 1 100%;
 }

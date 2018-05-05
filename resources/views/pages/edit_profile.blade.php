@@ -75,12 +75,7 @@
                         <div class="card-body text-center">
                             <h4 class="card-text my-2">Control Panel</h4>
                             <div class="d-flex flex-column justify-content-center">
-                                <div>
-                                    <span class="badge badge-success mt-3 mb-2">Trusted</span>
-                                </div>
-                                <div>
-                                    <span class="badge badge-success mb-1">Moderator</span>
-                                </div>
+                              <span class="badge badge-success">{{$user->getBadge()}}</span>
                             </div>
                             <div class="my-3">
                                 <p>Reputation Points</p>
