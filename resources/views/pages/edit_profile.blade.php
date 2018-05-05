@@ -70,7 +70,7 @@
 
             <!-- Side Column -->
             <aside class="col-md-3">
-                <div class="aside-content py-5">
+                <div class="py-5">
                     <div class="card">
                         <div class="card-body text-center">
                             <h4 class="card-text my-2">Control Panel</h4>

@@ -24,7 +24,9 @@ function uploadImage(abbr, type) {
       let response = this.responseText;
       if (this.status == 200)
         profile_img.src = response + '?time=' + performance.now();
-      else window.location.replace('/login');
+      else if(e.target.status == 403)
+        window.location.replace('/login');
+      else result.outerHTML = '<div id="bio-alert" class="alert alert-danger alert-dismissible" role="alert"><div class="container"><div class="d-flex justify-content-between"><div>Error changing your image.</div><button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div></div></div>'
     });
 
     request.open('POST', '/users/edit/image/' + type, true);
@@ -43,7 +45,21 @@ function editBiography() {
   bio_save.addEventListener("click", function (e) {
     let bio_input = document.querySelector("#bio-input");
     if (bio_input == null) return;
-    ajax.sendAjaxRequest('POST', '/users/edit/biography', { biography: bio_input.value });
+    ajax.sendAjaxRequest('POST', '/users/edit/biography', { biography: bio_input.value }, editBiographyHandler);
+  });
+}
+
+function editBiographyHandler(e) {
+  let header = document.querySelector("header");
+  let result = document.createElement('div');
+  header.appendChild(result);
+  if(e.target.status == 200)
+    result.outerHTML = '<div id="bio-alert" class="alert alert-success alert-dismissible" role="alert"><div class="container"><div class="d-flex justify-content-between"><div>You changed your biography with success!</div><button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div></div></div>'
+  else if(e.target.status == 403)
+    window.location.replace('/login');
+  else result.outerHTML = '<div id="bio-alert" class="alert alert-danger alert-dismissible" role="alert"><div class="container"><div class="d-flex justify-content-between"><div>Error changing your biography.</div><button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div></div></div>'
+  $("#bio-alert").fadeTo(2000, 500).slideUp(500, function(){
+    $(this).remove();
   });
 }
 
