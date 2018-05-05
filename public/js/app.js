@@ -179,7 +179,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(13);
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var messages = __webpack_require__(33);
 
 
 
@@ -196,105 +196,13 @@ function addEventListeners() {
     // html elements triggering the events are created
 }
 
-function genericClickListener(selector, method) {
-
-    var comments = document.querySelectorAll(selector);
-    if (comments == null) return;
-
-    var _loop = function _loop(comment) {
-
-        var message_id = comment.getAttribute('data-message-id');
-        if (message_id == null) return {
-                v: void 0
-            };
-
-        comment.addEventListener('click', function () {
-            method(message_id);
-        });
-    };
-
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-        for (var _iterator = comments[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var comment = _step.value;
-
-            var _ret = _loop(comment);
-
-            if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
-        }
-    } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-            }
-        } finally {
-            if (_didIteratorError) {
-                throw _iteratorError;
-            }
-        }
-    }
-}
-
-function genericEnterListener(selector, method) {
-
-    var comments = document.querySelectorAll(selector);
-    if (comments == null) return;
-
-    var _loop2 = function _loop2(comment) {
-
-        var message_id = comment.getAttribute('data-message-id');
-        if (message_id == null) return {
-                v: void 0
-            };
-
-        comment.addEventListener('keyup', function (event) {
-            if (event.keyCode == 13) {
-                method(message_id);
-            }
-        });
-    };
-
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
-
-    try {
-        for (var _iterator2 = comments[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var comment = _step2.value;
-
-            var _ret2 = _loop2(comment);
-
-            if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
-        }
-    } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                _iterator2.return();
-            }
-        } finally {
-            if (_didIteratorError2) {
-                throw _iteratorError2;
-            }
-        }
-    }
-}
-
 function viewCommentsEventListener() {
-    genericClickListener('.show-comments', __WEBPACK_IMPORTED_MODULE_0__viewComments_js__["a" /* viewCommentsRequest */]);
+    messages.genericClickListener('.show-comments', __WEBPACK_IMPORTED_MODULE_0__viewComments_js__["a" /* viewCommentsRequest */]);
 }
 
 function addCommentsEventListener() {
-    genericClickListener('.new-comment-submit', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */]);
-    genericEnterListener('.new-comment-content', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */]);
+    messages.genericClickListener('.new-comment-submit', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */]);
+    messages.genericEnterListener('.new-comment-content', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */]);
 }
 
 function addSingleCommentEventListener(message_id) {
@@ -307,7 +215,7 @@ function addSingleCommentEventListener(message_id) {
 }
 
 function editCommentsEventListener() {
-    genericClickListener('.edit-comments', __WEBPACK_IMPORTED_MODULE_2__editComment_js__["a" /* setEditMode */]);
+    messages.genericClickListener('.edit-comments', __WEBPACK_IMPORTED_MODULE_2__editComment_js__["a" /* setEditMode */]);
 }
 
 function removeCommentsEventListener() {
@@ -1858,6 +1766,7 @@ function getPreviousComment(inputNode, previousNode) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = removeComment;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils__ = __webpack_require__(0);
 var ajax = __webpack_require__(1);
+var alert = __webpack_require__(3);
 
 
 
@@ -1892,10 +1801,10 @@ function removeCommentRequest(comment_id, answer_id, commentNode) {
 
 function removeCommentHandler(response, commentNode) {
     if (response.status == 403) {
-        displayError("You have no permission to delete this comment");
+        alert.displayError("You have no permission to delete this comment");
         return;
     } else if (response.status != 200) {
-        displayError("Failed to delete the comment");
+        alert.displayError("Failed to delete the comment");
         return;
     }
 
@@ -7133,6 +7042,120 @@ if (editor_element != null) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */
+/***/ (function(module, exports) {
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function genericClickListener(selector, method) {
+
+    var messages = document.querySelectorAll(selector);
+    if (messages == null) return;
+
+    var _loop = function _loop(message) {
+
+        var ref_message_id = message.getAttribute('data-message-id');
+        if (ref_message_id == null) return {
+                v: void 0
+            };
+
+        message.addEventListener('click', function () {
+            method(ref_message_id);
+        });
+    };
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = messages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var message = _step.value;
+
+            var _ret = _loop(message);
+
+            if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+}
+
+function genericEnterListener(selector, method) {
+
+    var messages = document.querySelectorAll(selector);
+    if (messages == null) return;
+
+    var _loop2 = function _loop2(message) {
+
+        var ref_message_id = message.getAttribute('data-message-id');
+        if (ref_message_id == null) return {
+                v: void 0
+            };
+
+        message.addEventListener('keyup', function (event) {
+            if (event.keyCode == 13) {
+                method(ref_message_id);
+            }
+        });
+    };
+
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+        for (var _iterator2 = messages[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var message = _step2.value;
+
+            var _ret2 = _loop2(message);
+
+            if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+        }
+    } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+            }
+        } finally {
+            if (_didIteratorError2) {
+                throw _iteratorError2;
+            }
+        }
+    }
+}
+
+module.exports = {
+    genericClickListener: genericClickListener,
+    genericEnterListener: genericEnterListener
+};
 
 /***/ })
 /******/ ]);

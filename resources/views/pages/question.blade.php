@@ -143,7 +143,7 @@ $num_answers = $question->get_num_answers();
                     </textarea>
                 </div>
                 <div class="text-right w-100 pr-4 mb-3">
-                    <button class="p-2 align-left btn btn-outline-info px-3">Post answer</button>
+                    <button id="answer-creator" class="p-2 align-left btn btn-outline-info px-3" data-message-id="{{$question->id}}">Post answer</button>
                 </div>
             </div>
             @endif

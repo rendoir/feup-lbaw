@@ -40,6 +40,9 @@ Route::get('questions/{id}', 'Question\QuestionsController@showQuestionPage')->n
 Route::get('ask_question', 'Question\QuestionsController@showAskQuestionForm')->name('ask_question_form');
 Route::post('ask_question', 'Question\QuestionsController@addQuestion')->name('ask_question');
 
+// Answers
+Route::post('questions/{id}/answers', 'Question\AnswersController@addAnswer');
+
 // Comments
 // Comments on Answers
 Route::get('questions/{id}/answers/{answer_id}/comments', 'Question\CommentsController@getAnswerComments');

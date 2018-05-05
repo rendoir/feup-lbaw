@@ -1,4 +1,5 @@
 var ajax = require('../ajax.js');
+var alert = require('../alerts.js');
 
 import { getUniqueCommentURL } from "./commentsUtils";
 
@@ -37,11 +38,11 @@ function removeCommentRequest(comment_id, answer_id, commentNode) {
 
 function removeCommentHandler(response, commentNode) {
     if (response.status == 403) {
-        displayError("You have no permission to delete this comment");
+        alert.displayError("You have no permission to delete this comment");
         return;
     }
     else if (response.status != 200) {
-        displayError("Failed to delete the comment");
+        alert.displayError("Failed to delete the comment");
         return;
     }
 
