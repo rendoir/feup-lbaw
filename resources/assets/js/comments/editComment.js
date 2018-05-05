@@ -13,7 +13,7 @@ export function setEditMode(comment_id) {
     let parentNode = contentNode.parentNode;
     let content = contentNode.innerText;
     parentNode.removeChild(contentNode);
-    
+
     let input = document.createElement("input");
     input.classList.add('form-control');
     input.value = content;
@@ -24,15 +24,14 @@ export function setEditMode(comment_id) {
 }
 
 function addKeyListeners(inputNode, oldNode, comment_id) {
-    inputNode.addEventListener('keyup', function(event) {
-        
-        switch(event.keyCode)
-        {
+    inputNode.addEventListener('keyup', function (event) {
+
+        switch (event.keyCode) {
             // ENTER was pressed
             case (13):
                 requestEdition(inputNode, oldNode, comment_id);
                 break;
-            
+
             // ESC was pressed 
             case (27):
                 getPreviousComment(inputNode, oldNode);
@@ -71,12 +70,12 @@ function editCommentHandler(response, inputNode, oldNode) {
 
     let edittedComment = JSON.parse(response.responseText).comment;
     oldNode.innerText = edittedComment.content.version;
-    
+
     getPreviousComment(inputNode, oldNode);
 }
 
 function getPreviousComment(inputNode, previousNode) {
-    
+
     let parentNode = inputNode.parentNode;
     parentNode.removeChild(inputNode);
 

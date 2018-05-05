@@ -23,10 +23,10 @@ export function viewCommentsRequest(message_id) {
 
 // Handler to the get comments request response
 function getCommentsHandler(response, message_id) {
-    
+
     if (response.status == 200) {
         let responseJSON = JSON.parse(response.responseText);
         createComments(responseJSON, message_id);
     }
-    else errors.displayError("Failed to retrieve the requested Comments"); 
+    else errors.displayError("Failed to retrieve the requested Comments");
 }

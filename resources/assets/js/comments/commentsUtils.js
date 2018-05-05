@@ -56,7 +56,7 @@ export function getUniqueCommentURL(commentable_id, comment_id) {
  */
 export function toggleShowMsg(message_id, show) {
     let toggler = document.querySelector("a[aria-controls='AnswerComments" + message_id + "']");
-    
+
     if (!show) {
         toggler.innerHTML = "Hide Comments";
         return;
@@ -65,5 +65,5 @@ export function toggleShowMsg(message_id, show) {
     let numComments = toggler.parentNode.nextElementSibling.firstElementChild;
     let value = numComments.innerText.split(" ")[0];
 
-    toggler.innerHTML = (value > 0? "Show Comments" : "Add Comment");
+    toggler.innerHTML = (value > 0 ? "Show Comments" : "Add Comment");
 }

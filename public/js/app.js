@@ -1009,28 +1009,29 @@ __webpack_require__(14);
 __webpack_require__(15);
 __webpack_require__(16);
 __webpack_require__(17);
+__webpack_require__(32);
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports) {
 
 decodeHTML = function decodeHTML(html) {
-		var txt = document.createElement('textarea');
-		txt.innerHTML = html;
-		return txt.value;
+	var txt = document.createElement('textarea');
+	txt.innerHTML = html;
+	return txt.value;
 };
 
 function applyMarkdown() {
-		window.addEventListener("load", function () {
-				var markdown_content = document.querySelectorAll(".markdown");
-				var instance = new Object();
-				instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
-				for (var i = 0; i < markdown_content.length; i++) {
-						markdown_content[i].style.visibility = "visible";
-						var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown_content[i].innerHTML));
-						markdown_content[i].innerHTML = bound();
-				}
-		});
+	window.addEventListener("load", function () {
+		var markdown_content = document.querySelectorAll(".markdown");
+		var instance = new Object();
+		instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+		for (var i = 0; i < markdown_content.length; i++) {
+			markdown_content[i].style.visibility = "visible";
+			var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown_content[i].innerHTML));
+			markdown_content[i].innerHTML = bound();
+		}
+	});
 }
 
 applyMarkdown();
@@ -7030,6 +7031,84 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */
+/***/ (function(module, exports) {
+
+var simplemde = new SimpleMDE({
+    renderingConfig: { codeSyntaxHighlighting: true }, element: document.getElementById("editor"), forceSync: true, toolbar: ["bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list", "ordered-list", "link", "image", "table", "horizontal-rule", "preview", {
+        name: "side-by-side",
+        action: function customPreview(editor) {
+            var cm = editor.codemirror;
+            var wrapper = cm.getWrapperElement();
+            var main = document.querySelector(".main-content");
+            var preview = wrapper.nextSibling;
+            var toolbarButton = editor.toolbarElements["side-by-side"];
+            var useSideBySideListener = false;
+            if (/editor-preview-active-side/.test(preview.className)) {
+                preview.className = preview.className.replace(/\s*editor-preview-active-side\s*/g, "");
+                main.className = main.className.replace(/\s*preview-content\s*/g, "");
+                toolbarButton.className = toolbarButton.className.replace(/\s*active\s*/g, "");
+                wrapper.className = wrapper.className.replace(/\s*CodeMirror-sided\s*/g, " ");
+            } else {
+                // When the preview button is clicked for the first time,
+                // give some time for the transition from editor.css to fire and the view to slide from right to left,
+                // instead of just appearing.
+                setTimeout(function () {
+                    preview.className += " editor-preview-active-side";
+                }, 1);
+                toolbarButton.className += " active";
+                wrapper.className += " CodeMirror-sided";
+                main.className += " preview-content";
+                useSideBySideListener = true;
+            }
+
+            // Hide normal preview if active
+            var previewNormal = wrapper.lastChild;
+            if (/editor-preview-active/.test(previewNormal.className)) {
+                previewNormal.className = previewNormal.className.replace(/\s*editor-preview-active\s*/g, "");
+                var toolbar = editor.toolbarElements.preview;
+                var toolbar_div = wrapper.previousSibling;
+                toolbar.className = toolbar.className.replace(/\s*active\s*/g, "");
+                toolbar_div.className = toolbar_div.className.replace(/\s*disabled-for-preview*/g, "");
+            }
+
+            var sideBySideRenderingFunction = function sideBySideRenderingFunction() {
+                preview.innerHTML = editor.options.previewRender(editor.value(), preview);
+            };
+
+            if (!cm.sideBySideRenderingFunction) {
+                cm.sideBySideRenderingFunction = sideBySideRenderingFunction;
+            }
+
+            if (useSideBySideListener) {
+                preview.innerHTML = editor.options.previewRender(editor.value(), preview);
+                cm.on("update", cm.sideBySideRenderingFunction);
+            } else {
+                cm.off("update", cm.sideBySideRenderingFunction);
+            }
+
+            // Refresh to fix selection being off (#309)
+            cm.refresh();
+        },
+        className: "fa fa-columns no-disable",
+        title: "Toggle Side by Side"
+    }]
+});
+
+simplemde.value("");
 
 /***/ })
 /******/ ]);

@@ -46,12 +46,12 @@ function addCommentHandler(response, message_id) {
 
     if (!commentsSection.classList.contains('comment-creator')) {
         commentsSection.firstElementChild
-                .firstElementChild
-                .innerHTML += createCommentHTML(responseJSON);
+            .firstElementChild
+            .innerHTML += createCommentHTML(responseJSON);
         addSingleCommentEventListener(newComment.id);
     }
     else
-        createComments({'comments': [newComment], 'is_authenticated': responseJSON.is_authenticated}, message_id);
+        createComments({ 'comments': [newComment], 'is_authenticated': responseJSON.is_authenticated }, message_id);
 
     // Cleaning input text
     let contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";

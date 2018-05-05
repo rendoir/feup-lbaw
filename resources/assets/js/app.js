@@ -7,3 +7,4 @@ require('./tooltip.js');
 require('./profile.js');
 require('./login.js');
 require('./set_up_notifications.js');
+require('./editor.js');
