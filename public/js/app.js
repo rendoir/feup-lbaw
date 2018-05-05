@@ -1033,8 +1033,10 @@ decodeHTML = function decodeHTML(html) {
 function applyMarkdown() {
 	window.addEventListener("load", function () {
 		var markdown_content = document.querySelectorAll(".markdown");
+
 		var instance = new Object();
 		instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+
 		for (var i = 0; i < markdown_content.length; i++) {
 			markdown_content[i].style.visibility = "visible";
 			var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown_content[i].innerHTML));

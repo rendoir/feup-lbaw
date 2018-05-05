@@ -26,7 +26,7 @@
         </div>
 
         <!-- Text editor -->
-        <section class="main-content">
+        <section class="main-content question-editor">
           <textarea id="editor" name="messageContent">
           </textarea>
         </section>

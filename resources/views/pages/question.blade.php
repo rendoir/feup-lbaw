@@ -137,12 +137,14 @@ $num_answers = $question->get_num_answers();
         <div class="col-md-9">
             @if (Auth::check())
             <!-- Text editor -->
-            <div class="card-body b-3">
-                <div class="main-content">
-                    <textarea id="editor" name="messageContent">
+            <div class="card mt-3">
+                <div class="main-content m-3 answer-editor">
+                    <textarea id="editor"  name="messageContent">
                     </textarea>
                 </div>
-                <button class="p-2 ml-auto btn btn-outline-info my-2 my-sm-0" type="submit">Post answer</button>
+                <div class="text-right w-100 pr-4 mb-3">
+                    <button class="p-2 align-left btn btn-outline-info px-3">Post answer</button>
+                </div>
             </div>
             @endif
 
