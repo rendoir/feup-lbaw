@@ -77,20 +77,20 @@
                     <div class="my-3">
                         <p>Reputation Points</p>
                         <i class="fas fa-trophy"></i>
-                        <span>200</span>
+                        <span>{{$user->reputation}}</span>
                     </div>
                     <div class="d-flex flex-column align-content-center container">
                         <div class="py-2">
                             <i class="far fa-question-circle"></i>
-                            <span>Questions: 24</span>
+                            <span>{{$user->getNumberQuestions()}}</span>
                         </div>
                         <div class="py-2 border-top">
                             <i class="far fa-hand-peace"></i>
-                            <span>Answers: 24</span>
+                            <span>{{$user->getNumberAnswers()}}</span>
                         </div>
                         <div class="py-2 border-top">
                             <i class="far fa-comment"></i>
-                            <span>Comments: 24</span>
+                            <span>{{$user->getNumberComments()}}</span>
                         </div>
                     </div>
                     <div class="py-3">

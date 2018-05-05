@@ -30,8 +30,12 @@ function uploadImage(abbr, type) {
       else if (e.target.status == 403) {
         window.location.replace('/login');
       }
-      else
-        errors.displayError("Error changing your image.");
+      else {
+        let alert_elem = errors.displayError("Error changing your image.");
+        $(alert_elem).fadeTo(2000, 500).slideUp(500, function () {
+          $(this).remove();
+        });
+      }
     });
 
     request.open('POST', '/users/edit/image/' + type, true);
@@ -58,17 +62,18 @@ function editBiography() {
 }
 
 function editBiographyHandler(e) {
+  let alert_elem;
 
   if (e.target.status == 200) {
-    errors.displaySuccess("You changed your biography with success!");
+    alert_elem = errors.displaySuccess("You changed your biography with success!");
   }
   else if (e.target.status == 403) {
     window.location.replace('/login');
   }
   else
-    errors.displayError("Error changing your biography.");
+    alert_elem = errors.displayError("Error changing your biography.");
 
-  $("#bio-alert").fadeTo(2000, 500).slideUp(500, function () {
+  $(alert_elem).fadeTo(2000, 500).slideUp(500, function () {
     $(this).remove();
   });
 }

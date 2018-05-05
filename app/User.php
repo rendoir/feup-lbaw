@@ -60,4 +60,22 @@ class User extends Authenticatable
         return ($name);
       else return '/' . $type . 's/default';
     }
+
+    public function getNumberQuestions() {
+      return Question::join('messages', 'questions.id', '=', 'messages.id')
+      ->where('messages.author', '=', $this->id)
+      ->count();
+    }
+
+    public function getNumberAnswers() {
+      return Answer::join('messages', 'answers.id', '=', 'messages.id')
+      ->where('messages.author', '=', $this->id)
+      ->count();
+    }
+
+    public function getNumberComments() {
+      return Comment::join('messages', 'comments.id', '=', 'messages.id')
+      ->where('messages.author', '=', $this->id)
+      ->count();
+    }
 }

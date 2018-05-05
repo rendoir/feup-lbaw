@@ -1,11 +1,11 @@
 var Mustache = require('mustache');
 
 function displayError(errorMessage) {
-    displayMessage(errorMessage, false);
+    return displayMessage(errorMessage, false);
 }
 
 function displaySuccess(successMessage) {
-    displayMessage(successMessage, true);
+    return displayMessage(successMessage, true);
 }
 
 function displayMessage(message, isSuccess) {
@@ -17,6 +17,8 @@ function displayMessage(message, isSuccess) {
 
     let header = document.querySelector("header");
     header.appendChild(placeholder);
+
+    return placeholder;
 }
 
 module.exports = {

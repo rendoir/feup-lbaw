@@ -335,11 +335,11 @@ window.addEventListener('load', addEventListeners);
 var Mustache = __webpack_require__(4);
 
 function displayError(errorMessage) {
-    displayMessage(errorMessage, false);
+    return displayMessage(errorMessage, false);
 }
 
 function displaySuccess(successMessage) {
-    displayMessage(successMessage, true);
+    return displayMessage(successMessage, true);
 }
 
 function displayMessage(message, isSuccess) {
@@ -351,6 +351,8 @@ function displayMessage(message, isSuccess) {
 
     var header = document.querySelector("header");
     header.appendChild(placeholder);
+
+    return placeholder;
 }
 
 module.exports = {
@@ -1946,7 +1948,12 @@ function uploadImage(abbr, type) {
         profile_img.src = response + '?time=' + performance.now();
       } else if (e.target.status == 403) {
         window.location.replace('/login');
-      } else errors.displayError("Error changing your image.");
+      } else {
+        var alert_elem = errors.displayError("Error changing your image.");
+        $(alert_elem).fadeTo(2000, 500).slideUp(500, function () {
+          $(this).remove();
+        });
+      }
     });
 
     request.open('POST', '/users/edit/image/' + type, true);
@@ -1972,14 +1979,15 @@ function editBiography() {
 }
 
 function editBiographyHandler(e) {
+  var alert_elem = void 0;
 
   if (e.target.status == 200) {
-    errors.displaySuccess("You changed your biography with success!");
+    alert_elem = errors.displaySuccess("You changed your biography with success!");
   } else if (e.target.status == 403) {
     window.location.replace('/login');
-  } else errors.displayError("Error changing your biography.");
+  } else alert_elem = errors.displayError("Error changing your biography.");
 
-  $("#bio-alert").fadeTo(2000, 500).slideUp(500, function () {
+  $(alert_elem).fadeTo(2000, 500).slideUp(500, function () {
     $(this).remove();
   });
 }
