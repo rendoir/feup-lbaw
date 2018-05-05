@@ -67,7 +67,7 @@
 
     <!-- Side Column -->
     <aside class="col-md-3 mb-5">
-        <div class="aside-content pt-5">
+        <div class="pt-5">
             <div class="card">
                 <div class="card-body text-center">
                     <h4 class="card-text my-2">Control Panel</h4>
