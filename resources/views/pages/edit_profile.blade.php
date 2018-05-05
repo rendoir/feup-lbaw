@@ -102,4 +102,6 @@
             </aside>
         </div>
 </main>
+
+@include('templates.alerts')
 @endsection

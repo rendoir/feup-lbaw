@@ -30,8 +30,12 @@ function uploadImage(abbr, type) {
       else if (e.target.status == 403) {
         window.location.replace('/login');
       }
-      else
-        errors.displayError("Error changing your image.");
+      else {
+        let alert_elem = errors.displayError("Error changing your image.");
+        $(alert_elem).fadeTo(2000, 500).slideUp(500, function () {
+          $(this).remove();
+        });
+      }
     });
 
     request.open('POST', '/users/edit/image/' + type, true);
