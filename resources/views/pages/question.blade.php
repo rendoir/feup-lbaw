@@ -135,6 +135,14 @@ $num_answers = $question->get_num_answers();
 <section class="container">
     <div class="row">
         <div class="col-md-9">
+            @if (Auth::check())
+            <!-- Text editor -->
+            <section class="main-content">
+                <textarea id="editor" name="messageContent">
+                </textarea>
+            </section>
+            @endif
+
             @foreach($answers as $answer)
                 @include('partials.answer', ['answer' => $answer])
             @endforeach
@@ -177,6 +185,6 @@ $num_answers = $question->get_num_answers();
 </div>
 
 @include('templates.comments')
-@include('templates.errors')
+@include('templates.alerts')
 
 @endsection

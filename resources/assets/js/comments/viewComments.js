@@ -1,5 +1,5 @@
 var ajax = require('../ajax.js');
-var errors = require('../errors.js');
+var alert = require('../alerts.js');
 
 import { getCommentsURL } from './commentsUtils.js'
 import { getCommentsDropDown } from './commentsUtils.js'
@@ -28,5 +28,5 @@ function getCommentsHandler(response, message_id) {
         let responseJSON = JSON.parse(response.responseText);
         createComments(responseJSON, message_id);
     }
-    else errors.displayError("Failed to retrieve the requested Comments");
+    else alert.displayError("Failed to retrieve the requested Comments");
 }

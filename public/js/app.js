@@ -329,27 +329,7 @@ function removeCommentsEventListener() {
 window.addEventListener('load', addEventListeners);
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mustache = __webpack_require__(4);
-
-function displayError(errorMessage) {
-
-    var template = document.querySelector("template#error-template").innerHTML;
-    var placeholder = document.createElement("span");
-
-    placeholder.innerHTML = Mustache.render(template, { message: errorMessage });
-
-    var header = document.querySelector("header");
-    header.appendChild(placeholder);
-}
-
-module.exports = {
-    displayError: displayError
-};
-
-/***/ }),
+/* 3 */,
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1661,7 +1641,7 @@ addTags();
 /* harmony export (immutable) */ __webpack_exports__["a"] = viewCommentsRequest;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
 var ajax = __webpack_require__(1);
-var errors = __webpack_require__(3);
+var alert = __webpack_require__(33);
 
 
 
@@ -1687,7 +1667,7 @@ function getCommentsHandler(response, message_id) {
     if (response.status == 200) {
         var responseJSON = JSON.parse(response.responseText);
         Object(__WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__["b" /* createComments */])(responseJSON, message_id);
-    } else errors.displayError("Failed to retrieve the requested Comments");
+    } else alert.displayError("Failed to retrieve the requested Comments");
 }
 
 /***/ }),
@@ -1699,7 +1679,7 @@ function getCommentsHandler(response, message_id) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__comments_js__ = __webpack_require__(2);
 var ajax = __webpack_require__(1);
-var errors = __webpack_require__(3);
+var alert = __webpack_require__(33);
 
 
 
@@ -1727,10 +1707,10 @@ function addCommentRequest(message_id) {
 // Handler to the add comment request response
 function addCommentHandler(response, message_id) {
     if (response.status == 403) {
-        errors.displayError("You have no permission to execute this action");
+        alert.displayError("You have no permission to execute this action");
         return;
     } else if (response.status != 200) {
-        errors.displayError("Failed to add a new Comment");
+        alert.displayError("Failed to add a new Comment");
         return;
     }
 
@@ -1908,6 +1888,7 @@ $(function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(1);
+var errors = __webpack_require__(33);
 
 function uploadImage(abbr, type) {
   var save_changes = document.querySelector("#" + abbr + "-save");
@@ -1929,7 +1910,12 @@ function uploadImage(abbr, type) {
     var request = new XMLHttpRequest();
     request.addEventListener('load', function (event) {
       var response = this.responseText;
-      if (this.status == 200) profile_img.src = response + '?time=' + performance.now();else if (e.target.status == 403) window.location.replace('/login');else result.outerHTML = '<div id="bio-alert" class="alert alert-danger alert-dismissible" role="alert"><div class="container"><div class="d-flex justify-content-between"><div>Error changing your image.</div><button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div></div></div>';
+
+      if (this.status == 200) {
+        profile_img.src = response + '?time=' + performance.now();
+      } else if (e.target.status == 403) {
+        window.location.replace('/login');
+      } else errors.displayError("Error changing your image.");
     });
 
     request.open('POST', '/users/edit/image/' + type, true);
@@ -1945,18 +1931,23 @@ uploadImage('p', 'profile');
 function editBiography() {
   var bio_save = document.querySelector("#bio-save");
   if (bio_save == null) return;
+
   bio_save.addEventListener("click", function (e) {
     var bio_input = document.querySelector("#bio-input");
     if (bio_input == null) return;
+
     ajax.sendAjaxRequest('POST', '/users/edit/biography', { biography: bio_input.value }, editBiographyHandler);
   });
 }
 
 function editBiographyHandler(e) {
-  var header = document.querySelector("header");
-  var result = document.createElement('div');
-  header.appendChild(result);
-  if (e.target.status == 200) result.outerHTML = '<div id="bio-alert" class="alert alert-success alert-dismissible" role="alert"><div class="container"><div class="d-flex justify-content-between"><div>You changed your biography with success!</div><button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div></div></div>';else if (e.target.status == 403) window.location.replace('/login');else result.outerHTML = '<div id="bio-alert" class="alert alert-danger alert-dismissible" role="alert"><div class="container"><div class="d-flex justify-content-between"><div>Error changing your biography.</div><button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div></div></div>';
+
+  if (e.target.status == 200) {
+    errors.displaySuccess("You changed your biography with success!");
+  } else if (e.target.status == 403) {
+    window.location.replace('/login');
+  } else errors.displayError("Error changing your biography.");
+
   $("#bio-alert").fadeTo(2000, 500).slideUp(500, function () {
     $(this).remove();
   });
@@ -7109,6 +7100,36 @@ var simplemde = new SimpleMDE({
 });
 
 simplemde.value("");
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mustache = __webpack_require__(4);
+
+function displayError(errorMessage) {
+    displayMessage(errorMessage, false);
+}
+
+function displaySuccess(successMessage) {
+    displayMessage(successMessage, true);
+}
+
+function displayMessage(message, isSuccess) {
+
+    var template = document.querySelector("template#alert-template").innerHTML;
+    var placeholder = document.createElement("span");
+
+    placeholder.innerHTML = Mustache.render(template, { message: errorMessage, isSucess: isSuccess });
+
+    var header = document.querySelector("header");
+    header.appendChild(placeholder);
+}
+
+module.exports = {
+    displayError: displayError,
+    displaySuccess: displaySuccess
+};
 
 /***/ })
 /******/ ]);

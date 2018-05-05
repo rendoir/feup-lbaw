@@ -1,6 +1,11 @@
 @verbatim
-<template id="error-template">
+<template id="alert-template">
+    {{#isSucess}}
+    <div class="alert alert-success alert-dismissible m-0" role="alert">
+    {{/isSucess}}
+    {{^isSucess}}
     <div class="alert alert-danger alert-dismissible m-0" role="alert">
+    {{/isSucess}}
         <div class="container">
             <div class="d-flex justify-content-between">
             <div>{{message}}</div>

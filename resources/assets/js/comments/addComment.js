@@ -1,5 +1,5 @@
 var ajax = require('../ajax.js');
-var errors = require('../errors.js');
+var alert = require('../alerts.js');
 
 import { getCommentsURL } from './commentsUtils.js'
 import { createCommentHTML } from './commentsUtils.js'
@@ -30,11 +30,11 @@ export function addCommentRequest(message_id) {
 // Handler to the add comment request response
 function addCommentHandler(response, message_id) {
     if (response.status == 403) {
-        errors.displayError("You have no permission to execute this action");
+        alert.displayError("You have no permission to execute this action");
         return;
     }
     else if (response.status != 200) {
-        errors.displayError("Failed to add a new Comment");
+        alert.displayError("Failed to add a new Comment");
         return;
     }
 
