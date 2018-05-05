@@ -15,8 +15,8 @@ export function removeComment(commentTrashBtn) {
     let comment = commentTrashBtn.parentNode.parentNode.parentNode;
     let commentsGroup = comment.parentNode.parentNode.parentNode;
     let answer_id = commentsGroup.parentNode.parentNode.getAttribute("data-message-id");
-    
-    deleteBtn.addEventListener('click', function() {
+
+    deleteBtn.addEventListener('click', function () {
         removeCommentRequest(comment_id, answer_id, comment.parentNode);
     });
 }

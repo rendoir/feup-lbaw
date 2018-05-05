@@ -2,10 +2,10 @@ var ajax = require('./ajax.js');
 
 function addEventListeners() {
     let logout = document.querySelector('#logout');
-    if(logout != null) logout.addEventListener('click', sendLogoutRequest);
+    if (logout != null) logout.addEventListener('click', sendLogoutRequest);
 
     let login = document.querySelector('#login');
-    if(login != null) login.addEventListener('click', sendLoginRequest);
+    if (login != null) login.addEventListener('click', sendLoginRequest);
 }
 
 function sendLogoutRequest() {
@@ -16,14 +16,14 @@ function sendLoginRequest() {
     let form = document.querySelector('#signin_form');
     let email = form.querySelector('input[type=text]').value;
     let password = form.querySelector('input[type=password]').value;
-    ajax.sendAjaxRequest('post', 'login', {email: email, password: password}, sendLoginHandler);
+    ajax.sendAjaxRequest('post', 'login', { email: email, password: password }, sendLoginHandler);
 }
 
 function sendRegisterRequest() {
     let form = document.querySelector('#signin_form');
     let email = form.querySelector('input[type=text]').value;
     let password = form.querySelector('input[type=password]').value;
-    ajax.sendAjaxRequest('post', 'login', {email: email, password: password}, sendLoginHandler);
+    ajax.sendAjaxRequest('post', 'login', { email: email, password: password }, sendLoginHandler);
 }
 
 function sendLogoutHandler() {

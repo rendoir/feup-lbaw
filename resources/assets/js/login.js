@@ -8,17 +8,17 @@ function addEventListeners() {
 
         let placeholder = input.placeholder;
 
-        input.addEventListener('focus', function() {
+        input.addEventListener('focus', function () {
             input.placeholder = "";
         });
 
-        input.addEventListener('blur', function() {
-            setTimeout(function() {
+        input.addEventListener('blur', function () {
+            setTimeout(function () {
                 if (input.value == "")
                     input.placeholder = placeholder;
             }, 200);
         });
     }
-        
-    
+
+
 }
