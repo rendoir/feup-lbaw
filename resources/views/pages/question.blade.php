@@ -137,10 +137,13 @@ $num_answers = $question->get_num_answers();
         <div class="col-md-9">
             @if (Auth::check())
             <!-- Text editor -->
-            <section class="main-content">
-                <textarea id="editor" name="messageContent">
-                </textarea>
-            </section>
+            <div class="card-body b-3">
+                <div class="main-content">
+                    <textarea id="editor" name="messageContent">
+                    </textarea>
+                </div>
+                <button class="p-2 ml-auto btn btn-outline-info my-2 my-sm-0" type="submit">Post answer</button>
+            </div>
             @endif
 
             @foreach($answers as $answer)
