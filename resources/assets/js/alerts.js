@@ -17,6 +17,8 @@ function displayMessage(message, isSuccess) {
 
     let header = document.querySelector("header");
     header.appendChild(placeholder);
+
+    return placeholder;
 }
 
 module.exports = {

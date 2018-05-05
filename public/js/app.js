@@ -329,7 +329,38 @@ function removeCommentsEventListener() {
 window.addEventListener('load', addEventListeners);
 
 /***/ }),
-/* 3 */,
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mustache = __webpack_require__(4);
+
+function displayError(errorMessage) {
+    displayMessage(errorMessage, false);
+}
+
+function displaySuccess(successMessage) {
+    displayMessage(successMessage, true);
+}
+
+function displayMessage(message, isSuccess) {
+
+    var template = document.querySelector("template#alert-template").innerHTML;
+    var placeholder = document.createElement("span");
+
+    placeholder.innerHTML = Mustache.render(template, { message: errorMessage, isSucess: isSuccess });
+
+    var header = document.querySelector("header");
+    header.appendChild(placeholder);
+
+    return placeholder;
+}
+
+module.exports = {
+    displayError: displayError,
+    displaySuccess: displaySuccess
+};
+
+/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1641,7 +1672,7 @@ addTags();
 /* harmony export (immutable) */ __webpack_exports__["a"] = viewCommentsRequest;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
 var ajax = __webpack_require__(1);
-var alert = __webpack_require__(33);
+var alert = __webpack_require__(3);
 
 
 
@@ -1679,7 +1710,7 @@ function getCommentsHandler(response, message_id) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__comments_js__ = __webpack_require__(2);
 var ajax = __webpack_require__(1);
-var alert = __webpack_require__(33);
+var alert = __webpack_require__(3);
 
 
 
@@ -1888,7 +1919,7 @@ $(function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(1);
-var errors = __webpack_require__(33);
+var errors = __webpack_require__(3);
 
 function uploadImage(abbr, type) {
   var save_changes = document.querySelector("#" + abbr + "-save");
@@ -1941,14 +1972,15 @@ function editBiography() {
 }
 
 function editBiographyHandler(e) {
+  var alert_elem = void 0;
 
   if (e.target.status == 200) {
-    errors.displaySuccess("You changed your biography with success!");
+    alert_elem = errors.displaySuccess("You changed your biography with success!");
   } else if (e.target.status == 403) {
     window.location.replace('/login');
-  } else errors.displayError("Error changing your biography.");
+  } else alert_elem = errors.displayError("Error changing your biography.");
 
-  $("#bio-alert").fadeTo(2000, 500).slideUp(500, function () {
+  $(alert_elem).fadeTo(2000, 500).slideUp(500, function () {
     $(this).remove();
   });
 }
@@ -7093,36 +7125,6 @@ if (editor_element != null) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mustache = __webpack_require__(4);
-
-function displayError(errorMessage) {
-    displayMessage(errorMessage, false);
-}
-
-function displaySuccess(successMessage) {
-    displayMessage(successMessage, true);
-}
-
-function displayMessage(message, isSuccess) {
-
-    var template = document.querySelector("template#alert-template").innerHTML;
-    var placeholder = document.createElement("span");
-
-    placeholder.innerHTML = Mustache.render(template, { message: errorMessage, isSucess: isSuccess });
-
-    var header = document.querySelector("header");
-    header.appendChild(placeholder);
-}
-
-module.exports = {
-    displayError: displayError,
-    displaySuccess: displaySuccess
-};
 
 /***/ })
 /******/ ]);
