@@ -1180,7 +1180,11 @@ Tagify.prototype = {
             }
             if (e.key == "Enter") {
                 e.preventDefault(); // solves Chrome bug - http://stackoverflow.com/a/20398191/104380
-                if (this.addTags(s).length) e.target.value = '';
+                if (this.addTags(s).length) {
+                    e.target.value = '';
+                    var suggestions = document.querySelector('ul.suggestions');
+                    suggestions.parentNode.removeChild(suggestions);
+                }
                 return false;
             } else {
                 if (this.noneDatalistInput) clearTimeout(this.noneDatalistInput);
@@ -1223,7 +1227,7 @@ Tagify.prototype = {
                 var tags = document.querySelector('tags').parentNode;
                 suggestions = document.createElement('ul');
                 suggestions.className = "suggestions";
-                tags.appendChild(suggestions);
+                tags.insertAdjacentElement("afterend", suggestions);
                 var pattern = new RegExp(e.target.value, 'i');
 
                 var _loop = function _loop(i) {
@@ -1235,7 +1239,10 @@ Tagify.prototype = {
                         suggestions.appendChild(suggestion);
                         var lib = _this;
                         suggestion.addEventListener('click', function () {
-                            if (lib.addTags(curr_tag).length) e.target.value = '';
+                            if (lib.addTags(curr_tag).length) {
+                                suggestions.parentNode.removeChild(suggestions);
+                                e.target.value = '';
+                            }
                         });
                     }
                 };
@@ -1243,6 +1250,7 @@ Tagify.prototype = {
                 for (var i = 0; i < this.settings.whitelist.length; i++) {
                     _loop(i);
                 }
+                if (suggestions.children.length == 0) suggestions.style.display = 'none';
             }
         },
 

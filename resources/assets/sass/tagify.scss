@@ -197,5 +197,8 @@ tags, .suggestions{
 }
 
 ul.suggestions{
-  display: block;
+  padding: 0;
+  >li>tag>div {
+    padding: 0.3em 0.5em;
+  }
 }

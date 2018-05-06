@@ -1354,7 +1354,11 @@ tags > div > span,
 }
 
 ul.suggestions {
-  display: block;
+  padding: 0;
+}
+
+ul.suggestions > li > tag > div {
+  padding: 0.3em 0.5em;
 }
 
 .pagination {
