@@ -923,12 +923,13 @@ __webpack_require__(1);
 __webpack_require__(7);
 __webpack_require__(8);
 __webpack_require__(9);
-__webpack_require__(3);
 __webpack_require__(15);
 __webpack_require__(16);
 __webpack_require__(17);
 __webpack_require__(18);
 __webpack_require__(21);
+__webpack_require__(34);
+__webpack_require__(3);
 
 /***/ }),
 /* 7 */
@@ -7168,6 +7169,89 @@ if (editor_element != null) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__addAnswer_js__ = __webpack_require__(35);
+var messages = __webpack_require__(10);
+
+
+
+function addAnswerEventListeners() {
+
+    addAnswerEventListener();
+}
+
+function addAnswerEventListener() {
+    messages.genericClickListener('#answer-creator', __WEBPACK_IMPORTED_MODULE_0__addAnswer_js__["a" /* addAnswerRequest */]);
+}
+
+window.addEventListener('load', addAnswerEventListeners);
+
+/***/ }),
+/* 35 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = addAnswerRequest;
+var ajax = __webpack_require__(1);
+var alert = __webpack_require__(2);
+var utils = __webpack_require__(36);
+
+function addAnswerRequest(message_id) {
+
+    var contentNode = document.querySelector(".new-answer-content");
+
+    if (contentNode == null || contentNode.value.trim() == "") return;
+
+    var requestBody = {
+        "content": contentNode.value,
+        "question": message_id
+    };
+
+    ajax.sendAjaxRequest('post', utils.getAnswersURL(), requestBody, function (data) {
+        addAnswerHandler(data.target, message_id);
+    });
+}
+
+function addAnswerHandler(response, message_id) {
+    if (response.status == 403) {
+        alert.displayError("You have no permission to execute this action");
+        return;
+    } else if (response.status != 200) {
+        alert.displayError("Failed to add a new Answer");
+        return;
+    }
+
+    // TODO
+}
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports) {
+
+function getAnswersURL() {
+    return window.location.pathname + '/answers';
+}
+
+module.exports = {
+    getAnswersURL: getAnswersURL
+};
 
 /***/ })
 /******/ ]);

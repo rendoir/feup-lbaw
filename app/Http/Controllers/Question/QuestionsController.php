@@ -41,18 +41,22 @@ class QuestionsController extends Controller
     {
         if (Auth::check()) {
             $question = null;
+            
             DB::transaction(function() use (&$request, &$question) {
                 $user = User::find(Auth::id());
                 $message = Message::create(['author' => $user->id]);
+                
                 Commentable::create(['id' => $message->id]);
                 $question = Question::create(['id' => $message->id, 'title' => $request->title]);
                 MessageVersion::create(['content' => $request->messageContent, 'message_id' => $message->id]);
+                
                 $tags = explode(',', $request->tags);
                 foreach ($tags as $tag){
                     $tagModel = Category::where('name', $tag)->first();
                     $question->categories()->attach($tagModel->id);
                 }
             });
+            
             return redirect()->route('questions', ['id' => $question->id]);
         }
         return redirect('\ask_question');

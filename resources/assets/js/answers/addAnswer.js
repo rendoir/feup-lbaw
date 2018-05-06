@@ -1,24 +1,24 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
+var utils = require('./answersUtils.js');
 
 export function addAnswerRequest(message_id) {
 
-    let contentSelector = ".new-answer-content[data-message-id='" + message_id + "']";
+    let contentNode = document.querySelector(".new-answer-content");
 
-    let contentNode = document.querySelector(contentSelector);
-    if (contentNode == null || contentNode.value == "")
+    if (contentNode == null || contentNode.value.trim() == "")
         return;
 
     let requestBody = {
         "content": contentNode.value,
-        "commentable": message_id
+        "question": message_id
     };
 
-    /*ajax.sendAjaxRequest(
-        'post', getCommentsURL(message_id), requestBody, (data) => {
-            addCommentHandler(data.target, message_id);
+    ajax.sendAjaxRequest(
+        'post', utils.getAnswersURL(), requestBody, (data) => {
+            addAnswerHandler(data.target, message_id);
         }
-    );*/
+    );
 }
 
 function addAnswerHandler(response, message_id) {

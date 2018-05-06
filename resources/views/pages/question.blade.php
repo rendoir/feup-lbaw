@@ -138,8 +138,8 @@ $num_answers = $question->get_num_answers();
             @if (Auth::check())
             <!-- Text editor -->
             <div class="card mt-3">
-                <div class="main-content m-3 answer-editor">
-                    <textarea id="editor"  name="messageContent">
+                <div class="main-content m-3">
+                    <textarea id="editor" class="new-answer-content" name="messageContent">
                     </textarea>
                 </div>
                 <div class="text-right w-100 pr-4 mb-3">
