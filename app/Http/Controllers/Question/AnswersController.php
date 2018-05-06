@@ -44,8 +44,7 @@ class AnswersController extends Controller
             $answer_id = Message::create(['author' => $user_id])->id;
             
             Commentable::create(['id' => $answer_id]);
-            //Answer::create(['id' => $answer_id->id, 'question_id' => $request->question]);
-            DB::insert("INSERT INTO answers (id, question_id) VALUES (?, ?)", [$answer_id, $request->question]);
+            Answer::create(['id' => $answer_id, 'question_id' => $request->question]);
             MessageVersion::create(['content' => $request->input('content'), 'message_id' => $answer_id]);
         });
 

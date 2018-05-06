@@ -86,7 +86,7 @@ class CommentsController extends Controller
             $user_id = User::find(Auth::id())->id;
             $comment_id = Message::create(['author' => $user_id])->id;
             
-            DB::insert("INSERT INTO comments (id, commentable_id) VALUES (?, ?)", [$comment_id, $request->commentable]);
+            Comment::create(['id' => $comment_id, 'commentable_id' => $request->commentable]);
             MessageVersion::create(['content' => $request->input('content'), 'message_id' => $comment_id]);
         });
 
