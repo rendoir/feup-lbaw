@@ -283,6 +283,7 @@ Tagify.prototype = {
                       suggestions.parentNode.removeChild(suggestions);
                       e.target.value = '';
                     }
+                    lib.DOM.input.focus();
                   });
                 }
               }

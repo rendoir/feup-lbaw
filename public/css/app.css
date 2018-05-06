@@ -249,8 +249,13 @@ body > footer {
   height: 66px;
 }
 
-#navbar a.nav-item.nav-link.active {
+#navbar a.nav-item.nav-link,
+.nav-tabs .nav-item.nav-link:hover {
   padding-bottom: calc(0.5em - 1px);
+}
+
+.nav-tabs .nav-item.nav-link.active:hover {
+  padding-bottom: 0.5em;
 }
 
 .sticky-shadow {
