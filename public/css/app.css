@@ -1036,7 +1036,8 @@ nav {
   --jordy-blue: #75A6DA;
 }
 
-tags {
+tags,
+.suggestions {
   display: block;
   border: 1px solid #DDD;
   padding-right: 0.3em 0.5em;
@@ -1044,7 +1045,8 @@ tags {
   overflow: hidden;
 }
 
-tags:hover {
+tags:hover,
+.suggestions:hover {
   border-color: #CCC;
 }
 
@@ -1062,7 +1064,10 @@ tags:hover {
   }
 }
 
-tags tag {
+tags tag,
+tags .suggestion,
+.suggestions tag,
+.suggestions .suggestion {
   display: inline-block;
   margin: 5px 0 5px 5px;
   vertical-align: top;
@@ -1075,7 +1080,14 @@ tags tag {
           animation: .3s tags--bump 1 ease-out;
 }
 
-tags tag > div {
+tags tag > div,
+tags tag > ul,
+tags .suggestion > div,
+tags .suggestion > ul,
+.suggestions tag > div,
+.suggestions tag > ul,
+.suggestions .suggestion > div,
+.suggestions .suggestion > ul {
   vertical-align: top;
   position: relative;
   -webkit-box-sizing: border-box;
@@ -1088,7 +1100,22 @@ tags tag > div {
   padding-right: 1.5em;
 }
 
-tags tag > div > span {
+tags tag > div > span,
+tags tag > div > li,
+tags tag > ul > span,
+tags tag > ul > li,
+tags .suggestion > div > span,
+tags .suggestion > div > li,
+tags .suggestion > ul > span,
+tags .suggestion > ul > li,
+.suggestions tag > div > span,
+.suggestions tag > div > li,
+.suggestions tag > ul > span,
+.suggestions tag > ul > li,
+.suggestions .suggestion > div > span,
+.suggestions .suggestion > div > li,
+.suggestions .suggestion > ul > span,
+.suggestions .suggestion > ul > li {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1099,7 +1126,14 @@ tags tag > div > span {
   transition: .1s;
 }
 
-tags tag > div::before {
+tags tag > div::before,
+tags tag > ul::before,
+tags .suggestion > div::before,
+tags .suggestion > ul::before,
+.suggestions tag > div::before,
+.suggestions tag > ul::before,
+.suggestions .suggestion > div::before,
+.suggestions .suggestion > ul::before {
   content: '';
   position: absolute;
   left: 0;
@@ -1114,7 +1148,10 @@ tags tag > div::before {
   transition: 80ms ease;
 }
 
-tags tag:hover div::before {
+tags tag:hover div::before,
+tags .suggestion:hover div::before,
+.suggestions tag:hover div::before,
+.suggestions .suggestion:hover div::before {
   top: -2px;
   right: -2px;
   bottom: -2px;
@@ -1124,12 +1161,18 @@ tags tag:hover div::before {
           box-shadow: 0 0 0 0 #D39494 inset;
 }
 
-tags tag.tagify--noAnim {
+tags tag.tagify--noAnim,
+tags .suggestion.tagify--noAnim,
+.suggestions tag.tagify--noAnim,
+.suggestions .suggestion.tagify--noAnim {
   -webkit-animation: none;
           animation: none;
 }
 
-tags tag.tagify--hide {
+tags tag.tagify--hide,
+tags .suggestion.tagify--hide,
+.suggestions tag.tagify--hide,
+.suggestions .suggestion.tagify--hide {
   width: 0 !important;
   padding-left: 0;
   padding-right: 0;
@@ -1155,22 +1198,34 @@ tags tag.tagify--hide {
   }
 }
 
-tags tag.tagify--mark div::before {
+tags tag.tagify--mark div::before,
+tags .suggestion.tagify--mark div::before,
+.suggestions tag.tagify--mark div::before,
+.suggestions .suggestion.tagify--mark div::before {
   -webkit-animation: .3s tagify--pulse 2 ease-out;
           animation: .3s tagify--pulse 2 ease-out;
 }
 
-tags tag.tagify--notAllowed div > span {
+tags tag.tagify--notAllowed div > span,
+tags .suggestion.tagify--notAllowed div > span,
+.suggestions tag.tagify--notAllowed div > span,
+.suggestions .suggestion.tagify--notAllowed div > span {
   opacity: .5;
 }
 
-tags tag.tagify--notAllowed div::before {
+tags tag.tagify--notAllowed div::before,
+tags .suggestion.tagify--notAllowed div::before,
+.suggestions tag.tagify--notAllowed div::before,
+.suggestions .suggestion.tagify--notAllowed div::before {
   background: rgba(211, 148, 148, 0.44);
   -webkit-transition: .2s;
   transition: .2s;
 }
 
-tags tag x {
+tags tag x,
+tags .suggestion x,
+.suggestions tag x,
+.suggestions .suggestion x {
   font: 14px/14px Serif;
   width: 14px;
   height: 14px;
@@ -1187,54 +1242,74 @@ tags tag x {
   transition: .2s ease-out;
 }
 
-tags tag x::after {
+tags tag x::after,
+tags .suggestion x::after,
+.suggestions tag x::after,
+.suggestions .suggestion x::after {
   content: "\D7";
 }
 
-tags tag x:hover {
+tags tag x:hover,
+tags .suggestion x:hover,
+.suggestions tag x:hover,
+.suggestions .suggestion x:hover {
   color: white;
   background: #c77777;
 }
 
-tags tag x:hover + div > span {
+tags tag x:hover + div > span,
+tags .suggestion x:hover + div > span,
+.suggestions tag x:hover + div > span,
+.suggestions .suggestion x:hover + div > span {
   opacity: .5;
 }
 
-tags tag x:hover + div::before {
+tags tag x:hover + div::before,
+tags .suggestion x:hover + div::before,
+.suggestions tag x:hover + div::before,
+.suggestions .suggestion x:hover + div::before {
   background: rgba(211, 148, 148, 0.44);
   -webkit-transition: .2s;
   transition: .2s;
 }
 
-tags.readonly {
+tags.readonly,
+.suggestions.readonly {
   cursor: default;
 }
 
-tags.readonly > div {
+tags.readonly > div,
+.suggestions.readonly > div {
   visibility: hidden;
   width: 0;
   margin: 5px 0;
 }
 
-tags.readonly x {
+tags.readonly x,
+.suggestions.readonly x {
   display: none;
 }
 
-tags.readonly tag > div {
+tags.readonly tag > div,
+.suggestions.readonly tag > div {
   padding: 0.3em 0.5em;
 }
 
 tags input,
-tags textarea {
+tags textarea,
+.suggestions input,
+.suggestions textarea {
   border: 0;
   display: none;
 }
 
-tags input::-webkit-calendar-picker-indicator {
+tags input::-webkit-calendar-picker-indicator,
+.suggestions input::-webkit-calendar-picker-indicator {
   display: none;
 }
 
-tags > div {
+tags > div,
+.suggestions > div {
   display: inline-block;
   min-width: 10px;
   margin: 5px;
@@ -1243,24 +1318,28 @@ tags > div {
   vertical-align: top;
 }
 
-tags > div > input {
+tags > div > input,
+.suggestions > div > input {
   display: block;
   min-width: 130px;
   color: gray;
   background-color: white;
 }
 
-tags > div > input:focus {
+tags > div > input:focus,
+.suggestions > div > input:focus {
   outline: none;
 }
 
-tags > div > input.placeholder ~ span {
+tags > div > input.placeholder ~ span,
+.suggestions > div > input.placeholder ~ span {
   opacity: .5;
   -webkit-transform: none;
           transform: none;
 }
 
-tags > div > span {
+tags > div > span,
+.suggestions > div > span {
   opacity: 0;
   line-height: 1.8;
   position: absolute;
@@ -1272,6 +1351,10 @@ tags > div > span {
           transform: translatex(6px);
   -webkit-transition: .15s ease-out;
   transition: .15s ease-out;
+}
+
+ul.suggestions {
+  display: block;
 }
 
 .pagination {

@@ -187,18 +187,18 @@ Tagify.prototype = {
      */
     callbacks: {
         onFocusBlur: function (e) {
-            var text = e.target.value.trim();
+              var text = e.target.value.trim();
 
-            if (e.type == "focus")
-                e.target.className = 'input';
-            else if (e.type == "blur" && text) {
-                if (this.addTags(text).length)
-                    e.target.value = '';
-            }
-            else {
-                e.target.className = 'input placeholder';
-                this.DOM.input.removeAttribute('style');
-            }
+              if (e.type == "focus")
+                  e.target.className = 'input';
+              //else if (e.type == "blur" && text) {
+                  //if (this.addTags(text).length)
+                      //e.target.value = '';
+              //}
+              else if(e.type != "blur" || !text) {
+                  e.target.className = 'input placeholder';
+                  //this.DOM.input.removeAttribute('style');
+              }
         },
 
         onKeydown: function (e) {
@@ -253,7 +253,7 @@ Tagify.prototype = {
                 }
             }
 
-            /*let suggestions = document.querySelector('ul.suggestions');
+            let suggestions = document.querySelector('ul.suggestions');
             //Remove outdated suggestions
             if(suggestions != null) {
               suggestions.parentNode.removeChild(suggestions);
@@ -266,14 +266,22 @@ Tagify.prototype = {
               tags.appendChild(suggestions);
               let pattern = new RegExp(e.target.value, 'i');
               for(let i = 0; i < this.settings.whitelist.length; i++) {
-                if(pattern.test(this.settings.whitelist[i])) {
+                let curr_tag = this.settings.whitelist[i];
+                if(pattern.test(curr_tag)) {
                   let suggestion = document.createElement('li');
-                  suggestion.innerHTML = this.settings.whitelist[i];
+                  suggestion.innerHTML = '<tag value="' + curr_tag
+                                      + '"><div><span title="' + curr_tag
+                                      + '">' + curr_tag + '</span></div></tag>';
                   suggestion.className = "suggestion";
                   suggestions.appendChild(suggestion);
+                  let lib = this;
+                  suggestion.addEventListener('click', function(){
+                    if (lib.addTags(curr_tag).length)
+                        e.target.value = '';
+                  });
                 }
               }
-            }*/
+            }
 
         },
 
@@ -518,7 +526,6 @@ Tagify.prototype = {
                 else {
                     // update state
                     that.value.push(tagData);
-                    console.log(tagData);
                     that.update();
                     that.trigger('add', that.extend({}, tagData, { index: that.value.length, tag: tagElm }));
 

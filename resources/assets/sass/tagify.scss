@@ -1,4 +1,4 @@
-tags{
+tags, .suggestions{
     $tagMargin        : 5px;
     $tagPad           : .3em .5em;
     $tag-text-color   : black;
@@ -19,7 +19,7 @@ tags{
         30% { box-shadow:0 0 0 4px $tag-bg; }
     }
 
-    tag{
+    tag, .suggestion{
         display        : inline-block;
         margin         : $tagMargin 0 $tagMargin $tagMargin;
         vertical-align : top;
@@ -30,7 +30,7 @@ tags{
         transition     : .13s ease-out;
         animation      : .3s tags--bump 1 ease-out;
 
-        > div{
+        > div, > ul{
             vertical-align : top;
             position       : relative;
             box-sizing     : border-box;
@@ -39,7 +39,7 @@ tags{
             color          : $tag-text-color;
             transition     : .13s ease-out;
 
-            > span{
+            > span, > li{
                 white-space    : nowrap;
                 overflow       : hidden;
                 text-overflow  : ellipsis;
@@ -194,4 +194,8 @@ tags{
             transition:.15s ease-out;
         }
     }
+}
+
+ul.suggestions{
+  display: block;
 }

@@ -74,7 +74,7 @@
 /* harmony export (immutable) */ __webpack_exports__["d"] = getCommentsURL;
 /* harmony export (immutable) */ __webpack_exports__["e"] = getUniqueCommentURL;
 /* harmony export (immutable) */ __webpack_exports__["f"] = toggleShowMsg;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(3);
 var Mustache = __webpack_require__(4);
 
 
@@ -169,17 +169,49 @@ module.exports = {
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mustache = __webpack_require__(4);
+
+function displayError(errorMessage) {
+    return displayMessage(errorMessage, false);
+}
+
+function displaySuccess(successMessage) {
+    return displayMessage(successMessage, true);
+}
+
+function displayMessage(message, isSuccess) {
+
+    var template = document.querySelector("template#alert-template").innerHTML;
+    var placeholder = document.createElement("span");
+
+    placeholder.innerHTML = Mustache.render(template, { message: message, isSucess: isSuccess });
+
+    var header = document.querySelector("header");
+    header.appendChild(placeholder);
+
+    return placeholder;
+}
+
+module.exports = {
+    displayError: displayError,
+    displaySuccess: displaySuccess
+};
+
+/***/ }),
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["addSingleCommentEventListener"] = addSingleCommentEventListener;
 /* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(13);
-var messages = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(14);
+var messages = __webpack_require__(10);
 
 
 
@@ -235,38 +267,6 @@ function removeCommentsEventListener() {
 }
 
 window.addEventListener('load', addEventListeners);
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mustache = __webpack_require__(4);
-
-function displayError(errorMessage) {
-    return displayMessage(errorMessage, false);
-}
-
-function displaySuccess(successMessage) {
-    return displayMessage(successMessage, true);
-}
-
-function displayMessage(message, isSuccess) {
-
-    var template = document.querySelector("template#alert-template").innerHTML;
-    var placeholder = document.createElement("span");
-
-    placeholder.innerHTML = Mustache.render(template, { message: message, isSucess: isSuccess });
-
-    var header = document.querySelector("header");
-    header.appendChild(placeholder);
-
-    return placeholder;
-}
-
-module.exports = {
-    displayError: displayError,
-    displaySuccess: displaySuccess
-};
 
 /***/ }),
 /* 4 */
@@ -912,7 +912,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(6);
-module.exports = __webpack_require__(21);
+module.exports = __webpack_require__(22);
 
 
 /***/ }),
@@ -923,12 +923,12 @@ __webpack_require__(1);
 __webpack_require__(7);
 __webpack_require__(8);
 __webpack_require__(9);
-__webpack_require__(2);
-__webpack_require__(14);
+__webpack_require__(3);
 __webpack_require__(15);
 __webpack_require__(16);
 __webpack_require__(17);
-__webpack_require__(20);
+__webpack_require__(18);
+__webpack_require__(21);
 
 /***/ }),
 /* 7 */
@@ -1153,12 +1153,15 @@ Tagify.prototype = {
         onFocusBlur: function onFocusBlur(e) {
             var text = e.target.value.trim();
 
-            if (e.type == "focus") e.target.className = 'input';else if (e.type == "blur" && text) {
-                if (this.addTags(text).length) e.target.value = '';
-            } else {
-                e.target.className = 'input placeholder';
-                this.DOM.input.removeAttribute('style');
-            }
+            if (e.type == "focus") e.target.className = 'input';
+            //else if (e.type == "blur" && text) {
+            //if (this.addTags(text).length)
+            //e.target.value = '';
+            //}
+            else if (e.type != "blur" || !text) {
+                    e.target.className = 'input placeholder';
+                    //this.DOM.input.removeAttribute('style');
+                }
         },
 
         onKeydown: function onKeydown(e) {
@@ -1188,6 +1191,8 @@ Tagify.prototype = {
         },
 
         onInput: function onInput(e) {
+            var _this = this;
+
             var value = e.target.value,
                 lastChar = value[value.length - 1],
                 isDatalistInput = !this.noneDatalistInput && value.length > 1,
@@ -1208,27 +1213,37 @@ Tagify.prototype = {
                 }
             }
 
-            /*let suggestions = document.querySelector('ul.suggestions');
+            var suggestions = document.querySelector('ul.suggestions');
             //Remove outdated suggestions
-            if(suggestions != null) {
-              suggestions.parentNode.removeChild(suggestions);
+            if (suggestions != null) {
+                suggestions.parentNode.removeChild(suggestions);
             }
             //Add new suggestions
-            if(showSuggestions) {
-              let tags = document.querySelector('tags').parentNode;
-              suggestions = document.createElement('ul');
-              suggestions.className = "suggestions";
-              tags.appendChild(suggestions);
-              let pattern = new RegExp(e.target.value, 'i');
-              for(let i = 0; i < this.settings.whitelist.length; i++) {
-                if(pattern.test(this.settings.whitelist[i])) {
-                  let suggestion = document.createElement('li');
-                  suggestion.innerHTML = this.settings.whitelist[i];
-                  suggestion.className = "suggestion";
-                  suggestions.appendChild(suggestion);
+            if (showSuggestions) {
+                var tags = document.querySelector('tags').parentNode;
+                suggestions = document.createElement('ul');
+                suggestions.className = "suggestions";
+                tags.appendChild(suggestions);
+                var pattern = new RegExp(e.target.value, 'i');
+
+                var _loop = function _loop(i) {
+                    var curr_tag = _this.settings.whitelist[i];
+                    if (pattern.test(curr_tag)) {
+                        var suggestion = document.createElement('li');
+                        suggestion.innerHTML = '<tag value="' + curr_tag + '"><div><span title="' + curr_tag + '">' + curr_tag + '</span></div></tag>';
+                        suggestion.className = "suggestion";
+                        suggestions.appendChild(suggestion);
+                        var lib = _this;
+                        suggestion.addEventListener('click', function () {
+                            if (lib.addTags(curr_tag).length) e.target.value = '';
+                        });
+                    }
+                };
+
+                for (var i = 0; i < this.settings.whitelist.length; i++) {
+                    _loop(i);
                 }
-              }
-            }*/
+            }
         },
 
         onPaste: function onPaste(e) {
@@ -1472,7 +1487,6 @@ Tagify.prototype = {
                 } else {
                     // update state
                     that.value.push(tagData);
-                    console.log(tagData);
                     that.update();
                     that.trigger('add', that.extend({}, tagData, { index: that.value.length, tag: tagElm }));
 
@@ -1576,13 +1590,116 @@ addTags();
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports) {
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function genericClickListener(selector, method) {
+
+    var messages = document.querySelectorAll(selector);
+    if (messages == null) return;
+
+    var _loop = function _loop(message) {
+
+        var ref_message_id = message.getAttribute('data-message-id');
+        if (ref_message_id == null) return {
+                v: void 0
+            };
+
+        message.addEventListener('click', function () {
+            method(ref_message_id);
+        });
+    };
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = messages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var message = _step.value;
+
+            var _ret = _loop(message);
+
+            if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+}
+
+function genericEnterListener(selector, method) {
+
+    var messages = document.querySelectorAll(selector);
+    if (messages == null) return;
+
+    var _loop2 = function _loop2(message) {
+
+        var ref_message_id = message.getAttribute('data-message-id');
+        if (ref_message_id == null) return {
+                v: void 0
+            };
+
+        message.addEventListener('keyup', function (event) {
+            if (event.keyCode == 13) {
+                method(ref_message_id);
+            }
+        });
+    };
+
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+        for (var _iterator2 = messages[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var message = _step2.value;
+
+            var _ret2 = _loop2(message);
+
+            if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+        }
+    } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+            }
+        } finally {
+            if (_didIteratorError2) {
+                throw _iteratorError2;
+            }
+        }
+    }
+}
+
+module.exports = {
+    genericClickListener: genericClickListener,
+    genericEnterListener: genericEnterListener
+};
+
+/***/ }),
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = viewCommentsRequest;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
 var ajax = __webpack_require__(1);
-var alert = __webpack_require__(3);
+var alert = __webpack_require__(2);
 
 
 
@@ -1612,15 +1729,15 @@ function getCommentsHandler(response, message_id) {
 }
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = addCommentRequest;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__comments_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__comments_js__ = __webpack_require__(3);
 var ajax = __webpack_require__(1);
-var alert = __webpack_require__(3);
+var alert = __webpack_require__(2);
 
 
 
@@ -1672,7 +1789,7 @@ function addCommentHandler(response, message_id) {
 }
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1759,14 +1876,14 @@ function getPreviousComment(inputNode, previousNode) {
 }
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = removeComment;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils__ = __webpack_require__(0);
 var ajax = __webpack_require__(1);
-var alert = __webpack_require__(3);
+var alert = __webpack_require__(2);
 
 
 
@@ -1818,7 +1935,7 @@ function removeCommentHandler(response, commentNode) {
 }
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 $(function () {
@@ -1826,11 +1943,11 @@ $(function () {
 });
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(1);
-var errors = __webpack_require__(3);
+var errors = __webpack_require__(2);
 
 function uploadImage(abbr, type) {
   var save_changes = document.querySelector("#" + abbr + "-save");
@@ -1904,7 +2021,7 @@ function editBiographyHandler(e) {
 editBiography();
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 addEventListeners();
@@ -1955,12 +2072,12 @@ function addEventListeners() {
 }
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -1970,7 +2087,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-window.Pusher = __webpack_require__(19);
+window.Pusher = __webpack_require__(20);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
@@ -1980,7 +2097,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 });
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -2778,7 +2895,7 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -6966,7 +7083,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 var editor_element = document.getElementById("editor");
@@ -7038,124 +7155,10 @@ if (editor_element != null) {
 }
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */
-/***/ (function(module, exports) {
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function genericClickListener(selector, method) {
-
-    var messages = document.querySelectorAll(selector);
-    if (messages == null) return;
-
-    var _loop = function _loop(message) {
-
-        var ref_message_id = message.getAttribute('data-message-id');
-        if (ref_message_id == null) return {
-                v: void 0
-            };
-
-        message.addEventListener('click', function () {
-            method(ref_message_id);
-        });
-    };
-
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-        for (var _iterator = messages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var message = _step.value;
-
-            var _ret = _loop(message);
-
-            if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
-        }
-    } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-            }
-        } finally {
-            if (_didIteratorError) {
-                throw _iteratorError;
-            }
-        }
-    }
-}
-
-function genericEnterListener(selector, method) {
-
-    var messages = document.querySelectorAll(selector);
-    if (messages == null) return;
-
-    var _loop2 = function _loop2(message) {
-
-        var ref_message_id = message.getAttribute('data-message-id');
-        if (ref_message_id == null) return {
-                v: void 0
-            };
-
-        message.addEventListener('keyup', function (event) {
-            if (event.keyCode == 13) {
-                method(ref_message_id);
-            }
-        });
-    };
-
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
-
-    try {
-        for (var _iterator2 = messages[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var message = _step2.value;
-
-            var _ret2 = _loop2(message);
-
-            if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
-        }
-    } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                _iterator2.return();
-            }
-        } finally {
-            if (_didIteratorError2) {
-                throw _iteratorError2;
-            }
-        }
-    }
-}
-
-module.exports = {
-    genericClickListener: genericClickListener,
-    genericEnterListener: genericEnterListener
-};
 
 /***/ })
 /******/ ]);
