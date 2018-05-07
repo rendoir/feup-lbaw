@@ -134,7 +134,7 @@ $num_answers = $question->get_num_answers();
 
 <section class="container">
     <div class="row">
-        <div class="col-md-9">
+        <div id="answers-container" class="col-md-9">
             @if (Auth::check())
             <!-- Text editor -->
             <div class="card mt-3">
@@ -189,6 +189,7 @@ $num_answers = $question->get_num_answers();
     </div>
 </div>
 
+@include('templates.answers')
 @include('templates.comments')
 @include('templates.alerts')
 
