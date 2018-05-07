@@ -5,12 +5,27 @@ function createAnswer(answer_info) {
     let template = document.querySelector("template.answer").innerHTML;
     let placeholder = document.createElement("span");
 
-    answer_info.hasComments = (answer_info.answer.num_comments > 0? true : false);
+    answer_info.hasComments = (answer_info.answer.num_comments > 0 ? true : false);
+    addMarkdownFunction(answer_info);
 
     placeholder.innerHTML = Mustache.render(template, answer_info);
 
     let answers = document.getElementById("answers-container");
     answers.appendChild(placeholder.firstElementChild);
+}
+
+function addMarkdownFunction(answer_info) {
+
+    answer_info.markdown = function () {
+        return function (text, render) {
+
+            let instance = new Object();
+            instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+
+            let bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(render(text)));
+            return bound();
+        }
+    }
 }
 
 function getAnswersURL() {
@@ -28,14 +43,14 @@ function jumpToElement(elementID) {
     let pos = window.screenY;
     let finalPos = top + height;
 
-    let int = setInterval(function() {
-      window.scrollTo(0, pos);
-      
-      inc = (finalPos - pos) / 15;
-      pos += (inc > 5? inc : 5);
+    let int = setInterval(function () {
+        window.scrollTo(0, pos);
 
-      if (pos >= finalPos)
-        clearInterval(int);
+        inc = (finalPos - pos) / 15;
+        pos += (inc > 5 ? inc : 5);
+
+        if (pos >= finalPos)
+            clearInterval(int);
 
     }, 20);
 }

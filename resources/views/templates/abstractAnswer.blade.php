@@ -11,7 +11,7 @@
         <div class="col-11">
             <div class="card-body">
                 <p class="card-text">
-                    {{content.version}}
+                    {{#markdown}}{{content.version}}{{/markdown}}
 
                     {{#was_edited}}
                         <span class="badge badge-light float-right mr-2 mt-3">Edited</span>
@@ -68,7 +68,7 @@
         <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
             <div class="card-body p-1 p-sm-4">
                 <p class="card-text">
-                {{content.version}}
+                {{#markdown}}{{content.version}}{{/markdown}}
 
                 {{#was_edited}}
                     <span class="badge badge-light float-right mr-2 mt-1">Edited</span>

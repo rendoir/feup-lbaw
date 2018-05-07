@@ -6998,7 +6998,6 @@ var utils = __webpack_require__(20);
 function addAnswerRequest(message_id) {
 
     var contentNode = document.querySelector(".new-answer-content");
-
     if (contentNode == null || contentNode.value.trim() == "") return;
 
     var requestBody = {
@@ -7027,6 +7026,9 @@ function addAnswerHandler(response) {
     Object(__WEBPACK_IMPORTED_MODULE_0__comments_comments_js__["addSingleEventListeners"])(answer_id);
 
     utils.jumpToElement("answer-" + answer_id);
+
+    //Cleaning answer creator content
+    // TODO
 }
 
 /***/ }),
@@ -7041,11 +7043,26 @@ function createAnswer(answer_info) {
     var placeholder = document.createElement("span");
 
     answer_info.hasComments = answer_info.answer.num_comments > 0 ? true : false;
+    addMarkdownFunction(answer_info);
 
     placeholder.innerHTML = Mustache.render(template, answer_info);
 
     var answers = document.getElementById("answers-container");
     answers.appendChild(placeholder.firstElementChild);
+}
+
+function addMarkdownFunction(answer_info) {
+
+    answer_info.markdown = function () {
+        return function (text, render) {
+
+            var instance = new Object();
+            instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+
+            var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(render(text)));
+            return bound();
+        };
+    };
 }
 
 function getAnswersURL() {

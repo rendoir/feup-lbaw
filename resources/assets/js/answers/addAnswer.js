@@ -7,7 +7,6 @@ import { addSingleEventListeners } from '../comments/comments.js';
 export function addAnswerRequest(message_id) {
 
     let contentNode = document.querySelector(".new-answer-content");
-
     if (contentNode == null || contentNode.value.trim() == "")
         return;
 
@@ -40,4 +39,7 @@ function addAnswerHandler(response) {
     addSingleEventListeners(answer_id);
 
     utils.jumpToElement("answer-" + answer_id);
+
+    //Cleaning answer creator content
+    // TODO
 }
