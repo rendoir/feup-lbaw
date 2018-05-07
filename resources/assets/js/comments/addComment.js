@@ -5,7 +5,7 @@ import { getCommentsURL } from './commentsUtils.js'
 import { createCommentHTML } from './commentsUtils.js'
 import { getCommentsDropDown } from './commentsUtils.js'
 import { createComments } from './commentsUtils.js'
-import { addSingleCommentEventListener } from './comments.js';
+import { addCommentEditEventListener } from './comments.js';
 
 export function addCommentRequest(message_id) {
 
@@ -48,7 +48,7 @@ function addCommentHandler(response, message_id) {
         commentsSection.firstElementChild
             .firstElementChild
             .innerHTML += createCommentHTML(responseJSON);
-        addSingleCommentEventListener(newComment.id);
+        addCommentEditEventListener(newComment.id);
     }
     else
         createComments({ 'comments': [newComment], 'is_authenticated': responseJSON.is_authenticated }, message_id);

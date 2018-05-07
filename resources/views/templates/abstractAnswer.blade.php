@@ -1,8 +1,7 @@
 @verbatim
 <div id="answer-{{id}}" class="card my-3">
-
-    {{^is_authenticated}}
     <div class="row mx-0">
+        {{^is_authenticated}}
         <div class="col-1 d-flex flex-column align-items-start">
             <div class="p-2 mt-3 mb-auto">
                 <i class="fas fa-trophy"></i>
@@ -25,14 +24,14 @@
                 </p>
                 <div class="mr-auto">
                     <span>{{author}}</span>
-                    <!--<span class="badge badge-success">{{$author->getBadge()-->
+                    <!--<span class="badge badge-success">{{author.badge}}-->
                 </div>
                 <div class="text-center m-auto">
                     {{#hasComments}}
-                        <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}" 
-                        aria-expanded="false" aria-controls="AnswerComments{{id}}" data-message-id="{{id}}">
-                            Show Comments
-                        </a>
+                    <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}" 
+                    aria-expanded="false" aria-controls="AnswerComments{{id}}" data-message-id="{{id}}">
+                        Show Comments
+                    </a>
                     {{/hasComments}}
                 </div>
                 <div class="ml-auto">
@@ -40,31 +39,9 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!--@if (Auth::check())-->
-    <!-- COMMENTS -->
-    <!--<div class="collapse answer-comments" id="AnswerComments{{$id}}" data-message-id="{{$id}}">
-        
-        <!--<div class="comment-creator card-footer comments-card px-0 px-sm-4">
-            <div class="d-flex list-group list-group-flush">
-                <div class="list-group-item bg-transparent">
-                    <div class="input-group mt-3">
-                        <input class="form-control new-comment-content" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2" type="text" data-message-id="{{$id}}">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-success new-comment-submit" type="button" data-message-id="{{$id}}">Add Comment</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
-    <!--@elseif ($num_comments > 0)
-    <div class="collapse answer-comments" id="AnswerComments{{$id}}" data-message-id="{{$id}}"></div>
-    @endif-->
-    {{/is_authenticated}}
+        {{/is_authenticated}}
 
-    {{#is_authenticated}}
-    <div class="row mx-0">
+        {{#is_authenticated}}
         <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
             <div class="p-2">
                 <i class="fas fa-trophy"></i>
@@ -109,8 +86,7 @@
                     <span class="badge badge-success">Trusted</span>
                 </div>
                 <div class="text-center m-auto">
-                    <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}"
-                    aria-expanded="false" aria-controls="AnswerComments{{id}}" data-message-id="{{id}}">
+                    <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}" aria-expanded="false" aria-controls="AnswerComments{{id}}" data-message-id="{{id}}">
                         {{#hasComments}}
                         Show Comments
                         {{/hasComments}}
@@ -138,12 +114,26 @@
                 </small>
             </div>
         </div>
-        <div class="collapse" id="AnswerComments-1">
-            <div class="card-footer comments-card px-0 px-sm-4">
+
+        <!-- COMMENTS -->
+        <div class="collapse answer-comments w-100" id="AnswerComments{{id}}" data-message-id="{{id}}">  
+            <div class="comment-creator card-footer comments-card px-0 px-sm-4">
+                <div class="d-flex list-group list-group-flush">
+                    <div class="list-group-item bg-transparent">
+                        <div class="input-group mt-3">
+                            <input class="form-control new-comment-content" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2" type="text" data-message-id="{{id}}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success new-comment-submit" type="button" data-message-id="{{id}}">Add Comment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <!--@elseif ($num_comments > 0)
+        <div class="collapse answer-comments" id="AnswerComments{{$id}}" data-message-id="{{$id}}"></div>
+        @endif-->
+        {{/is_authenticated}}
     </div>
-    {{/is_authenticated}}
-
 </div>
 @endverbatim

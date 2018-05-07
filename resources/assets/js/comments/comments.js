@@ -9,14 +9,23 @@ function addEventListeners() {
 
     viewCommentsEventListener();
     addCommentsEventListener();
-    removeCommentsEventListener()
+    removeCommentsEventListener();
 
     // Some event listeners are only added when the respective
     // html elements triggering the events are created
 }
 
+export function addSingleEventListeners(message_id) {
+    viewSingleCommentEventListener(message_id);
+    addSingleCommentEventListener(message_id);
+}
+
 function viewCommentsEventListener() {
     messages.genericClickListener('.show-comments', viewCommentsRequest);
+}
+
+function viewSingleCommentEventListener(message_id) {
+    messages.genericSingleClickListener('.show-comments', viewCommentsRequest, message_id);
 }
 
 function addCommentsEventListener() {
@@ -24,7 +33,12 @@ function addCommentsEventListener() {
     messages.genericEnterListener('.new-comment-content', addCommentRequest);
 }
 
-export function addSingleCommentEventListener(message_id) {
+function addSingleCommentEventListener(message_id) {
+    messages.genericSingleClickListener('.new-comment-submit', addCommentRequest, message_id);
+    messages.genericSingleEnterListener('.new-comment-content', addCommentRequest, message_id);
+}
+
+export function addCommentEditEventListener(message_id) {
 
     let comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
 

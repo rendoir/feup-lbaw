@@ -31,7 +31,8 @@ function jumpToElement(elementID) {
     let int = setInterval(function() {
       window.scrollTo(0, pos);
       
-      pos += (finalPos - pos) / 15;
+      inc = (finalPos - pos) / 15;
+      pos += (inc > 5? inc : 5);
 
       if (pos >= finalPos)
         clearInterval(int);

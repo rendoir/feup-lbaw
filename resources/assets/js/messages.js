@@ -16,6 +16,17 @@ function genericClickListener(selector, method) {
     }
 }
 
+function genericSingleClickListener(selector, method, message_id) {
+
+    let message = document.querySelector(selector + "[data-message-id='" + message_id + "']");
+    if (message == null)
+        return;
+
+    message.addEventListener('click', function () {
+        method(message_id);
+    });
+}
+
 function genericEnterListener(selector, method) {
 
     let messages = document.querySelectorAll(selector);
@@ -36,7 +47,22 @@ function genericEnterListener(selector, method) {
     }
 }
 
+function genericSingleEnterListener(selector, method, message_id) {
+
+    let message = document.querySelector(selector + "[data-message-id='" + message_id + "']");
+    if (message == null)
+        return;
+
+    message.addEventListener('keyup', function (event) {
+        if (event.keyCode == 13) {
+            method(message_id);
+        }
+    });
+}
+
 module.exports = {
     genericClickListener,
-    genericEnterListener
+    genericEnterListener,
+    genericSingleClickListener,
+    genericSingleEnterListener
 };

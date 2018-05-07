@@ -2,6 +2,8 @@ var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./answersUtils.js');
 
+import { addSingleEventListeners } from '../comments/comments.js';
+
 export function addAnswerRequest(message_id) {
 
     let contentNode = document.querySelector(".new-answer-content");
@@ -33,5 +35,9 @@ function addAnswerHandler(response) {
 
     let responseJSON = JSON.parse(response.responseText);
     utils.createAnswer({ 'answer': responseJSON.answer, 'is_authenticated': responseJSON.is_authenticated });
-    utils.jumpToElement("answer-" + responseJSON.answer.id);
+
+    let answer_id = responseJSON.answer.id;
+    addSingleEventListeners(answer_id);
+
+    utils.jumpToElement("answer-" + answer_id);
 }
