@@ -1104,6 +1104,7 @@ applyMarkdown();
 
 function bookmarkEvent() {
 	var bookmark = document.querySelector("#bookmark");
+	var i = bookmark.querySelector("i");
 	if (bookmark == null) return;
 	bookmark.addEventListener("click", function () {
 		var message_id = bookmark.getAttribute('data-message-id');
@@ -1113,7 +1114,13 @@ function bookmarkEvent() {
 		var data = { question_id: message_id };
 		ajax.sendAjaxRequest(method, url, data, function () {
 			if (this.status == 200) {
-				bookmark.className = is_active ? 'inactive' : 'active';
+				if (is_active) {
+					bookmark.className = 'inactive';
+					i.className = i.className.replace('fas', 'far');
+				} else {
+					bookmark.className = 'active';
+					i.className = i.className.replace('far', 'fas');
+				}
 			}
 		});
 	});

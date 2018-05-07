@@ -89,7 +89,7 @@ class User extends Authenticatable
     }
 
     public function getBookmarks() {
-      return Bookmark::join('question', 'bookmarks.question_id', '=', 'question.id')
+      return Question::join('bookmarks', 'bookmarks.question_id', '=', 'questions.id')
                     ->where('bookmarks.user_id', '=', $this->id);
     }
 

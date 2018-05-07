@@ -25,6 +25,7 @@ applyMarkdown();
 
 function bookmarkEvent() {
 	let bookmark = document.querySelector("#bookmark");
+	let i = bookmark.querySelector("i");
 	if(bookmark == null) return;
 	bookmark.addEventListener("click", function() {
 		let message_id = bookmark.getAttribute('data-message-id');
@@ -34,7 +35,13 @@ function bookmarkEvent() {
 		let data = { question_id: message_id };
 		ajax.sendAjaxRequest(method, url, data, function() {
 			if(this.status == 200){
-				bookmark.className = is_active ? 'inactive' : 'active';
+				if(is_active) {
+					bookmark.className = 'inactive';
+					i.className = i.className.replace('fas', 'far');
+				} else {
+					bookmark.className = 'active';
+					i.className = i.className.replace('far', 'fas');
+				}
 			}
 	  });
 	});

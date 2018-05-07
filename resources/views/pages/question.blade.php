@@ -112,7 +112,10 @@ $num_answers = $question->get_num_answers();
                         <span class="w-100">{{$score}}</span>
                     </div>
                     @if (Auth::check())
-                      <span id="bookmark" class="{{Auth::user()->hasBookmarkOn($question->id) ? 'active' : 'inactive'}}" data-message-id="{{$question->id}}"><i class="far fa-heart"></i></span>
+                      <?php
+                        $has_bookmark = Auth::user()->hasBookmarkOn($question->id);
+                      ?>
+                      <span id="bookmark" class="{{$has_bookmark ? 'active' : 'inactive'}}" data-message-id="{{$question->id}}"><i class="{{$has_bookmark ? 'fas' : 'far'}} fa-heart"></i></span>
                     @endif
                 </div>
 
