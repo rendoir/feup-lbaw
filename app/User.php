@@ -62,20 +62,41 @@ class User extends Authenticatable
     }
 
     public function getNumberQuestions() {
-      return Question::join('messages', 'questions.id', '=', 'messages.id')
-      ->where('messages.author', '=', $this->id)
-      ->count();
+      return $this->getQuestions()->count();
     }
 
     public function getNumberAnswers() {
-      return Answer::join('messages', 'answers.id', '=', 'messages.id')
-      ->where('messages.author', '=', $this->id)
-      ->count();
+      return $this->getAnswers()->count();
     }
 
     public function getNumberComments() {
+      return $this->getComments()->count();
+    }
+
+    public function getQuestions() {
+      return Question::join('messages', 'questions.id', '=', 'messages.id')
+                    ->where('messages.author', '=', $this->id);
+    }
+
+    public function getAnswers() {
+      return Answer::join('messages', 'answers.id', '=', 'messages.id')
+                    ->where('messages.author', '=', $this->id);
+    }
+
+    public function getComments() {
       return Comment::join('messages', 'comments.id', '=', 'messages.id')
-      ->where('messages.author', '=', $this->id)
-      ->count();
+                    ->where('messages.author', '=', $this->id);
+    }
+
+    public function getBookmarks() {
+      return Bookmark::join('question', 'bookmarks.question_id', '=', 'question.id')
+                    ->where('bookmarks.user_id', '=', $this->id);
+    }
+
+    public function hasBookmarkOn($question_id) {
+      return Bookmark::where('user_id', '=', $this->id)
+                      ->where('question_id', '=', $question_id)
+                      ->count() > 0;
+
     }
 }

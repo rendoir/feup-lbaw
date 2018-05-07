@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS commentable_notifications CASCADE;
 DROP TABLE IF EXISTS badge_notifications CASCADE;
 DROP TABLE IF EXISTS badge_attainments CASCADE;
 DROP TABLE IF EXISTS reports CASCADE;
+DROP TABLE IF EXISTS bookmarks CASCADE;
 
 CREATE TABLE users (
     id BIGSERIAL PRIMARY KEY,
@@ -127,6 +128,12 @@ CREATE TABLE badge_attainments (
     badge_id SMALLINT NOT NULL REFERENCES badges(id) ON DELETE CASCADE,
     attainment_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     PRIMARY KEY (user_id, badge_id)
+);
+
+CREATE TABLE bookmarks (
+    question_id BIGINT REFERENCES questions(id) ON DELETE CASCADE,
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    PRIMARY KEY (question_id, user_id)
 );
 
 ALTER TABLE questions

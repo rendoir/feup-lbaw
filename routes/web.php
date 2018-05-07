@@ -64,6 +64,8 @@ Route::get('users/{username?}', 'ProfileController@getProfile')->name('profile')
 Route::get('users/{username}/edit', 'ProfileController@getEditProfile')->name('edit_profile');
 Route::post('users/edit/image/{type}', 'ProfileController@imageUpload');
 Route::post('users/edit/biography', 'ProfileController@editBiography');
+Route::post('users/bookmarks/{question_id}', 'ProfileController@addBookmark');
+Route::delete('users/bookmarks/{question_id}', 'ProfileController@deleteBookmark');
 
 // Testing Notifications' Server
 Route::get('test/notifications-view', function() {

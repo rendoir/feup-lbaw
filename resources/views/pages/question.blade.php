@@ -111,6 +111,9 @@ $num_answers = $question->get_num_answers();
                         <span class="font-weight-bold w-100">Votes: </span>
                         <span class="w-100">{{$score}}</span>
                     </div>
+                    @if (Auth::check())
+                      <span id="bookmark" class="{{Auth::user()->hasBookmarkOn($question->id) ? 'active' : 'inactive'}}" data-message-id="{{$question->id}}"><i class="far fa-heart"></i></span>
+                    @endif
                 </div>
 
                 <div>

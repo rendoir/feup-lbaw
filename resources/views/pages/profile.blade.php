@@ -39,27 +39,19 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab">
                     <!-- Questions -->
-                    <ul class="list-group  my-4">
-
-                    </ul>
+                    @each('partials.question', $user->getQuestions()->get(), 'question')
                 </div>
                 <div class="tab-pane fade" id="nav-answers" role="tabpanel" aria-labelledby="nav-answers-tab">
                     <!-- Answers -->
-                    <ul class="list-group ml-3 my-4">
-
-                    </ul>
+                    {{-- @each('partials.answer', $user->getAnswers()->get(), 'answer') --}}
                 </div>
                 <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
                     <!-- Comments -->
-                    <ul class="list-group ml-3 my-4">
-
-                    </ul>
+                    {{-- @each('partials.comment', $user->getComments()->get(), 'comment') --}}
                 </div>
                 <div class="tab-pane fade" id="nav-marked" role="tabpanel" aria-labelledby="nav-marked-tab">
                     <!-- Marked Questions -->
-                    <ul class="list-group ml-3 my-4">
-
-                    </ul>
+                    @each('partials.question', $user->getBookmarks()->get(), 'question')
                 </div>
             </div>
         </div>

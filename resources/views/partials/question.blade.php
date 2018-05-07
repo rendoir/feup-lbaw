@@ -29,7 +29,7 @@
             </div>
             <div class="card-footer bg-transparent d-flex justify-content-between">
                 <p class="card-text mb-0">
-                    <small class="text-muted">Created by - &nbsp</small>{{$author->username}}
+                    Created by - <strong>{{$author->username}}</strong>
                 </p>
                 <div class="ml-2 mr-auto">
                     <span></span>
