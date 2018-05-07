@@ -1775,10 +1775,10 @@ function addCommentRequest(message_id) {
 // Handler to the add comment request response
 function addCommentHandler(response, message_id) {
     if (response.status == 403) {
-        alert.displayError("You have no permission to execute this action");
+        alert.displayError("You have no permission to execute this action.");
         return;
     } else if (response.status != 200) {
-        alert.displayError("Failed to add a new Comment");
+        alert.displayError("Failed to add a new Comment.");
         return;
     }
 
@@ -7225,31 +7225,52 @@ function addAnswerRequest(message_id) {
     };
 
     ajax.sendAjaxRequest('post', utils.getAnswersURL(), requestBody, function (data) {
-        addAnswerHandler(data.target, message_id);
+        addAnswerHandler(data.target);
     });
 }
 
-function addAnswerHandler(response, message_id) {
+function addAnswerHandler(response) {
     if (response.status == 403) {
-        alert.displayError("You have no permission to execute this action");
+        alert.displayError("You have no permission to execute this action.");
         return;
     } else if (response.status != 200) {
-        alert.displayError("Failed to add a new Answer");
+        alert.displayError("Failed to add a new Answer.");
         return;
     }
 
-    // TODO
+    var responseJSON = JSON.parse(response.responseText);
+    utils.createAnswer({ 'answer': responseJSON.answer, 'is_authenticated': responseJSON.is_authenticated });
 }
 
 /***/ }),
 /* 36 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mustache = __webpack_require__(4);
+
+function createAnswer(answer_info) {
+
+    var template = document.querySelector("template.comments").innerHTML;
+    var placeholder = document.createElement("span");
+
+    placeholder.innerHTML = Mustache.render(template, response);
+
+    var final = getCommentsDropDown(message_id);
+    var child = final.firstElementChild;
+
+    // child can either be a comment or the comment-adder or null,
+    // if there are no comments and the user is not authenticated
+    if (child == null || child.classList.contains('comment-creator')) {
+        final.insertBefore(placeholder, child);
+    } else final.replaceChild(placeholder, child);
+}
 
 function getAnswersURL() {
     return window.location.pathname + '/answers';
 }
 
 module.exports = {
+    createAnswer: createAnswer,
     getAnswersURL: getAnswersURL
 };
 

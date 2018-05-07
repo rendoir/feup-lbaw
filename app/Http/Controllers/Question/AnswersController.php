@@ -24,6 +24,29 @@ class AnswersController extends Controller
     |
     */
 
+    /**
+     * @param $comment
+     * @return array
+     */
+    private function getAnswerJSON($answer)
+    {
+        $message = $answer->message;
+        $content = $message->message_version;
+        $author = $message->get_author();
+
+        return array(
+            "id" => $answer->id,
+            "author" => $author->username,
+            "score" => $message->score,
+            "was_edited" => $message->was_edited(),
+            "is_owner" => ($author->id == Auth::id()),
+            "content" => array (
+                "version" => $content->content,
+                "creation_time" => $content->creation_time,
+                "author" => ($content->moderator_id != null? $content->moderator_id : $content->author)
+            )
+        );
+    }
 
     /**
      * @param Request $request
@@ -36,21 +59,22 @@ class AnswersController extends Controller
                 array("is_authenticated" => false)
             );
 
-        // Placeholder for the id of the answer that is going to be created
+        // Placeholder for future variables
         $answer_id = null;
+        $answer = null;
 
-        DB::transaction(function() use (&$request, &$answer_id) {
+        DB::transaction(function() use (&$request, &$answer_id, &$answer) {
             $user_id = User::find(Auth::id())->id;
             $answer_id = Message::create(['author' => $user_id])->id;
             
             Commentable::create(['id' => $answer_id]);
-            Answer::create(['id' => $answer_id, 'question_id' => $request->question]);
+            $answer = Answer::create(['id' => $answer_id, 'question_id' => $request->question]);
             MessageVersion::create(['content' => $request->input('content'), 'message_id' => $answer_id]);
         });
 
         return response()->json(
             array(
-                //"answer" => $this->getCommentJSON(Answer::find($answer_id)),
+                "answer" => $this->getAnswerJSON($answer),
                 "is_authenticated" => true
             )
         );

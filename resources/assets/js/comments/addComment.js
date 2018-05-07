@@ -30,11 +30,11 @@ export function addCommentRequest(message_id) {
 // Handler to the add comment request response
 function addCommentHandler(response, message_id) {
     if (response.status == 403) {
-        alert.displayError("You have no permission to execute this action");
+        alert.displayError("You have no permission to execute this action.");
         return;
     }
     else if (response.status != 200) {
-        alert.displayError("Failed to add a new Comment");
+        alert.displayError("Failed to add a new Comment.");
         return;
     }
 

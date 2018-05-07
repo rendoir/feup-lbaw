@@ -16,20 +16,21 @@ export function addAnswerRequest(message_id) {
 
     ajax.sendAjaxRequest(
         'post', utils.getAnswersURL(), requestBody, (data) => {
-            addAnswerHandler(data.target, message_id);
+            addAnswerHandler(data.target);
         }
     );
 }
 
-function addAnswerHandler(response, message_id) {
+function addAnswerHandler(response) {
     if (response.status == 403) {
-        alert.displayError("You have no permission to execute this action");
+        alert.displayError("You have no permission to execute this action.");
         return;
     }
     else if (response.status != 200) {
-        alert.displayError("Failed to add a new Answer");
+        alert.displayError("Failed to add a new Answer.");
         return;
     }
 
-    // TODO
+    let responseJSON = JSON.parse(response.responseText);
+    utils.createAnswer({ 'answer': responseJSON.answer, 'is_authenticated': responseJSON.is_authenticated });
 }
