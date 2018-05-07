@@ -17,4 +17,8 @@ class Answer extends Model
     public function commentable() {
         return $this->hasOne('App\Commentable', 'id');
     }
+
+    public function num_comments() {
+        return $this->hasMany('App\Comment', 'commentable_id')->count();
+    }
 }

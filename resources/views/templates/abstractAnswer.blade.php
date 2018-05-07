@@ -28,17 +28,12 @@
                     <!--<span class="badge badge-success">{{$author->getBadge()-->
                 </div>
                 <div class="text-center m-auto">
-                    <!--@if ($num_comments > 0)
+                    {{#hasComments}}
                         <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}" 
                         aria-expanded="false" aria-controls="AnswerComments{{id}}" data-message-id="{{id}}">
                             Show Comments
-                        </a>-->
-                    <!--@elseif (Auth::Check())
-                        <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}" 
-                        aria-expanded="false" aria-controls="AnswerComments{{id}}" data-message-id="{{id}}">
-                            Add Comment
-                    </a>
-                    @endif-->
+                        </a>
+                    {{/hasComments}}
                 </div>
                 <div class="ml-auto">
                     <p class="text-right mb-0">{{num_comments}} comments</p>
@@ -114,8 +109,15 @@
                     <span class="badge badge-success">Trusted</span>
                 </div>
                 <div class="text-center m-auto">
-                    <a role="button" data-toggle="collapse" href="#AnswerComments1" aria-expanded="false" aria-controls="AnswerComments1">
+                    <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}"
+                    aria-expanded="false" aria-controls="AnswerComments{{id}}" data-message-id="{{id}}">
+                        {{#hasComments}}
                         Show Comments
+                        {{/hasComments}}
+
+                        {{^hasComments}}
+                        Add Comment
+                        {{/hasComments}}
                     </a>
                 </div>
                 <small class="ml-auto mr-1 text-center mt-auto mb-auto">
@@ -142,6 +144,6 @@
         </div>
     </div>
     {{/is_authenticated}}
-    
+
 </div>
 @endverbatim

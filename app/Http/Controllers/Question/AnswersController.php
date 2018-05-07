@@ -40,6 +40,7 @@ class AnswersController extends Controller
             "score" => $message->score,
             "was_edited" => $message->was_edited(),
             "is_owner" => ($author->id == Auth::id()),
+            "num_comments" => $answer->num_comments(),
             "content" => array (
                 "version" => $content->content,
                 "creation_time" => $content->creation_time,

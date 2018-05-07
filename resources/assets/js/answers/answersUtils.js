@@ -5,6 +5,8 @@ function createAnswer(answer_info) {
     let template = document.querySelector("template.answer").innerHTML;
     let placeholder = document.createElement("span");
 
+    answer_info.hasComments = (answer_info.answer.num_comments > 0? true : false);
+
     placeholder.innerHTML = Mustache.render(template, answer_info);
 
     let answers = document.getElementById("answers-container");
@@ -24,12 +26,14 @@ function jumpToElement(elementID) {
 
     //Go there with a smooth transition
     let pos = window.screenY;
-    
+    let finalPos = top + height;
+
     let int = setInterval(function() {
       window.scrollTo(0, pos);
-      pos += 80;
       
-      if (pos >= (top + height))
+      pos += (finalPos - pos) / 15;
+
+      if (pos >= finalPos)
         clearInterval(int);
 
     }, 20);
