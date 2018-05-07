@@ -7240,6 +7240,7 @@ function addAnswerHandler(response) {
 
     var responseJSON = JSON.parse(response.responseText);
     utils.createAnswer({ 'answer': responseJSON.answer, 'is_authenticated': responseJSON.is_authenticated });
+    utils.jumpToElement("answer-" + responseJSON.answer.id);
 }
 
 /***/ }),
@@ -7254,10 +7255,8 @@ function createAnswer(answer_info) {
     var placeholder = document.createElement("span");
 
     placeholder.innerHTML = Mustache.render(template, answer_info);
-    console.log(placeholder);
 
     var answers = document.getElementById("answers-container");
-    console.log(answers);
     answers.appendChild(placeholder.firstElementChild);
 }
 
@@ -7265,9 +7264,28 @@ function getAnswersURL() {
     return window.location.pathname + '/answers';
 }
 
+function jumpToElement(elementID) {
+    var element = document.getElementById(elementID);
+
+    //Getting Y and Height of target element
+    var top = element.offsetTop;
+    var height = element.offsetHeight;
+
+    //Go there with a smooth transition
+    var pos = window.screenY;
+
+    var int = setInterval(function () {
+        window.scrollTo(0, pos);
+        pos += 80;
+
+        if (pos >= top + height) clearInterval(int);
+    }, 20);
+}
+
 module.exports = {
     createAnswer: createAnswer,
-    getAnswersURL: getAnswersURL
+    getAnswersURL: getAnswersURL,
+    jumpToElement: jumpToElement
 };
 
 /***/ })

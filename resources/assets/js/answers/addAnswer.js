@@ -33,4 +33,5 @@ function addAnswerHandler(response) {
 
     let responseJSON = JSON.parse(response.responseText);
     utils.createAnswer({ 'answer': responseJSON.answer, 'is_authenticated': responseJSON.is_authenticated });
+    utils.jumpToElement("answer-" + responseJSON.answer.id);
 }

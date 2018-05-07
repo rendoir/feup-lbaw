@@ -1,6 +1,7 @@
 @verbatim
-{{^is_authenticated}}
-<div class="card my-3">
+<div id="answer-{{id}}" class="card my-3">
+
+    {{^is_authenticated}}
     <div class="row mx-0">
         <div class="col-1 d-flex flex-column align-items-start">
             <div class="p-2 mt-3 mb-auto">
@@ -65,12 +66,9 @@
     <!--@elseif ($num_comments > 0)
     <div class="collapse answer-comments" id="AnswerComments{{$id}}" data-message-id="{{$id}}"></div>
     @endif-->
-</div>
+    {{/is_authenticated}}
 
-{{/is_authenticated}}
-
-{{#is_authenticated}}
-<div class="card my-3">
+    {{#is_authenticated}}
     <div class="row mx-0">
         <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
             <div class="p-2">
@@ -143,7 +141,7 @@
             </div>
         </div>
     </div>
+    {{/is_authenticated}}
+    
 </div>
-
-{{/is_authenticated}}
 @endverbatim
