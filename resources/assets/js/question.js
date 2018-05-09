@@ -25,8 +25,8 @@ applyMarkdown();
 
 function bookmarkEvent() {
 	let bookmark = document.querySelector("#bookmark");
-	let i = bookmark.querySelector("i");
 	if(bookmark == null) return;
+	let i = bookmark.querySelector("i");
 	bookmark.addEventListener("click", function() {
 		let message_id = bookmark.getAttribute('data-message-id');
 		let is_active = bookmark.className == 'active';
