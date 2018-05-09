@@ -61,18 +61,6 @@ class User extends Authenticatable
       else return '/' . $type . 's/default';
     }
 
-    public function getNumberQuestions() {
-      return $this->getQuestions()->count();
-    }
-
-    public function getNumberAnswers() {
-      return $this->getAnswers()->count();
-    }
-
-    public function getNumberComments() {
-      return $this->getComments()->count();
-    }
-
     public function getQuestions() {
       return Question::join('messages', 'questions.id', '=', 'messages.id')
                     ->where('messages.author', '=', $this->id);
