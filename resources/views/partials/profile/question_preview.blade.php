@@ -2,7 +2,6 @@
     $message = $question->message;
     $content = $message->message_version;
     $score = $message->score;
-    $message_id = $message->id;
 ?>
 <a class="card my-3 question-card <?= ($question->correct_answer != null ? 'border-success' : '') ?>" href="{{ route('questions', ['id' => $question->id]) }}">
     <div class="row mx-0">

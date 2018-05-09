@@ -47,7 +47,7 @@
                 </div>
                 <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
                     <!-- Comments -->
-                    {{-- @each('partials.profile.comment_preview', $user->getComments()->get(), 'comment') --}}
+                    @each('partials.profile.comment_preview', $user->getComments()->get(), 'comment')
                 </div>
                 <div class="tab-pane fade" id="nav-marked" role="tabpanel" aria-labelledby="nav-marked-tab">
                     <!-- Marked Questions -->
