@@ -1104,8 +1104,8 @@ applyMarkdown();
 
 function bookmarkEvent() {
 	var bookmark = document.querySelector("#bookmark");
-	var i = bookmark.querySelector("i");
 	if (bookmark == null) return;
+	var i = bookmark.querySelector("i");
 	bookmark.addEventListener("click", function () {
 		var message_id = bookmark.getAttribute('data-message-id');
 		var is_active = bookmark.className == 'active';

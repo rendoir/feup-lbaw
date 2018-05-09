@@ -39,15 +39,15 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab">
                     <!-- Questions -->
-                    @each('partials.question', $user->getQuestions()->get(), 'question')
+                    @each('partials.profile.question_preview', $user->getQuestions()->get(), 'question')
                 </div>
                 <div class="tab-pane fade" id="nav-answers" role="tabpanel" aria-labelledby="nav-answers-tab">
                     <!-- Answers -->
-                    {{-- @each('partials.answer', $user->getAnswers()->get(), 'answer') --}}
+                    @each('partials.profile.answer_preview', $user->getAnswers()->get(), 'answer')
                 </div>
                 <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
                     <!-- Comments -->
-                    {{-- @each('partials.comment', $user->getComments()->get(), 'comment') --}}
+                    {{-- @each('partials.profile.comment_preview', $user->getComments()->get(), 'comment') --}}
                 </div>
                 <div class="tab-pane fade" id="nav-marked" role="tabpanel" aria-labelledby="nav-marked-tab">
                     <!-- Marked Questions -->
