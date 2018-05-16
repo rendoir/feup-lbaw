@@ -1054,7 +1054,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(7);
-module.exports = __webpack_require__(25);
+module.exports = __webpack_require__(26);
 
 
 /***/ }),
@@ -1072,6 +1072,7 @@ __webpack_require__(14);
 __webpack_require__(17);
 __webpack_require__(18);
 __webpack_require__(3);
+__webpack_require__(25);
 
 /***/ }),
 /* 8 */
@@ -7369,6 +7370,29 @@ function removeCommentHandler(response, commentNode) {
 
 /***/ }),
 /* 25 */
+/***/ (function(module, exports) {
+
+function tagSearchEvent() {
+  var search = document.getElementById("tag_search");
+  if (search == null) return;
+  var tags = document.querySelectorAll(".tagcloud ul li a");
+
+  search.addEventListener("input", function () {
+    var pattern = new RegExp(search.value, 'i');
+    for (var i = 0; i < tags.length; i++) {
+      if (!pattern.test(tags[i].innerHTML)) {
+        tags[i].parentElement.style.display = "none";
+      } else {
+        tags[i].parentElement.style.display = "inline-block";
+      }
+    }
+  });
+}
+
+tagSearchEvent();
+
+/***/ }),
+/* 26 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
