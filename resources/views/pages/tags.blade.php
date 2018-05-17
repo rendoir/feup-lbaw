@@ -14,11 +14,11 @@
             </div>
 
             <!-- Search Bar -->
-            <div id="categories-search" class="input-group mb-4 w-50 mr-5">
+            <div class="input-group mb-4 w-50 mr-5">
                 <div class="input-group-prepend">
                     <span class="input-group-text btn btn-primary" id="basic-addon1">Search your Category here</span>
                 </div>
-                <input type="text" class="form-control" placeholder="e.g. javascript" aria-label="Username" aria-describedby="basic-addon1">
+                <input id="tag_search" type="text" class="form-control" placeholder="e.g. javascript" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
         </section>
@@ -29,7 +29,7 @@
 
                 @foreach($tags as $tag)
                     <li>
-                        <a href="#">{{$tag->name}}</a>
+                        <a href="/questions?search=[{{$tag->name}}]">{{$tag->name}}</a>
                         <span>{{$tag->num_posts}}</span>
                     </li>
                 @endforeach

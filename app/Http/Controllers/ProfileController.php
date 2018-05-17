@@ -3,6 +3,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Bookmark;
+
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -54,5 +57,21 @@ class ProfileController extends Controller
       $user = Auth::user();
       $user->biography = $request->biography;
       $user->save();
+    }
+
+    public function addBookmark(Request $request) {
+      if(!Auth::check())
+        return response()->setStatusCode(403);
+
+      DB::table('bookmarks')->insert(['question_id' => $request->question_id, 'user_id' => Auth::id()]);
+    }
+
+    public function deleteBookmark(Request $request) {
+      if(!Auth::check())
+        return response()->setStatusCode(403);
+
+      DB::table('bookmarks')->where('user_id', '=', Auth::id())
+        ->where('question_id', '=', $request->question_id)
+        ->delete();
     }
 }

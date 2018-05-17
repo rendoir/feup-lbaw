@@ -1,9 +1,7 @@
 <?php
     $message = $question->message;
     $content = $message->message_version;
-    $author = $message->get_author();
     $score = $message->score;
-    $message_id = $message->id;
 ?>
 <a class="card my-3 question-card <?= ($question->correct_answer != null ? 'border-success' : '') ?>" href="{{ route('questions', ['id' => $question->id]) }}">
     <div class="row mx-0">
@@ -27,14 +25,7 @@
 
                 <p class="card-text"><?=substr($content->content, 0, 240)?>...</p>
             </div>
-            <div class="card-footer bg-transparent d-flex justify-content-between">
-                <p class="card-text mb-0">
-                    Created by - <strong>{{$author->username}}</strong>
-                </p>
-                <div class="ml-2 mr-auto">
-                    <span></span>
-                    <span class="badge badge-success">{{$author->getBadge()}}</span>
-                </div>
+            <div class="card-footer bg-transparent d-flex justify-content-end">
                 <div>
                     @each('partials.category', $question->categories, 'category')
                 </div>

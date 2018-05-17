@@ -9,3 +9,4 @@ require('./set_up_notifications.js');
 require('./editor.js');
 require('./answers/answers.js');
 require('./comments/comments.js');
+require('./tag_cloud.js');

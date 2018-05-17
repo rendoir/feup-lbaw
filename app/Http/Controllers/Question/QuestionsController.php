@@ -41,22 +41,22 @@ class QuestionsController extends Controller
     {
         if (Auth::check()) {
             $question = null;
-            
+
             DB::transaction(function() use (&$request, &$question) {
                 $user = User::find(Auth::id());
                 $message = Message::create(['author' => $user->id]);
-                
+
                 Commentable::create(['id' => $message->id]);
                 $question = Question::create(['id' => $message->id, 'title' => $request->title]);
                 MessageVersion::create(['content' => $request->messageContent, 'message_id' => $message->id]);
-                
+
                 $tags = explode(',', $request->tags);
                 foreach ($tags as $tag){
                     $tagModel = Category::where('name', $tag)->first();
                     $question->categories()->attach($tagModel->id);
                 }
             });
-            
+
             return redirect()->route('questions', ['id' => $question->id]);
         }
         return redirect('\ask_question');
@@ -68,7 +68,20 @@ class QuestionsController extends Controller
 
     public function showQueriedQuestions(Request $request) {
         $query_string = $request->get('search');
-        $questions = Question::search($query_string)->paginate(NUM_PER_PAGE);
+        preg_match_all('/(?<=\[).*?(?=\])/', $query_string, $tag_names);
+        $query_string = preg_replace('/\[.*?\]/', "", $query_string);
+        $tag_names = $tag_names[0];
+
+        //Get Eloquent Tags
+        /*$tags = [];
+        for ($i=0; $i < count($tag_names); $i++) {
+          $tag = Category::where('name', $tag_names[$i])->first();
+          if($tag != null)
+            array_push($tags, $tag);
+        }*/
+
+        $questions = Question::search($query_string);
+        $questions = $questions->paginate(NUM_PER_PAGE);
         $questions->appends(['search' => $query_string]);
 
         return view('pages.questions', [

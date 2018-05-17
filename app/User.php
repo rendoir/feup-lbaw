@@ -61,21 +61,30 @@ class User extends Authenticatable
       else return '/' . $type . 's/default';
     }
 
-    public function getNumberQuestions() {
+    public function getQuestions() {
       return Question::join('messages', 'questions.id', '=', 'messages.id')
-      ->where('messages.author', '=', $this->id)
-      ->count();
+                    ->where('messages.author', '=', $this->id);
     }
 
-    public function getNumberAnswers() {
+    public function getAnswers() {
       return Answer::join('messages', 'answers.id', '=', 'messages.id')
-      ->where('messages.author', '=', $this->id)
-      ->count();
+                    ->where('messages.author', '=', $this->id);
     }
 
-    public function getNumberComments() {
+    public function getComments() {
       return Comment::join('messages', 'comments.id', '=', 'messages.id')
-      ->where('messages.author', '=', $this->id)
-      ->count();
+                    ->where('messages.author', '=', $this->id);
+    }
+
+    public function getBookmarks() {
+      return Question::join('bookmarks', 'bookmarks.question_id', '=', 'questions.id')
+                    ->where('bookmarks.user_id', '=', $this->id);
+    }
+
+    public function hasBookmarkOn($question_id) {
+      return Bookmark::where('user_id', '=', $this->id)
+                      ->where('question_id', '=', $question_id)
+                      ->count() > 0;
+
     }
 }

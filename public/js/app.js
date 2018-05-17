@@ -1072,10 +1072,13 @@ __webpack_require__(14);
 __webpack_require__(17);
 __webpack_require__(18);
 __webpack_require__(3);
+__webpack_require__(39);
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(1);
 
 decodeHTML = function decodeHTML(html) {
 	var txt = document.createElement('textarea');
@@ -1084,7 +1087,7 @@ decodeHTML = function decodeHTML(html) {
 };
 
 function applyMarkdown() {
-	window.addEventListener("load", function () {
+	document.addEventListener("DOMContentLoaded", function () {
 		var markdown_content = document.querySelectorAll(".markdown");
 
 		var instance = new Object();
@@ -1099,6 +1102,32 @@ function applyMarkdown() {
 }
 
 applyMarkdown();
+
+function bookmarkEvent() {
+	var bookmark = document.querySelector("#bookmark");
+	if (bookmark == null) return;
+	var i = bookmark.querySelector("i");
+	bookmark.addEventListener("click", function () {
+		var message_id = bookmark.getAttribute('data-message-id');
+		var is_active = bookmark.className == 'active';
+		var method = is_active ? 'delete' : 'post';
+		var url = '/users/bookmarks/' + message_id;
+		var data = { question_id: message_id };
+		ajax.sendAjaxRequest(method, url, data, function () {
+			if (this.status == 200) {
+				if (is_active) {
+					bookmark.className = 'inactive';
+					i.className = i.className.replace('fas', 'far');
+				} else {
+					bookmark.className = 'active';
+					i.className = i.className.replace('far', 'fas');
+				}
+			}
+		});
+	});
+}
+
+bookmarkEvent();
 
 /***/ }),
 /* 9 */
@@ -7392,6 +7421,30 @@ function getAnswersHandler() {
 module.exports = {
     getAnswersRequest: getAnswersRequest
 };
+
+/***/ }),
+/* 38 */,
+/* 39 */
+/***/ (function(module, exports) {
+
+function tagSearchEvent() {
+  var search = document.getElementById("tag_search");
+  if (search == null) return;
+  var tags = document.querySelectorAll(".tagcloud ul li a");
+
+  search.addEventListener("input", function () {
+    var pattern = new RegExp(search.value, 'i');
+    for (var i = 0; i < tags.length; i++) {
+      if (!pattern.test(tags[i].innerHTML)) {
+        tags[i].parentElement.style.display = "none";
+      } else {
+        tags[i].parentElement.style.display = "inline-block";
+      }
+    }
+  });
+}
+
+tagSearchEvent();
 
 /***/ })
 /******/ ]);
