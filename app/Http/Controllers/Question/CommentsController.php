@@ -25,25 +25,6 @@ class CommentsController extends Controller
     */
 
     /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getAnswerComments(Request $request)
-    {
-        $commentable = Answer::find($request->answer_id)->commentable;
-        $comment_ids = $commentable->get_comments;
-
-        $comments = array();
-
-        foreach ($comment_ids as $comment)
-            array_push($comments, $this->getCommentJSON($comment));
-        
-        $result = array("comments" => $comments, "is_authenticated" => Auth::check());
-        return response()->json($result);
-    }
-
-
-    /**
      * @param $comment
      * @return array
      */
@@ -67,6 +48,23 @@ class CommentsController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAnswerComments(Request $request)
+    {
+        $commentable = Answer::find($request->answer_id)->commentable;
+        $comment_ids = $commentable->get_comments;
+
+        $comments = array();
+
+        foreach ($comment_ids as $comment)
+            array_push($comments, $this->getCommentJSON($comment));
+        
+        $result = array("comments" => $comments, "is_authenticated" => Auth::check());
+        return response()->json($result);
+    }
 
     /**
      * @param Request $request

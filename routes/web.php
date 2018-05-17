@@ -41,6 +41,7 @@ Route::get('ask_question', 'Question\QuestionsController@showAskQuestionForm')->
 Route::post('ask_question', 'Question\QuestionsController@addQuestion')->name('ask_question');
 
 // Answers
+Route::get('questions/{id}/answers', 'Question\AnswersController@getAnswers');
 Route::post('questions/{id}/answers', 'Question\AnswersController@addAnswer');
 
 // Comments

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Question;
 use App\Commentable;
 use App\Message;
 use App\MessageVersion;
-use App\Comment;
+use App\Question;
 use App\Answer;
 use App\User;
 use Illuminate\Http\Request;
@@ -47,6 +47,19 @@ class AnswersController extends Controller
                 "author" => ($content->moderator_id != null? $content->moderator_id : $content->author)
             )
         );
+    }
+
+    public function getAnswers(Request $request) {
+        $answers = Question::find($request->id)->answers();
+
+        $answers_array = array();
+
+        foreach ($answers as $answer)
+            array_push($answers_array, $this->getAnswerJSON($answer));
+        
+        $result = array("answers" => $answers_array, "is_authenticated" => Auth::check());
+        
+        return response()->json($result);
     }
 
     /**

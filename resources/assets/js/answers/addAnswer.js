@@ -42,4 +42,8 @@ function addAnswerHandler(response) {
 
     //Cleaning answer creator content
     // TODO
+
+    // This does not work
+    let contentNode = document.querySelector(".new-answer-content");
+    contentNode.value = "";
 }

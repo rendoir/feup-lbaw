@@ -74,8 +74,8 @@
 /* harmony export (immutable) */ __webpack_exports__["d"] = getCommentsURL;
 /* harmony export (immutable) */ __webpack_exports__["e"] = getUniqueCommentURL;
 /* harmony export (immutable) */ __webpack_exports__["f"] = toggleShowMsg;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(4);
-var Mustache = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_js__ = __webpack_require__(3);
+var Mustache = __webpack_require__(4);
 
 
 
@@ -171,7 +171,7 @@ module.exports = {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mustache = __webpack_require__(3);
+var Mustache = __webpack_require__(4);
 
 function displayError(errorMessage) {
     return displayMessage(errorMessage, false);
@@ -201,6 +201,90 @@ module.exports = {
 
 /***/ }),
 /* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["addSingleEventListeners"] = addSingleEventListeners;
+/* harmony export (immutable) */ __webpack_exports__["addCommentEditEventListener"] = addCommentEditEventListener;
+/* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(24);
+var messages = __webpack_require__(5);
+
+
+
+
+
+
+function addEventListeners() {
+
+    viewCommentsEventListener();
+    addCommentsEventListener();
+    removeCommentsEventListener();
+
+    // Some event listeners are only added when the respective
+    // html elements triggering the events are created
+}
+
+function addSingleEventListeners(message_id) {
+    viewSingleCommentEventListener(message_id);
+    addSingleCommentEventListener(message_id);
+}
+
+function viewCommentsEventListener() {
+    messages.genericClickListener('.show-comments', __WEBPACK_IMPORTED_MODULE_0__viewComments_js__["a" /* viewCommentsRequest */]);
+}
+
+function viewSingleCommentEventListener(message_id) {
+    messages.genericSingleClickListener('.show-comments', __WEBPACK_IMPORTED_MODULE_0__viewComments_js__["a" /* viewCommentsRequest */], message_id);
+}
+
+function addCommentsEventListener() {
+    messages.genericClickListener('.new-comment-submit', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */]);
+    messages.genericEnterListener('.new-comment-content', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */]);
+}
+
+function addSingleCommentEventListener(message_id) {
+    messages.genericSingleClickListener('.new-comment-submit', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */], message_id);
+    messages.genericSingleEnterListener('.new-comment-content', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */], message_id);
+}
+
+function addCommentEditEventListener(message_id) {
+
+    var comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
+
+    comment.addEventListener('click', function () {
+        Object(__WEBPACK_IMPORTED_MODULE_2__editComment_js__["a" /* setEditMode */])(message_id);
+    });
+}
+
+function editCommentsEventListener() {
+    messages.genericClickListener('.edit-comments', __WEBPACK_IMPORTED_MODULE_2__editComment_js__["a" /* setEditMode */]);
+}
+
+function removeCommentsEventListener() {
+
+    $('#deleteCommentModal').on('show.bs.modal', function (e) {
+        Object(__WEBPACK_IMPORTED_MODULE_3__removeComment_js__["a" /* removeComment */])($(e.relatedTarget)[0]);
+    });
+
+    /* 
+    let deleteModal = document.querySelector('#deleteCommentModal');
+    if (deleteModal == null)
+        return;
+     deleteModal.addEventListener('show.bs.modal', function(e) {
+        console.log(e.relatedTarget);
+    });
+    */
+}
+
+window.addEventListener('load', addEventListeners);
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -839,90 +923,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (immutable) */ __webpack_exports__["addSingleEventListeners"] = addSingleEventListeners;
-/* harmony export (immutable) */ __webpack_exports__["addCommentEditEventListener"] = addCommentEditEventListener;
-/* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(24);
-var messages = __webpack_require__(5);
-
-
-
-
-
-
-function addEventListeners() {
-
-    viewCommentsEventListener();
-    addCommentsEventListener();
-    removeCommentsEventListener();
-
-    // Some event listeners are only added when the respective
-    // html elements triggering the events are created
-}
-
-function addSingleEventListeners(message_id) {
-    viewSingleCommentEventListener(message_id);
-    addSingleCommentEventListener(message_id);
-}
-
-function viewCommentsEventListener() {
-    messages.genericClickListener('.show-comments', __WEBPACK_IMPORTED_MODULE_0__viewComments_js__["a" /* viewCommentsRequest */]);
-}
-
-function viewSingleCommentEventListener(message_id) {
-    messages.genericSingleClickListener('.show-comments', __WEBPACK_IMPORTED_MODULE_0__viewComments_js__["a" /* viewCommentsRequest */], message_id);
-}
-
-function addCommentsEventListener() {
-    messages.genericClickListener('.new-comment-submit', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */]);
-    messages.genericEnterListener('.new-comment-content', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */]);
-}
-
-function addSingleCommentEventListener(message_id) {
-    messages.genericSingleClickListener('.new-comment-submit', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */], message_id);
-    messages.genericSingleEnterListener('.new-comment-content', __WEBPACK_IMPORTED_MODULE_1__addComment_js__["a" /* addCommentRequest */], message_id);
-}
-
-function addCommentEditEventListener(message_id) {
-
-    var comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
-
-    comment.addEventListener('click', function () {
-        Object(__WEBPACK_IMPORTED_MODULE_2__editComment_js__["a" /* setEditMode */])(message_id);
-    });
-}
-
-function editCommentsEventListener() {
-    messages.genericClickListener('.edit-comments', __WEBPACK_IMPORTED_MODULE_2__editComment_js__["a" /* setEditMode */]);
-}
-
-function removeCommentsEventListener() {
-
-    $('#deleteCommentModal').on('show.bs.modal', function (e) {
-        Object(__WEBPACK_IMPORTED_MODULE_3__removeComment_js__["a" /* removeComment */])($(e.relatedTarget)[0]);
-    });
-
-    /* 
-    let deleteModal = document.querySelector('#deleteCommentModal');
-    if (deleteModal == null)
-        return;
-     deleteModal.addEventListener('show.bs.modal', function(e) {
-        console.log(e.relatedTarget);
-    });
-    */
-}
-
-window.addEventListener('load', addEventListeners);
-
-/***/ }),
 /* 5 */
 /***/ (function(module, exports) {
 
@@ -1071,7 +1071,7 @@ __webpack_require__(13);
 __webpack_require__(14);
 __webpack_require__(17);
 __webpack_require__(18);
-__webpack_require__(4);
+__webpack_require__(3);
 
 /***/ }),
 /* 8 */
@@ -6968,10 +6968,13 @@ if (editor_element != null) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__addAnswer_js__ = __webpack_require__(19);
 var messages = __webpack_require__(5);
+var answersGetter = __webpack_require__(37);
 
 
 
 function addAnswerEventListeners() {
+
+    answersGetter.getAnswersRequest();
 
     addAnswerEventListener();
 }
@@ -6988,7 +6991,7 @@ window.addEventListener('load', addAnswerEventListeners);
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = addAnswerRequest;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_comments_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_comments_js__ = __webpack_require__(3);
 var ajax = __webpack_require__(1);
 var alert = __webpack_require__(2);
 var utils = __webpack_require__(20);
@@ -7029,13 +7032,17 @@ function addAnswerHandler(response) {
 
     //Cleaning answer creator content
     // TODO
+
+    // This does not work
+    var contentNode = document.querySelector(".new-answer-content");
+    contentNode.value = "";
 }
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mustache = __webpack_require__(3);
+var Mustache = __webpack_require__(4);
 
 function createAnswer(answer_info) {
 
@@ -7140,7 +7147,7 @@ function getCommentsHandler(response, message_id) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = addCommentRequest;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__comments_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__comments_js__ = __webpack_require__(3);
 var ajax = __webpack_require__(1);
 var alert = __webpack_require__(2);
 
@@ -7344,6 +7351,47 @@ function removeCommentHandler(response, commentNode) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(1);
+var alert = __webpack_require__(2);
+var utils = __webpack_require__(20);
+
+function getAnswersRequest() {
+
+    // If not in a question's page
+    if (document.getElementById("question") == null) return;
+
+    ajax.sendAjaxRequest('get', utils.getAnswersURL(), {}, getAnswersHandler);
+}
+
+// Handler to the get comments request response
+function getAnswersHandler() {
+
+    if (this.status == 200) {
+        var responseJSON = JSON.parse(this.responseText);
+        //createComments(responseJSON, message_id);
+        console.log(responseJSON);
+    } else alert.displayError("Failed to retrieve Question's answers");
+}
+
+module.exports = {
+    getAnswersRequest: getAnswersRequest
+};
 
 /***/ })
 /******/ ]);
