@@ -208,10 +208,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["addSingleEventListeners"] = addSingleEventListeners;
 /* harmony export (immutable) */ __webpack_exports__["addCommentEditEventListener"] = addCommentEditEventListener;
 /* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(24);
 var messages = __webpack_require__(5);
 
 
@@ -7060,32 +7060,40 @@ if (editor_element != null) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__addAnswer_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getAnswers_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addAnswer_js__ = __webpack_require__(25);
 var messages = __webpack_require__(5);
-var answersGetter = __webpack_require__(20);
+//var answersGetter = require('./getAnswers.js');
+
 
 
 
 function addAnswerEventListeners() {
 
-    answersGetter.getAnswersRequest();
+    //answersGetter.getAnswersRequest();
+    Object(__WEBPACK_IMPORTED_MODULE_0__getAnswers_js__["a" /* getAnswersRequest */])();
 
     addAnswerEventListener();
 }
 
 function addAnswerEventListener() {
-    messages.genericClickListener('#answer-creator', __WEBPACK_IMPORTED_MODULE_0__addAnswer_js__["a" /* addAnswerRequest */]);
+    messages.genericClickListener('#answer-creator', __WEBPACK_IMPORTED_MODULE_1__addAnswer_js__["a" /* addAnswerRequest */]);
 }
 
 window.addEventListener('load', addAnswerEventListeners);
 
 /***/ }),
 /* 20 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = getAnswersRequest;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_comments_js__ = __webpack_require__(3);
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(2);
 var utils = __webpack_require__(6);
+
+
 
 function getAnswersRequest() {
 
@@ -7100,70 +7108,44 @@ function getAnswersHandler() {
 
     if (this.status == 200) {
         var responseJSON = JSON.parse(this.responseText);
-        //createComments(responseJSON, message_id);
-        console.log(responseJSON);
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = responseJSON.answers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var answer = _step.value;
+
+                utils.createAnswer({ 'answer': answer, 'is_authenticated': responseJSON.is_authenticated });
+                console.log(answer);
+
+                // Add event listeners for handling comments
+                Object(__WEBPACK_IMPORTED_MODULE_0__comments_comments_js__["addSingleEventListeners"])(answer.id);
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
     } else alert.displayError("Failed to retrieve Question's answers");
 }
 
-module.exports = {
-    getAnswersRequest: getAnswersRequest
-};
+/*module.exports = {
+    getAnswersRequest
+};*/
 
 /***/ }),
 /* 21 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = addAnswerRequest;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_comments_js__ = __webpack_require__(3);
-var ajax = __webpack_require__(0);
-var alert = __webpack_require__(2);
-var utils = __webpack_require__(6);
-
-
-
-function addAnswerRequest(message_id) {
-
-    var contentNode = document.querySelector(".new-answer-content");
-    if (contentNode == null || contentNode.value.trim() == "") return;
-
-    var requestBody = {
-        "content": contentNode.value,
-        "question": message_id
-    };
-
-    ajax.sendAjaxRequest('post', utils.getAnswersURL(), requestBody, function (data) {
-        addAnswerHandler(data.target);
-    });
-}
-
-function addAnswerHandler(response) {
-    if (response.status == 403) {
-        alert.displayError("You have no permission to execute this action.");
-        return;
-    } else if (response.status != 200) {
-        alert.displayError("Failed to add a new Answer.");
-        return;
-    }
-
-    var responseJSON = JSON.parse(response.responseText);
-    utils.createAnswer({ 'answer': responseJSON.answer, 'is_authenticated': responseJSON.is_authenticated });
-
-    var answer_id = responseJSON.answer.id;
-    Object(__WEBPACK_IMPORTED_MODULE_0__comments_comments_js__["addSingleEventListeners"])(answer_id);
-
-    utils.jumpToElement("answer-" + answer_id);
-
-    //Cleaning answer creator content
-    // TODO
-
-    // This does not work
-    var contentNode = document.querySelector(".new-answer-content");
-    contentNode.value = "";
-}
-
-/***/ }),
-/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7200,7 +7182,7 @@ function getCommentsHandler(response, message_id) {
 }
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7260,7 +7242,7 @@ function addCommentHandler(response, message_id) {
 }
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7347,7 +7329,7 @@ function getPreviousComment(inputNode, previousNode) {
 }
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7403,6 +7385,60 @@ function removeCommentHandler(response, commentNode) {
         var ancestorNode = dadNode.parentNode.parentNode;
         ancestorNode.parentNode.removeChild(ancestorNode);
     } else dadNode.removeChild(commentNode);
+}
+
+/***/ }),
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = addAnswerRequest;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_comments_js__ = __webpack_require__(3);
+var ajax = __webpack_require__(0);
+var alert = __webpack_require__(2);
+var utils = __webpack_require__(6);
+
+
+
+function addAnswerRequest(message_id) {
+
+    var contentNode = document.querySelector(".new-answer-content");
+    if (contentNode == null || contentNode.value.trim() == "") return;
+
+    var requestBody = {
+        "content": contentNode.value,
+        "question": message_id
+    };
+
+    ajax.sendAjaxRequest('post', utils.getAnswersURL(), requestBody, function (data) {
+        addAnswerHandler(data.target);
+    });
+}
+
+function addAnswerHandler(response) {
+    if (response.status == 403) {
+        alert.displayError("You have no permission to execute this action.");
+        return;
+    } else if (response.status != 200) {
+        alert.displayError("Failed to add a new Answer.");
+        return;
+    }
+
+    var responseJSON = JSON.parse(response.responseText);
+    utils.createAnswer({ 'answer': responseJSON.answer, 'is_authenticated': responseJSON.is_authenticated });
+
+    // Add event listeners for handling comments
+    var answer_id = responseJSON.answer.id;
+    Object(__WEBPACK_IMPORTED_MODULE_0__comments_comments_js__["addSingleEventListeners"])(answer_id);
+
+    utils.jumpToElement("answer-" + answer_id);
+
+    //Cleaning answer creator content
+    // TODO
+
+    // This does not work
+    var contentNode = document.querySelector(".new-answer-content");
+    contentNode.value = "";
 }
 
 /***/ }),

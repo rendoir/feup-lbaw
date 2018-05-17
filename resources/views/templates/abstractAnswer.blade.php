@@ -114,9 +114,11 @@
                 </small>
             </div>
         </div>
+        {{/is_authenticated}}
 
         <!-- COMMENTS -->
-        <div class="collapse answer-comments w-100" id="AnswerComments{{id}}" data-message-id="{{id}}">  
+        <div class="collapse answer-comments w-100" id="AnswerComments{{id}}" data-message-id="{{id}}">
+        {{#is_authenticated}}  
             <div class="comment-creator card-footer comments-card px-0 px-sm-4">
                 <div class="d-flex list-group list-group-flush">
                     <div class="list-group-item bg-transparent">
@@ -130,9 +132,6 @@
                 </div>
             </div>
         </div>
-        <!--@elseif ($num_comments > 0)
-        <div class="collapse answer-comments" id="AnswerComments{{$id}}" data-message-id="{{$id}}"></div>
-        @endif-->
         {{/is_authenticated}}
     </div>
 </div>

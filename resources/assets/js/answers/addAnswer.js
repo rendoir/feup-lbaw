@@ -35,6 +35,7 @@ function addAnswerHandler(response) {
     let responseJSON = JSON.parse(response.responseText);
     utils.createAnswer({ 'answer': responseJSON.answer, 'is_authenticated': responseJSON.is_authenticated });
 
+    // Add event listeners for handling comments
     let answer_id = responseJSON.answer.id;
     addSingleEventListeners(answer_id);
 

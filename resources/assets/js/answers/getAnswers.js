@@ -2,7 +2,9 @@ var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./answersUtils.js');
 
-function getAnswersRequest() {
+import { addSingleEventListeners } from '../comments/comments.js';
+
+export function getAnswersRequest() {
 
     // If not in a question's page
     if (document.getElementById("question") == null)
@@ -18,12 +20,18 @@ function getAnswersHandler() {
 
     if (this.status == 200) {
         let responseJSON = JSON.parse(this.responseText);
-        //createComments(responseJSON, message_id);
-        console.log(responseJSON);
+
+        for (let answer of responseJSON.answers) {
+            utils.createAnswer({ 'answer': answer, 'is_authenticated': responseJSON.is_authenticated });
+            console.log(answer);
+
+            // Add event listeners for handling comments
+            addSingleEventListeners(answer.id);
+        }
     }
     else alert.displayError("Failed to retrieve Question's answers");
 }
 
-module.exports = {
+/*module.exports = {
     getAnswersRequest
-};
+};*/
