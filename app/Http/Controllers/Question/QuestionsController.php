@@ -68,11 +68,20 @@ class QuestionsController extends Controller
 
     public function showQueriedQuestions(Request $request) {
         $query_string = $request->get('search');
-        preg_match_all('/(?<=\[).*?(?=\])/', $query_string, $categories);
+        preg_match_all('/(?<=\[).*?(?=\])/', $query_string, $tag_names);
         $query_string = preg_replace('/\[.*?\]/', "", $query_string);
-        var_dump($categories);
-        var_dump($query_string);
-        $questions = Question::search($query_string)->paginate(NUM_PER_PAGE);
+        $tag_names = $tag_names[0];
+
+        //Get Eloquent Tags
+        /*$tags = [];
+        for ($i=0; $i < count($tag_names); $i++) {
+          $tag = Category::where('name', $tag_names[$i])->first();
+          if($tag != null)
+            array_push($tags, $tag);
+        }*/
+
+        $questions = Question::search($query_string);
+        $questions = $questions->paginate(NUM_PER_PAGE);
         $questions->appends(['search' => $query_string]);
 
         return view('pages.questions', [
