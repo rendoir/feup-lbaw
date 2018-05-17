@@ -7,7 +7,7 @@ decodeHTML = function (html) {
 };
 
 function applyMarkdown() {
-	window.addEventListener("load", function () {
+	document.addEventListener("DOMContentLoaded", function () {
 		let markdown_content = document.querySelectorAll(".markdown");
 
 		let instance = new Object();
