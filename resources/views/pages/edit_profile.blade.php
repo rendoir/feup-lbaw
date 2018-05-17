@@ -3,6 +3,12 @@
 @section('title', 'Edit Profile')
 
 @section('content')
+<?php
+  $questions = $user->getQuestions();
+  $answers = $user->getAnswers();
+  $comments = $user->getComments();
+  $bookmarks = $user->getBookmarks();
+ ?>
 <main class="container">
         <div class="row">
 
@@ -69,13 +75,13 @@
             </section>
 
             <!-- Side Column -->
-            <aside class="col-md-3">
-                <div class="py-5">
+            <aside class="col-md-3 mb-5">
+                <div class="pt-5">
                     <div class="card">
                         <div class="card-body text-center">
                             <h4 class="card-text my-2">Control Panel</h4>
                             <div class="d-flex flex-column justify-content-center">
-                              <span class="badge badge-success">{{$user->getBadge()}}</span>
+                                <span class="badge badge-success">{{$user->getBadge()}}</span>
                             </div>
                             <div class="my-3">
                                 <p>Reputation Points</p>
@@ -85,15 +91,15 @@
                             <div class="d-flex flex-column align-content-center container">
                                 <div class="py-2">
                                     <i class="far fa-question-circle"></i>
-                                    <span>{{$user->getNumberQuestions()}}</span>
+                                    <span>{{$questions->count()}}</span>
                                 </div>
                                 <div class="py-2 border-top">
                                     <i class="far fa-hand-peace"></i>
-                                    <span>{{$user->getNumberAnswers()}}</span>
+                                    <span>{{$answers->count()}}</span>
                                 </div>
-                                <div class="pt-2 pb-3 border-top">
+                                <div class="py-2 border-top">
                                     <i class="far fa-comment"></i>
-                                    <span>{{$user->getNumberComments()}}</span>
+                                    <span>{{$comments->count()}}</span>
                                 </div>
                             </div>
                         </div>
