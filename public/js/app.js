@@ -60,11 +60,36 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+function encodeForAjax(data) {
+    if (data == null) return null;
+    return Object.keys(data).map(function (k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
+    }).join('&');
+}
+
+function sendAjaxRequest(method, url, data, handler) {
+    var request = new XMLHttpRequest();
+
+    request.open(method, url, true);
+    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.addEventListener('load', handler);
+    request.send(encodeForAjax(data));
+}
+
+module.exports = {
+    sendAjaxRequest: sendAjaxRequest
+};
+
+/***/ }),
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -143,31 +168,6 @@ function toggleShowMsg(message_id, show) {
 }
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-function encodeForAjax(data) {
-    if (data == null) return null;
-    return Object.keys(data).map(function (k) {
-        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
-    }).join('&');
-}
-
-function sendAjaxRequest(method, url, data, handler) {
-    var request = new XMLHttpRequest();
-
-    request.open(method, url, true);
-    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.addEventListener('load', handler);
-    request.send(encodeForAjax(data));
-}
-
-module.exports = {
-    sendAjaxRequest: sendAjaxRequest
-};
-
-/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -208,10 +208,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["addSingleEventListeners"] = addSingleEventListeners;
 /* harmony export (immutable) */ __webpack_exports__["addCommentEditEventListener"] = addCommentEditEventListener;
 /* harmony export (immutable) */ __webpack_exports__["editCommentsEventListener"] = editCommentsEventListener;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__viewComments_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addComment_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editComment_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__removeComment_js__ = __webpack_require__(25);
 var messages = __webpack_require__(5);
 
 
@@ -1053,32 +1053,97 @@ module.exports = {
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(7);
-module.exports = __webpack_require__(25);
+var Mustache = __webpack_require__(4);
 
+function createAnswer(answer_info) {
+
+    var template = document.querySelector("template.answer").innerHTML;
+    var placeholder = document.createElement("span");
+
+    answer_info.hasComments = answer_info.answer.num_comments > 0 ? true : false;
+    addMarkdownFunction(answer_info);
+
+    placeholder.innerHTML = Mustache.render(template, answer_info);
+
+    var answers = document.getElementById("answers-container");
+    answers.appendChild(placeholder.firstElementChild);
+}
+
+function addMarkdownFunction(answer_info) {
+
+    answer_info.markdown = function () {
+        return function (text, render) {
+
+            var instance = new Object();
+            instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+
+            var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(render(text)));
+            return bound();
+        };
+    };
+}
+
+function getAnswersURL() {
+    return window.location.pathname + '/answers';
+}
+
+function jumpToElement(elementID) {
+    var element = document.getElementById(elementID);
+
+    //Getting Y and Height of target element
+    var top = element.offsetTop;
+    var height = element.offsetHeight;
+
+    //Go there with a smooth transition
+    var pos = window.screenY;
+    var finalPos = top + height;
+
+    var int = setInterval(function () {
+        window.scrollTo(0, pos);
+
+        inc = (finalPos - pos) / 15;
+        pos += inc > 5 ? inc : 5;
+
+        if (pos >= finalPos) clearInterval(int);
+    }, 20);
+}
+
+module.exports = {
+    createAnswer: createAnswer,
+    getAnswersURL: getAnswersURL,
+    jumpToElement: jumpToElement
+};
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(1);
 __webpack_require__(8);
+module.exports = __webpack_require__(27);
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(0);
 __webpack_require__(9);
 __webpack_require__(10);
 __webpack_require__(11);
 __webpack_require__(12);
 __webpack_require__(13);
 __webpack_require__(14);
-__webpack_require__(17);
+__webpack_require__(15);
 __webpack_require__(18);
+__webpack_require__(19);
 __webpack_require__(3);
-__webpack_require__(39);
+__webpack_require__(26);
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ajax = __webpack_require__(1);
+var ajax = __webpack_require__(0);
 
 decodeHTML = function decodeHTML(html) {
 	var txt = document.createElement('textarea');
@@ -1130,7 +1195,7 @@ function bookmarkEvent() {
 bookmarkEvent();
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 $(window).scroll(function () {
@@ -1144,10 +1209,10 @@ $(window).scroll(function () {
 });
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ajax = __webpack_require__(1);
+var ajax = __webpack_require__(0);
 
 function Tagify(input, settings) {
     // protection
@@ -1770,7 +1835,7 @@ function addTags() {
 addTags();
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 $(function () {
@@ -1778,10 +1843,10 @@ $(function () {
 });
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ajax = __webpack_require__(1);
+var ajax = __webpack_require__(0);
 var errors = __webpack_require__(2);
 
 function uploadImage(abbr, type) {
@@ -1856,7 +1921,7 @@ function editBiographyHandler(e) {
 editBiography();
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 addEventListeners();
@@ -1907,12 +1972,12 @@ function addEventListeners() {
 }
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -1922,7 +1987,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-window.Pusher = __webpack_require__(16);
+window.Pusher = __webpack_require__(17);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
@@ -1932,7 +1997,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 });
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -2730,7 +2795,7 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -6918,7 +6983,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 var editor_element = document.getElementById("editor");
@@ -6990,14 +7055,14 @@ if (editor_element != null) {
 }
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__addAnswer_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__addAnswer_js__ = __webpack_require__(21);
 var messages = __webpack_require__(5);
-var answersGetter = __webpack_require__(37);
+var answersGetter = __webpack_require__(20);
 
 
 
@@ -7015,15 +7080,45 @@ function addAnswerEventListener() {
 window.addEventListener('load', addAnswerEventListeners);
 
 /***/ }),
-/* 19 */
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var alert = __webpack_require__(2);
+var utils = __webpack_require__(6);
+
+function getAnswersRequest() {
+
+    // If not in a question's page
+    if (document.getElementById("question") == null) return;
+
+    ajax.sendAjaxRequest('get', utils.getAnswersURL(), {}, getAnswersHandler);
+}
+
+// Handler for the question's answers request
+function getAnswersHandler() {
+
+    if (this.status == 200) {
+        var responseJSON = JSON.parse(this.responseText);
+        //createComments(responseJSON, message_id);
+        console.log(responseJSON);
+    } else alert.displayError("Failed to retrieve Question's answers");
+}
+
+module.exports = {
+    getAnswersRequest: getAnswersRequest
+};
+
+/***/ }),
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = addAnswerRequest;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__comments_comments_js__ = __webpack_require__(3);
-var ajax = __webpack_require__(1);
+var ajax = __webpack_require__(0);
 var alert = __webpack_require__(2);
-var utils = __webpack_require__(20);
+var utils = __webpack_require__(6);
 
 
 
@@ -7068,78 +7163,13 @@ function addAnswerHandler(response) {
 }
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mustache = __webpack_require__(4);
-
-function createAnswer(answer_info) {
-
-    var template = document.querySelector("template.answer").innerHTML;
-    var placeholder = document.createElement("span");
-
-    answer_info.hasComments = answer_info.answer.num_comments > 0 ? true : false;
-    addMarkdownFunction(answer_info);
-
-    placeholder.innerHTML = Mustache.render(template, answer_info);
-
-    var answers = document.getElementById("answers-container");
-    answers.appendChild(placeholder.firstElementChild);
-}
-
-function addMarkdownFunction(answer_info) {
-
-    answer_info.markdown = function () {
-        return function (text, render) {
-
-            var instance = new Object();
-            instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
-
-            var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(render(text)));
-            return bound();
-        };
-    };
-}
-
-function getAnswersURL() {
-    return window.location.pathname + '/answers';
-}
-
-function jumpToElement(elementID) {
-    var element = document.getElementById(elementID);
-
-    //Getting Y and Height of target element
-    var top = element.offsetTop;
-    var height = element.offsetHeight;
-
-    //Go there with a smooth transition
-    var pos = window.screenY;
-    var finalPos = top + height;
-
-    var int = setInterval(function () {
-        window.scrollTo(0, pos);
-
-        inc = (finalPos - pos) / 15;
-        pos += inc > 5 ? inc : 5;
-
-        if (pos >= finalPos) clearInterval(int);
-    }, 20);
-}
-
-module.exports = {
-    createAnswer: createAnswer,
-    getAnswersURL: getAnswersURL,
-    jumpToElement: jumpToElement
-};
-
-/***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = viewCommentsRequest;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
-var ajax = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(1);
+var ajax = __webpack_require__(0);
 var alert = __webpack_require__(2);
 
 
@@ -7170,14 +7200,14 @@ function getCommentsHandler(response, message_id) {
 }
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = addCommentRequest;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__comments_js__ = __webpack_require__(3);
-var ajax = __webpack_require__(1);
+var ajax = __webpack_require__(0);
 var alert = __webpack_require__(2);
 
 
@@ -7230,13 +7260,13 @@ function addCommentHandler(response, message_id) {
 }
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = setEditMode;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(0);
-var ajax = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils_js__ = __webpack_require__(1);
+var ajax = __webpack_require__(0);
 
 
 
@@ -7317,13 +7347,13 @@ function getPreviousComment(inputNode, previousNode) {
 }
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = removeComment;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils__ = __webpack_require__(0);
-var ajax = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentsUtils__ = __webpack_require__(1);
+var ajax = __webpack_require__(0);
 var alert = __webpack_require__(2);
 
 
@@ -7376,55 +7406,7 @@ function removeCommentHandler(response, commentNode) {
 }
 
 /***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ajax = __webpack_require__(1);
-var alert = __webpack_require__(2);
-var utils = __webpack_require__(20);
-
-function getAnswersRequest() {
-
-    // If not in a question's page
-    if (document.getElementById("question") == null) return;
-
-    ajax.sendAjaxRequest('get', utils.getAnswersURL(), {}, getAnswersHandler);
-}
-
-// Handler to the get comments request response
-function getAnswersHandler() {
-
-    if (this.status == 200) {
-        var responseJSON = JSON.parse(this.responseText);
-        //createComments(responseJSON, message_id);
-        console.log(responseJSON);
-    } else alert.displayError("Failed to retrieve Question's answers");
-}
-
-module.exports = {
-    getAnswersRequest: getAnswersRequest
-};
-
-/***/ }),
-/* 38 */,
-/* 39 */
+/* 26 */
 /***/ (function(module, exports) {
 
 function tagSearchEvent() {
@@ -7445,6 +7427,12 @@ function tagSearchEvent() {
 }
 
 tagSearchEvent();
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

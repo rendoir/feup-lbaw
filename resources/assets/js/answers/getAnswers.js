@@ -13,7 +13,7 @@ function getAnswersRequest() {
     );
 }
 
-// Handler to the get comments request response
+// Handler for the question's answers request
 function getAnswersHandler() {
 
     if (this.status == 200) {
