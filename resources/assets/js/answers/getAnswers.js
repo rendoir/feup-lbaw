@@ -20,13 +20,11 @@ function getAnswersHandler() {
     if (this.status == 200) {
         let responseJSON = JSON.parse(this.responseText);
 
-        for (let answer of responseJSON.answers) {
+        for (let answer of responseJSON.answers)
             utils.createAnswer({ 'answer': answer, 'is_authenticated': responseJSON.is_authenticated });
-            console.log(answer);
 
-            // Add event listeners for handling comments
-            comments.addSingleEventListeners(answer.id);
-        }
+        // Add event listeners for handling comments
+        comments.addEventListeners();
     }
     else alert.displayError("Failed to retrieve Question's answers");
 }

@@ -1,10 +1,4 @@
 var messages = require('../messages.js');
-
-module.exports = {
-    addSingleEventListeners,
-    editCommentsEventListener
-};
-
 var commentsViewer = require('./viewComments.js');
 var commentsCreator = require('./addComment.js');
 var commentsEditor = require('./editComment.js');
@@ -43,10 +37,6 @@ function addSingleCommentEventListener(message_id) {
     messages.genericSingleEnterListener('.new-comment-content', commentsCreator.addCommentRequest, message_id);
 }
 
-function editCommentsEventListener() {
-    messages.genericClickListener('.edit-comments', commentsEditor.setEditMode);
-}
-
 function removeCommentsEventListener() {
 
     $('#deleteCommentModal').on('show.bs.modal', function (e) {
@@ -63,5 +53,9 @@ function removeCommentsEventListener() {
     });
     */
 }
+
+module.exports = {
+    addEventListeners
+};
 
 //window.addEventListener('load', addEventListeners);

@@ -1,6 +1,7 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./commentsUtils.js');
+var editor = require('./editComment.js');
 
 function viewCommentsRequest(message_id) {
 
@@ -23,6 +24,10 @@ function getCommentsHandler(response, message_id) {
     if (response.status == 200) {
         let responseJSON = JSON.parse(response.responseText);
         utils.createComments(responseJSON, message_id);
+
+        // Enabling edition of freshly added comments
+        for (let comment of responseJSON.comments)
+            editor.enableEditMode(comment.id);
     }
     else alert.displayError("Failed to retrieve the requested Comments");
 }

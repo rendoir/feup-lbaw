@@ -1,6 +1,16 @@
 var ajax = require('../ajax.js');
 var utils = require('./commentsUtils.js');
 
+// Adding edit capability to freshly added comment
+function enableEditMode(message_id) {
+
+    let comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
+    
+    comment.addEventListener('click', function () {
+        setEditMode(message_id);
+    });
+}
+
 function setEditMode(comment_id) {
 
     let contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
@@ -82,5 +92,5 @@ function getPreviousComment(inputNode, previousNode) {
 }
 
 module.exports = {
-    setEditMode
+    enableEditMode
 };

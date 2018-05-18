@@ -1,5 +1,4 @@
 var Mustache = require('mustache');
-var commentsMain = require('../comments/comments.js');
 
 function createComments(response, message_id) {
 
@@ -23,14 +22,10 @@ function createComments(response, message_id) {
         final.replaceChild(placeholder, child);
 
     toggleShowMsg(message_id, false);
-
-    // Adding event listener to freshly added html
-    console.log(commentsMain);
-    commentsMain.editCommentsEventListener();
 }
 
 function createCommentHTML(comment) {
-
+    
     let template = document.querySelector("template.comment").innerHTML;
 
     return Mustache.render(template, comment);

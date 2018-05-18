@@ -1,7 +1,7 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./commentsUtils.js');
-var commentsEditor = require('./editComment.js');
+var editor = require('./editComment.js');
 
 function addCommentRequest(message_id) {
 
@@ -44,24 +44,16 @@ function addCommentHandler(response, message_id) {
         commentsSection.firstElementChild
             .firstElementChild
             .innerHTML += utils.createCommentHTML(responseJSON);
-        addCommentEditEventListener(newComment.id);
     }
     else
         utils.createComments({ 'comments': [newComment], 'is_authenticated': responseJSON.is_authenticated }, message_id);
 
+    // Enabling edition of freshly added comments
+    editor.enableEditMode(newComment.id);
+
     // Cleaning input text
     let contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
     document.querySelector(contentSelector).value = "";
-}
-
-// Adding edit capability to freshly added comment
-function addCommentEditEventListener(message_id) {
-
-    let comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
-
-    comment.addEventListener('click', function () {
-        commentsEditor.setEditMode(message_id);
-    });
 }
 
 module.exports = {
