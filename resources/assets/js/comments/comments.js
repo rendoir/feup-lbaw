@@ -57,5 +57,3 @@ function removeCommentsEventListener() {
 module.exports = {
     addEventListeners
 };
-
-//window.addEventListener('load', addEventListeners);

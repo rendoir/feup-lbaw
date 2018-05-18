@@ -183,8 +183,6 @@ module.exports = {
     addEventListeners: addEventListeners
 };
 
-//window.addEventListener('load', addEventListeners);
-
 /***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1046,6 +1044,12 @@ function createAnswer(answer_info) {
     answers.appendChild(placeholder.firstElementChild);
 }
 
+function cleanAnswers() {
+    var answers = document.getElementById("answers-container");
+
+    answers.innerHTML = "";
+}
+
 function addMarkdownFunction(answer_info) {
 
     answer_info.markdown = function () {
@@ -1087,6 +1091,7 @@ function jumpToElement(elementID) {
 
 module.exports = {
     createAnswer: createAnswer,
+    cleanAnswers: cleanAnswers,
     getAnswersURL: getAnswersURL,
     jumpToElement: jumpToElement
 };
@@ -7076,6 +7081,8 @@ function getAnswersHandler() {
     if (this.status == 200) {
         var responseJSON = JSON.parse(this.responseText);
 
+        utils.cleanAnswers();
+
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -7239,6 +7246,7 @@ var utils = __webpack_require__(3);
 function enableEditMode(message_id) {
 
     var comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
+    if (comment == null) return; // Comment without edit functionality
 
     comment.addEventListener('click', function () {
         setEditMode(message_id);

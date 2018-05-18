@@ -154,11 +154,9 @@ $num_answers = $question->get_num_answers();
             </div>
             @endif
 
-            <!--@verbatim
-            @foreach($answers as $answer)
-                @include('partials.answer', ['answer' => $answer])
-            @endforeach
-            @endverbatim-->
+            @for($i = 0 ; $i < 6; ++$i)
+                @include('partials.answer')
+            @endfor
         </div>
         <!-- related questions -->
         <aside class="col-md-3 mt-3">

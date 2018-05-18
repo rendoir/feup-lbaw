@@ -20,6 +20,8 @@ function getAnswersHandler() {
     if (this.status == 200) {
         let responseJSON = JSON.parse(this.responseText);
 
+        utils.cleanAnswers();
+
         for (let answer of responseJSON.answers)
             utils.createAnswer({ 'answer': answer, 'is_authenticated': responseJSON.is_authenticated });
 

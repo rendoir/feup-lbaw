@@ -5,6 +5,8 @@ var utils = require('./commentsUtils.js');
 function enableEditMode(message_id) {
 
     let comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
+    if (comment == null)
+        return; // Comment without edit functionality
     
     comment.addEventListener('click', function () {
         setEditMode(message_id);
