@@ -16,8 +16,11 @@ function createAnswer(answer_info) {
 
 function cleanAnswers() {
     let answers = document.getElementById("answers-container");
-
-    answers.innerHTML = "";
+    
+    for (let child of answers.childNodes) {
+        if (child.id == "answer-skeleton")
+            answers.removeChild(child);
+    }
 }
 
 function addMarkdownFunction(answer_info) {

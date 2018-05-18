@@ -1047,7 +1047,30 @@ function createAnswer(answer_info) {
 function cleanAnswers() {
     var answers = document.getElementById("answers-container");
 
-    answers.innerHTML = "";
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = answers.childNodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var child = _step.value;
+
+            if (child.id == "answer-skeleton") answers.removeChild(child);
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
 }
 
 function addMarkdownFunction(answer_info) {
@@ -7043,7 +7066,7 @@ if (editor_element != null) {
 "use strict";
 var messages = __webpack_require__(5);
 var answersGetter = __webpack_require__(20);
-var answersAdder = __webpack_require__(20);
+var answersAdder = __webpack_require__(25);
 
 function addAnswerEventListeners() {
 
@@ -7393,7 +7416,60 @@ module.exports = {
 };
 
 /***/ }),
-/* 25 */,
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var alert = __webpack_require__(1);
+var utils = __webpack_require__(6);
+var comments = __webpack_require__(2);
+
+function addAnswerRequest(message_id) {
+
+    var contentNode = document.querySelector(".new-answer-content");
+    if (contentNode == null || contentNode.value.trim() == "") return;
+
+    var requestBody = {
+        "content": contentNode.value,
+        "question": message_id
+    };
+
+    ajax.sendAjaxRequest('post', utils.getAnswersURL(), requestBody, function (data) {
+        addAnswerHandler(data.target);
+    });
+}
+
+function addAnswerHandler(response) {
+    if (response.status == 403) {
+        alert.displayError("You have no permission to execute this action.");
+        return;
+    } else if (response.status != 200) {
+        alert.displayError("Failed to add a new Answer.");
+        return;
+    }
+
+    var responseJSON = JSON.parse(response.responseText);
+    utils.createAnswer({ 'answer': responseJSON.answer, 'is_authenticated': responseJSON.is_authenticated });
+
+    // Add event listeners for handling comments
+    var answer_id = responseJSON.answer.id;
+    comments.addEventListeners();
+
+    utils.jumpToElement("answer-" + answer_id);
+
+    //Cleaning answer creator content
+    // TODO
+
+    // This does not work
+    var contentNode = document.querySelector(".new-answer-content");
+    contentNode.value = "";
+}
+
+module.exports = {
+    addAnswerRequest: addAnswerRequest
+};
+
+/***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 

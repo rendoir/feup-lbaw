@@ -36,7 +36,7 @@ function addAnswerHandler(response) {
 
     // Add event listeners for handling comments
     let answer_id = responseJSON.answer.id;
-    comments.addSingleEventListeners(answer_id);
+    comments.addEventListeners();
 
     utils.jumpToElement("answer-" + answer_id);
 

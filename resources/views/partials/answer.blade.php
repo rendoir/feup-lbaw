@@ -1,4 +1,4 @@
-<div class="card my-3">
+<div id="answer-skeleton" class="card my-3">
     <div class="row mx-0">
         <div class="col-1 d-flex flex-column align-items-start">
             <div class="p-2 mt-3 mb-auto skeleton skeleton-score">
