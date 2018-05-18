@@ -1,10 +1,9 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./answersUtils.js');
+var comments = require('../comments/comments.js');
 
-import { addSingleEventListeners } from '../comments/comments.js';
-
-export function getAnswersRequest() {
+function getAnswersRequest() {
 
     // If not in a question's page
     if (document.getElementById("question") == null)
@@ -26,12 +25,12 @@ function getAnswersHandler() {
             console.log(answer);
 
             // Add event listeners for handling comments
-            addSingleEventListeners(answer.id);
+            comments.addSingleEventListeners(answer.id);
         }
     }
     else alert.displayError("Failed to retrieve Question's answers");
 }
 
-/*module.exports = {
+module.exports = {
     getAnswersRequest
-};*/
+};

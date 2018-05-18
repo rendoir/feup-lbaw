@@ -1,8 +1,7 @@
 var ajax = require('../ajax.js');
+var utils = require('./commentsUtils.js');
 
-import { getUniqueCommentURL } from './commentsUtils.js'
-
-export function setEditMode(comment_id) {
+function setEditMode(comment_id) {
 
     let contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
 
@@ -52,7 +51,7 @@ function requestEdition(inputNode, oldNode, comment_id) {
     };
 
     ajax.sendAjaxRequest(
-        'put', getUniqueCommentURL(answer_id, comment_id), requestBody, (data) => {
+        'put', utils.getUniqueCommentURL(answer_id, comment_id), requestBody, (data) => {
             editCommentHandler(data.target, inputNode, oldNode);
         }
     );
@@ -81,3 +80,7 @@ function getPreviousComment(inputNode, previousNode) {
 
     parentNode.insertBefore(previousNode, parentNode.firstChild);
 }
+
+module.exports = {
+    setEditMode
+};

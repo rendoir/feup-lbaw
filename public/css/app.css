@@ -791,16 +791,6 @@ nav {
   #question {
     top: 65px !important;
   }
-
-  .question-answer-nlogged > div:first-child > div {
-    max-width: none;
-    -ms-flex-preferred-size: 100%;
-        flex-basis: 100%;
-  }
-
-  .question-answer-nlogged > div:first-child > div:first-child > div {
-    margin: auto;
-  }
 }
 
 .main-content :first-child {

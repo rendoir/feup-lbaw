@@ -1,10 +1,9 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./answersUtils.js');
+var comments = require('../comments/comments.js');
 
-import { addSingleEventListeners } from '../comments/comments.js';
-
-export function addAnswerRequest(message_id) {
+function addAnswerRequest(message_id) {
 
     let contentNode = document.querySelector(".new-answer-content");
     if (contentNode == null || contentNode.value.trim() == "")
@@ -37,7 +36,7 @@ function addAnswerHandler(response) {
 
     // Add event listeners for handling comments
     let answer_id = responseJSON.answer.id;
-    addSingleEventListeners(answer_id);
+    comments.addSingleEventListeners(answer_id);
 
     utils.jumpToElement("answer-" + answer_id);
 
@@ -48,3 +47,7 @@ function addAnswerHandler(response) {
     let contentNode = document.querySelector(".new-answer-content");
     contentNode.value = "";
 }
+
+module.exports = {
+    addAnswerRequest
+};
