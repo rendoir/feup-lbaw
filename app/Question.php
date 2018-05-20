@@ -61,5 +61,4 @@ class Question extends Model
             'category_id'
         );
     }
-
 }

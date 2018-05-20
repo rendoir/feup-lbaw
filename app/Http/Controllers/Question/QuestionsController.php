@@ -72,16 +72,13 @@ class QuestionsController extends Controller
         $query_string = preg_replace('/\[.*?\]/', "", $query_string);
         $tag_names = $tag_names[0];
 
-        //Get Eloquent Tags
-        /*$tags = [];
-        for ($i=0; $i < count($tag_names); $i++) {
-          $tag = Category::where('name', $tag_names[$i])->first();
-          if($tag != null)
-            array_push($tags, $tag);
-        }*/
+        $tags = Category::whereIn('name', $tag_names)->pluck('id')->toArray();
 
-        $questions = Question::search($query_string);
-        $questions = $questions->paginate(NUM_PER_PAGE);
+        if(!empty($tags))
+          $questions = Question::whereHas('categories', function($query) use($tags) {
+                        $query->whereIn('id', $tags);
+                    })->search($query_string)->paginate(NUM_PER_PAGE);
+        else $questions = Question::search($query_string)->paginate(NUM_PER_PAGE);
         $questions->appends(['search' => $query_string]);
 
         return view('pages.questions', [
