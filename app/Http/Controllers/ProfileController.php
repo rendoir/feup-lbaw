@@ -74,4 +74,30 @@ class ProfileController extends Controller
         ->where('question_id', '=', $request->question_id)
         ->delete();
     }
+
+    public function getMinProfile(){
+        if(!Auth::check())
+            return;
+
+        $user = Auth::user();
+        $badge = $user->getBadge();
+        if($badge == null)
+            $have_badge = false;
+        else
+            $have_badge = true;
+
+        $info = [
+            'username' => $user->username,
+            'bg-profile-img' => $user->getImage('background'),
+            'profile-img' => $user->getImage('profile'),
+            'reputaion' => $user->reputation,
+            'have_badge' => $have_badge,
+            'badge' => $badge,
+            'questions_points' => $user->getQuestions()->count(),
+            'answers_points' => $user->getAnswers()->count(),
+            'comments_points' => $user->getComments()->count()
+            ];
+
+        return json_encode($info);
+    }
 }
