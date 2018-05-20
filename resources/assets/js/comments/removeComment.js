@@ -1,9 +1,8 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
+var utils = require('./commentsUtils.js');
 
-import { getUniqueCommentURL } from "./commentsUtils";
-
-export function removeComment(commentTrashBtn) {
+function removeComment(commentTrashBtn) {
 
     let deleteBtn = document.querySelector('#delete-comment');
     if (deleteBtn == null)
@@ -30,7 +29,7 @@ function removeCommentRequest(comment_id, answer_id, commentNode) {
     };
 
     ajax.sendAjaxRequest(
-        'delete', getUniqueCommentURL(answer_id, comment_id), requestBody, (data) => {
+        'delete', utils.getUniqueCommentURL(answer_id, comment_id), requestBody, (data) => {
             removeCommentHandler(data.target, commentNode);
         }
     );
@@ -57,3 +56,7 @@ function removeCommentHandler(response, commentNode) {
     else
         dadNode.removeChild(commentNode);
 }
+
+module.exports = {
+    removeComment
+};

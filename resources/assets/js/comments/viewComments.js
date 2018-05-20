@@ -1,21 +1,18 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
+var utils = require('./commentsUtils.js');
+var editor = require('./editComment.js');
 
-import { getCommentsURL } from './commentsUtils.js'
-import { getCommentsDropDown } from './commentsUtils.js'
-import { createComments } from './commentsUtils.js'
-import { toggleShowMsg } from './commentsUtils.js'
-
-export function viewCommentsRequest(message_id) {
+function viewCommentsRequest(message_id) {
 
     // If area already expanded, its only closing, so not worth making ajax request
-    if (getCommentsDropDown(message_id).classList.contains('show')) {
-        toggleShowMsg(message_id, true);
+    if (utils.getCommentsDropDown(message_id).classList.contains('show')) {
+        utils.toggleShowMsg(message_id, true);
         return;
     }
 
     ajax.sendAjaxRequest(
-        'get', getCommentsURL(message_id), {}, (data) => {
+        'get', utils.getCommentsURL(message_id), {}, (data) => {
             getCommentsHandler(data.target, message_id);
         }
     );
@@ -26,7 +23,15 @@ function getCommentsHandler(response, message_id) {
 
     if (response.status == 200) {
         let responseJSON = JSON.parse(response.responseText);
-        createComments(responseJSON, message_id);
+        utils.createComments(responseJSON, message_id);
+
+        // Enabling edition of freshly added comments
+        for (let comment of responseJSON.comments)
+            editor.enableEditMode(comment.id);
     }
     else alert.displayError("Failed to retrieve the requested Comments");
 }
+
+module.exports = {
+    viewCommentsRequest
+};

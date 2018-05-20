@@ -14,6 +14,15 @@ function createAnswer(answer_info) {
     answers.appendChild(placeholder.firstElementChild);
 }
 
+function cleanAnswers() {
+    let answers = document.getElementById("answers-container");
+    
+    for (let child of answers.childNodes) {
+        if (child.id == "answer-skeleton")
+            answers.removeChild(child);
+    }
+}
+
 function addMarkdownFunction(answer_info) {
 
     answer_info.markdown = function () {
@@ -57,6 +66,7 @@ function jumpToElement(elementID) {
 
 module.exports = {
     createAnswer,
+    cleanAnswers,    
     getAnswersURL,
     jumpToElement
 };

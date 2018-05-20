@@ -1,10 +1,9 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./answersUtils.js');
+var comments = require('../comments/comments.js');
 
-import { addSingleEventListeners } from '../comments/comments.js';
-
-export function addAnswerRequest(message_id) {
+function addAnswerRequest(message_id) {
 
     let contentNode = document.querySelector(".new-answer-content");
     if (contentNode == null || contentNode.value.trim() == "")
@@ -35,11 +34,20 @@ function addAnswerHandler(response) {
     let responseJSON = JSON.parse(response.responseText);
     utils.createAnswer({ 'answer': responseJSON.answer, 'is_authenticated': responseJSON.is_authenticated });
 
+    // Add event listeners for handling comments
     let answer_id = responseJSON.answer.id;
-    addSingleEventListeners(answer_id);
+    comments.addEventListeners();
 
     utils.jumpToElement("answer-" + answer_id);
 
     //Cleaning answer creator content
     // TODO
+
+    // This does not work
+    let contentNode = document.querySelector(".new-answer-content");
+    contentNode.value = "";
 }
+
+module.exports = {
+    addAnswerRequest
+};

@@ -1,9 +1,8 @@
 var messages = require('../messages.js');
-
-import { viewCommentsRequest } from './viewComments.js'
-import { addCommentRequest } from './addComment.js'
-import { setEditMode } from './editComment.js'
-import { removeComment } from './removeComment.js';
+var commentsViewer = require('./viewComments.js');
+var commentsCreator = require('./addComment.js');
+var commentsEditor = require('./editComment.js');
+var commentsRemover = require('./removeComment.js');
 
 function addEventListeners() {
 
@@ -15,46 +14,33 @@ function addEventListeners() {
     // html elements triggering the events are created
 }
 
-export function addSingleEventListeners(message_id) {
+function addSingleEventListeners(message_id) {
     viewSingleCommentEventListener(message_id);
     addSingleCommentEventListener(message_id);
 }
 
 function viewCommentsEventListener() {
-    messages.genericClickListener('.show-comments', viewCommentsRequest);
+    messages.genericClickListener('.show-comments', commentsViewer.viewCommentsRequest);
 }
 
 function viewSingleCommentEventListener(message_id) {
-    messages.genericSingleClickListener('.show-comments', viewCommentsRequest, message_id);
+    messages.genericSingleClickListener('.show-comments', commentsViewer.viewCommentsRequest, message_id);
 }
 
 function addCommentsEventListener() {
-    messages.genericClickListener('.new-comment-submit', addCommentRequest);
-    messages.genericEnterListener('.new-comment-content', addCommentRequest);
+    messages.genericClickListener('.new-comment-submit', commentsCreator.addCommentRequest);
+    messages.genericEnterListener('.new-comment-content', commentsCreator.addCommentRequest);
 }
 
 function addSingleCommentEventListener(message_id) {
-    messages.genericSingleClickListener('.new-comment-submit', addCommentRequest, message_id);
-    messages.genericSingleEnterListener('.new-comment-content', addCommentRequest, message_id);
-}
-
-export function addCommentEditEventListener(message_id) {
-
-    let comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
-
-    comment.addEventListener('click', function () {
-        setEditMode(message_id);
-    });
-}
-
-export function editCommentsEventListener() {
-    messages.genericClickListener('.edit-comments', setEditMode);
+    messages.genericSingleClickListener('.new-comment-submit', commentsCreator.addCommentRequest, message_id);
+    messages.genericSingleEnterListener('.new-comment-content', commentsCreator.addCommentRequest, message_id);
 }
 
 function removeCommentsEventListener() {
 
     $('#deleteCommentModal').on('show.bs.modal', function (e) {
-        removeComment($(e.relatedTarget)[0]);
+        commentsRemover.removeComment($(e.relatedTarget)[0]);
     });
 
     /* 
@@ -68,4 +54,6 @@ function removeCommentsEventListener() {
     */
 }
 
-window.addEventListener('load', addEventListeners);
+module.exports = {
+    addEventListeners
+};

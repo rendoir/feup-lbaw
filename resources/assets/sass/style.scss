@@ -496,11 +496,5 @@ nav {
     #question {
         top: 65px !important;
     }
-    .question-answer-nlogged > div:first-child > div {
-        max-width: none;
-        flex-basis: 100%;
-    }
-    .question-answer-nlogged > div:first-child > div:first-child > div {
-        margin: auto;
-    }
+
 }

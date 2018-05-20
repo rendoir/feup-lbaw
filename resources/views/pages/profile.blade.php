@@ -20,7 +20,7 @@
                     <img class="rounded-circle img-profile-big" src="<?=$user->getImage('profile')?>" alt="UserImage">
                 </div>
                 <h2 class="card-text my-3"><?=$user->username?></h2>
-                <p><?=$user->biography != null ? $user->biography : 'Apparently, this user prefers to keep an air of mystery about them.'?></p>
+                <p><?=$user->biography != null ? $user->biography : 'Apparently, this user prefers to keep an air of mystery about himself.'?></p>
             </div>
         </div>
 

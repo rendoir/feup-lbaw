@@ -1,13 +1,9 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
+var utils = require('./commentsUtils.js');
+var editor = require('./editComment.js');
 
-import { getCommentsURL } from './commentsUtils.js'
-import { createCommentHTML } from './commentsUtils.js'
-import { getCommentsDropDown } from './commentsUtils.js'
-import { createComments } from './commentsUtils.js'
-import { addCommentEditEventListener } from './comments.js';
-
-export function addCommentRequest(message_id) {
+function addCommentRequest(message_id) {
 
     let contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
 
@@ -21,7 +17,7 @@ export function addCommentRequest(message_id) {
     };
 
     ajax.sendAjaxRequest(
-        'post', getCommentsURL(message_id), requestBody, (data) => {
+        'post', utils.getCommentsURL(message_id), requestBody, (data) => {
             addCommentHandler(data.target, message_id);
         }
     );
@@ -41,19 +37,25 @@ function addCommentHandler(response, message_id) {
     let responseJSON = JSON.parse(response.responseText);
     let newComment = responseJSON.comment;
 
-    let comments = getCommentsDropDown(message_id);
+    let comments = utils.getCommentsDropDown(message_id);
     let commentsSection = comments.firstElementChild;
 
     if (!commentsSection.classList.contains('comment-creator')) {
         commentsSection.firstElementChild
             .firstElementChild
-            .innerHTML += createCommentHTML(responseJSON);
-        addCommentEditEventListener(newComment.id);
+            .innerHTML += utils.createCommentHTML(responseJSON);
     }
     else
-        createComments({ 'comments': [newComment], 'is_authenticated': responseJSON.is_authenticated }, message_id);
+        utils.createComments({ 'comments': [newComment], 'is_authenticated': responseJSON.is_authenticated }, message_id);
+
+    // Enabling edition of freshly added comments
+    editor.enableEditMode(newComment.id);
 
     // Cleaning input text
     let contentSelector = ".new-comment-content[data-message-id='" + message_id + "']";
     document.querySelector(contentSelector).value = "";
 }
+
+module.exports = {
+    addCommentRequest
+};
