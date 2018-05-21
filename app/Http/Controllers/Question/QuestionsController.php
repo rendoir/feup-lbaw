@@ -140,4 +140,38 @@ class QuestionsController extends Controller
         $question = Question::find($question_id);
         return view('pages.question', ['question' => $question]);
     }
+
+    public function getQuestions(){
+        $questions = Question::join('message_versions', 'questions.id', '=', 'message_versions.message_id')
+            ->join('messages', 'messages.latest_version', '=', 'message_versions.id')
+            ->orderByDesc('creation_time')
+            ->paginate(NUM_PER_PAGE);
+        $questions_info = [];
+
+        foreach ($questions as $question) {
+            $message = $question->message;
+            $content = $message->message_version;
+            $author = $message->get_author();
+            $badge = $author->getBadge();
+            if($badge == null)
+                $have_badge = false;
+            else
+                $have_badge = true;
+            $question_info = [
+                "correct_answer" => ($question->correct_answer != null ? true : false),
+                "question_id" => $question->id,
+                "num_answers" => $question->get_num_answers(),
+                "score" => $message->score,
+                "title" => $question->title,
+                "preview" => substr($content->content, 0, 240),
+                "author" => $author->username,
+                "have_badge" => $have_badge,
+                "badge" => $badge,
+                "categories" => $question->categories
+            ];
+            array_push($questions_info, $question_info);
+        }
+
+        return ["questions" => $questions_info];
+    }
 }

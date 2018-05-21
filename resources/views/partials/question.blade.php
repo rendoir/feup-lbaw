@@ -29,10 +29,10 @@
             </div>
             <div class="card-footer bg-transparent d-flex justify-content-between">
                 <p class="card-text mb-0">
-                    Created by - <strong>{{$author->username}}</strong>
+                    <small>Created by -</small>
                 </p>
                 <div class="ml-2 mr-auto">
-                    <span></span>
+                    <span>{{$author->username}}</span>
                     <span class="badge badge-success">{{$author->getBadge()}}</span>
                 </div>
                 <div>

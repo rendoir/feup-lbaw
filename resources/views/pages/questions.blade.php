@@ -24,11 +24,16 @@
         <!-- Separators Contents -->
         <div class="row">
             <div class="tab-content col-md-9" id="nav-tabContent">
+
+                @include('templates.questions')
+
                 <div class="tab-pane fade @if(isset($type) && strcmp($type, 'recent') == 0){{"show active"}}@endif" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab"
                 @if (isset($type) && strcmp($type, 'recent') == false) {{ 'href="' . route('recent_questions') .'"' }} @endif>
 
                     @if (isset($type) && strcmp($type, 'recent') == 0)
-                        @each('partials.question', $questions, 'question')
+                        @for ($i = 0; $i < 10; $i++)
+                            @include('templates.questionTemplate');
+                        @endfor
                     @endif
 
                 </div>

@@ -27,6 +27,7 @@ Auth::routes();
 Route::get('about', 'HomeController@about')->name('about');
 Route::get('404', 'HomeController@error')->name('404');
 Route::get('min-profile', 'ProfileController@getMinProfile');
+Route::get('getRecentQuestions', 'Question\QuestionsController@getQuestions');
 
 
 // Search questions with string query

@@ -7514,6 +7514,20 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
     });
 }
 
+if (window.location.pathname.match(/questions\/recent/) != null) {
+    ajax.sendAjaxRequest('GET', "/getRecentQuestions", null, function (data) {
+        var template = $('template#questions')[0];
+        var questions = null;
+
+        try {
+            questions = JSON.parse(data.target.responseText);
+        } catch (e) {}
+
+        var mustacheRender = Mustache.render(template.innerHTML, questions);
+        $('div#nav-new')[0].innerHTML = mustacheRender;
+    });
+}
+
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
