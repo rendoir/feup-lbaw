@@ -605,6 +605,18 @@ nav {
   background-color: var(--medium-aquamarine);
 }
 
+.card-img-top-container {
+  width: 100%;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 56.67%;
+}
+
+.card-img-top-container img {
+  position: absolute;
+}
+
 /*************************************************/
 
 /************** Responsive Design ****************/

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -92,7 +92,7 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mustache = __webpack_require__(4);
+var Mustache = __webpack_require__(2);
 
 function displayError(errorMessage) {
     return displayMessage(errorMessage, false);
@@ -122,144 +122,6 @@ module.exports = {
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var messages = __webpack_require__(5);
-var commentsViewer = __webpack_require__(21);
-var commentsCreator = __webpack_require__(22);
-var commentsEditor = __webpack_require__(23);
-var commentsRemover = __webpack_require__(24);
-
-function addEventListeners() {
-
-    viewCommentsEventListener();
-    addCommentsEventListener();
-    removeCommentsEventListener();
-
-    // Some event listeners are only added when the respective
-    // html elements triggering the events are created
-}
-
-function addSingleEventListeners(message_id) {
-    viewSingleCommentEventListener(message_id);
-    addSingleCommentEventListener(message_id);
-}
-
-function viewCommentsEventListener() {
-    messages.genericClickListener('.show-comments', commentsViewer.viewCommentsRequest);
-}
-
-function viewSingleCommentEventListener(message_id) {
-    messages.genericSingleClickListener('.show-comments', commentsViewer.viewCommentsRequest, message_id);
-}
-
-function addCommentsEventListener() {
-    messages.genericClickListener('.new-comment-submit', commentsCreator.addCommentRequest);
-    messages.genericEnterListener('.new-comment-content', commentsCreator.addCommentRequest);
-}
-
-function addSingleCommentEventListener(message_id) {
-    messages.genericSingleClickListener('.new-comment-submit', commentsCreator.addCommentRequest, message_id);
-    messages.genericSingleEnterListener('.new-comment-content', commentsCreator.addCommentRequest, message_id);
-}
-
-function removeCommentsEventListener() {
-
-    $('#deleteCommentModal').on('show.bs.modal', function (e) {
-        commentsRemover.removeComment($(e.relatedTarget)[0]);
-    });
-
-    /* 
-    let deleteModal = document.querySelector('#deleteCommentModal');
-    if (deleteModal == null)
-        return;
-     deleteModal.addEventListener('show.bs.modal', function(e) {
-        console.log(e.relatedTarget);
-    });
-    */
-}
-
-module.exports = {
-    addEventListeners: addEventListeners
-};
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mustache = __webpack_require__(4);
-
-function createComments(response, message_id) {
-
-    if (response.comments.length == 0) return;
-
-    var template = document.querySelector("template.comments").innerHTML;
-    var placeholder = document.createElement("span");
-
-    placeholder.innerHTML = Mustache.render(template, response);
-
-    var final = getCommentsDropDown(message_id);
-    var child = final.firstElementChild;
-
-    // child can either be a comment or the comment-adder or null,
-    // if there are no comments and the user is not authenticated
-    if (child == null || child.classList.contains('comment-creator')) {
-        final.insertBefore(placeholder, child);
-    } else final.replaceChild(placeholder, child);
-
-    toggleShowMsg(message_id, false);
-}
-
-function createCommentHTML(comment) {
-
-    var template = document.querySelector("template.comment").innerHTML;
-
-    return Mustache.render(template, comment);
-}
-
-function getCommentsDropDown(message_id) {
-    var commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
-    return document.querySelector(commentSelector);
-}
-
-function getCommentsURL(message_id) {
-    return window.location.pathname + '/answers/' + message_id + '/comments';
-}
-
-function getUniqueCommentURL(commentable_id, comment_id) {
-    return getCommentsURL(commentable_id) + '/' + comment_id;
-}
-
-/**
- * 
- * @param {String} message_id 
- * @param {boolean} show - If true, it's supposed to to 'Show Comments' , if false it's supposed to 'Hide Comments'
- */
-function toggleShowMsg(message_id, show) {
-    var toggler = document.querySelector("a[aria-controls='AnswerComments" + message_id + "']");
-
-    if (!show) {
-        toggler.innerHTML = "Hide Comments";
-        return;
-    }
-
-    var numComments = toggler.parentNode.nextElementSibling.firstElementChild;
-    var value = numComments.innerText.split(" ")[0];
-
-    toggler.innerHTML = value > 0 ? "Show Comments" : "Add Comment";
-}
-
-module.exports = {
-    createComments: createComments,
-    createCommentHTML: createCommentHTML,
-    getCommentsDropDown: getCommentsDropDown,
-    getCommentsURL: getCommentsURL,
-    getUniqueCommentURL: getUniqueCommentURL,
-    toggleShowMsg: toggleShowMsg
-};
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -898,7 +760,243 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mustache = __webpack_require__(2);
+
+function createComments(response, message_id) {
+
+    if (response.comments.length == 0) return;
+
+    var template = document.querySelector("template.comments").innerHTML;
+    var placeholder = document.createElement("span");
+
+    placeholder.innerHTML = Mustache.render(template, response);
+
+    var final = getCommentsDropDown(message_id);
+    var child = final.firstElementChild;
+
+    // child can either be a comment or the comment-adder or null,
+    // if there are no comments and the user is not authenticated
+    if (child == null || child.classList.contains('comment-creator')) {
+        final.insertBefore(placeholder, child);
+    } else final.replaceChild(placeholder, child);
+
+    toggleShowMsg(message_id, false);
+}
+
+function createCommentHTML(comment) {
+
+    var template = document.querySelector("template.comment").innerHTML;
+
+    return Mustache.render(template, comment);
+}
+
+function getCommentsDropDown(message_id) {
+    var commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
+    return document.querySelector(commentSelector);
+}
+
+function getCommentsURL(message_id) {
+    return window.location.pathname + '/answers/' + message_id + '/comments';
+}
+
+function getUniqueCommentURL(commentable_id, comment_id) {
+    return getCommentsURL(commentable_id) + '/' + comment_id;
+}
+
+/**
+ * 
+ * @param {String} message_id 
+ * @param {boolean} show - If true, it's supposed to to 'Show Comments' , if false it's supposed to 'Hide Comments'
+ */
+function toggleShowMsg(message_id, show) {
+    var toggler = document.querySelector("a[aria-controls='AnswerComments" + message_id + "']");
+
+    if (!show) {
+        toggler.innerHTML = "Hide Comments";
+        return;
+    }
+
+    var numComments = toggler.parentNode.nextElementSibling.firstElementChild;
+    var value = numComments.innerText.split(" ")[0];
+
+    toggler.innerHTML = value > 0 ? "Show Comments" : "Add Comment";
+}
+
+module.exports = {
+    createComments: createComments,
+    createCommentHTML: createCommentHTML,
+    getCommentsDropDown: getCommentsDropDown,
+    getCommentsURL: getCommentsURL,
+    getUniqueCommentURL: getUniqueCommentURL,
+    toggleShowMsg: toggleShowMsg
+};
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var messages = __webpack_require__(6);
+var commentsViewer = __webpack_require__(22);
+var commentsCreator = __webpack_require__(23);
+var commentsEditor = __webpack_require__(5);
+var commentsRemover = __webpack_require__(24);
+
+function addEventListeners() {
+
+    viewCommentsEventListener();
+    addCommentsEventListener();
+    removeCommentsEventListener();
+
+    // Some event listeners are only added when the respective
+    // html elements triggering the events are created
+}
+
+function addSingleEventListeners(message_id) {
+    viewSingleCommentEventListener(message_id);
+    addSingleCommentEventListener(message_id);
+}
+
+function viewCommentsEventListener() {
+    messages.genericClickListener('.show-comments', commentsViewer.viewCommentsRequest);
+}
+
+function viewSingleCommentEventListener(message_id) {
+    messages.genericSingleClickListener('.show-comments', commentsViewer.viewCommentsRequest, message_id);
+}
+
+function addCommentsEventListener() {
+    messages.genericClickListener('.new-comment-submit', commentsCreator.addCommentRequest);
+    messages.genericEnterListener('.new-comment-content', commentsCreator.addCommentRequest);
+}
+
+function addSingleCommentEventListener(message_id) {
+    messages.genericSingleClickListener('.new-comment-submit', commentsCreator.addCommentRequest, message_id);
+    messages.genericSingleEnterListener('.new-comment-content', commentsCreator.addCommentRequest, message_id);
+}
+
+function removeCommentsEventListener() {
+
+    $('#deleteCommentModal').on('show.bs.modal', function (e) {
+        commentsRemover.removeComment($(e.relatedTarget)[0]);
+    });
+
+    /* 
+    let deleteModal = document.querySelector('#deleteCommentModal');
+    if (deleteModal == null)
+        return;
+     deleteModal.addEventListener('show.bs.modal', function(e) {
+        console.log(e.relatedTarget);
+    });
+    */
+}
+
+module.exports = {
+    addEventListeners: addEventListeners
+};
+
+/***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var utils = __webpack_require__(3);
+
+// Adding edit capability to freshly added comment
+function enableEditMode(message_id) {
+
+    var comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
+    if (comment == null) return; // Comment without edit functionality
+
+    comment.addEventListener('click', function () {
+        setEditMode(message_id);
+    });
+}
+
+function setEditMode(comment_id) {
+
+    var contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
+
+    var contentNode = document.querySelector(contentSelector);
+    if (contentNode == null) return;
+
+    var parentNode = contentNode.parentNode;
+    var content = contentNode.innerText;
+    parentNode.removeChild(contentNode);
+
+    var input = document.createElement("input");
+    input.classList.add('form-control');
+    input.value = content;
+
+    parentNode.insertBefore(input, parentNode.firstChild);
+
+    addKeyListeners(input, contentNode, comment_id);
+}
+
+function addKeyListeners(inputNode, oldNode, comment_id) {
+    inputNode.addEventListener('keyup', function (event) {
+
+        switch (event.keyCode) {
+            // ENTER was pressed
+            case 13:
+                requestEdition(inputNode, oldNode, comment_id);
+                break;
+
+            // ESC was pressed 
+            case 27:
+                getPreviousComment(inputNode, oldNode);
+                return;
+        }
+    });
+}
+
+function requestEdition(inputNode, oldNode, comment_id) {
+
+    var commentsGroup = inputNode.parentNode.parentNode.parentNode;
+    var answer_id = commentsGroup.parentNode.parentNode.getAttribute("data-message-id");
+
+    var requestBody = {
+        "content": inputNode.value,
+        "commentable": answer_id,
+        "comment": comment_id
+    };
+
+    ajax.sendAjaxRequest('put', utils.getUniqueCommentURL(answer_id, comment_id), requestBody, function (data) {
+        editCommentHandler(data.target, inputNode, oldNode);
+    });
+}
+
+function editCommentHandler(response, inputNode, oldNode) {
+    if (response.status == 403) {
+        displayError("You have no permission to edit this comment");
+        return;
+    } else if (response.status != 200) {
+        displayError("Failed to edit the comment");
+        return;
+    }
+
+    var edittedComment = JSON.parse(response.responseText).comment;
+    oldNode.innerText = edittedComment.content.version;
+
+    getPreviousComment(inputNode, oldNode);
+}
+
+function getPreviousComment(inputNode, previousNode) {
+
+    var parentNode = inputNode.parentNode;
+    parentNode.removeChild(inputNode);
+
+    parentNode.insertBefore(previousNode, parentNode.firstChild);
+}
+
+module.exports = {
+    enableEditMode: enableEditMode
+};
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -1025,10 +1123,10 @@ module.exports = {
 };
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mustache = __webpack_require__(4);
+var Mustache = __webpack_require__(2);
 
 function createAnswer(answer_info) {
 
@@ -1120,32 +1218,33 @@ module.exports = {
 };
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(8);
-module.exports = __webpack_require__(27);
-
-
-/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(0);
 __webpack_require__(9);
+module.exports = __webpack_require__(28);
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(0);
 __webpack_require__(10);
 __webpack_require__(11);
 __webpack_require__(12);
 __webpack_require__(13);
 __webpack_require__(14);
 __webpack_require__(15);
-__webpack_require__(18);
+__webpack_require__(16);
 __webpack_require__(19);
-__webpack_require__(2);
+__webpack_require__(20);
+__webpack_require__(4);
 __webpack_require__(26);
+__webpack_require__(27);
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -1200,7 +1299,7 @@ function bookmarkEvent() {
 bookmarkEvent();
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 $(window).scroll(function () {
@@ -1214,7 +1313,7 @@ $(window).scroll(function () {
 });
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -1840,7 +1939,7 @@ function addTags() {
 addTags();
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 $(function () {
@@ -1848,7 +1947,7 @@ $(function () {
 });
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -1926,7 +2025,7 @@ function editBiographyHandler(e) {
 editBiography();
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 addEventListeners();
@@ -1977,12 +2076,12 @@ function addEventListeners() {
 }
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -1992,7 +2091,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-window.Pusher = __webpack_require__(17);
+window.Pusher = __webpack_require__(18);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
@@ -2002,7 +2101,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 });
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -2800,7 +2899,7 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -6988,7 +7087,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 var editor_element = document.getElementById("editor");
@@ -7060,12 +7159,11 @@ if (editor_element != null) {
 }
 
 /***/ }),
-/* 19 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-var messages = __webpack_require__(5);
-var answersGetter = __webpack_require__(20);
+var messages = __webpack_require__(6);
+var answersGetter = __webpack_require__(21);
 var answersAdder = __webpack_require__(25);
 
 function addAnswerEventListeners() {
@@ -7082,13 +7180,13 @@ function addAnswerEventListener() {
 window.addEventListener('load', addAnswerEventListeners);
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(6);
-var comments = __webpack_require__(2);
+var utils = __webpack_require__(7);
+var comments = __webpack_require__(4);
 
 function getAnswersRequest() {
 
@@ -7140,13 +7238,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(3);
-var editor = __webpack_require__(23);
+var editor = __webpack_require__(5);
 
 function viewCommentsRequest(message_id) {
 
@@ -7201,13 +7299,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(3);
-var editor = __webpack_require__(23);
+var editor = __webpack_require__(5);
 
 function addCommentRequest(message_id) {
 
@@ -7256,104 +7354,6 @@ function addCommentHandler(response, message_id) {
 
 module.exports = {
     addCommentRequest: addCommentRequest
-};
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ajax = __webpack_require__(0);
-var utils = __webpack_require__(3);
-
-// Adding edit capability to freshly added comment
-function enableEditMode(message_id) {
-
-    var comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
-    if (comment == null) return; // Comment without edit functionality
-
-    comment.addEventListener('click', function () {
-        setEditMode(message_id);
-    });
-}
-
-function setEditMode(comment_id) {
-
-    var contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
-
-    var contentNode = document.querySelector(contentSelector);
-    if (contentNode == null) return;
-
-    var parentNode = contentNode.parentNode;
-    var content = contentNode.innerText;
-    parentNode.removeChild(contentNode);
-
-    var input = document.createElement("input");
-    input.classList.add('form-control');
-    input.value = content;
-
-    parentNode.insertBefore(input, parentNode.firstChild);
-
-    addKeyListeners(input, contentNode, comment_id);
-}
-
-function addKeyListeners(inputNode, oldNode, comment_id) {
-    inputNode.addEventListener('keyup', function (event) {
-
-        switch (event.keyCode) {
-            // ENTER was pressed
-            case 13:
-                requestEdition(inputNode, oldNode, comment_id);
-                break;
-
-            // ESC was pressed 
-            case 27:
-                getPreviousComment(inputNode, oldNode);
-                return;
-        }
-    });
-}
-
-function requestEdition(inputNode, oldNode, comment_id) {
-
-    var commentsGroup = inputNode.parentNode.parentNode.parentNode;
-    var answer_id = commentsGroup.parentNode.parentNode.getAttribute("data-message-id");
-
-    var requestBody = {
-        "content": inputNode.value,
-        "commentable": answer_id,
-        "comment": comment_id
-    };
-
-    ajax.sendAjaxRequest('put', utils.getUniqueCommentURL(answer_id, comment_id), requestBody, function (data) {
-        editCommentHandler(data.target, inputNode, oldNode);
-    });
-}
-
-function editCommentHandler(response, inputNode, oldNode) {
-    if (response.status == 403) {
-        displayError("You have no permission to edit this comment");
-        return;
-    } else if (response.status != 200) {
-        displayError("Failed to edit the comment");
-        return;
-    }
-
-    var edittedComment = JSON.parse(response.responseText).comment;
-    oldNode.innerText = edittedComment.content.version;
-
-    getPreviousComment(inputNode, oldNode);
-}
-
-function getPreviousComment(inputNode, previousNode) {
-
-    var parentNode = inputNode.parentNode;
-    parentNode.removeChild(inputNode);
-
-    parentNode.insertBefore(previousNode, parentNode.firstChild);
-}
-
-module.exports = {
-    enableEditMode: enableEditMode
 };
 
 /***/ }),
@@ -7421,8 +7421,8 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(6);
-var comments = __webpack_require__(2);
+var utils = __webpack_require__(7);
+var comments = __webpack_require__(4);
 
 function addAnswerRequest(message_id) {
 
@@ -7494,9 +7494,29 @@ tagSearchEvent();
 
 /***/ }),
 /* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var Mustache = __webpack_require__(2);
+
+ajax.sendAjaxRequest('GET', "/min-profile", null, function (data) {
+    var template = $('template#minProfile')[0];
+    var info = null;
+
+    try {
+        info = JSON.parse(data.target.responseText);
+    } catch (e) {}
+
+    var mustacheRender = Mustache.render(template.innerHTML, info);
+    template.parentElement.children[0].outerHTML = mustacheRender;
+    template.parentElement.removeChild(template);
+});
+
+/***/ }),
+/* 28 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleBuildError: Module build failed: \n}\n^\n      Invalid CSS after \"}\": expected \"}\", was \"\"\n      in /home/bayard/Github/lbaw1763/resources/assets/sass/style.scss (line 520, column 2)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (/home/bayard/Github/lbaw1763/node_modules/sass-loader/lib/loader.js:55:13)\n    at Object.done [as callback] (/home/bayard/Github/lbaw1763/node_modules/neo-async/async.js:7974:18)\n    at options.error (/home/bayard/Github/lbaw1763/node_modules/node-sass/lib/index.js:294:32)");
 
 /***/ })
 /******/ ]);

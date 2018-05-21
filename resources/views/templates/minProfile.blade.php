@@ -1,12 +1,12 @@
 @verbatim
-<template>
-    <a href="users/{{username}}" class="card unnoticed-a hover-box-shadow">
-        <img class="card-img-top" src="assets/img/{{bg-profile-img}}" alt="Card image cap">
-        <div class="card-body text-center">
-            <div>
-                <img class="rounded-circle img-profile-aside" src="assets/img/{{profile-img}}" alt="UserImage">
-            </div>
-            <h3 class="card-text mb-0">{{usernama}}</h3>
+<template id="minProfile">
+    <a href="/users/{{username}}" class="card unnoticed-a hover-box-shadow mb-3">
+        <div class="card-img-top-container">
+            <img class="card-img-top" src="{{bg-profile-img}}" alt="Card image cap">
+        </div>
+        <div class="card-body text-center" style="z-index: 1">
+            <img class="rounded-circle img-profile-aside" src="{{profile-img}}" alt="UserImage" height="100px" width="100px">
+            <h3 class="card-text mb-0">{{username}}</h3>
             {{#have_badge}}
             <span class="badge badge-success mb-3">{{badge}}</span>
             {{/have_badge}}

@@ -10,3 +10,4 @@ require('./editor.js');
 require('./answers/answers.js');
 require('./comments/comments.js');
 require('./tag_cloud.js');
+require('./minProfiele.js');

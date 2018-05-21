@@ -74,33 +74,38 @@
                 </div>
             </div>
             <aside class="col-md-3 mb-3">
-                <div class="aside-content  pt-3">
-                    <div id="ask-sign-in" class="card">
-                        <form class="px-4 py-3" action="ask_question.html">
-                            <div class="form-group">
-                                <label for="exampleDropdownFormEmail">Email address</label>
-                                <input type="email" class="form-control" id="exampleDropdownFormEmail" placeholder="email@example.com">
+                <div class="aside-content pt-3">
+
+                    @if(Auth::check())
+                        <div class="card unnoticed-a hover-box-shadow mb-3">
+                            <div class="card-img-top-container"></div>
+                            <div class="card-body text-center">
+                                <div class="rounded-circle img-profile-aside" height="100px" width="100px"></div>
+                                <h3 class="card-text mb-0">-</h3>
+                                <div class="my-3">
+                                    <i class="fas fa-trophy"></i>
+                                    <span>-</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 px-1 border-right">
+                                        <div>-</div>
+                                        <small>Questions</small>
+                                    </div>
+                                    <div class="col-4 px-1">
+                                        <div>-</div>
+                                        <small>Answers</small>
+                                    </div>
+                                    <div class="col-4 px-1 border-left">
+                                        <div>-</div>
+                                        <small>Comments</small>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleDropdownFormPassword">Password</label>
-                                <input type="password" class="form-control" id="exampleDropdownFormPassword" placeholder="Password">
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="dropdownCheck_ask">
-                                <label class="form-check-label" for="dropdownCheck_ask">Remember me</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-signin">Sign in</button>
-                            <a class="btn btn-social btn-github" href="#">
-                                <i class="fab fa-github"></i>
-                                <div>Sign in with Github</div>
-                            </a>
-                            <div class="mx-auto mt-1 d-flex">
-                                <div class="g-signin2" data-onsuccess="onSignIn" data-width="200" data-height="34" data-longtitle="true">button</div>
-                            </div>
-                        </form>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="sign-up.html">New around here? Sign up</a>
-                    </div>
+                        </div>
+
+                        @include('templates.minProfile')
+                    @endif
+
                     <div class="card">
                         <div class="card-body d-flex flex-column justify-content-center">
                             <h5 class="card-title">Have a Question?</h5>
@@ -112,6 +117,7 @@
                             </form>
                         </div>
                     </div>
+
                 </div>
             </aside>
         </div>
