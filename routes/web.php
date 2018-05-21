@@ -27,13 +27,13 @@ Auth::routes();
 Route::get('about', 'HomeController@about')->name('about');
 Route::get('404', 'HomeController@error')->name('404');
 Route::get('min-profile', 'ProfileController@getMinProfile');
-Route::get('getRecentQuestions', 'Question\QuestionsController@getQuestions');
 
 
 // Search questions with string query
 Route::get('questions', 'Question\QuestionsController@showQueriedQuestions');
 
 Route::get('questions/recent', 'Question\QuestionsController@showRecentQuestions')->name('recent_questions'); // Most recent
+Route::get('getRecentQuestions', 'Question\QuestionsController@getRecentQuestions');
 Route::get('questions/hot', 'Question\QuestionsController@showHotQuestions')->name('hot_questions'); // Most answers
 Route::get('questions/highly-voted', 'Question\QuestionsController@showHighlyVotedQuestions')->name('highly_voted_questions'); // Highest score
 Route::get('questions/active', 'Question\QuestionsController@showActiveQuestions')->name('active_questions'); // Unanswered

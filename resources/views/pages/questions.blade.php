@@ -32,7 +32,7 @@
 
                     @if (isset($type) && strcmp($type, 'recent') == 0)
                         @for ($i = 0; $i < 10; $i++)
-                            @include('templates.questionTemplate');
+                            @include('templates.questionTemplate')
                         @endfor
                     @endif
 
@@ -74,9 +74,6 @@
                 @endif
                 </div>
 
-                <div class="centered">
-                {{ $questions->links('partials.pagination') }}
-                </div>
             </div>
             <aside class="col-md-3 mb-3">
                 <div class="aside-content pt-3">

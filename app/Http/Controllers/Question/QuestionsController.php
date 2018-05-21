@@ -102,13 +102,7 @@ class QuestionsController extends Controller
     }
 
     public function showRecentQuestions() {
-        $questions = Question::join('message_versions', 'questions.id', '=', 'message_versions.message_id')
-        ->join('messages', 'messages.latest_version', '=', 'message_versions.id')
-        ->orderByDesc('creation_time')
-        ->paginate(NUM_PER_PAGE);
-
-        return view('pages.questions',
-            ['questions' => $questions, 'type' => 'recent']);
+        return view('pages.questions', ['type' => 'recent']);
     }
 
     public function showHotQuestions() { // TODO order by most answers
@@ -141,7 +135,7 @@ class QuestionsController extends Controller
         return view('pages.question', ['question' => $question]);
     }
 
-    public function getQuestions(){
+    public function getRecentQuestions(){
         $questions = Question::join('message_versions', 'questions.id', '=', 'message_versions.message_id')
             ->join('messages', 'messages.latest_version', '=', 'message_versions.id')
             ->orderByDesc('creation_time')
