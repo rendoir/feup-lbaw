@@ -7499,24 +7499,26 @@ tagSearchEvent();
 var ajax = __webpack_require__(0);
 var Mustache = __webpack_require__(2);
 
-ajax.sendAjaxRequest('GET', "/min-profile", null, function (data) {
-    var template = $('template#minProfile')[0];
-    var info = null;
+if (window.location.pathname.match(/questions\/\D/) != null) {
+    ajax.sendAjaxRequest('GET', "/min-profile", null, function (data) {
+        var template = $('template#minProfile')[0];
+        var info = null;
 
-    try {
-        info = JSON.parse(data.target.responseText);
-    } catch (e) {}
+        try {
+            info = JSON.parse(data.target.responseText);
+        } catch (e) {}
 
-    var mustacheRender = Mustache.render(template.innerHTML, info);
-    template.parentElement.children[0].outerHTML = mustacheRender;
-    template.parentElement.removeChild(template);
-});
+        var mustacheRender = Mustache.render(template.innerHTML, info);
+        template.parentElement.children[0].outerHTML = mustacheRender;
+        template.parentElement.removeChild(template);
+    });
+}
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: \n}\n^\n      Invalid CSS after \"}\": expected \"}\", was \"\"\n      in /home/bayard/Github/lbaw1763/resources/assets/sass/style.scss (line 520, column 2)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (/home/bayard/Github/lbaw1763/node_modules/sass-loader/lib/loader.js:55:13)\n    at Object.done [as callback] (/home/bayard/Github/lbaw1763/node_modules/neo-async/async.js:7974:18)\n    at options.error (/home/bayard/Github/lbaw1763/node_modules/node-sass/lib/index.js:294:32)");
+throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: spawn /home/bayard/Github/lbaw1763/node_modules/mozjpeg/vendor/cjpeg ENOENT\n    at exports._errnoException (util.js:1020:11)\n    at Process.ChildProcess._handle.onexit (internal/child_process.js:197:32)\n    at onErrorNT (internal/child_process.js:376:16)\n    at _combinedTickCallback (internal/process/next_tick.js:80:11)\n    at process._tickCallback (internal/process/next_tick.js:104:9)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at /home/bayard/Github/lbaw1763/node_modules/img-loader/index.js:45:31\n    at process._tickCallback (internal/process/next_tick.js:109:7)");
 
 /***/ })
 /******/ ]);
