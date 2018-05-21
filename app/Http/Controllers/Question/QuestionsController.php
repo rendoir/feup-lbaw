@@ -105,29 +105,16 @@ class QuestionsController extends Controller
         return view('pages.questions', ['type' => 'recent']);
     }
 
-    public function showHotQuestions() { // TODO order by most answers
-        $questions = Question::paginate(NUM_PER_PAGE);
-
-        return view('pages.questions',
-            ['questions' => $questions, 'type' => 'hot']);
+    public function showHotQuestions() {
+        return view('pages.questions', ['type' => 'hot']);
     }
 
     public function showHighlyVotedQuestions() {
-        $questions = Question::HighlyVoted()->paginate(NUM_PER_PAGE);
-
-        return view('pages.questions',
-            ['questions' => $questions, 'type' => 'highly-voted']);
+        return view('pages.questions', ['type' => 'highly-voted']);
     }
 
     public function showActiveQuestions() {
-        $questions = Question::whereRaw('correct_answer IS NULL')
-            ->join('message_versions', 'questions.id', '=', 'message_versions.message_id')
-            ->join('messages', 'messages.latest_version', '=', 'message_versions.id')
-            ->orderByDesc('creation_time')
-            ->paginate(NUM_PER_PAGE);
-
-        return view('pages.questions',
-            ['questions' => $questions, 'type' => 'active']);
+        return view('pages.questions', ['type' => 'active']);
     }
 
     public function showQuestionPage($question_id) {
@@ -140,8 +127,34 @@ class QuestionsController extends Controller
             ->join('messages', 'messages.latest_version', '=', 'message_versions.id')
             ->orderByDesc('creation_time')
             ->paginate(NUM_PER_PAGE);
-        $questions_info = [];
 
+        return QuestionsController::questionsJSON($questions);
+    }
+
+    public function getHotQuestions() { // TODO order by most answers
+        $questions = Question::paginate(NUM_PER_PAGE);
+
+        return QuestionsController::questionsJSON($questions);
+    }
+
+    public function getHighlyVotedQuestions() {
+        $questions = Question::HighlyVoted()->paginate(NUM_PER_PAGE);
+
+        return QuestionsController::questionsJSON($questions);
+    }
+
+    public function getActiveQuestions() {
+        $questions = Question::whereRaw('correct_answer IS NULL')
+            ->join('message_versions', 'questions.id', '=', 'message_versions.message_id')
+            ->join('messages', 'messages.latest_version', '=', 'message_versions.id')
+            ->orderByDesc('creation_time')
+            ->paginate(NUM_PER_PAGE);
+
+        return QuestionsController::questionsJSON($questions);
+    }
+
+    private function questionsJSON($questions){
+        $questions_info = [];
         foreach ($questions as $question) {
             $message = $question->message;
             $content = $message->message_version;

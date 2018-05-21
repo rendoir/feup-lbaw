@@ -10,14 +10,13 @@
         <div class="row">
             <div class="nav nav-tabs col-md-9" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link @if(isset($type) && strcmp($type, 'recent') == 0){{"active"}}@endif" id="nav-new-tab" aria-controls="nav-new" aria-selected="true"
-                   href="@if(isset($type) && strcmp($type, 'recent') != 0){{ route('recent_questions') }}@else{{ "#" }}@endif">Recent</a>
+                   data-toggle="tab" role="tab" href="#nav-new">Recent</a>
                 <a class="nav-item nav-link @if(isset($type) && strcmp($type, 'hot') == 0){{"active"}}@endif" id="nav-hot-tab" aria-controls="nav-hot" aria-selected="false"
-                   href="@if(isset($type) && strcmp($type, 'hot') != 0){{ route('hot_questions') }}@else{{ "#" }}@endif">Hot</a>
+                   data-toggle="tab" role="tab" href="#nav-hot">Hot</a>
                 <a class="nav-item nav-link @if(isset($type) && strcmp($type, 'highly-voted') == 0){{"active"}}@endif" id="nav-voted-tab" aria-controls="nav-voted" aria-selected="false"
-                   href="@if(isset($type) && strcmp($type, 'highly-voted') != 0){{ route('highly_voted_questions') }}@else{{ "#" }}@endif">Highly Voted</a>
+                   data-toggle="tab" role="tab" href="#nav-voted">Highly Voted</a>
                 <a class="nav-item nav-link @if(isset($type) && strcmp($type, 'active') == 0){{"active"}}@endif" id="nav-active-tab" aria-controls="nav-active" aria-selected="false"
-                   href="@if(isset($type) && strcmp($type, 'active') != 0){{ route('active_questions') }}@else{{ "#" }}@endif">Active</a>
-
+                   data-toggle="tab" role="tab" href="#nav-active">Active</a>
             </div>
         </div>
 
@@ -27,45 +26,36 @@
 
                 @include('templates.questions')
 
-                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'recent') == 0){{"show active"}}@endif" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab"
-                @if (isset($type) && strcmp($type, 'recent') == false) {{ 'href="' . route('recent_questions') .'"' }} @endif>
-
+                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'recent') == 0){{"show active"}}@endif" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
                     @if (isset($type) && strcmp($type, 'recent') == 0)
                         @for ($i = 0; $i < 10; $i++)
                             @include('templates.questionTemplate')
                         @endfor
                     @endif
-
                 </div>
 
-                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'hot') == 0){{"show active"}}@endif" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab"
-                @if (isset($type) && strcmp($type, 'hot') == false) {{ 'href="' . route('hot_questions') .'"' }} @endif>
-
-
+                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'hot') == 0){{"show active"}}@endif" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
                     @if (isset($type) && strcmp($type, 'hot') == 0)
-                        @each('partials.question', $questions, 'question')
+                        @for ($i = 0; $i < 10; $i++)
+                            @include('templates.questionTemplate')
+                        @endfor
                     @endif
-
                 </div>
 
-                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'highly-voted') == 0){{"show active"}}@endif" id="nav-voted" role="tabpanel" aria-labelledby="nav-voted-tab"
-                @if (isset($type) && strcmp($type, 'highly-voted') == false) {{ 'href="' . route('highly_voted_questions') .'"' }} @endif>
-
-
+                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'highly-voted') == 0){{"show active"}}@endif" id="nav-voted" role="tabpanel" aria-labelledby="nav-voted-tab">
                     @if (isset($type) && strcmp($type, 'highly-voted') == 0)
-                        @each('partials.question', $questions, 'question')
+                        @for ($i = 0; $i < 10; $i++)
+                            @include('templates.questionTemplate')
+                        @endfor
                     @endif
-
                 </div>
 
-                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'active') == 0){{"show active"}}@endif" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab"
-                @if (isset($type) && strcmp($type, 'active') == false) {{ 'href="' . route('active_questions') .'"' }} @endif>
-
-
+                <div class="tab-pane fade @if(isset($type) && strcmp($type, 'active') == 0){{"show active"}}@endif" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
                     @if (isset($type) && strcmp($type, 'active') == 0)
-                        @each('partials.question', $questions, 'question')
+                        @for ($i = 0; $i < 10; $i++)
+                            @include('templates.questionTemplate')
+                        @endfor
                     @endif
-
                 </div>
 
                 <div class="search-content">

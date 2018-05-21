@@ -24,7 +24,7 @@
                     <small>Created by -</small>
                 </p>
                 <div class="ml-2 mr-auto">
-                    <span class="template-for-fill">&nbsp</span>
+                    <span class="template-for-fill">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                 </div>
             </div>
         </div>
