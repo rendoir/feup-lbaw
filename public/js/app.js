@@ -7499,7 +7499,7 @@ tagSearchEvent();
 var ajax = __webpack_require__(0);
 var Mustache = __webpack_require__(2);
 
-if (window.location.pathname.match(/questions\/\D/) != null) {
+if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
     ajax.sendAjaxRequest('GET', "/min-profile", null, function (data) {
         var template = $('template#minProfile')[0];
         var info = null;

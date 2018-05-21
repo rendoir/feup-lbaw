@@ -78,25 +78,25 @@
 
                     @if(Auth::check())
                         <div class="card unnoticed-a hover-box-shadow mb-3">
-                            <div class="card-img-top-container"></div>
+                            <div class="card-img-top-container template-for-fill"></div>
                             <div class="card-body text-center">
-                                <div class="rounded-circle img-profile-aside" height="100px" width="100px"></div>
-                                <h3 class="card-text mb-0">-</h3>
+                                <div class="rounded-circle img-profile-aside template-for-fill mx-auto" height="100px" width="100px"></div>
+                                <h3 class="card-text mb-0 template-for-fill">&nbsp</h3>
                                 <div class="my-3">
                                     <i class="fas fa-trophy"></i>
-                                    <span>-</span>
+                                    <span class="template-for-fill">&nbsp</span>
                                 </div>
                                 <div class="row">
                                     <div class="col-4 px-1 border-right">
-                                        <div>-</div>
+                                        <div class="template-for-fill">&nbsp</div>
                                         <small>Questions</small>
                                     </div>
                                     <div class="col-4 px-1">
-                                        <div>-</div>
+                                        <div class="template-for-fill">&nbsp</div>
                                         <small>Answers</small>
                                     </div>
                                     <div class="col-4 px-1 border-left">
-                                        <div>-</div>
+                                        <div class="template-for-fill">&nbsp</div>
                                         <small>Comments</small>
                                     </div>
                                 </div>
@@ -104,6 +104,7 @@
                         </div>
 
                         @include('templates.minProfile')
+
                     @endif
 
                     <div class="card">

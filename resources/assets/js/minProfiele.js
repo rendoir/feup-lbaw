@@ -1,7 +1,7 @@
 let ajax = require('./ajax.js');
 let Mustache = require('mustache');
 
-if(window.location.pathname.match( /questions\/\D/ ) != null){
+if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
     ajax.sendAjaxRequest('GET', "/min-profile", null,(data) => {
         let template = $('template#minProfile')[0];
         let info = null;
