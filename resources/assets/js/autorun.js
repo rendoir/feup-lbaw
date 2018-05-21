@@ -104,14 +104,14 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
             getQuestions(1);
         }
     });
-}
 
-$(window).scroll(function () {
-    if (!endOfPage) {
-        if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-            endOfPage = true;
-            pages_num[page_enum[questionType]]++;
-            getQuestions(pages_num[page_enum[questionType]]);
+    $(window).scroll(function () {
+        if (!endOfPage) {
+            if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                endOfPage = true;
+                pages_num[page_enum[questionType]]++;
+                getQuestions(pages_num[page_enum[questionType]]);
+            }
         }
-    }
-});
+    });
+}
