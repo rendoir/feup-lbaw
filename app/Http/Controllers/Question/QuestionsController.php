@@ -68,16 +68,29 @@ class QuestionsController extends Controller
 
     public function showQueriedQuestions(Request $request) {
         $query_string = $request->get('search');
+        $operator = $request->get('operator');
         preg_match_all('/(?<=\[).*?(?=\])/', $query_string, $tag_names);
         $query_string = preg_replace('/\[.*?\]/', "", $query_string);
         $tag_names = $tag_names[0];
 
         $tags = Category::whereIn('name', $tag_names)->pluck('id')->toArray();
 
-        if(!empty($tags))
-          $questions = Question::whereHas('categories', function($query) use($tags) {
-                        $query->whereIn('id', $tags);
-                    })->search($query_string)->paginate(NUM_PER_PAGE);
+        if(!empty($tags)) {
+          if($operator == 'and' || $operator == null) {
+            $query = Question::query();
+            foreach ($tags as $tag_id) {
+                $query->whereHas('categories', function($query) use($tag_id) {
+                    $query->where('id', $tag_id);
+                });
+            }
+            $questions = $query->search($query_string)->paginate(NUM_PER_PAGE);
+          }
+          else if($operator == 'or') {
+            $questions = Question::whereHas('categories', function($query) use($tags) {
+                          $query->whereIn('id', $tags);
+                      })->search($query_string)->paginate(NUM_PER_PAGE);
+          }
+        }
         else $questions = Question::search($query_string)->paginate(NUM_PER_PAGE);
         $questions->appends(['search' => $query_string]);
 
