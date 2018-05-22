@@ -34,7 +34,11 @@ class QuestionsController extends Controller
             'showHotQuestions',
             'showHighlyVotedQuestions',
             'showActiveQuestions',
-            'showQuestionPage']);
+            'showQuestionPage',
+            'getRecentQuestions',
+            'getHotQuestions',
+            'getHighlyVotedQuestions',
+            'getActiveQuestions']);
     }
 
     public function addQuestion(Request $request)
