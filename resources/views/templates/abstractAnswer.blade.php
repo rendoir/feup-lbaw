@@ -28,7 +28,7 @@
                 </div>
                 <div class="text-center m-auto">
                     {{#hasComments}}
-                    <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}" 
+                    <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}"
                     aria-expanded="false" aria-controls="AnswerComments{{id}}" data-message-id="{{id}}">
                         Show Comments
                     </a>
@@ -49,12 +49,8 @@
             </div>
             {{^is_owner}}
             <div class="d-flex flex-column justify-content-around mb-sm-n-100">
-                <a href="#">
-                    <i class="fas fa-arrow-up"></i>
-                </a>
-                <a href="#">
-                    <i class="fas fa-arrow-down discrete"></i>
-                </a>
+                <i class="vote fas fa-arrow-up discrete" data-positive="true" data-message_id="{{id}}"></i>
+                <i class="vote fas fa-arrow-down discrete" data-positive="false" data-message_id="{{id}}"></i>
             </div>
             {{/is_owner}}
             {{#is_question_owner}}
@@ -118,7 +114,7 @@
 
         <!-- COMMENTS -->
         <div class="collapse answer-comments w-100" id="AnswerComments{{id}}" data-message-id="{{id}}">
-        {{#is_authenticated}}  
+        {{#is_authenticated}}
             <div class="comment-creator card-footer comments-card px-0 px-sm-4">
                 <div class="d-flex list-group list-group-flush">
                     <div class="list-group-item bg-transparent">

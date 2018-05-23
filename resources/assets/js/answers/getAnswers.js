@@ -2,6 +2,7 @@ var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./answersUtils.js');
 var comments = require('../comments/comments.js');
+var vote = require('../vote.js');
 
 function getAnswersRequest() {
 
@@ -27,6 +28,9 @@ function getAnswersHandler() {
 
         // Add event listeners for handling comments
         comments.addEventListeners();
+
+        //Vote events
+        vote.addVoteEvent('#answers-container .vote');
     }
     else alert.displayError("Failed to retrieve Question's answers");
 }

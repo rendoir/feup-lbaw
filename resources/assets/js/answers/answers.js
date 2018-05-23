@@ -5,7 +5,7 @@ var answersAdder = require('./addAnswer.js');
 function addAnswerEventListeners() {
 
     answersGetter.getAnswersRequest();
-    
+
     addAnswerEventListener();
 }
 

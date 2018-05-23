@@ -38,6 +38,7 @@ $num_answers = $question->get_num_answers();
                 <div class="collapse" id="QuestionComments">
                     <div class="card-footer comments-card">
                         <div class="d-flex list-group list-group-flush">
+                            <!-- TODO Replace -->
                             <div class="list-group-item px-0 bg-transparent">
                                 <div class="row mx-sm-0">
                                     <div class="col-1 my-auto text-center">
@@ -54,48 +55,6 @@ $num_answers = $question->get_num_answers();
                                     </div>
                                 </div>
                             </div>
-                            <div class="list-group-item px-0 bg-transparent">
-                                <div class="row mx-sm-0">
-                                    <div class="col-1 my-1 text-center">
-                                        <p class="text-center mb-0 w-100">1</p>
-                                    </div>
-                                    <div class="col-11 my-1 pl-4">
-                                        <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit
-                                            dapibus.
-                                        </p>
-                                        <p class="text-right discrete">
-                                            jflcarvalho
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="list-group-item px-0 bg-transparent">
-                                <div class="row mx-sm-0">
-                                    <div class="col-1 my-auto text-center">
-                                        <p class="text-center mb-0 w-100">1</p>
-                                    </div>
-                                    <div class="col-11 my-auto pl-4">
-                                        <p>This is a sample comment!! *Insert meme here*</p>
-                                        <p class="text-right discrete">
-                                            EdgarACarneiro
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="list-group-item px-0 bg-transparent">
-                                <div class="row mx-sm-0">
-                                    <div class="col-1 my-auto text-center">
-                                        <p class="text-center mb-0 w-100">-1</p>
-                                    </div>
-                                    <div class="col-11 my-auto pl-4">
-                                        <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
-                                            hendrerit dapibus. Bada badu badumtsss.</p>
-                                        <p class="text-right discrete">
-                                            rendoir
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,6 +62,7 @@ $num_answers = $question->get_num_answers();
             </div>
             <div class="col-md-3 p-3 d-flex flex-column justify-content-between">
                 <div>
+                    <div style="display: inline-block">
                     <div>
                         <span class="font-weight-bold w-100">Answers: </span>
                         <span class="w-100">{{$num_answers}}</span>
@@ -111,12 +71,28 @@ $num_answers = $question->get_num_answers();
                         <span class="font-weight-bold w-100">Votes: </span>
                         <span class="w-100">{{$score}}</span>
                     </div>
+                    </div>
                     @if (Auth::check())
                       <?php
                         $has_bookmark = Auth::user()->hasBookmarkOn($question->id);
                       ?>
-                      <span id="bookmark" class="{{$has_bookmark ? 'active' : 'inactive'}}" data-message-id="{{$question->id}}"><i class="{{$has_bookmark ? 'fas' : 'far'}} fa-heart"></i></span>
+                      <div style="display: inline-block; height: 100%; float: right; position: relative;">
+                        <span style="font-size: 1.5em; position: absolute; top: 50%; transform: translate(-50%,-50%);" id="bookmark" class="{{$has_bookmark ? 'active' : 'inactive'}}" data-message-id="{{$question->id}}"><i class="{{$has_bookmark ? 'fas' : 'far'}} fa-heart"></i></span>
+                      </div>
                     @endif
+                </div>
+
+                <div>
+                  @if (Auth::check())
+                  <div class="row" style="font-size: 1.5em;">
+                        <div class="col-6 text-center">
+                            <i class="fas fa-thumbs-up discrete"></i>
+                        </div>
+                        <div class="col-6 border-left text-center">
+                            <i class="fas fa-thumbs-down discrete"></i>
+                        </div>
+                    </div>
+                  @endif
                 </div>
 
                 <div>

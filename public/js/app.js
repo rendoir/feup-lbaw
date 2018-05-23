@@ -7187,6 +7187,7 @@ var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(7);
 var comments = __webpack_require__(4);
+var vote = __webpack_require__(40);
 
 function getAnswersRequest() {
 
@@ -7230,6 +7231,9 @@ function getAnswersHandler() {
         }
 
         comments.addEventListeners();
+
+        //Vote events
+        vote.addVoteEvent('#answers-container .vote');
     } else alert.displayError("Failed to retrieve Question's answers");
 }
 
@@ -7609,7 +7613,74 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
 /* 28 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: spawn /home/bayard/Github/lbaw1763/node_modules/mozjpeg/vendor/cjpeg ENOENT\n    at exports._errnoException (util.js:1020:11)\n    at Process.ChildProcess._handle.onexit (internal/child_process.js:197:32)\n    at onErrorNT (internal/child_process.js:376:16)\n    at _combinedTickCallback (internal/process/next_tick.js:80:11)\n    at process._tickCallback (internal/process/next_tick.js:104:9)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at /home/bayard/Github/lbaw1763/node_modules/img-loader/index.js:45:31\n    at process._tickCallback (internal/process/next_tick.js:109:7)");
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+
+function addVoteEvent(query) {
+	var vote_buttons = document.querySelectorAll(query);
+	if (vote_buttons == null) return;
+	console.log(vote_buttons);
+
+	var _loop = function _loop(button) {
+		button.addEventListener('click', function () {
+			var message_id = button.dataset.message_id;
+			var positive = button.dataset.positive;
+			var url = 'messages/' + message_id + '/vote';
+			var data = { positive: positive };
+			console.log("A TUA PRIMA");
+			/*ajax.sendAjaxRequest('post', url, data, function() {
+   	console.log(this.status);
+   });*/
+		});
+	};
+
+	var _iteratorNormalCompletion = true;
+	var _didIteratorError = false;
+	var _iteratorError = undefined;
+
+	try {
+		for (var _iterator = vote_buttons[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var button = _step.value;
+
+			_loop(button);
+		}
+	} catch (err) {
+		_didIteratorError = true;
+		_iteratorError = err;
+	} finally {
+		try {
+			if (!_iteratorNormalCompletion && _iterator.return) {
+				_iterator.return();
+			}
+		} finally {
+			if (_didIteratorError) {
+				throw _iteratorError;
+			}
+		}
+	}
+}
+
+addVoteEvent('#question-body .vote');
+
+module.exports = {
+	addVoteEvent: addVoteEvent
+};
 
 /***/ })
 /******/ ]);

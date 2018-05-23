@@ -73,6 +73,10 @@ Route::post('users/edit/biography', 'ProfileController@editBiography');
 Route::post('users/bookmarks/{question_id}', 'ProfileController@addBookmark');
 Route::delete('users/bookmarks/{question_id}', 'ProfileController@deleteBookmark');
 
+//Messages
+Route::post('messages/{id}/vote', 'MessageController@vote');
+
+
 // Testing Notifications' Server
 Route::get('test/notifications-view', function() {
     return view('notifications_test');

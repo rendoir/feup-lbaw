@@ -16,7 +16,7 @@ function createAnswer(answer_info) {
 
 function cleanAnswers() {
     let answers = document.getElementById("answers-container");
-    
+
     for (let child of answers.childNodes) {
         if (child.id == "answer-skeleton")
             answers.removeChild(child);
@@ -66,7 +66,7 @@ function jumpToElement(elementID) {
 
 module.exports = {
     createAnswer,
-    cleanAnswers,    
+    cleanAnswers,
     getAnswersURL,
     jumpToElement
 };
