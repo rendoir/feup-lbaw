@@ -1222,7 +1222,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(9);
-module.exports = __webpack_require__(28);
+module.exports = __webpack_require__(29);
 
 
 /***/ }),
@@ -1240,8 +1240,8 @@ __webpack_require__(16);
 __webpack_require__(19);
 __webpack_require__(20);
 __webpack_require__(4);
-__webpack_require__(26);
 __webpack_require__(27);
+__webpack_require__(28);
 
 /***/ }),
 /* 10 */
@@ -7164,7 +7164,7 @@ if (editor_element != null) {
 
 var messages = __webpack_require__(6);
 var answersGetter = __webpack_require__(21);
-var answersAdder = __webpack_require__(25);
+var answersAdder = __webpack_require__(26);
 
 function addAnswerEventListeners() {
 
@@ -7187,7 +7187,7 @@ var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(7);
 var comments = __webpack_require__(4);
-var vote = __webpack_require__(40);
+var vote = __webpack_require__(25);
 
 function getAnswersRequest() {
 
@@ -7424,6 +7424,62 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
+
+function addVoteEvent(query) {
+	var vote_buttons = document.querySelectorAll(query);
+	if (vote_buttons == null) return;
+	console.log(vote_buttons);
+
+	var _loop = function _loop(button) {
+		button.addEventListener('click', function () {
+			var message_id = button.dataset.message_id;
+			var positive = button.dataset.positive;
+			var url = 'messages/' + message_id + '/vote';
+			var data = { positive: positive };
+			console.log("Sending ajax request");
+			ajax.sendAjaxRequest('post', url, data, function () {
+				console.log("Received response " + this.status);
+			});
+		});
+	};
+
+	var _iteratorNormalCompletion = true;
+	var _didIteratorError = false;
+	var _iteratorError = undefined;
+
+	try {
+		for (var _iterator = vote_buttons[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var button = _step.value;
+
+			_loop(button);
+		}
+	} catch (err) {
+		_didIteratorError = true;
+		_iteratorError = err;
+	} finally {
+		try {
+			if (!_iteratorNormalCompletion && _iterator.return) {
+				_iterator.return();
+			}
+		} finally {
+			if (_didIteratorError) {
+				throw _iteratorError;
+			}
+		}
+	}
+}
+
+addVoteEvent('#question-body .vote');
+
+module.exports = {
+	addVoteEvent: addVoteEvent
+};
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(7);
 var comments = __webpack_require__(4);
@@ -7474,7 +7530,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 function tagSearchEvent() {
@@ -7497,7 +7553,7 @@ function tagSearchEvent() {
 tagSearchEvent();
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7610,77 +7666,10 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
 }
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ajax = __webpack_require__(0);
-
-function addVoteEvent(query) {
-	var vote_buttons = document.querySelectorAll(query);
-	if (vote_buttons == null) return;
-	console.log(vote_buttons);
-
-	var _loop = function _loop(button) {
-		button.addEventListener('click', function () {
-			var message_id = button.dataset.message_id;
-			var positive = button.dataset.positive;
-			var url = 'messages/' + message_id + '/vote';
-			var data = { positive: positive };
-			console.log("A TUA PRIMA");
-			/*ajax.sendAjaxRequest('post', url, data, function() {
-   	console.log(this.status);
-   });*/
-		});
-	};
-
-	var _iteratorNormalCompletion = true;
-	var _didIteratorError = false;
-	var _iteratorError = undefined;
-
-	try {
-		for (var _iterator = vote_buttons[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-			var button = _step.value;
-
-			_loop(button);
-		}
-	} catch (err) {
-		_didIteratorError = true;
-		_iteratorError = err;
-	} finally {
-		try {
-			if (!_iteratorNormalCompletion && _iterator.return) {
-				_iterator.return();
-			}
-		} finally {
-			if (_didIteratorError) {
-				throw _iteratorError;
-			}
-		}
-	}
-}
-
-addVoteEvent('#question-body .vote');
-
-module.exports = {
-	addVoteEvent: addVoteEvent
-};
 
 /***/ })
 /******/ ]);
