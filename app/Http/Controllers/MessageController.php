@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Message;
+use App\Vote;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,10 +20,10 @@ class MessageController extends Controller
     if(!Auth::check() || $message->author == Auth::id())
       return response()->setStatusCode(403);
 
-    $positive = $request->get('vote');
+    $positive = $request->get('positive');
 
     $old_vote = Vote::where('user_id', Auth::id())->where('message_id', $id)->first();
-    if($old_vote != null) {
+    if($old_vote == null) {
       //Create
       $vote = Vote::create(['message_id' => $id, 'user_id' => Auth::id(), 'positive' => $positive]);
       $vote->save();

@@ -6,11 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vote extends Model
 {
-    public $timestamps = false;
+    protected $fillable = ['message_id', 'user_id', 'positive'];
 
-    public function create($message_id, $user_id, $positive) {
-        $this->message_id = $message_id;
-        $this->user_id = $user_id;
-        $this->$positive = $positive;
-    }
+    public $timestamps = false;
 }
