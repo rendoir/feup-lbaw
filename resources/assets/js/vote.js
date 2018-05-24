@@ -8,12 +8,12 @@ function addVoteEvent(query) {
 		button.addEventListener('click', function() {
 			let message_id = button.dataset.message_id;
 			let positive = button.dataset.positive;
-			let url = 'messages/' + message_id + '/vote';
+			let url = '/messages/' + message_id + '/vote';
 			let data = { positive: positive };
-			console.log("A TUA PRIMA");
-			/*ajax.sendAjaxRequest('post', url, data, function() {
-				console.log(this.status);
-			});*/
+			console.log("Sending ajax request");
+			ajax.sendAjaxRequest('post', url, data, function() {
+				console.log("Received response " + this.status);
+			});
 		});
 	}
 }

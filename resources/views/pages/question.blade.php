@@ -9,6 +9,7 @@ $author = $message->get_author();
 $score = $message->score;
 $answers = $question->answers();
 $num_answers = $question->get_num_answers();
+$positive = $message->getVote();
 ?>
 
 @section('question-title')
@@ -86,10 +87,10 @@ $num_answers = $question->get_num_answers();
                   @if (Auth::check())
                   <div class="row" style="font-size: 1.5em;">
                         <div class="col-6 text-center">
-                            <i class="fas fa-thumbs-up discrete"></i>
+                            <i class="vote fas fa-thumbs-up <?=$positive === true ? '' : 'discrete';?>" data-message_id="{{$message->id}}" data-positive="true"></i>
                         </div>
                         <div class="col-6 border-left text-center">
-                            <i class="fas fa-thumbs-down discrete"></i>
+                            <i class="vote fas fa-thumbs-down <?=$positive === false ? '' : 'discrete';?>" data-message_id="{{$message->id}}" data-positive="false"></i>
                         </div>
                     </div>
                   @endif
