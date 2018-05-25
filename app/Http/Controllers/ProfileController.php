@@ -35,7 +35,7 @@ class ProfileController extends Controller
     public function imageUpload(Request $request, $type)
     {
       if(!Auth::check())
-        return response()->setStatusCode(403);
+        return response('You must login to edit your profile', 401);
 
       $this->validate($request, [
           'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
@@ -52,7 +52,7 @@ class ProfileController extends Controller
 
     public function editBiography(Request $request) {
       if(!Auth::check())
-        return response()->setStatusCode(403);
+        return response('You must login to edit your profile', 403);
 
       $user = Auth::user();
       $user->biography = $request->biography;
@@ -61,14 +61,14 @@ class ProfileController extends Controller
 
     public function addBookmark(Request $request) {
       if(!Auth::check())
-        return response()->setStatusCode(403);
+        return response('You must login to manage your bookmarks', 403);
 
       DB::table('bookmarks')->insert(['question_id' => $request->question_id, 'user_id' => Auth::id()]);
     }
 
     public function deleteBookmark(Request $request) {
       if(!Auth::check())
-        return response()->setStatusCode(403);
+        return response('You must login to manage your bookmarks', 403);
 
       DB::table('bookmarks')->where('user_id', '=', Auth::id())
         ->where('question_id', '=', $request->question_id)

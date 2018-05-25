@@ -16,16 +16,17 @@ class MessageController extends Controller
   public function vote(Request $request, $id) {
     $message = Message::find($id);
     if($message == null)
-      return response()->setStatusCode(404);
+      return response('This message does not exist', 404);
 
-    if(!Auth::check() || $message->author == Auth::id())
-      return response()->setStatusCode(403);
+    if(!Auth::check())
+      return response('You must login to vote a message', 401);
+    if($message->author == Auth::id())
+      return response('You cannot vote your own message', 403);
 
     $positive = $request->get('positive');
 
     $old_vote = DB::table('votes')->where('user_id', Auth::id())->where('message_id', $id);
     if($old_vote->first() == null) {
-      echo "create";
       //Create
       DB::table('votes')->insert(
           ['message_id' => $id, 'user_id' => Auth::id(), 'positive' => $positive]
@@ -33,11 +34,8 @@ class MessageController extends Controller
     } else {
       if($old_vote->first()->positive == $positive) {
         //Remove
-        echo "remove";
-        var_dump($old_vote);
         $old_vote->delete();
       } else {
-        echo "update";
         //Update
         $old_vote->update(['positive' => $positive]);
       }

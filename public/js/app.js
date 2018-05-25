@@ -7428,7 +7428,6 @@ var ajax = __webpack_require__(0);
 function addVoteEvent(query) {
 	var vote_buttons = document.querySelectorAll(query);
 	if (vote_buttons == null) return;
-	console.log(vote_buttons);
 
 	var _loop = function _loop(button) {
 		button.addEventListener('click', function () {
@@ -7436,9 +7435,8 @@ function addVoteEvent(query) {
 			var positive = button.dataset.positive;
 			var url = '/messages/' + message_id + '/vote';
 			var data = { positive: positive };
-			console.log("Sending ajax request");
 			ajax.sendAjaxRequest('post', url, data, function () {
-				console.log("Received response " + this.status);
+				if (this.status == 401) window.location = "/login";else if (this.status == 403) console.log("NAO PODES VOTAR NA TUA PERGUNTA FDP");else if (this.status == 200) console.log("OLHA PINTOU MANO, FIXE");
 			});
 		});
 	};
