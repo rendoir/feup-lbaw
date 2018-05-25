@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Message;
 use App\Vote;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -22,19 +23,23 @@ class MessageController extends Controller
 
     $positive = $request->get('positive');
 
-    $old_vote = Vote::where('user_id', Auth::id())->where('message_id', $id)->first();
-    if($old_vote == null) {
+    $old_vote = DB::table('votes')->where('user_id', Auth::id())->where('message_id', $id);
+    if($old_vote->first() == null) {
+      echo "create";
       //Create
-      $vote = Vote::create(['message_id' => $id, 'user_id' => Auth::id(), 'positive' => $positive]);
-      $vote->save();
+      DB::table('votes')->insert(
+          ['message_id' => $id, 'user_id' => Auth::id(), 'positive' => $positive]
+      );
     } else {
-      if($old_vote->positive == $positive) {
+      if($old_vote->first()->positive == $positive) {
         //Remove
+        echo "remove";
+        var_dump($old_vote);
         $old_vote->delete();
       } else {
+        echo "update";
         //Update
-        $old_vote->positive = $positive;
-        $old_vote->save();
+        $old_vote->update(['positive' => $positive]);
       }
     }
   }

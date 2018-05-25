@@ -353,7 +353,7 @@ CREATE FUNCTION delete_score_vote() RETURNS TRIGGER AS $$
         SET score = score + 1
         WHERE OLD.message_id = messages.id;
     END IF;
-    RETURN NEW;
+    RETURN OLD;
   END;
 $$ LANGUAGE plpgsql;
 
