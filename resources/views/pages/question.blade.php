@@ -70,7 +70,7 @@ $positive = $message->getVote();
                     </div>
                     <div>
                         <span class="font-weight-bold w-100">Votes: </span>
-                        <span class="w-100">{{$score}}</span>
+                        <span class="w-100 score">{{$score}}</span>
                     </div>
                     </div>
                     @if (Auth::check())

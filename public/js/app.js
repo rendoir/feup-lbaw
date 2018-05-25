@@ -105,12 +105,12 @@ function displaySuccess(successMessage) {
 function displayMessage(message, isSuccess) {
 
     var template = document.querySelector("template#alert-template").innerHTML;
-    var placeholder = document.createElement("span");
+    var placeholder = document.createElement("div");
 
     placeholder.innerHTML = Mustache.render(template, { message: message, isSucess: isSuccess });
 
-    var header = document.querySelector("header");
-    header.appendChild(placeholder);
+    var header = document.querySelector("#navbar");
+    header.insertAdjacentElement("afterend", placeholder);
 
     return placeholder;
 }
@@ -1979,8 +1979,8 @@ function uploadImage(abbr, type) {
       } else if (e.target.status == 403) {
         window.location.replace('/login');
       } else {
-        var alert_elem = errors.displayError("Error changing your image.");
-        $(alert_elem).fadeTo(2000, 500).slideUp(500, function () {
+        var alert_elem = errors.displayError(JSON.parse(this.responseText).image[0]);
+        $(alert_elem).delay(4000).slideUp(500, function () {
           $(this).remove();
         });
       }
@@ -2017,7 +2017,7 @@ function editBiographyHandler(e) {
     window.location.replace('/login');
   } else alert_elem = errors.displayError("Error changing your biography.");
 
-  $(alert_elem).fadeTo(2000, 500).slideUp(500, function () {
+  $(alert_elem).delay(4000).slideUp(500, function () {
     $(this).remove();
   });
 }
@@ -7233,7 +7233,7 @@ function getAnswersHandler() {
         comments.addEventListeners();
 
         //Vote events
-        vote.addVoteEvent('#answers-container .vote');
+        vote.addVoteEvent('#answers-container');
     } else alert.displayError("Failed to retrieve Question's answers");
 }
 
@@ -7424,50 +7424,45 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
+var errors = __webpack_require__(1);
 
-function addVoteEvent(query) {
-	var vote_buttons = document.querySelectorAll(query);
+function addVoteEvent(container) {
+	var vote_buttons = document.querySelectorAll(container + ' .vote');
+	var scores = document.querySelectorAll(container + ' .score');
 	if (vote_buttons == null) return;
 
-	var _loop = function _loop(button) {
+	var _loop = function _loop(i) {
+		var button = vote_buttons[i];
 		button.addEventListener('click', function () {
 			var message_id = button.dataset.message_id;
 			var positive = button.dataset.positive;
 			var url = '/messages/' + message_id + '/vote';
 			var data = { positive: positive };
 			ajax.sendAjaxRequest('post', url, data, function () {
-				if (this.status == 401) window.location = "/login";else if (this.status == 403) console.log("NAO PODES VOTAR NA TUA PERGUNTA FDP");else if (this.status == 200) console.log("OLHA PINTOU MANO, FIXE");
+				if (this.status == 401) window.location = "/login";else if (this.status == 403) {
+					var alert_elem = errors.displayError("You cannot vote your messages.");
+					$(alert_elem).delay(4000).slideUp(500, function () {
+						$(this).remove();
+					});
+				} else if (this.status == 200) {
+					if (button.classList.contains('discrete')) {
+						button.classList.remove('discrete');
+						var pair_i = positive === 'true' ? i + 1 : i - 1;
+						if (!vote_buttons[pair_i].classList.contains('discrete')) vote_buttons[pair_i].classList.add('discrete');
+					} else button.classList.add('discrete');
+					var score = scores[Math.floor(i / 2)];
+					score.innerHTML = JSON.parse(this.responseText).score;
+				}
 			});
 		});
 	};
 
-	var _iteratorNormalCompletion = true;
-	var _didIteratorError = false;
-	var _iteratorError = undefined;
-
-	try {
-		for (var _iterator = vote_buttons[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-			var button = _step.value;
-
-			_loop(button);
-		}
-	} catch (err) {
-		_didIteratorError = true;
-		_iteratorError = err;
-	} finally {
-		try {
-			if (!_iteratorNormalCompletion && _iterator.return) {
-				_iterator.return();
-			}
-		} finally {
-			if (_didIteratorError) {
-				throw _iteratorError;
-			}
-		}
+	for (var i = 0; i < vote_buttons.length; i++) {
+		_loop(i);
 	}
 }
 
-addVoteEvent('#question-body .vote');
+addVoteEvent('#question-body');
 
 module.exports = {
 	addVoteEvent: addVoteEvent

@@ -23,7 +23,7 @@ class MessageController extends Controller
     if($message->author == Auth::id())
       return response('You cannot vote your own message', 403);
 
-    $positive = $request->get('positive');
+    $positive = $request->get('positive') === 'true';
 
     $old_vote = DB::table('votes')->where('user_id', Auth::id())->where('message_id', $id);
     if($old_vote->first() == null) {
@@ -40,5 +40,7 @@ class MessageController extends Controller
         $old_vote->update(['positive' => $positive]);
       }
     }
+    $message = Message::find($id);
+    return response()->json(['score' => $message->score]);
   }
 }

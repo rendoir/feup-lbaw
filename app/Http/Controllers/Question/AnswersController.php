@@ -33,6 +33,7 @@ class AnswersController extends Controller
         $message = $answer->message;
         $content = $message->message_version;
         $author = $message->get_author();
+        $positive = $message->getVote();
 
         return array(
             "id" => $answer->id,
@@ -41,6 +42,8 @@ class AnswersController extends Controller
             "was_edited" => $message->was_edited(),
             "is_owner" => ($author->id == Auth::id()),
             "num_comments" => $answer->num_comments(),
+            "discrete_p" => $positive === true ? '' : 'discrete',
+            "discrete_n" => $positive === false ? '' : 'discrete',
             "content" => array (
                 "version" => $content->content,
                 "creation_time" => $content->creation_time,
@@ -56,9 +59,9 @@ class AnswersController extends Controller
 
         foreach ($answers as $answer)
             array_push($answers_array, $this->getAnswerJSON($answer));
-        
+
         $result = array("answers" => $answers_array, "is_authenticated" => Auth::check());
-        
+
         return response()->json($result);
     }
 
@@ -80,7 +83,7 @@ class AnswersController extends Controller
         DB::transaction(function() use (&$request, &$answer_id, &$answer) {
             $user_id = User::find(Auth::id())->id;
             $answer_id = Message::create(['author' => $user_id])->id;
-            
+
             Commentable::create(['id' => $answer_id]);
             $answer = Answer::create(['id' => $answer_id, 'question_id' => $request->question]);
             MessageVersion::create(['content' => $request->input('content'), 'message_id' => $answer_id]);

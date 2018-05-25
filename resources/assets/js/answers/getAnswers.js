@@ -30,7 +30,7 @@ function getAnswersHandler() {
         comments.addEventListeners();
 
         //Vote events
-        vote.addVoteEvent('#answers-container .vote');
+        vote.addVoteEvent('#answers-container');
     }
     else alert.displayError("Failed to retrieve Question's answers");
 }

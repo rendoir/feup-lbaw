@@ -45,12 +45,12 @@
         <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
             <div class="p-2">
                 <i class="fas fa-trophy"></i>
-                <p class="text-center mb-0 w-100">{{score}}</p>
+                <p class="text-center mb-0 w-100 score">{{score}}</p>
             </div>
             {{^is_owner}}
             <div class="d-flex flex-column justify-content-around mb-sm-n-100">
-                <i class="vote fas fa-arrow-up discrete" data-positive="true" data-message_id="{{id}}"></i>
-                <i class="vote fas fa-arrow-down discrete" data-positive="false" data-message_id="{{id}}"></i>
+                <i class="vote fas fa-arrow-up {{discrete_p}}" data-positive="true" data-message_id="{{id}}"></i>
+                <i class="vote fas fa-arrow-down {{discrete_n}}" data-positive="false" data-message_id="{{id}}"></i>
             </div>
             {{/is_owner}}
             {{#is_question_owner}}

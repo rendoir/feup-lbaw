@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Bookmark;
 
+use Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -37,9 +38,13 @@ class ProfileController extends Controller
       if(!Auth::check())
         return response('You must login to edit your profile', 401);
 
-      $this->validate($request, [
-          'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+      $validator = Validator::make($request->all(), [
+        'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
       ]);
+
+      if ($validator->fails()) {
+          return response()->json($validator->errors(),400);
+      }
 
       $image = $request->file('image');
       $name = Auth::id();
