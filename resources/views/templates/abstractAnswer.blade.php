@@ -94,18 +94,18 @@
                 </div>
                 <small class="ml-auto mr-1 text-center mt-auto mb-auto">
                     {{#is_owner}}
-                    <a class="discrete mx-1" href="#" role="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
-                        <i class="fas fa-pencil-alt"></i>
-                    </a>
-                    <a class="discrete ml-1" data-toggle="modal" href="#deleteModal">
+                    <button class="btn btn-link discrete mx-1" data-toggle="modal" href="#editAnswerModal" data-message-id='{{id}}'>
+                        <i class="fas fa-pencil-alt" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"></i>
+                    </button>
+                    <button class="btn btn-link discrete ml-1" data-toggle="modal" href="#deleteAnswerModal" data-message-id='{{id}}'>
                         <i class="far fa-trash-alt" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i>
-                    </a>
+                    </button>
                     {{/is_owner}}
 
                     {{^is_owner}}
-                    <a class="discrete" href="#" role="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Report">
+                    <button class="btn btn-link discrete report-answer" data-toggle="tooltip" data-placement="top" title="" data-original-title="Report" data-message-id='{{id}}'>
                         <i class="fas fa-exclamation-triangle"></i>
-                    </a>
+                    </button>
                     {{/is_owner}}
                 </small>
             </div>

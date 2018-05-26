@@ -839,10 +839,10 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var messages = __webpack_require__(7);
-var commentsViewer = __webpack_require__(22);
-var commentsCreator = __webpack_require__(23);
+var commentsViewer = __webpack_require__(24);
+var commentsCreator = __webpack_require__(25);
 var commentsEditor = __webpack_require__(5);
-var commentsRemover = __webpack_require__(24);
+var commentsRemover = __webpack_require__(26);
 
 function addEventListeners() {
 
@@ -1292,6 +1292,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var Mustache = __webpack_require__(2);
+var answerEditor = __webpack_require__(22);
+var answerRemover = __webpack_require__(23);
 
 function createAnswer(answer_info) {
 
@@ -1302,9 +1304,20 @@ function createAnswer(answer_info) {
     addMarkdownFunction(answer_info);
 
     placeholder.innerHTML = Mustache.render(template, answer_info);
+    addMissingEventListeners();
 
     var answers = document.getElementById("answers-container");
     answers.appendChild(placeholder.firstElementChild);
+}
+
+// Function to add the event listeners missing to the freshly added answers: edition and deletion
+function addMissingEventListeners() {
+    $('#editAnswerModal').on('show.bs.modal', function (e) {
+        answerEditor.editAnswer($(e.relatedTarget)[0]);
+    });
+    $('#deleteAnswerModal').on('show.bs.modal', function (e) {
+        answerRemover.removeAnswer($(e.relatedTarget)[0]);
+    });
 }
 
 function cleanAnswers() {
@@ -1387,7 +1400,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(10);
-module.exports = __webpack_require__(29);
+module.exports = __webpack_require__(31);
 
 
 /***/ }),
@@ -1405,8 +1418,8 @@ __webpack_require__(16);
 __webpack_require__(19);
 __webpack_require__(20);
 __webpack_require__(4);
-__webpack_require__(27);
-__webpack_require__(28);
+__webpack_require__(29);
+__webpack_require__(30);
 
 /***/ }),
 /* 11 */
@@ -7274,7 +7287,7 @@ if (editor_element != null) {
 
 var messages = __webpack_require__(7);
 var answersGetter = __webpack_require__(21);
-var answersAdder = __webpack_require__(26);
+var answersAdder = __webpack_require__(28);
 
 function addAnswerEventListeners() {
 
@@ -7298,7 +7311,7 @@ var alert = __webpack_require__(1);
 var utils = __webpack_require__(8);
 var comments = __webpack_require__(4);
 var question = __webpack_require__(6);
-var common = __webpack_require__(25);
+var common = __webpack_require__(27);
 
 function getAnswersRequest() {
 
@@ -7354,6 +7367,54 @@ module.exports = {
 
 /***/ }),
 /* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var alert = __webpack_require__(1);
+
+function editAnswer(editTrigger) {
+
+    var editBtn = document.getElementById('edit-answer');
+    if (editBtn == null) return;
+
+    var edit_id = editTrigger.getAttribute("data-message-id");
+    if (edit_id == null) return;
+
+    editBtn.addEventListener('click', function () {
+        //editAnswerRequest(comment_id, answer_id, comment.parentNode);
+    });
+}
+
+module.exports = {
+    editAnswer: editAnswer
+};
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var alert = __webpack_require__(1);
+
+function removeAnswer(removeTrigger) {
+
+    var removeBtn = document.getElementById('delete-answer');
+    if (removeBtn == null) return;
+
+    var remove_id = removeTrigger.getAttribute("data-message-id");
+    if (remove_id == null) return;
+
+    removeBtn.addEventListener('click', function () {
+        //removeAnswerRequest(comment_id, answer_id, comment.parentNode);
+    });
+}
+
+module.exports = {
+    removeAnswer: removeAnswer
+};
+
+/***/ }),
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7414,7 +7475,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7472,7 +7533,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7481,7 +7542,7 @@ var utils = __webpack_require__(3);
 
 function removeComment(commentTrashBtn) {
 
-    var deleteBtn = document.querySelector('#delete-comment');
+    var deleteBtn = document.getElementById('delete-comment');
     if (deleteBtn == null) return;
 
     var comment_id = commentTrashBtn.getAttribute("data-message-id");
@@ -7531,7 +7592,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports) {
 
 function sortAnswers() {
@@ -7559,7 +7620,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7613,7 +7674,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports) {
 
 function tagSearchEvent() {
@@ -7636,7 +7697,7 @@ function tagSearchEvent() {
 tagSearchEvent();
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7749,7 +7810,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
 }
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

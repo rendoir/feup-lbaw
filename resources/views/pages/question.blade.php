@@ -152,12 +152,58 @@ $positive = $message->getVote();
     </div>
 </section>
 
+<!-- Answer edition' modal -->
+<div class="modal fade" id="editAnswerModal" tabindex="-1" role="dialog" aria-labelledby="editAnswerModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="deleteCommentModalLabel">Edit Answer</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <section class="main-content question-editor">
+                    <textarea id="editor" name="messageContent">
+                    </textarea>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button id="edit-answer" type="button" class="btn btn-outline-danger" data-dismiss="modal">Edit</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Answer deletion' modal -->
+<div class="modal fade" id="deleteAnswerModal" tabindex="-1" role="dialog" aria-labelledby="deleteAnswerModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="deleteCommentModalLabel">Delete Answer</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this answer? <br>
+                The process is irreversible.
+            </div>
+            <div class="modal-footer">
+                <button id="delete-answer" type="button" class="btn btn-outline-danger" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Comments' modal -->
 <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="deleteCommentModalLabel">Delete</h4>
+                <h4 class="modal-title" id="deleteCommentModalLabel">Delete Comment</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>

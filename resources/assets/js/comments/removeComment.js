@@ -4,7 +4,7 @@ var utils = require('./commentsUtils.js');
 
 function removeComment(commentTrashBtn) {
 
-    let deleteBtn = document.querySelector('#delete-comment');
+    let deleteBtn = document.getElementById('delete-comment');
     if (deleteBtn == null)
         return;
 

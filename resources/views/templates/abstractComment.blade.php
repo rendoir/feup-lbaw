@@ -36,7 +36,7 @@
                         <i class="far fa-trash-alt" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i>
                     </button>
                 </small>
-                <p class="discrete ml-auto">{{author}}</p>
+                <a class="ml-auto discrete" href="/users/{{author}}">{{author}}</a>
             </div>
         </div>
     </div>
@@ -62,7 +62,7 @@
                     <i class="fas fa-exclamation-triangle"></i>
                 </btn>
             </small>
-            <p class="ml-auto discrete">{{author}}</p>
+            <a class="ml-auto discrete" href="/users/{{author}}">{{author}}</a>
         </div>
     </div>
     {{/is_owner}}

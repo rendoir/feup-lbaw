@@ -45,7 +45,11 @@
                                 <button type="submit" class="btn btn-primary mt-2 mx-auto">
                                   Sign up for SegFault
                                 </button>
-                              </form>
+                          </form>
+
+                            <a href="{{ url('/auth/github') }}" class="btn btn-github"><i class="fa fa-github"></i> Github</a>
+                            <a href="{{ url('/auth/google') }}" class="btn btn-google"><i class="fa fa-google"></i> Google</a>
+
                         </div>
                     </div>
                 </div>
