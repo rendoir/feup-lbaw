@@ -42,14 +42,14 @@
                                     <input name="accept" type="checkbox" class="form-check-input" id="check" required>
                                     <label class="form-check-label" for="check">I accept the terms and conditions.</label>
                                 </div>
-                                <button type="submit" class="btn btn-primary mt-2 mx-auto">
-                                  Sign up for SegFault
-                                </button>
+                                <div class="d-flex flex-column">
+                                    <button type="submit" class="btn btn-primary mt-2 mx-5">
+                                        Sign up for SegFault
+                                    </button>
+                                    <a href="{{ url('/auth/github') }}" class="btn btn-github mt-2 mx-5"><i class="fab fa-github"></i> Sign up with Github</a>
+                                    <a href="{{ url('/auth/google') }}" class="btn btn-google mt-2 mx-5"><i class="fab fa-google"></i> Sign up with Google</a>
+                                </div>
                           </form>
-
-                            <a href="{{ url('/auth/github') }}" class="btn btn-github"><i class="fa fa-github"></i> Github</a>
-                            <a href="{{ url('/auth/google') }}" class="btn btn-google"><i class="fa fa-google"></i> Google</a>
-
                         </div>
                     </div>
                 </div>

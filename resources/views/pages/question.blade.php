@@ -164,7 +164,7 @@ $positive = $message->getVote();
             </div>
             <div class="modal-body">
                 <section class="main-content question-editor">
-                    <textarea id="editor" name="messageContent">
+                    <textarea id="edit-editor" name="messageContent">
                     </textarea>
                 </section>
             </div>
