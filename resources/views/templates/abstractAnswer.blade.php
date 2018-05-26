@@ -24,7 +24,7 @@
                 </p>
                 <div class="mr-auto">
                     <span>{{author}}</span>
-                    <!--<span class="badge badge-success">{{author.badge}}-->
+                    <span class="badge badge-success">{{author_badge}}</span>
                 </div>
                 <div class="text-center m-auto">
                     {{#hasComments}}
@@ -79,7 +79,7 @@
                 <div class="text-center">
                     <small class="text-muted">Created by -</small>
                     <span>{{author}}</span>
-                    <!--<span class="badge badge-success">Trusted</span>-->
+                    <span class="badge badge-success">{{author_badge}}</span>
                 </div>
                 <div class="text-center m-auto">
                     <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}" aria-expanded="false" aria-controls="AnswerComments{{id}}" data-message-id="{{id}}">

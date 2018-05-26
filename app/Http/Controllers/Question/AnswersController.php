@@ -46,6 +46,7 @@ class AnswersController extends Controller
             "discrete_p" => $positive === true ? '' : 'discrete',
             "discrete_n" => $positive === false ? '' : 'discrete',
             'correct' => $correct,
+            'author_badge' => $author->getBadge(),
             "content" => array (
                 "version" => $content->content,
                 "creation_time" => $content->creation_time,
