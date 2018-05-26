@@ -27,7 +27,7 @@
                             <small>Created by - </small>
                         </p>
                         <div class="ml-2 mr-auto">
-                            <a href="/users/{{author}}">{{author}}</a>
+                            <span href="/users/{{author}}">{{author}}</span>
                             {{#have_badge}}
                                 <span class="badge badge-success">{{badge}}</span>
                             {{/have_badge}}
@@ -44,4 +44,3 @@
         {{/questions}}
     </template>
 @endverbatim
-
