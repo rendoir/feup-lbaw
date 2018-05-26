@@ -28,7 +28,7 @@ CREATE TABLE users (
     password_hash TEXT,
     biography TEXT,
     reputation REAL NOT NULL DEFAULT 0.0,
-    remember_token VARCHAR(100)
+    remember_token VARCHAR(100),
     provider TEXT,
     provider_id TEXT
 );

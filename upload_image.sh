@@ -10,6 +10,7 @@ IMAGE_NAME=lbaw1763
 docker exec lbaw_php composer install # Ensure that dependencies are available
 docker exec lbaw_php php artisan clear-compiled
 docker exec lbaw_php php artisan optimize
+docker exec lbaw_php php artisan db:seed --force
 
 docker build -t $DOCKER_USERNAME/$IMAGE_NAME .
 docker push $DOCKER_USERNAME/$IMAGE_NAME
