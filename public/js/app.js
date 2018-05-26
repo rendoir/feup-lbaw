@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -838,7 +838,7 @@ module.exports = {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var messages = __webpack_require__(6);
+var messages = __webpack_require__(7);
 var commentsViewer = __webpack_require__(22);
 var commentsCreator = __webpack_require__(23);
 var commentsEditor = __webpack_require__(5);
@@ -997,6 +997,171 @@ module.exports = {
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var ajax = __webpack_require__(0);
+var errors = __webpack_require__(1);
+
+decodeHTML = function decodeHTML(html) {
+	var txt = document.createElement('textarea');
+	txt.innerHTML = html;
+	return txt.value;
+};
+
+function applyMarkdown() {
+	document.addEventListener("DOMContentLoaded", function () {
+		var markdown_content = document.querySelectorAll(".markdown");
+
+		var instance = new Object();
+		instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+
+		for (var i = 0; i < markdown_content.length; i++) {
+			markdown_content[i].style.visibility = "visible";
+			var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown_content[i].innerHTML));
+			markdown_content[i].innerHTML = bound();
+		}
+	});
+}
+
+applyMarkdown();
+
+function bookmarkEvent() {
+	var bookmark = document.querySelector("#bookmark");
+	if (bookmark == null) return;
+	var i = bookmark.querySelector("i");
+	bookmark.addEventListener("click", function () {
+		var message_id = bookmark.getAttribute('data-message-id');
+		var is_active = bookmark.className == 'active';
+		var method = is_active ? 'delete' : 'post';
+		var url = '/users/bookmarks/' + message_id;
+		var data = { question_id: message_id };
+		ajax.sendAjaxRequest(method, url, data, function () {
+			if (this.status == 200) {
+				if (is_active) {
+					bookmark.className = 'inactive';
+					i.className = i.className.replace('fas', 'far');
+				} else {
+					bookmark.className = 'active';
+					i.className = i.className.replace('far', 'fas');
+				}
+			}
+		});
+	});
+}
+
+bookmarkEvent();
+
+function addVoteEvent(container) {
+	var vote_buttons = document.querySelectorAll(container + ' .vote');
+	var scores = document.querySelectorAll(container + ' .score');
+	if (vote_buttons == null) return;
+
+	var _loop = function _loop(i) {
+		var button = vote_buttons[i];
+		button.addEventListener('click', function () {
+			var message_id = button.dataset.message_id;
+			var positive = button.dataset.positive;
+			var url = '/messages/' + message_id + '/vote';
+			var data = { positive: positive };
+			ajax.sendAjaxRequest('post', url, data, function () {
+				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
+					var alert_elem = errors.displayError("You cannot vote your messages.");
+					$(alert_elem).delay(4000).slideUp(500, function () {
+						$(this).remove();
+					});
+				} else if (this.status == 200) {
+					if (button.classList.contains('discrete')) {
+						button.classList.remove('discrete');
+						var pair_i = positive === 'true' ? i + 1 : i - 1;
+						if (!vote_buttons[pair_i].classList.contains('discrete')) vote_buttons[pair_i].classList.add('discrete');
+					} else button.classList.add('discrete');
+					var score = scores[Math.floor(i / 2)];
+					score.innerHTML = JSON.parse(this.responseText).score;
+				}
+			});
+		});
+	};
+
+	for (var i = 0; i < vote_buttons.length; i++) {
+		_loop(i);
+	}
+}
+
+addVoteEvent('#question-body');
+
+function addMarkCorrectEvent() {
+	var answers = document.querySelectorAll(".answer");
+
+	var _loop2 = function _loop2(answer) {
+		var button = answer.querySelector(".mark");
+		if (button == null) return {
+				v: void 0
+			};
+		button.addEventListener('click', function () {
+			var answer_id = button.dataset.message_id;
+			var url = '/messages/' + answer_id + '/mark_correct';
+			ajax.sendAjaxRequest('post', url, null, function () {
+				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
+					var alert_elem = errors.displayError("You cannot mark this answer as correct.");
+					$(alert_elem).delay(4000).slideUp(500, function () {
+						$(this).remove();
+					});
+				} else if (this.status == 200) {
+					if (button.classList.contains('marked')) {
+						button.classList.remove('marked');
+						answer.classList.remove('border-success');
+					} else {
+						var old_correct = document.querySelector(".answer.border-success");
+						if (old_correct != null) {
+							old_correct.classList.remove('border-success');
+							var old_correct_button = old_correct.querySelector(".mark.marked");
+							if (old_correct_button != null) old_correct_button.classList.remove('marked');
+						}
+						button.classList.add('marked');
+						answer.classList.add('border-success');
+					}
+				}
+			});
+		});
+	};
+
+	var _iteratorNormalCompletion = true;
+	var _didIteratorError = false;
+	var _iteratorError = undefined;
+
+	try {
+		for (var _iterator = answers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var answer = _step.value;
+
+			var _ret2 = _loop2(answer);
+
+			if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+		}
+	} catch (err) {
+		_didIteratorError = true;
+		_iteratorError = err;
+	} finally {
+		try {
+			if (!_iteratorNormalCompletion && _iterator.return) {
+				_iterator.return();
+			}
+		} finally {
+			if (_didIteratorError) {
+				throw _iteratorError;
+			}
+		}
+	}
+}
+
+module.exports = {
+	addVoteEvent: addVoteEvent,
+	addMarkCorrectEvent: addMarkCorrectEvent
+};
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -1123,7 +1288,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Mustache = __webpack_require__(2);
@@ -1218,19 +1383,19 @@ module.exports = {
 };
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(9);
-module.exports = __webpack_require__(30);
-
-
-/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(0);
 __webpack_require__(10);
+module.exports = __webpack_require__(29);
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(0);
+__webpack_require__(6);
 __webpack_require__(11);
 __webpack_require__(12);
 __webpack_require__(13);
@@ -1240,151 +1405,8 @@ __webpack_require__(16);
 __webpack_require__(19);
 __webpack_require__(20);
 __webpack_require__(4);
+__webpack_require__(27);
 __webpack_require__(28);
-__webpack_require__(29);
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ajax = __webpack_require__(0);
-var errors = __webpack_require__(1);
-
-decodeHTML = function decodeHTML(html) {
-	var txt = document.createElement('textarea');
-	txt.innerHTML = html;
-	return txt.value;
-};
-
-function applyMarkdown() {
-	document.addEventListener("DOMContentLoaded", function () {
-		var markdown_content = document.querySelectorAll(".markdown");
-
-		var instance = new Object();
-		instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
-
-		for (var i = 0; i < markdown_content.length; i++) {
-			markdown_content[i].style.visibility = "visible";
-			var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown_content[i].innerHTML));
-			markdown_content[i].innerHTML = bound();
-		}
-	});
-}
-
-applyMarkdown();
-
-function bookmarkEvent() {
-	var bookmark = document.querySelector("#bookmark");
-	if (bookmark == null) return;
-	var i = bookmark.querySelector("i");
-	bookmark.addEventListener("click", function () {
-		var message_id = bookmark.getAttribute('data-message-id');
-		var is_active = bookmark.className == 'active';
-		var method = is_active ? 'delete' : 'post';
-		var url = '/users/bookmarks/' + message_id;
-		var data = { question_id: message_id };
-		ajax.sendAjaxRequest(method, url, data, function () {
-			if (this.status == 200) {
-				if (is_active) {
-					bookmark.className = 'inactive';
-					i.className = i.className.replace('fas', 'far');
-				} else {
-					bookmark.className = 'active';
-					i.className = i.className.replace('far', 'fas');
-				}
-			}
-		});
-	});
-}
-
-bookmarkEvent();
-
-function addVoteEvent(container) {
-	var vote_buttons = document.querySelectorAll(container + ' .vote');
-	var scores = document.querySelectorAll(container + ' .score');
-	if (vote_buttons == null) return;
-
-	var _loop = function _loop(i) {
-		var button = vote_buttons[i];
-		button.addEventListener('click', function () {
-			var message_id = button.dataset.message_id;
-			var positive = button.dataset.positive;
-			var url = '/messages/' + message_id + '/vote';
-			var data = { positive: positive };
-			ajax.sendAjaxRequest('post', url, data, function () {
-				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
-					var alert_elem = errors.displayError("You cannot vote your messages.");
-					$(alert_elem).delay(4000).slideUp(500, function () {
-						$(this).remove();
-					});
-				} else if (this.status == 200) {
-					if (button.classList.contains('discrete')) {
-						button.classList.remove('discrete');
-						var pair_i = positive === 'true' ? i + 1 : i - 1;
-						if (!vote_buttons[pair_i].classList.contains('discrete')) vote_buttons[pair_i].classList.add('discrete');
-					} else button.classList.add('discrete');
-					var score = scores[Math.floor(i / 2)];
-					score.innerHTML = JSON.parse(this.responseText).score;
-				}
-			});
-		});
-	};
-
-	for (var i = 0; i < vote_buttons.length; i++) {
-		_loop(i);
-	}
-}
-
-addVoteEvent('#question-body');
-
-function addMarkCorrectEvent() {
-	var mark_buttons = document.querySelectorAll(".mark");
-
-	var _loop2 = function _loop2(_button) {
-		_button.addEventListener('click', function () {
-			var answer_id = _button.dataset.message_id;
-			var url = '/messages/' + answer_id + '/mark_correct';
-			ajax.sendAjaxRequest('post', url, null, function () {
-				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
-					var alert_elem = errors.displayError("You cannot mark this answer as correct.");
-					$(alert_elem).delay(4000).slideUp(500, function () {
-						$(this).remove();
-					});
-				} else if (this.status == 200) {}
-			});
-		});
-	};
-
-	var _iteratorNormalCompletion = true;
-	var _didIteratorError = false;
-	var _iteratorError = undefined;
-
-	try {
-		for (var _iterator = mark_buttons[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-			var _button = _step.value;
-
-			_loop2(_button);
-		}
-	} catch (err) {
-		_didIteratorError = true;
-		_iteratorError = err;
-	} finally {
-		try {
-			if (!_iteratorNormalCompletion && _iterator.return) {
-				_iterator.return();
-			}
-		} finally {
-			if (_didIteratorError) {
-				throw _iteratorError;
-			}
-		}
-	}
-}
-
-module.exports = {
-	addVoteEvent: addVoteEvent,
-	addMarkCorrectEvent: addMarkCorrectEvent
-};
 
 /***/ }),
 /* 11 */
@@ -7250,9 +7272,9 @@ if (editor_element != null) {
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var messages = __webpack_require__(6);
+var messages = __webpack_require__(7);
 var answersGetter = __webpack_require__(21);
-var answersAdder = __webpack_require__(27);
+var answersAdder = __webpack_require__(26);
 
 function addAnswerEventListeners() {
 
@@ -7273,10 +7295,10 @@ window.addEventListener('load', addAnswerEventListeners);
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(7);
+var utils = __webpack_require__(8);
 var comments = __webpack_require__(4);
-var question = __webpack_require__(10);
-var common = __webpack_require__(26);
+var question = __webpack_require__(6);
+var common = __webpack_require__(25);
 
 function getAnswersRequest() {
 
@@ -7509,8 +7531,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 25 */,
-/* 26 */
+/* 25 */
 /***/ (function(module, exports) {
 
 function sortAnswers() {
@@ -7538,12 +7559,12 @@ module.exports = {
 };
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(7);
+var utils = __webpack_require__(8);
 var comments = __webpack_require__(4);
 
 function addAnswerRequest(message_id) {
@@ -7592,7 +7613,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports) {
 
 function tagSearchEvent() {
@@ -7615,7 +7636,7 @@ function tagSearchEvent() {
 tagSearchEvent();
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7728,7 +7749,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
 }
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

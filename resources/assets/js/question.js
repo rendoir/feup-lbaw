@@ -89,8 +89,10 @@ function addVoteEvent(container) {
 addVoteEvent('#question-body');
 
 function addMarkCorrectEvent() {
-	let mark_buttons = document.querySelectorAll(".mark");
-	for(let button of mark_buttons) {
+	let answers = document.querySelectorAll(".answer");
+	for(let answer of answers) {
+		let button = answer.querySelector(".mark");
+		if(button == null) return;
 		button.addEventListener('click', function() {
 			let answer_id = button.dataset.message_id;
 			let url = '/messages/' + answer_id + '/mark_correct';
@@ -105,7 +107,20 @@ function addMarkCorrectEvent() {
 						$(this).remove();
 					});
 				}	else if (this.status == 200) {
-					
+					if(button.classList.contains('marked')) {
+						button.classList.remove('marked');
+						answer.classList.remove('border-success');
+					}	else {
+						let old_correct = document.querySelector(".answer.border-success");
+						if(old_correct != null) {
+							old_correct.classList.remove('border-success');
+							let old_correct_button = old_correct.querySelector(".mark.marked");
+							if(old_correct_button != null)
+								old_correct_button.classList.remove('marked');
+						}
+						button.classList.add('marked');
+						answer.classList.add('border-success');
+					}
 				}
 			});
 		});
