@@ -1699,7 +1699,7 @@ ul.suggestions > li > tag > div {
   display: block;
   position: relative;
   z-index: 1;
-  border-radius: 25px;
+  border-radius: 5px;
   overflow: hidden;
   margin: 0 auto;
 }
@@ -1800,6 +1800,12 @@ ul.suggestions > li > tag > div {
     visibility: visible;
     opacity: 1;
   }
+}
+
+#external-signins {
+  text-align: center;
+  border-radius: 5px;
+  color: white;
 }
 
 .btn-google {

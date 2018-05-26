@@ -63,7 +63,25 @@
                         Forgot Your Password?
                         </a>
                     </div>
+
                 </form>
+
+                <div class="row mt-1" id="external-signins">
+                    <div class="col mr-1">
+                        <button class="btn btn-social" href="{{ url('/auth/github') }}">
+                            <i class="fab fa-github"></i>
+                            &nbsp;GitHub
+                        </button>
+                    </div>
+                    <div class="col ml-1">
+                        <button class="btn btn-social" href="{{ url('/auth/google') }}">
+                            <i class="fab fa-google"></i>
+                            &nbsp;Google
+                        </button>
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </div>

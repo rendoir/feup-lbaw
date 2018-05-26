@@ -278,7 +278,7 @@
     display: block;
     position: relative;
     z-index: 1;
-    border-radius: 25px;
+    border-radius: 5px;
     overflow: hidden;
     margin: 0 auto;
   }
@@ -386,7 +386,23 @@
   }
 }
 
-// Register PAge
+#external-signins {
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+
+
+  .btn-google {
+
+  }
+
+  .btn-github {
+
+  }
+
+}
+
+// Register Page
 .btn-google {
   background-color: #e13e2f;
   color: white;
