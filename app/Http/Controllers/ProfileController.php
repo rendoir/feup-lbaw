@@ -105,4 +105,12 @@ class ProfileController extends Controller
 
         return json_encode($info);
     }
+
+    public function notifications()
+    {
+        $notifications = auth()->user()->unreadNotifications()->limit(5)->get();
+
+        return view('pages.notifications', compact('notifications'));
+    }
+
 }

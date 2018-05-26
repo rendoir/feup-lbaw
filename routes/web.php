@@ -103,3 +103,4 @@ Route::get('test/notifications-hello-world', function() {
 
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('/notifications', 'ProfileController@notifications');
