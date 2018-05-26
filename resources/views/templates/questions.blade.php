@@ -25,10 +25,10 @@
                     </div>
                     <div class="card-footer bg-transparent d-flex justify-content-between">
                         <p class="card-text mb-0">
-                            <small>Created by -</small>
+                            <small>Created by - </small>
                         </p>
                         <div class="ml-2 mr-auto">
-                            <span>{{author}}</span>
+                            <a href="/users/{{author}}">{{author}}</a>
                             {{#have_badge}}
                                 <span class="badge badge-success">{{badge}}</span>
                             {{/have_badge}}

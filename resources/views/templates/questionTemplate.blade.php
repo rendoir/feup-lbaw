@@ -21,7 +21,7 @@
             </div>
             <div class="card-footer bg-transparent d-flex justify-content-between">
                 <p class="card-text mb-0">
-                    <small>Created by -</small>
+                    <small>Created by - </small>
                 </p>
                 <div class="ml-2 mr-auto">
                     <span class="template-for-fill">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>

@@ -99,10 +99,10 @@ $positive = $message->getVote();
                 <div>
                     <div class="d-flex">
                         <p class="mb-0">
-                            <small>Created by - &nbsp</small>
+                            <small>Created by - </small>
+                            <a href="/users/{{$author->username}}">{{$author->username}}</a>
                         </p>
                         <div class="mr-auto">
-                            <span>{{$author->username}}</span>
                             <span class="badge badge-success">{{$author->getBadge()}}</span>
                         </div>
                     </div>
@@ -132,7 +132,7 @@ $positive = $message->getVote();
             @endif
 
             <div id="answers-container">
-              @for($i = 0 ; $i < 6; ++$i)
+              @for($i = 0 ; $i < $num_answers && $i < 10; ++$i)
                   @include('partials.answer')
               @endfor
           </div>

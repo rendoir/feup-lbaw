@@ -20,10 +20,10 @@
             </div>
             <div class="card-footer bg-transparent d-flex justify-content-between">
                 <p class="card-text mb-0">
-                    <small class="text-muted">Created by - &nbsp</small>
+                    <small class="text-muted">Created by - </small>
                 </p>
                 <div class="mr-auto">
-                    <span>{{author}}</span>
+                    <a href="/users/{{author}}">{{author}}</a>
                     <span class="badge badge-success">{{author_badge}}</span>
                 </div>
                 <div class="text-center m-auto">
@@ -77,8 +77,8 @@
         <div class="col-sm-11 ml-auto">
             <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
                 <div class="text-center">
-                    <small class="text-muted">Created by -</small>
-                    <span>{{author}}</span>
+                    <small class="text-muted">Created by - </small>
+                    <a href="/users/{{author}}">{{author}}</a>
                     <span class="badge badge-success">{{author_badge}}</span>
                 </div>
                 <div class="text-center m-auto">
