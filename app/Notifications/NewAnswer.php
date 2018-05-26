@@ -12,9 +12,10 @@ use App\User;
 
 class NewAnswer extends Notification implements ShouldQueue
 {
-    // ..
-    protected $following;
-    protected $answer;
+    use Queueable;
+
+    public $following;
+    public $answer;
 
     public function __construct(User $following, Answer $answer)
     {
@@ -47,7 +48,7 @@ class NewAnswer extends Notification implements ShouldQueue
             'read_at' => null,
             'data' => [
                 'following_id' => $this->following->id,
-                'following_name' => $this->following->name,
+                'following_name' => $this->following->username,
                 'answer_id' => $this->answer->id,
             ],
         ]);

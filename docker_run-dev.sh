@@ -14,7 +14,8 @@ if [ ! -f /.inited ]; then
     echo "Since it is the first launch, we will install project dependencies and seed the database."
 
     composer install
-    php artisan db:seed
+    php artisan db:seed --force
+    php artisan migrate:fresh --force
 
     touch /.inited
 fi

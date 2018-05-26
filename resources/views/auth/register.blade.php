@@ -50,6 +50,7 @@
                                     <a href="{{ url('/auth/google') }}" class="btn btn-google mt-2 mx-5"><i class="fab fa-google"></i> Sign up with Google</a>
                                 </div>
                           </form>
+
                         </div>
                     </div>
                 </div>
