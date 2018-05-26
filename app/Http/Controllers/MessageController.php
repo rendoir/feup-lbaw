@@ -56,7 +56,9 @@ class MessageController extends Controller
     if($answer->question->message->author != Auth::id() && Auth::user()->getBadge() != 'moderator')
       return response('You cannot mark this answer as correct', 403);
 
-    $answer->question->correct_answer = $answer->id;
+    if($answer->question->correct_answer == $answer->id)
+      $answer->question->correct_answer = null;
+    else $answer->question->correct_answer = $answer->id;
     $answer->question->save();
   }
 }

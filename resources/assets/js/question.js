@@ -64,6 +64,8 @@ function addVoteEvent(container) {
 			ajax.sendAjaxRequest('post', url, data, function() {
 				if(this.status == 401)
 					window.location = "/login";
+				else if (this.status == 404)
+					window.location = "/404";
 				else if (this.status == 403) {
 					let alert_elem = errors.displayError("You cannot vote your messages.");
 					$(alert_elem).delay(4000).slideUp(500, function () {
@@ -87,13 +89,39 @@ function addVoteEvent(container) {
 addVoteEvent('#question-body');
 
 function addMarkCorrectEvent() {
-	let mark_buttons = document.querySelectorAll(".mark");
-	for(let button of mark_buttons) {
+	let answers = document.querySelectorAll(".answer");
+	for(let answer of answers) {
+		let button = answer.querySelector(".mark");
+		if(button == null) return;
 		button.addEventListener('click', function() {
 			let answer_id = button.dataset.message_id;
 			let url = '/messages/' + answer_id + '/mark_correct';
 			ajax.sendAjaxRequest('post', url, null, function() {
-				console.log(this.status);
+				if(this.status == 401)
+					window.location = "/login";
+				else if (this.status == 404)
+					window.location = "/404";
+				else if (this.status == 403) {
+					let alert_elem = errors.displayError("You cannot mark this answer as correct.");
+					$(alert_elem).delay(4000).slideUp(500, function () {
+						$(this).remove();
+					});
+				}	else if (this.status == 200) {
+					if(button.classList.contains('marked')) {
+						button.classList.remove('marked');
+						answer.classList.remove('border-success');
+					}	else {
+						let old_correct = document.querySelector(".answer.border-success");
+						if(old_correct != null) {
+							old_correct.classList.remove('border-success');
+							let old_correct_button = old_correct.querySelector(".mark.marked");
+							if(old_correct_button != null)
+								old_correct_button.classList.remove('marked');
+						}
+						button.classList.add('marked');
+						answer.classList.add('border-success');
+					}
+				}
 			});
 		});
 	}

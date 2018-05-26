@@ -1,5 +1,5 @@
 @verbatim
-<div id="answer-{{id}}" class="card my-3 answer {{correct}}">
+<div id="answer-{{id}}" class="card my-3 answer {{# correct}}border-success{{/ correct}}">
     <div class="row mx-0">
         {{^is_authenticated}}
         <div class="col-1 d-flex flex-column align-items-start">
@@ -20,10 +20,10 @@
             </div>
             <div class="card-footer bg-transparent d-flex justify-content-between">
                 <p class="card-text mb-0">
-                    <small class="text-muted">Created by - &nbsp</small>
+                    <small class="text-muted">Created by - </small>
                 </p>
                 <div class="mr-auto">
-                    <span>{{author}}</span>
+                    <a href="/users/{{author}}">{{author}}</a>
                     <span class="badge badge-success">{{author_badge}}</span>
                 </div>
                 <div class="text-center m-auto">
@@ -55,7 +55,7 @@
             {{/is_owner}}
             {{#is_question_owner}}
             <div class="mb-sm-n-100 mt-3">
-                <button type="button" class="btn btn-outline-success ml-1 mark" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Mark answer as correct" data-message_id="{{id}}">
+                <button type="button" class="btn btn-outline-success ml-1 mark {{# correct}}marked{{/ correct}}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Mark answer as correct" data-message_id="{{id}}">
                     <i class="fas fa-check"></i>
                 </button>
             </div>
@@ -77,8 +77,8 @@
         <div class="col-sm-11 ml-auto">
             <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
                 <div class="text-center">
-                    <small class="text-muted">Created by -</small>
-                    <span>{{author}}</span>
+                    <small class="text-muted">Created by - </small>
+                    <a href="/users/{{author}}">{{author}}</a>
                     <span class="badge badge-success">{{author_badge}}</span>
                 </div>
                 <div class="text-center m-auto">

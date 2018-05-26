@@ -39,8 +39,10 @@
                         aria-selected="false">Answers</a>
                     <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-comments"
                         aria-selected="false">Comments</a>
+                    @if (Auth::id() == $user->id)
                     <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-marked" role="tab" aria-controls="nav-marked"
                         aria-selected="false">Marked Questions</a>
+                    @endif
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -65,13 +67,15 @@
                     @else <div class="px-2 py-3">No comments!</div>
                     @endif
                 </div>
-                <div class="tab-pane fade" id="nav-marked" role="tabpanel" aria-labelledby="nav-marked-tab">
-                    <!-- Marked Questions -->
-                    @if ($bookmarks->count() > 0)
-                      @each('partials.question', $bookmarks->get(), 'question')
-                    @else <div class="px-2 py-3">No bookmarks!</div>
-                    @endif
-                </div>
+                @if (Auth::id() == $user->id)
+                  <div class="tab-pane fade" id="nav-marked" role="tabpanel" aria-labelledby="nav-marked-tab">
+                      <!-- Marked Questions -->
+                      @if ($bookmarks->count() > 0)
+                        @each('partials.question', $bookmarks->get(), 'question')
+                      @else <div class="px-2 py-3">No bookmarks!</div>
+                      @endif
+                  </div>
+                @endif
             </div>
         </div>
     </section>

@@ -999,6 +999,8 @@ module.exports = {
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var ajax = __webpack_require__(0);
 var errors = __webpack_require__(1);
 
@@ -1064,7 +1066,7 @@ function addVoteEvent(container) {
 			var url = '/messages/' + message_id + '/vote';
 			var data = { positive: positive };
 			ajax.sendAjaxRequest('post', url, data, function () {
-				if (this.status == 401) window.location = "/login";else if (this.status == 403) {
+				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
 					var alert_elem = errors.displayError("You cannot vote your messages.");
 					$(alert_elem).delay(4000).slideUp(500, function () {
 						$(this).remove();
@@ -1090,14 +1092,37 @@ function addVoteEvent(container) {
 addVoteEvent('#question-body');
 
 function addMarkCorrectEvent() {
-	var mark_buttons = document.querySelectorAll(".mark");
+	var answers = document.querySelectorAll(".answer");
 
-	var _loop2 = function _loop2(_button) {
-		_button.addEventListener('click', function () {
-			var answer_id = _button.dataset.message_id;
+	var _loop2 = function _loop2(answer) {
+		var button = answer.querySelector(".mark");
+		if (button == null) return {
+				v: void 0
+			};
+		button.addEventListener('click', function () {
+			var answer_id = button.dataset.message_id;
 			var url = '/messages/' + answer_id + '/mark_correct';
 			ajax.sendAjaxRequest('post', url, null, function () {
-				console.log(this.status);
+				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
+					var alert_elem = errors.displayError("You cannot mark this answer as correct.");
+					$(alert_elem).delay(4000).slideUp(500, function () {
+						$(this).remove();
+					});
+				} else if (this.status == 200) {
+					if (button.classList.contains('marked')) {
+						button.classList.remove('marked');
+						answer.classList.remove('border-success');
+					} else {
+						var old_correct = document.querySelector(".answer.border-success");
+						if (old_correct != null) {
+							old_correct.classList.remove('border-success');
+							var old_correct_button = old_correct.querySelector(".mark.marked");
+							if (old_correct_button != null) old_correct_button.classList.remove('marked');
+						}
+						button.classList.add('marked');
+						answer.classList.add('border-success');
+					}
+				}
 			});
 		});
 	};
@@ -1107,10 +1132,12 @@ function addMarkCorrectEvent() {
 	var _iteratorError = undefined;
 
 	try {
-		for (var _iterator = mark_buttons[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-			var _button = _step.value;
+		for (var _iterator = answers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var answer = _step.value;
 
-			_loop2(_button);
+			var _ret2 = _loop2(answer);
+
+			if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
 		}
 	} catch (err) {
 		_didIteratorError = true;
