@@ -55,7 +55,7 @@
             {{/is_owner}}
             {{#is_question_owner}}
             <div class="mb-sm-n-100 mt-3">
-                <button type="button" class="btn btn-outline-success ml-1" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Mark answer as correct">
+                <button type="button" class="btn btn-outline-success ml-1 mark" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Mark answer as correct" data-message_id="{{id}}">
                     <i class="fas fa-check"></i>
                 </button>
             </div>

@@ -75,6 +75,7 @@ Route::delete('users/bookmarks/{question_id}', 'ProfileController@deleteBookmark
 
 //Messages
 Route::post('messages/{id}/vote', 'MessageController@vote');
+Route::post('messages/{id}/mark_correct', 'MessageController@markCorrect');
 
 
 // Testing Notifications' Server

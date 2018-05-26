@@ -2,7 +2,7 @@ var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./answersUtils.js');
 var comments = require('../comments/comments.js');
-var vote = require('../vote.js');
+var question = require('../question.js');
 var common = require('../utils.js');
 
 function getAnswersRequest() {
@@ -27,14 +27,10 @@ function getAnswersHandler() {
         for (let answer of responseJSON.answers)
             utils.createAnswer({ 'answer': answer, 'is_authenticated': responseJSON.is_authenticated });
 
-        //Sort answers
         common.sortAnswers();
-
-        // Add event listeners for handling comments
         comments.addEventListeners();
-
-        //Vote events
-        vote.addVoteEvent('#answers-container');
+        question.addVoteEvent('#answers-container');
+        question.addMarkCorrectEvent();
     }
     else alert.displayError("Failed to retrieve Question's answers");
 }

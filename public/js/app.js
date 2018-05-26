@@ -1222,7 +1222,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(9);
-module.exports = __webpack_require__(29);
+module.exports = __webpack_require__(30);
 
 
 /***/ }),
@@ -1240,14 +1240,15 @@ __webpack_require__(16);
 __webpack_require__(19);
 __webpack_require__(20);
 __webpack_require__(4);
-__webpack_require__(27);
 __webpack_require__(28);
+__webpack_require__(29);
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
+var errors = __webpack_require__(1);
 
 decodeHTML = function decodeHTML(html) {
 	var txt = document.createElement('textarea');
@@ -1297,6 +1298,88 @@ function bookmarkEvent() {
 }
 
 bookmarkEvent();
+
+function addVoteEvent(container) {
+	var vote_buttons = document.querySelectorAll(container + ' .vote');
+	var scores = document.querySelectorAll(container + ' .score');
+	if (vote_buttons == null) return;
+
+	var _loop = function _loop(i) {
+		var button = vote_buttons[i];
+		button.addEventListener('click', function () {
+			var message_id = button.dataset.message_id;
+			var positive = button.dataset.positive;
+			var url = '/messages/' + message_id + '/vote';
+			var data = { positive: positive };
+			ajax.sendAjaxRequest('post', url, data, function () {
+				if (this.status == 401) window.location = "/login";else if (this.status == 403) {
+					var alert_elem = errors.displayError("You cannot vote your messages.");
+					$(alert_elem).delay(4000).slideUp(500, function () {
+						$(this).remove();
+					});
+				} else if (this.status == 200) {
+					if (button.classList.contains('discrete')) {
+						button.classList.remove('discrete');
+						var pair_i = positive === 'true' ? i + 1 : i - 1;
+						if (!vote_buttons[pair_i].classList.contains('discrete')) vote_buttons[pair_i].classList.add('discrete');
+					} else button.classList.add('discrete');
+					var score = scores[Math.floor(i / 2)];
+					score.innerHTML = JSON.parse(this.responseText).score;
+				}
+			});
+		});
+	};
+
+	for (var i = 0; i < vote_buttons.length; i++) {
+		_loop(i);
+	}
+}
+
+addVoteEvent('#question-body');
+
+function addMarkCorrectEvent() {
+	var mark_buttons = document.querySelectorAll(".mark");
+
+	var _loop2 = function _loop2(_button) {
+		_button.addEventListener('click', function () {
+			var answer_id = _button.dataset.message_id;
+			var url = '/messages/' + answer_id + '/mark_correct';
+			ajax.sendAjaxRequest('post', url, null, function () {
+				console.log(this.status);
+			});
+		});
+	};
+
+	var _iteratorNormalCompletion = true;
+	var _didIteratorError = false;
+	var _iteratorError = undefined;
+
+	try {
+		for (var _iterator = mark_buttons[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var _button = _step.value;
+
+			_loop2(_button);
+		}
+	} catch (err) {
+		_didIteratorError = true;
+		_iteratorError = err;
+	} finally {
+		try {
+			if (!_iteratorNormalCompletion && _iterator.return) {
+				_iterator.return();
+			}
+		} finally {
+			if (_didIteratorError) {
+				throw _iteratorError;
+			}
+		}
+	}
+}
+
+module.exports = {
+	addVoteEvent: addVoteEvent,
+	addMarkCorrectEvent: addMarkCorrectEvent
+};
 
 /***/ }),
 /* 11 */
@@ -7164,7 +7247,7 @@ if (editor_element != null) {
 
 var messages = __webpack_require__(6);
 var answersGetter = __webpack_require__(21);
-var answersAdder = __webpack_require__(26);
+var answersAdder = __webpack_require__(27);
 
 function addAnswerEventListeners() {
 
@@ -7187,8 +7270,8 @@ var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(7);
 var comments = __webpack_require__(4);
-var vote = __webpack_require__(25);
-var common = __webpack_require__(41);
+var question = __webpack_require__(10);
+var common = __webpack_require__(26);
 
 function getAnswersRequest() {
 
@@ -7215,7 +7298,7 @@ function getAnswersHandler() {
                 var answer = _step.value;
 
                 utils.createAnswer({ 'answer': answer, 'is_authenticated': responseJSON.is_authenticated });
-            } //Sort answers
+            }
         } catch (err) {
             _didIteratorError = true;
             _iteratorError = err;
@@ -7232,12 +7315,9 @@ function getAnswersHandler() {
         }
 
         common.sortAnswers();
-
-        // Add event listeners for handling comments
         comments.addEventListeners();
-
-        //Vote events
-        vote.addVoteEvent('#answers-container');
+        question.addVoteEvent('#answers-container');
+        question.addMarkCorrectEvent();
     } else alert.displayError("Failed to retrieve Question's answers");
 }
 
@@ -7424,56 +7504,36 @@ module.exports = {
 };
 
 /***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 25 */,
+/* 26 */
+/***/ (function(module, exports) {
 
-var ajax = __webpack_require__(0);
-var errors = __webpack_require__(1);
+function sortAnswers() {
+    var container = document.querySelector('#answers-container');
+    var answers = container.querySelectorAll('.answer');
 
-function addVoteEvent(container) {
-	var vote_buttons = document.querySelectorAll(container + ' .vote');
-	var scores = document.querySelectorAll(container + ' .score');
-	if (vote_buttons == null) return;
+    var answers_array = Array.from(answers);
+    answers_array = answers_array.sort(function (a, b) {
+        var aCorrect = a.classList.contains('border-success');
+        var bCorrect = b.classList.contains('border-success');
+        if (aCorrect || bCorrect) return aCorrect < bCorrect;
+        var aValue = parseInt(a.querySelector('.score').innerHTML);
+        var bValue = parseInt(b.querySelector('.score').innerHTML);
+        return aValue < bValue;
+    });
 
-	var _loop = function _loop(i) {
-		var button = vote_buttons[i];
-		button.addEventListener('click', function () {
-			var message_id = button.dataset.message_id;
-			var positive = button.dataset.positive;
-			var url = '/messages/' + message_id + '/vote';
-			var data = { positive: positive };
-			ajax.sendAjaxRequest('post', url, data, function () {
-				if (this.status == 401) window.location = "/login";else if (this.status == 403) {
-					var alert_elem = errors.displayError("You cannot vote your messages.");
-					$(alert_elem).delay(4000).slideUp(500, function () {
-						$(this).remove();
-					});
-				} else if (this.status == 200) {
-					if (button.classList.contains('discrete')) {
-						button.classList.remove('discrete');
-						var pair_i = positive === 'true' ? i + 1 : i - 1;
-						if (!vote_buttons[pair_i].classList.contains('discrete')) vote_buttons[pair_i].classList.add('discrete');
-					} else button.classList.add('discrete');
-					var score = scores[Math.floor(i / 2)];
-					score.innerHTML = JSON.parse(this.responseText).score;
-				}
-			});
-		});
-	};
-
-	for (var i = 0; i < vote_buttons.length; i++) {
-		_loop(i);
-	}
+    var html = container.firstElementChild.outerHTML;
+    for (var i = 0; i < answers_array.length; ++i) {
+        html += answers_array[i].outerHTML;
+    }container.innerHTML = html;
 }
 
-addVoteEvent('#question-body');
-
 module.exports = {
-	addVoteEvent: addVoteEvent
+    sortAnswers: sortAnswers
 };
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7527,7 +7587,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 function tagSearchEvent() {
@@ -7550,7 +7610,7 @@ function tagSearchEvent() {
 tagSearchEvent();
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7663,49 +7723,10 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
 }
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */
-/***/ (function(module, exports) {
-
-function sortAnswers() {
-    var container = document.querySelector('#answers-container');
-    var answers = container.querySelectorAll('.answer');
-
-    var answers_array = Array.from(answers);
-    answers_array = answers_array.sort(function (a, b) {
-        var aCorrect = a.classList.contains('border-success');
-        var bCorrect = b.classList.contains('border-success');
-        if (aCorrect || bCorrect) return aCorrect < bCorrect;
-        var aValue = parseInt(a.querySelector('.score').innerHTML);
-        var bValue = parseInt(b.querySelector('.score').innerHTML);
-        return aValue < bValue;
-    });
-
-    var html = "";
-    for (var i = 0; i < answers_array.length; ++i) {
-        html += answers_array[i].outerHTML;
-    }container.innerHTML = html;
-}
-
-module.exports = {
-    sortAnswers: sortAnswers
-};
 
 /***/ })
 /******/ ]);

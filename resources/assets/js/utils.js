@@ -13,7 +13,7 @@ function sortAnswers() {
   		return aValue < bValue;
     });
 
-    let html = "";
+    let html = container.firstElementChild.outerHTML;
 		for( let i = 0; i < answers_array.length; ++i )
 	    html += answers_array[i].outerHTML;
     container.innerHTML = html;
