@@ -3,6 +3,7 @@ var alert = require('../alerts.js');
 var utils = require('./answersUtils.js');
 var comments = require('../comments/comments.js');
 var vote = require('../vote.js');
+var common = require('../utils.js');
 
 function getAnswersRequest() {
 
@@ -25,6 +26,9 @@ function getAnswersHandler() {
 
         for (let answer of responseJSON.answers)
             utils.createAnswer({ 'answer': answer, 'is_authenticated': responseJSON.is_authenticated });
+
+        //Sort answers
+        common.sortAnswers();
 
         // Add event listeners for handling comments
         comments.addEventListeners();

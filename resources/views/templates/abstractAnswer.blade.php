@@ -1,11 +1,11 @@
 @verbatim
-<div id="answer-{{id}}" class="card my-3">
+<div id="answer-{{id}}" class="card my-3 answer {{correct}}">
     <div class="row mx-0">
         {{^is_authenticated}}
         <div class="col-1 d-flex flex-column align-items-start">
             <div class="p-2 mt-3 mb-auto">
                 <i class="fas fa-trophy"></i>
-                <p class="text-center mb-0 w-100">{{score}}</p>
+                <p class="text-center mb-0 w-100 score">{{score}}</p>
             </div>
         </div>
         <div class="col-11">
@@ -79,7 +79,7 @@
                 <div class="text-center">
                     <small class="text-muted">Created by -</small>
                     <span>{{author}}</span>
-                    <span class="badge badge-success">Trusted</span>
+                    <!--<span class="badge badge-success">Trusted</span>-->
                 </div>
                 <div class="text-center m-auto">
                     <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}" aria-expanded="false" aria-controls="AnswerComments{{id}}" data-message-id="{{id}}">

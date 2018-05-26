@@ -34,6 +34,7 @@ class AnswersController extends Controller
         $content = $message->message_version;
         $author = $message->get_author();
         $positive = $message->getVote();
+        $correct = $answer->question->correct_answer == $answer->id ? 'border-success' : '';
 
         return array(
             "id" => $answer->id,
@@ -44,6 +45,7 @@ class AnswersController extends Controller
             "num_comments" => $answer->num_comments(),
             "discrete_p" => $positive === true ? '' : 'discrete',
             "discrete_n" => $positive === false ? '' : 'discrete',
+            'correct' => $correct,
             "content" => array (
                 "version" => $content->content,
                 "creation_time" => $content->creation_time,

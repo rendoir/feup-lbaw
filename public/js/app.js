@@ -7188,6 +7188,7 @@ var alert = __webpack_require__(1);
 var utils = __webpack_require__(7);
 var comments = __webpack_require__(4);
 var vote = __webpack_require__(25);
+var common = __webpack_require__(41);
 
 function getAnswersRequest() {
 
@@ -7214,7 +7215,7 @@ function getAnswersHandler() {
                 var answer = _step.value;
 
                 utils.createAnswer({ 'answer': answer, 'is_authenticated': responseJSON.is_authenticated });
-            } // Add event listeners for handling comments
+            } //Sort answers
         } catch (err) {
             _didIteratorError = true;
             _iteratorError = err;
@@ -7230,6 +7231,9 @@ function getAnswersHandler() {
             }
         }
 
+        common.sortAnswers();
+
+        // Add event listeners for handling comments
         comments.addEventListeners();
 
         //Vote events
@@ -7663,6 +7667,45 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */
+/***/ (function(module, exports) {
+
+function sortAnswers() {
+    var container = document.querySelector('#answers-container');
+    var answers = container.querySelectorAll('.answer');
+
+    var answers_array = Array.from(answers);
+    answers_array = answers_array.sort(function (a, b) {
+        var aCorrect = a.classList.contains('border-success');
+        var bCorrect = b.classList.contains('border-success');
+        if (aCorrect || bCorrect) return aCorrect < bCorrect;
+        var aValue = parseInt(a.querySelector('.score').innerHTML);
+        var bValue = parseInt(b.querySelector('.score').innerHTML);
+        return aValue < bValue;
+    });
+
+    var html = "";
+    for (var i = 0; i < answers_array.length; ++i) {
+        html += answers_array[i].outerHTML;
+    }container.innerHTML = html;
+}
+
+module.exports = {
+    sortAnswers: sortAnswers
+};
 
 /***/ })
 /******/ ]);
