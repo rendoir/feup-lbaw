@@ -100,5 +100,5 @@ Route::get('test/notifications-hello-world', function() {
   $pusher->trigger('my-channel', 'my-event', $data);
 });
 
-Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
-Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');

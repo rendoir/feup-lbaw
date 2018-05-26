@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Socialite;
 
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -43,7 +44,8 @@ class LoginController extends Controller
         $user = Socialite::driver($provider)->user();
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
-        return redirect($this->redirectTo);
+
+        return redirect('/');
     }
     public function findOrCreateUser($user, $provider)
     {
@@ -52,7 +54,7 @@ class LoginController extends Controller
             return $authUser;
         }
         return User::create([
-            'username' => $user->username,
+            'username' => ($provider == 'github' ? $user->nickname : $user->name),
             'email' => $user->email,
             'provider' => $provider,
             'provider_id' => $user->id

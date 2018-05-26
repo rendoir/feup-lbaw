@@ -25,7 +25,7 @@ CREATE TABLE users (
     id BIGSERIAL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
-    password_hash TEXT NOT NULL,
+    password_hash TEXT,
     biography TEXT,
     reputation REAL NOT NULL DEFAULT 0.0,
     remember_token VARCHAR(100)
