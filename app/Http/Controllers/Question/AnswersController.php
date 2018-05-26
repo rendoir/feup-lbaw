@@ -90,8 +90,8 @@ class AnswersController extends Controller
             $answer_id = Message::create(['author' => $user_id])->id;
 
             Commentable::create(['id' => $answer_id]);
-            $answer = Answer::create(['id' => $answer_id, 'question_id' => $request->question]);
             MessageVersion::create(['content' => $request->input('content'), 'message_id' => $answer_id]);
+            $answer = Answer::create(['id' => $answer_id, 'question_id' => $request->question]);
         });
 
         return response()->json(

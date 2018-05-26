@@ -5,7 +5,6 @@ require('./tagify.js');
 require('./tooltip.js');
 require('./profile.js');
 require('./login.js');
-require('./set_up_notifications.js');
 require('./editor.js');
 require('./answers/answers.js');
 require('./comments/comments.js');

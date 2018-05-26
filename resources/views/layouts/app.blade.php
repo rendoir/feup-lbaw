@@ -42,21 +42,8 @@
                                 <i class="fa fa-bell"></i>
                             </div>
                         </span>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
-              <button class="dropdown-item" type="button">
-                <i class="fa fa-thumbs-up"></i>
-                JohnDoe00 upvoted your Question
-              </button>
-              <div class="dropdown-divider"></div>
-              <button class="dropdown-item" type="button">
-                <i class="fa fa-comments"></i>
-                JohnDoe00 answered your Question
-              </button>
-              <div class="dropdown-divider"></div>
-              <button class="dropdown-item" type="button">
-                <i class="fa fa-check-circle"></i>
-                Moderator Tester33 selected a correct answer for your Question
-              </button>
+            <div id="notificationsMenu" class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
+            <!-- Notifications populated with JS -->
             </div>
           </div>
 

@@ -5,11 +5,15 @@ let pages_num = [0,0,0,0];
 let page_enum = {"nav-new" : 0, "nav-hot" : 1, "nav-voted" : 2, "nav-active" : 3};
 let urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions"];
 let endOfPage = false;
-let questionType = $('div.tab-pane.active.show')[0].id;
-let url = urls[page_enum[questionType]];
+// let questionType = $('div.tab-pane.active.show')[0].id;
+// let url = urls[page_enum[questionType]];
+let questionType;
 
 // GET questions on certain page
 function getQuestions(pageNum, handler) {
+    if (questionType == null)
+        return null;
+
     defaultHandler = (data) => {
         let template = $('template#questions')[0];
         let questions = null;
@@ -29,8 +33,10 @@ function getQuestions(pageNum, handler) {
         if(questions.questions.length != 0)
             endOfPage = false;
     };
+
     if(handler == null)
         handler = defaultHandler;
+
     ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
 }
 

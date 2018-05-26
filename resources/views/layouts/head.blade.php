@@ -37,9 +37,9 @@
 
     <!-- Scripts -->
     <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
+        window.Laravel = {!! json_encode([
+      'csrfToken' => csrf_token(),
+    ]) !!};
     </script>
 
     <!-- This makes the current user's id available in javascript -->
