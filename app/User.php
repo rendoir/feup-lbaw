@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password_hash', 'provider', 'provider_id'
+        'username', 'email', 'password', 'provider', 'provider_id'
     ];
 
     /**
@@ -28,13 +28,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password_hash'
+        'password'
     ];
-
-    public function getAuthPassword()
-    {
-        return $this->attributes['password_hash'];
-    }
 
     public function getBadgeAttainments() {
         return $this->hasMany('App\BadgeAttainment');
