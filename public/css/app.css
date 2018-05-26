@@ -1802,6 +1802,16 @@ ul.suggestions > li > tag > div {
   }
 }
 
+.btn-google {
+  background-color: #e13e2f;
+  color: white;
+}
+
+.btn-google:hover {
+  background-color: #e53908;
+  color: white;
+}
+
 .skeleton {
   background-color: #e9ecef;
   color: #e9ecef;

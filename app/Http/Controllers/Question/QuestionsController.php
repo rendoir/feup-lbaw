@@ -66,8 +66,9 @@ class QuestionsController extends Controller
         return redirect('\ask_question');
     }
 
-    public function showAskQuestionForm() {
-        return view('pages.ask_question');
+    public function showAskQuestionForm(Request $request) {
+        $title = $request->get('title');
+        return view('pages.ask_question', ['title' => $title]);
     }
 
     public function showQueriedQuestions(Request $request) {

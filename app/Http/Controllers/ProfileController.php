@@ -27,6 +27,12 @@ class ProfileController extends Controller
       else return redirect(route('404'));
     }
 
+    function getSettings($username) {
+      if(!Auth::check())
+        return redirect('login');
+      return view('pages.account_settings', ['user' => Auth::user()]);
+    }
+
     function getEditProfile($username) {
       if(!Auth::check())
         return redirect('login');

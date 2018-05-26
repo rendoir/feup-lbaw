@@ -118,7 +118,7 @@
                           </a>
                       </div>
                       <div class="pb-2">
-                          <a href="" role="button" class="btn btn-primary w-80">
+                          <a href="{{ route('settings', ['username' => $user->username]) }}" role="button" class="btn btn-primary w-80">
                               <span class="pr-1">
                                   <i class="fas fa-cog"></i>
                                   </i>
