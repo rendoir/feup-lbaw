@@ -1,5 +1,4 @@
 @verbatim
-
     <template id="questions">
         {{#questions}}
         <a class="card my-3 question-card {{#correct_answer}}border-success{{/correct_answer}}" href="/questions/{{question_id}}">
@@ -44,5 +43,4 @@
         </a>
         {{/questions}}
     </template>
-
 @endverbatim

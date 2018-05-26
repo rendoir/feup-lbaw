@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -838,11 +838,11 @@ module.exports = {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var messages = __webpack_require__(6);
-var commentsViewer = __webpack_require__(22);
-var commentsCreator = __webpack_require__(23);
+var messages = __webpack_require__(7);
+var commentsViewer = __webpack_require__(24);
+var commentsCreator = __webpack_require__(25);
 var commentsEditor = __webpack_require__(5);
-var commentsRemover = __webpack_require__(24);
+var commentsRemover = __webpack_require__(26);
 
 function addEventListeners() {
 
@@ -997,254 +997,6 @@ module.exports = {
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function genericClickListener(selector, method) {
-
-    var messages = document.querySelectorAll(selector);
-    if (messages == null) return;
-
-    var _loop = function _loop(message) {
-
-        var ref_message_id = message.getAttribute('data-message-id');
-        if (ref_message_id == null) return {
-                v: void 0
-            };
-
-        message.addEventListener('click', function () {
-            method(ref_message_id);
-        });
-    };
-
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-        for (var _iterator = messages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var message = _step.value;
-
-            var _ret = _loop(message);
-
-            if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
-        }
-    } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-            }
-        } finally {
-            if (_didIteratorError) {
-                throw _iteratorError;
-            }
-        }
-    }
-}
-
-function genericSingleClickListener(selector, method, message_id) {
-
-    var message = document.querySelector(selector + "[data-message-id='" + message_id + "']");
-    if (message == null) return;
-
-    message.addEventListener('click', function () {
-        method(message_id);
-    });
-}
-
-function genericEnterListener(selector, method) {
-
-    var messages = document.querySelectorAll(selector);
-    if (messages == null) return;
-
-    var _loop2 = function _loop2(message) {
-
-        var ref_message_id = message.getAttribute('data-message-id');
-        if (ref_message_id == null) return {
-                v: void 0
-            };
-
-        message.addEventListener('keyup', function (event) {
-            if (event.keyCode == 13) {
-                method(ref_message_id);
-            }
-        });
-    };
-
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
-
-    try {
-        for (var _iterator2 = messages[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var message = _step2.value;
-
-            var _ret2 = _loop2(message);
-
-            if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
-        }
-    } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                _iterator2.return();
-            }
-        } finally {
-            if (_didIteratorError2) {
-                throw _iteratorError2;
-            }
-        }
-    }
-}
-
-function genericSingleEnterListener(selector, method, message_id) {
-
-    var message = document.querySelector(selector + "[data-message-id='" + message_id + "']");
-    if (message == null) return;
-
-    message.addEventListener('keyup', function (event) {
-        if (event.keyCode == 13) {
-            method(message_id);
-        }
-    });
-}
-
-module.exports = {
-    genericClickListener: genericClickListener,
-    genericEnterListener: genericEnterListener,
-    genericSingleClickListener: genericSingleClickListener,
-    genericSingleEnterListener: genericSingleEnterListener
-};
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mustache = __webpack_require__(2);
-
-function createAnswer(answer_info) {
-
-    var template = document.querySelector("template.answer").innerHTML;
-    var placeholder = document.createElement("span");
-
-    answer_info.hasComments = answer_info.answer.num_comments > 0 ? true : false;
-    addMarkdownFunction(answer_info);
-
-    placeholder.innerHTML = Mustache.render(template, answer_info);
-
-    var answers = document.getElementById("answers-container");
-    answers.appendChild(placeholder.firstElementChild);
-}
-
-function cleanAnswers() {
-    var answers = document.getElementById("answers-container");
-
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-        for (var _iterator = answers.childNodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var child = _step.value;
-
-            if (child.id == "answer-skeleton") answers.removeChild(child);
-        }
-    } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-            }
-        } finally {
-            if (_didIteratorError) {
-                throw _iteratorError;
-            }
-        }
-    }
-}
-
-function addMarkdownFunction(answer_info) {
-
-    answer_info.markdown = function () {
-        return function (text, render) {
-
-            var instance = new Object();
-            instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
-
-            var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(render(text)));
-            return bound();
-        };
-    };
-}
-
-function getAnswersURL() {
-    return window.location.pathname + '/answers';
-}
-
-function jumpToElement(elementID) {
-    var element = document.getElementById(elementID);
-
-    //Getting Y and Height of target element
-    var top = element.offsetTop;
-    var height = element.offsetHeight;
-
-    //Go there with a smooth transition
-    var pos = window.screenY;
-    var finalPos = top + height;
-
-    var int = setInterval(function () {
-        window.scrollTo(0, pos);
-
-        inc = (finalPos - pos) / 15;
-        pos += inc > 5 ? inc : 5;
-
-        if (pos >= finalPos) clearInterval(int);
-    }, 20);
-}
-
-module.exports = {
-    createAnswer: createAnswer,
-    cleanAnswers: cleanAnswers,
-    getAnswersURL: getAnswersURL,
-    jumpToElement: jumpToElement
-};
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(9);
-module.exports = __webpack_require__(30);
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(0);
-__webpack_require__(10);
-__webpack_require__(11);
-__webpack_require__(12);
-__webpack_require__(13);
-__webpack_require__(14);
-__webpack_require__(15);
-__webpack_require__(16);
-__webpack_require__(19);
-__webpack_require__(20);
-__webpack_require__(4);
-__webpack_require__(28);
-__webpack_require__(29);
-
-/***/ }),
-/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -1380,6 +1132,267 @@ module.exports = {
 	addVoteEvent: addVoteEvent,
 	addMarkCorrectEvent: addMarkCorrectEvent
 };
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function genericClickListener(selector, method) {
+
+    var messages = document.querySelectorAll(selector);
+    if (messages == null) return;
+
+    var _loop = function _loop(message) {
+
+        var ref_message_id = message.getAttribute('data-message-id');
+        if (ref_message_id == null) return {
+                v: void 0
+            };
+
+        message.addEventListener('click', function () {
+            method(ref_message_id);
+        });
+    };
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = messages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var message = _step.value;
+
+            var _ret = _loop(message);
+
+            if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+}
+
+function genericSingleClickListener(selector, method, message_id) {
+
+    var message = document.querySelector(selector + "[data-message-id='" + message_id + "']");
+    if (message == null) return;
+
+    message.addEventListener('click', function () {
+        method(message_id);
+    });
+}
+
+function genericEnterListener(selector, method) {
+
+    var messages = document.querySelectorAll(selector);
+    if (messages == null) return;
+
+    var _loop2 = function _loop2(message) {
+
+        var ref_message_id = message.getAttribute('data-message-id');
+        if (ref_message_id == null) return {
+                v: void 0
+            };
+
+        message.addEventListener('keyup', function (event) {
+            if (event.keyCode == 13) {
+                method(ref_message_id);
+            }
+        });
+    };
+
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+        for (var _iterator2 = messages[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var message = _step2.value;
+
+            var _ret2 = _loop2(message);
+
+            if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+        }
+    } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+            }
+        } finally {
+            if (_didIteratorError2) {
+                throw _iteratorError2;
+            }
+        }
+    }
+}
+
+function genericSingleEnterListener(selector, method, message_id) {
+
+    var message = document.querySelector(selector + "[data-message-id='" + message_id + "']");
+    if (message == null) return;
+
+    message.addEventListener('keyup', function (event) {
+        if (event.keyCode == 13) {
+            method(message_id);
+        }
+    });
+}
+
+module.exports = {
+    genericClickListener: genericClickListener,
+    genericEnterListener: genericEnterListener,
+    genericSingleClickListener: genericSingleClickListener,
+    genericSingleEnterListener: genericSingleEnterListener
+};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mustache = __webpack_require__(2);
+var answerEditor = __webpack_require__(22);
+var answerRemover = __webpack_require__(23);
+
+function createAnswer(answer_info) {
+
+    var template = document.querySelector("template.answer").innerHTML;
+    var placeholder = document.createElement("span");
+
+    answer_info.hasComments = answer_info.answer.num_comments > 0 ? true : false;
+    addMarkdownFunction(answer_info);
+
+    placeholder.innerHTML = Mustache.render(template, answer_info);
+    addMissingEventListeners();
+
+    var answers = document.getElementById("answers-container");
+    answers.appendChild(placeholder.firstElementChild);
+}
+
+// Function to add the event listeners missing to the freshly added answers: edition and deletion
+function addMissingEventListeners() {
+    $('#editAnswerModal').on('show.bs.modal', function (e) {
+        answerEditor.editAnswer($(e.relatedTarget)[0]);
+    });
+    $('#deleteAnswerModal').on('show.bs.modal', function (e) {
+        answerRemover.removeAnswer($(e.relatedTarget)[0]);
+    });
+}
+
+function cleanAnswers() {
+    var answers = document.getElementById("answers-container");
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = answers.childNodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var child = _step.value;
+
+            if (child.id == "answer-skeleton") answers.removeChild(child);
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+}
+
+function addMarkdownFunction(answer_info) {
+
+    answer_info.markdown = function () {
+        return function (text, render) {
+
+            var instance = new Object();
+            instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+
+            var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(render(text)));
+            return bound();
+        };
+    };
+}
+
+function getAnswersURL() {
+    return window.location.pathname + '/answers';
+}
+
+function jumpToElement(elementID) {
+    var element = document.getElementById(elementID);
+
+    //Getting Y and Height of target element
+    var top = element.offsetTop;
+    var height = element.offsetHeight;
+
+    //Go there with a smooth transition
+    var pos = window.screenY;
+    var finalPos = top + height;
+
+    var int = setInterval(function () {
+        window.scrollTo(0, pos);
+
+        inc = (finalPos - pos) / 15;
+        pos += inc > 5 ? inc : 5;
+
+        if (pos >= finalPos) clearInterval(int);
+    }, 20);
+}
+
+module.exports = {
+    createAnswer: createAnswer,
+    cleanAnswers: cleanAnswers,
+    getAnswersURL: getAnswersURL,
+    jumpToElement: jumpToElement
+};
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(10);
+module.exports = __webpack_require__(31);
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(0);
+__webpack_require__(6);
+__webpack_require__(11);
+__webpack_require__(12);
+__webpack_require__(13);
+__webpack_require__(14);
+__webpack_require__(15);
+__webpack_require__(16);
+__webpack_require__(19);
+__webpack_require__(20);
+__webpack_require__(4);
+__webpack_require__(29);
+__webpack_require__(30);
 
 /***/ }),
 /* 11 */
@@ -7245,9 +7258,9 @@ if (editor_element != null) {
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var messages = __webpack_require__(6);
+var messages = __webpack_require__(7);
 var answersGetter = __webpack_require__(21);
-var answersAdder = __webpack_require__(27);
+var answersAdder = __webpack_require__(28);
 
 function addAnswerEventListeners() {
 
@@ -7268,10 +7281,10 @@ window.addEventListener('load', addAnswerEventListeners);
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(7);
+var utils = __webpack_require__(8);
 var comments = __webpack_require__(4);
-var question = __webpack_require__(10);
-var common = __webpack_require__(26);
+var question = __webpack_require__(6);
+var common = __webpack_require__(27);
 
 function getAnswersRequest() {
 
@@ -7327,6 +7340,54 @@ module.exports = {
 
 /***/ }),
 /* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var alert = __webpack_require__(1);
+
+function editAnswer(editTrigger) {
+
+    var editBtn = document.getElementById('edit-answer');
+    if (editBtn == null) return;
+
+    var edit_id = editTrigger.getAttribute("data-message-id");
+    if (edit_id == null) return;
+
+    editBtn.addEventListener('click', function () {
+        //editAnswerRequest(comment_id, answer_id, comment.parentNode);
+    });
+}
+
+module.exports = {
+    editAnswer: editAnswer
+};
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var alert = __webpack_require__(1);
+
+function removeAnswer(removeTrigger) {
+
+    var removeBtn = document.getElementById('delete-answer');
+    if (removeBtn == null) return;
+
+    var remove_id = removeTrigger.getAttribute("data-message-id");
+    if (remove_id == null) return;
+
+    removeBtn.addEventListener('click', function () {
+        //removeAnswerRequest(comment_id, answer_id, comment.parentNode);
+    });
+}
+
+module.exports = {
+    removeAnswer: removeAnswer
+};
+
+/***/ }),
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7387,7 +7448,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7445,7 +7506,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7454,7 +7515,7 @@ var utils = __webpack_require__(3);
 
 function removeComment(commentTrashBtn) {
 
-    var deleteBtn = document.querySelector('#delete-comment');
+    var deleteBtn = document.getElementById('delete-comment');
     if (deleteBtn == null) return;
 
     var comment_id = commentTrashBtn.getAttribute("data-message-id");
@@ -7504,8 +7565,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 25 */,
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 function sortAnswers() {
@@ -7533,12 +7593,12 @@ module.exports = {
 };
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(7);
+var utils = __webpack_require__(8);
 var comments = __webpack_require__(4);
 
 function addAnswerRequest(message_id) {
@@ -7587,7 +7647,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 function tagSearchEvent() {
@@ -7610,7 +7670,7 @@ function tagSearchEvent() {
 tagSearchEvent();
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -7723,7 +7783,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
 }
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
