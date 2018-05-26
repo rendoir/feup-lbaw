@@ -7522,7 +7522,7 @@ function sortAnswers() {
         return aValue < bValue;
     });
 
-    var html = container.firstElementChild.outerHTML;
+    var html = "";
     for (var i = 0; i < answers_array.length; ++i) {
         html += answers_array[i].outerHTML;
     }container.innerHTML = html;

@@ -117,7 +117,7 @@ $positive = $message->getVote();
 
 <section class="container">
     <div class="row">
-        <div id="answers-container" class="col-md-9">
+        <div class="col-md-9">
             @if (Auth::check())
             <!-- Text editor -->
             <div class="card mt-3">
@@ -131,9 +131,11 @@ $positive = $message->getVote();
             </div>
             @endif
 
-            @for($i = 0 ; $i < 6; ++$i)
-                @include('partials.answer')
-            @endfor
+            <div id="answers-container">
+              @for($i = 0 ; $i < 6; ++$i)
+                  @include('partials.answer')
+              @endfor
+          </div>
         </div>
         <!-- related questions -->
         <aside class="col-md-3 mt-3">
