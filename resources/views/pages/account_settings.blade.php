@@ -69,26 +69,6 @@
                       </div>
                   </div>
 
-                  <!-- Associated Accounts -->
-                  <div class="col-4 pt-3 pb-4">
-                      <h4>
-                          Associated Accounts
-                      </h4>
-                  </div>
-                  <div class="w-100"></div>
-                  <div class="col-8 pb-4">
-                    <a class="btn btn-block btn-social btn-github">
-                      <span class="fab fa-github"></span> Link account to Github
-                    </a>
-                  </div>
-
-                  <div class="w-100"></div>
-                  <div class="col-8 pb-4">
-                    <a class="btn btn-block btn-social btn-google">
-                      <span class="fab fa-google"></span> Link account to Google
-                    </a>
-                  </div>
-
               </div>
           </section>
 

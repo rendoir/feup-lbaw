@@ -79,30 +79,7 @@ Route::delete('users/bookmarks/{question_id}', 'ProfileController@deleteBookmark
 Route::post('messages/{id}/vote', 'MessageController@vote');
 Route::post('messages/{id}/mark_correct', 'MessageController@markCorrect');
 
-
-// Testing Notifications' Server
-Route::get('test/notifications-view', function() {
-    return view('notifications_test');
-});
-
-Route::get('test/notifications-hello-world', function() {
-  require __DIR__ . '/../vendor/autoload.php';
-
-  $options = array(
-    'cluster' => 'eu',
-    'encrypted' => true
-  );
-  $pusher = new Pusher\Pusher(
-    '***REMOVED***',
-    '***REMOVED***',
-    '***REMOVED***',
-    $options
-  );
-
-  $data['message'] = 'hello world';
-  $pusher->trigger('my-channel', 'my-event', $data);
-});
-
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+
 Route::get('/notifications', 'ProfileController@notifications');

@@ -129,5 +129,5 @@ function addMarkCorrectEvent() {
 
 module.exports = {
     addVoteEvent,
-		addMarkCorrectEvent
+	addMarkCorrectEvent
 };

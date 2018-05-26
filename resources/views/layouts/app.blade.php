@@ -55,7 +55,7 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-options">
               <a href="{{ route('profile') }}" class="dropdown-item" role="button">Profile</a>
               <div class="dropdown-divider"></div>
-              <a href="account.html" class="dropdown-item" role="button">Settings</a>
+              <a href="{{ route('settings', ['username' => Auth::user()->username]) }}" class="dropdown-item" role="button">Settings</a>
               <div class="dropdown-divider"></div>
               <form method="POST" action="{{ route('logout') }}">
                 {{ csrf_field() }}
