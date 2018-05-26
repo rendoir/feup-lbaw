@@ -34,7 +34,7 @@ class AnswersController extends Controller
         $content = $message->message_version;
         $author = $message->get_author();
         $positive = $message->getVote();
-        $correct = $answer->question->correct_answer == $answer->id ? 'border-success' : '';
+        $correct = $answer->question->correct_answer == $answer->id;
         $logged_user_badge = Auth::check() ? Auth::user()->getBadge() : '';
 
         return array(

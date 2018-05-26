@@ -1312,7 +1312,7 @@ function addVoteEvent(container) {
 			var url = '/messages/' + message_id + '/vote';
 			var data = { positive: positive };
 			ajax.sendAjaxRequest('post', url, data, function () {
-				if (this.status == 401) window.location = "/login";else if (this.status == 403) {
+				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
 					var alert_elem = errors.displayError("You cannot vote your messages.");
 					$(alert_elem).delay(4000).slideUp(500, function () {
 						$(this).remove();
@@ -1345,7 +1345,12 @@ function addMarkCorrectEvent() {
 			var answer_id = _button.dataset.message_id;
 			var url = '/messages/' + answer_id + '/mark_correct';
 			ajax.sendAjaxRequest('post', url, null, function () {
-				console.log(this.status);
+				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
+					var alert_elem = errors.displayError("You cannot mark this answer as correct.");
+					$(alert_elem).delay(4000).slideUp(500, function () {
+						$(this).remove();
+					});
+				} else if (this.status == 200) {}
 			});
 		});
 	};

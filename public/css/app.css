@@ -622,6 +622,12 @@ nav {
   border-radius: 0.2em;
 }
 
+.marked,
+.marked i {
+  color: var(--azure) !important;
+  background-color: var(--medium-aquamarine) !important;
+}
+
 /*************************************************/
 
 /************** Responsive Design ****************/

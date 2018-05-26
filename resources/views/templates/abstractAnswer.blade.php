@@ -1,5 +1,5 @@
 @verbatim
-<div id="answer-{{id}}" class="card my-3 answer {{correct}}">
+<div id="answer-{{id}}" class="card my-3 answer {{# correct}}border-success{{/ correct}}">
     <div class="row mx-0">
         {{^is_authenticated}}
         <div class="col-1 d-flex flex-column align-items-start">
@@ -55,7 +55,7 @@
             {{/is_owner}}
             {{#is_question_owner}}
             <div class="mb-sm-n-100 mt-3">
-                <button type="button" class="btn btn-outline-success ml-1 mark" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Mark answer as correct" data-message_id="{{id}}">
+                <button type="button" class="btn btn-outline-success ml-1 mark {{# correct}}marked{{/ correct}}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Mark answer as correct" data-message_id="{{id}}">
                     <i class="fas fa-check"></i>
                 </button>
             </div>
