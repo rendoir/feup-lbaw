@@ -47,8 +47,8 @@
                                 </button>
                           </form>
 
-                            <a href="{{ url('/auth/github') }}" class="btn btn-github"><i class="fa fa-github"></i> Github</a>
-                            <a href="{{ url('/auth/google') }}" class="btn btn-google"><i class="fa fa-google"></i> Google</a>
+                            <a href="{{ url('/auth/github') }}" class="btn btn-github"><i class="fab fa-github"></i> Github</a>
+                            <a href="{{ url('/auth/google') }}" class="btn btn-google"><i class="fab fa-google"></i> Google</a>
 
                         </div>
                     </div>

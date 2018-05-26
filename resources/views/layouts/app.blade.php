@@ -93,14 +93,18 @@
               </div>
 
               <button id="login" type="submit" class="btn btn-primary btn-signin">Sign in</button>
-              <a class="btn btn-social btn-github btn-signin mt-0" href="#">
+
+
+              <!-- Sign-In with External APIs: GitHub and Google -->
+              <a href="{{ url('/auth/github') }}" class="btn btn-github btn-social btn-signin mt-0">
                 <i class="fab fa-github"></i>
                 <div>Sign in with Github</div>
               </a>
+              <a href="{{ url('/auth/google') }}" class="btn btn-google btn-social btn-signin mt-0">
+                <i class="fab fa-google"></i>
+                <div>Sign in with Google</div>
+              </a>
 
-              <div class="btn-signin">
-                <div class="g-signin2" data-onsuccess="onSignIn" data-width="202" data-height="34" data-longtitle="true">button</div>
-              </div>
             </form>
 
             <div class="dropdown-divider"></div>
