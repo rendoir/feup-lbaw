@@ -17,6 +17,7 @@ DROP TABLE IF EXISTS badges CASCADE;
 DROP TABLE IF EXISTS badge_attainments CASCADE;
 DROP TABLE IF EXISTS reports CASCADE;
 DROP TABLE IF EXISTS bookmarks CASCADE;
+DROP TABLE IF EXISTS password_resets CASCADE;
 
 CREATE TABLE users (
     id BIGSERIAL PRIMARY KEY,
@@ -115,6 +116,13 @@ CREATE TABLE bookmarks (
     question_id BIGINT REFERENCES questions(id) ON DELETE CASCADE,
     user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
     PRIMARY KEY (question_id, user_id)
+);
+
+CREATE TABLE password_resets (
+    id BIGSERIAL PRIMARY KEY,
+    email TEXT,
+    token TEXT,
+    created_at TIMESTAMP
 );
 
 ALTER TABLE questions
