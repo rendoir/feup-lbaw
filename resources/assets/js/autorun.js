@@ -5,9 +5,8 @@ let pages_num = [0,0,0,0];
 let page_enum = {"nav-new" : 0, "nav-hot" : 1, "nav-voted" : 2, "nav-active" : 3};
 let urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions"];
 let endOfPage = false;
-// let questionType = $('div.tab-pane.active.show')[0].id;
-// let url = urls[page_enum[questionType]];
-let questionType;
+let questionType = $('div.tab-pane.active.show')[0].id;
+let url = urls[page_enum[questionType]];
 
 // GET questions on certain page
 function getQuestions(pageNum, handler) {
@@ -45,6 +44,8 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         ajax.sendAjaxRequest('GET', "/min-profile", null,(data) => {
         let template = $('template#minProfile')[0];
         let info = null;
+        if (template == null)
+            return;
 
         try {
             info = JSON.parse(data.target.responseText)
