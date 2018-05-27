@@ -127,7 +127,6 @@ ALTER TABLE messages
 DROP INDEX IF EXISTS comment_commentable CASCADE;
 DROP INDEX IF EXISTS message_version_message CASCADE;
 DROP INDEX IF EXISTS message_author CASCADE;
-DROP INDEX IF EXISTS notification_user CASCADE;
 DROP INDEX IF EXISTS category_name CASCADE;
 DROP INDEX IF EXISTS question_title CASCADE;
 DROP INDEX IF EXISTS unique_lowercase_username CASCADE;
@@ -163,8 +162,6 @@ DROP FUNCTION IF EXISTS award_moderator_trusted();
 DROP FUNCTION IF EXISTS check_own_vote();
 DROP FUNCTION IF EXISTS insert_report();
 DROP FUNCTION IF EXISTS delete_report();
-DROP FUNCTION IF EXISTS gen_answer_notification();
-DROP FUNCTION IF EXISTS gen_badge_notification();
 DROP FUNCTION IF EXISTS update_message_version();
 DROP FUNCTION IF EXISTS update_question_title_search();
 
@@ -185,8 +182,6 @@ DROP TRIGGER IF EXISTS award_moderator_trusted ON badge_attainments;
 DROP TRIGGER IF EXISTS check_own_vote ON votes;
 DROP TRIGGER IF EXISTS insert_report ON reports;
 DROP TRIGGER IF EXISTS delete_report ON reports;
-DROP TRIGGER IF EXISTS gen_answer_notification ON answers;
-DROP TRIGGER IF EXISTS gen_badge_notification ON badge_attainments;
 DROP TRIGGER IF EXISTS update_message_version ON message_versions;
 DROP TRIGGER IF EXISTS update_question_title_search_index ON questions;
 

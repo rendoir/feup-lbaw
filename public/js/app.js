@@ -2375,6 +2375,13 @@ function editAnswer(editTrigger) {
     var edit_id = editTrigger.getAttribute("data-message-id");
     if (edit_id == null) return;
 
+    var contentParent = document.querySelector(".answer-content[data-message-id='" + edit_id + "']");
+    if (contentParent == null) return;
+
+    console.log(contentParent);
+
+    // Usar os filhos para progredir
+
     editBtn.addEventListener('click', function () {
         //editAnswerRequest(comment_id, answer_id, comment.parentNode);
     });
