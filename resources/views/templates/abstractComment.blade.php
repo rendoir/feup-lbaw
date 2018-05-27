@@ -9,7 +9,9 @@
             <p class="px-2">
                 {{content.version}}
             </p>
-            <p class="discrete text-right">{{author}}</p>
+            <div class="text-right">
+                <a class="discrete" href="/users/{{author}}">{{author}}</a>
+            </div>
         </div>
     </div>
 </div>
