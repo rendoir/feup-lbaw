@@ -73,6 +73,7 @@ Route::post('users/edit/image/{type}', 'ProfileController@imageUpload');
 Route::post('users/edit/biography', 'ProfileController@editBiography');
 Route::post('users/bookmarks/{question_id}', 'ProfileController@addBookmark');
 Route::delete('users/bookmarks/{question_id}', 'ProfileController@deleteBookmark');
+Route::post('users/settings/change_password', 'ProfileController@changePassword');
 
 
 //Messages
