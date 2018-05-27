@@ -42,15 +42,20 @@
                                     <input name="accept" type="checkbox" class="form-check-input" id="check" required>
                                     <label class="form-check-label" for="check">I accept the terms and conditions.</label>
                                 </div>
-                                <div class="d-flex flex-column">
+                                <div class="d-flex flex-column mt-2">
                                     <button type="submit" class="btn btn-primary mt-2 mx-5">
                                         Sign up for SegFault
                                     </button>
-                                    <a href="{{ url('/auth/github') }}" class="btn btn-github mt-2 mx-5"><i class="fab fa-github"></i> Sign up with Github</a>
-                                    <a href="{{ url('/auth/google') }}" class="btn btn-google mt-2 mx-5"><i class="fab fa-google"></i> Sign up with Google</a>
+                                    <button class="btn btn-social btn-github mt-2 mx-5" href="{{ url('/auth/google') }}">
+                                        <i class="fab fa-github"></i>
+                                        <div>Sign up with Github</div>
+                                    </button>
+                                    <button class="btn btn-social btn-google mt-2 mx-5" href="{{ url('/auth/google') }}">
+                                        <i class="fab fa-google"></i>
+                                        <div>Sign up with Google</div>
+                                    </button>
                                 </div>
-                          </form>
-
+                            </form>
                         </div>
                     </div>
                 </div>

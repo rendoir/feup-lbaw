@@ -79,7 +79,6 @@
                             &nbsp;Google
                         </button>
                     </div>
-
                 </div>
 
             </div>
