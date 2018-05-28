@@ -13,7 +13,7 @@ $positive = $message->getVote();
 ?>
 
 @section('question-title')
-    <section id="question" class="sweet-grey">
+    <section id="question" class="sweet-grey" data-message-id="{{$question->id}}">
         <div class="container py-3">
             <header class="border-bottom sticky-top">
                 <h3>{{$question->title}}</h3>

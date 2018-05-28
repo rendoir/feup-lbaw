@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -836,13 +836,30 @@ module.exports = {
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports) {
+
+function getAnswersURL() {
+    return window.location.pathname + '/answers';
+}
+
+function getAnswerIdURL(id) {
+    return getAnswersURL + '/' + id;
+}
+
+module.exports = {
+    getAnswersURL: getAnswersURL,
+    getAnswerIdURL: getAnswerIdURL
+};
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var messages = __webpack_require__(7);
-var commentsViewer = __webpack_require__(21);
-var commentsCreator = __webpack_require__(22);
-var commentsEditor = __webpack_require__(5);
-var commentsRemover = __webpack_require__(23);
+var messages = __webpack_require__(8);
+var commentsViewer = __webpack_require__(22);
+var commentsCreator = __webpack_require__(23);
+var commentsEditor = __webpack_require__(6);
+var commentsRemover = __webpack_require__(24);
 
 function addEventListeners() {
 
@@ -898,7 +915,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -996,7 +1013,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -1161,7 +1178,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -1288,12 +1305,12 @@ module.exports = {
 };
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Mustache = __webpack_require__(2);
-var answerEditor = __webpack_require__(19);
-var answerRemover = __webpack_require__(20);
+var answerEditor = __webpack_require__(20);
+var answerRemover = __webpack_require__(21);
 
 function createAnswer(answer_info) {
 
@@ -1363,10 +1380,6 @@ function addMarkdownFunction(answer_info) {
     };
 }
 
-function getAnswersURL() {
-    return window.location.pathname + '/answers';
-}
-
 function jumpToElement(elementID) {
     var element = document.getElementById(elementID);
 
@@ -1391,39 +1404,38 @@ function jumpToElement(elementID) {
 module.exports = {
     createAnswer: createAnswer,
     cleanAnswers: cleanAnswers,
-    getAnswersURL: getAnswersURL,
     jumpToElement: jumpToElement
 };
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(10);
-module.exports = __webpack_require__(37);
-
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(0);
-__webpack_require__(6);
 __webpack_require__(11);
+module.exports = __webpack_require__(38);
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(0);
+__webpack_require__(7);
 __webpack_require__(12);
 __webpack_require__(13);
 __webpack_require__(14);
 __webpack_require__(15);
 __webpack_require__(16);
 __webpack_require__(17);
-__webpack_require__(4);
-__webpack_require__(26);
+__webpack_require__(18);
+__webpack_require__(5);
 __webpack_require__(27);
 __webpack_require__(28);
 __webpack_require__(29);
+__webpack_require__(30);
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 $(window).scroll(function () {
@@ -1437,7 +1449,7 @@ $(window).scroll(function () {
 });
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2063,7 +2075,7 @@ function addTags() {
 addTags();
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 $(function () {
@@ -2071,7 +2083,7 @@ $(function () {
 });
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2149,7 +2161,7 @@ function editBiographyHandler(e) {
 editBiography();
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 addEventListeners();
@@ -2200,7 +2212,7 @@ function addEventListeners() {
 }
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 function editor(editor_element) {
@@ -2278,12 +2290,12 @@ createEditor("editor");
 createEditor("edit-editor");
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var messages = __webpack_require__(7);
-var answersGetter = __webpack_require__(18);
-var answersAdder = __webpack_require__(25);
+var messages = __webpack_require__(8);
+var answersGetter = __webpack_require__(19);
+var answersAdder = __webpack_require__(26);
 
 function addAnswerEventListeners() {
 
@@ -2299,22 +2311,23 @@ function addAnswerEventListener() {
 window.addEventListener('load', addAnswerEventListeners);
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(8);
-var comments = __webpack_require__(4);
-var question = __webpack_require__(6);
-var common = __webpack_require__(24);
+var utils = __webpack_require__(9);
+var url = __webpack_require__(4);
+var comments = __webpack_require__(5);
+var question = __webpack_require__(7);
+var common = __webpack_require__(25);
 
 function getAnswersRequest() {
 
     // If not in a question's page
     if (document.getElementById("question") == null) return;
 
-    ajax.sendAjaxRequest('get', utils.getAnswersURL(), {}, getAnswersHandler);
+    ajax.sendAjaxRequest('get', url.getAnswersURL(), {}, getAnswersHandler);
 }
 
 // Handler for the question's answers request
@@ -2362,7 +2375,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2393,11 +2406,12 @@ module.exports = {
 };
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
+var url = __webpack_require__(4);
 
 function removeAnswer(removeTrigger) {
 
@@ -2408,8 +2422,38 @@ function removeAnswer(removeTrigger) {
     if (remove_id == null) return;
 
     removeBtn.addEventListener('click', function () {
-        //removeAnswerRequest(comment_id, answer_id, comment.parentNode);
+        removeAnswerRequest(remove_id);
     });
+}
+
+function removeAnswerRequest(answer_id) {
+
+    var question_id = document.getElementById("question").getAttribute("data-message-id");
+    if (question_id == null) return;
+
+    var requestBody = {
+        "asnwer": answer_id,
+        "question": question_id
+    };
+
+    ajax.sendAjaxRequest('delete', url.getAnswerIdURL(answer_id), requestBody, function (data) {
+        removeAnswerHandler(data.target, answer_id);
+    });
+}
+
+function removeAnswerHandler(response, answer_id) {
+    if (response.status == 403) {
+        alert.displayError("You have no permission to delete this answer");
+        return;
+    } else if (response.status != 200) {
+        alert.displayError("Failed to delete the answer");
+        return;
+    }
+
+    var answer = document.getElementById("answer-" + answer_id);
+    if (answer == null) return;
+
+    answer.parentNode.removeChild(answer);
 }
 
 module.exports = {
@@ -2417,13 +2461,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(3);
-var editor = __webpack_require__(5);
+var editor = __webpack_require__(6);
 
 function viewCommentsRequest(message_id) {
 
@@ -2478,13 +2522,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(3);
-var editor = __webpack_require__(5);
+var editor = __webpack_require__(6);
 
 function addCommentRequest(message_id) {
 
@@ -2536,7 +2580,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2595,7 +2639,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 function sortAnswers() {
@@ -2623,13 +2667,14 @@ module.exports = {
 };
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(8);
-var comments = __webpack_require__(4);
+var utils = __webpack_require__(9);
+var url = __webpack_require__(4);
+var comments = __webpack_require__(5);
 
 function addAnswerRequest(message_id) {
 
@@ -2641,7 +2686,7 @@ function addAnswerRequest(message_id) {
         "question": message_id
     };
 
-    ajax.sendAjaxRequest('post', utils.getAnswersURL(), requestBody, function (data) {
+    ajax.sendAjaxRequest('post', url.getAnswersURL(), requestBody, function (data) {
         addAnswerHandler(data.target);
     });
 }
@@ -2677,7 +2722,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 function tagSearchEvent() {
@@ -2700,7 +2745,7 @@ function tagSearchEvent() {
 tagSearchEvent();
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2742,7 +2787,7 @@ function changePasswordEvent() {
 changePasswordEvent();
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2955,18 +3000,18 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
 }
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
-window._ = __webpack_require__(30);
-window.$ = window.jQuery = __webpack_require__(33);
-__webpack_require__(34);
+window._ = __webpack_require__(31);
+window.$ = window.jQuery = __webpack_require__(34);
+__webpack_require__(35);
 
-window.Pusher = __webpack_require__(35);
+window.Pusher = __webpack_require__(36);
 
 
 window.Pusher.logToConsole = true;
@@ -3043,7 +3088,7 @@ function makeNotification(notification) {
 }
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -20153,10 +20198,10 @@ function makeNotification(notification) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31), __webpack_require__(32)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32), __webpack_require__(33)(module)))
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports) {
 
 var g;
@@ -20183,7 +20228,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -20211,7 +20256,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -30582,7 +30627,7 @@ return jQuery;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 /*!
@@ -32965,7 +33010,7 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -37153,7 +37198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -37951,7 +37996,7 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

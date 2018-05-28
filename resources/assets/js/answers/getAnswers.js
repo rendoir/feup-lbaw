@@ -1,6 +1,7 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./answersUtils.js');
+var url = require('./answersURL.js');
 var comments = require('../comments/comments.js');
 var question = require('../question.js');
 var common = require('../utils.js');
@@ -12,7 +13,7 @@ function getAnswersRequest() {
         return;
 
     ajax.sendAjaxRequest(
-        'get', utils.getAnswersURL(), {}, getAnswersHandler
+        'get', url.getAnswersURL(), {}, getAnswersHandler
     );
 }
 

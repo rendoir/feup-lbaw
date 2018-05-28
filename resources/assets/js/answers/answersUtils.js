@@ -50,10 +50,6 @@ function addMarkdownFunction(answer_info) {
     }
 }
 
-function getAnswersURL() {
-    return window.location.pathname + '/answers';
-}
-
 function jumpToElement(elementID) {
     let element = document.getElementById(elementID);
 
@@ -80,6 +76,5 @@ function jumpToElement(elementID) {
 module.exports = {
     createAnswer,
     cleanAnswers,
-    getAnswersURL,
     jumpToElement
 };
