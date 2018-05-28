@@ -13,4 +13,8 @@ class Comment extends Model
     public function message() {
         return $this->hasOne('App\Message', 'id');
     }
+
+    public function commentable() {
+        return $this->belongsTo('App\Commentable');
+    }
 }
