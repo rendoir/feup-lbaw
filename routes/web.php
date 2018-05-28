@@ -84,7 +84,7 @@ Route::post('messages/{id}/mark_correct', 'MessageController@markCorrect');
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
-Route::get('/notifications', 'ProfileController@notifications');
+Route::get('/api/notifications', 'ProfileController@notifications');
 
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');

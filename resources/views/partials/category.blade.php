@@ -1,1 +1,1 @@
-<span class="badge badge-dark"><?=$category->name?></span> 
+<a class="badge badge-dark tag" href="/questions?search=[<?=$category->name?>]"><?=$category->name?></a> 

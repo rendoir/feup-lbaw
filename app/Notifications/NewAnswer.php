@@ -42,30 +42,24 @@ class NewAnswer extends Notification implements ShouldQueue
         return ['database', 'broadcast'];
     }
 
-    public function toDatabase($notifiable)
-    {
-        return [
-            'id' => $this->id,
-            'read_at' => null,
-            'data' => [
-                'following_id' => $this->following->id,
-                'following_name' => $this->following->name,
-                'answer_id' => $this->answer->id,
-            ],
-        ];
-    }
-
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
             'id' => $this->id,
             'read_at' => null,
-            'data' => [
-                'following_id' => $this->following->id,
-                'following_name' => $this->following->username,
-                'answer_id' => $this->answer->id,
-                'is_author' => $this->isAuthor,
-            ],
+            'data' => $this->toArray($notifiable),
         ]);
+    }
+
+    public function toArray($notifiable)
+    {
+        return [
+            'following_id' => $this->following->id,
+            'following_name' => $this->following->username,
+            'answer_id' => $this->answer->id,
+            'question_id' => $this->answer->question->id,
+            'question_title' => $this->answer->question->title,
+            'is_author' => $this->isAuthor,
+        ];
     }
 }

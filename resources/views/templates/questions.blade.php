@@ -34,7 +34,7 @@
                         </div>
                         <div>
                             {{#categories}}
-                                <span class="badge badge-dark">{{name}}</span>
+                              <a class="badge badge-dark tag" href="/questions?search=[{{name}}]">{{name}}</a> 
                             {{/categories}}
                         </div>
                     </div>

@@ -426,8 +426,20 @@ nav {
     animation-direction: reverse;
 }
 
-.question-card, #notifications, #login, .dropdown {
+.question-card, #notifications, #login, .dropdown, .vote, .mark, #bookmark {
   cursor: pointer;
+}
+
+a, a:hover, {
+  text-decoration: none;
+}
+
+.question-card a:hover {
+  color: #0056b3;
+}
+
+a.tag {
+  color: white !important;
 }
 
 

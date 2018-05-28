@@ -33,6 +33,7 @@ class CommentsController extends Controller
         $message = $comment->message;
         $content = $message->message_version;
         $author = $message->get_author();
+        $positive = $message->getVote();
 
         return array(
             "id" => $comment->id,
@@ -40,6 +41,8 @@ class CommentsController extends Controller
             "score" => $message->score,
             "was_edited" => $message->was_edited(),
             "is_owner" => ($author->id == Auth::id()),
+            "discrete_p" => $positive === true ? '' : 'discrete',
+            "discrete_n" => $positive === false ? '' : 'discrete',
             "content" => array (
                 "version" => $content->content,
                 "creation_time" => $content->creation_time,
@@ -61,7 +64,7 @@ class CommentsController extends Controller
 
         foreach ($comment_ids as $comment)
             array_push($comments, $this->getCommentJSON($comment));
-        
+
         $result = array("comments" => $comments, "is_authenticated" => Auth::check());
         return response()->json($result);
     }
@@ -83,7 +86,7 @@ class CommentsController extends Controller
         DB::transaction(function() use (&$request, &$comment_id) {
             $user_id = User::find(Auth::id())->id;
             $comment_id = Message::create(['author' => $user_id])->id;
-            
+
             Comment::create(['id' => $comment_id, 'commentable_id' => $request->commentable]);
             MessageVersion::create(['content' => $request->input('content'), 'message_id' => $comment_id]);
         });
