@@ -9,5 +9,6 @@ require('./editor.js');
 require('./answers/answers.js');
 require('./comments/comments.js');
 require('./tag_cloud.js');
+require('./settings.js');
 require('./autorun.js');
 require('./notify.js');

@@ -73,6 +73,7 @@ Route::post('users/edit/image/{type}', 'ProfileController@imageUpload');
 Route::post('users/edit/biography', 'ProfileController@editBiography');
 Route::post('users/bookmarks/{question_id}', 'ProfileController@addBookmark');
 Route::delete('users/bookmarks/{question_id}', 'ProfileController@deleteBookmark');
+Route::post('users/settings/change_password', 'ProfileController@changePassword');
 
 
 //Messages
@@ -83,3 +84,10 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('/notifications', 'ProfileController@notifications');
+
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+Route::get('/email', 'MailController@testMail'); //TODO REMOVE

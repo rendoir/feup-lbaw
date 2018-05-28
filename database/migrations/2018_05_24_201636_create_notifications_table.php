@@ -21,6 +21,11 @@ class CreateNotificationsTable extends Migration
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('token')->index();
+            $table->timestamp('created_at');
+        });
     }
 
     /**
@@ -31,5 +36,6 @@ class CreateNotificationsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('notifications');
+        Schema::dropIfExists('password_resets');
     }
 }

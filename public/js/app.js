@@ -1418,6 +1418,7 @@ __webpack_require__(16);
 __webpack_require__(17);
 __webpack_require__(4);
 __webpack_require__(26);
+__webpack_require__(48);
 __webpack_require__(27);
 __webpack_require__(28);
 
@@ -37824,6 +37825,59 @@ module.exports = Echo;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var alerts = __webpack_require__(1);
+
+function addTimedError(msg) {
+  var error = alerts.displayError(msg);
+  $(error).delay(4000).slideUp(500, function () {
+    $(this).remove();
+  });
+}
+
+function addTimedSuccess(msg) {
+  var success = alerts.displaySuccess(msg);
+  $(success).delay(4000).slideUp(500, function () {
+    $(this).remove();
+  });
+}
+
+function changePasswordEvent() {
+  var button = document.getElementById('update_password');
+  if (button == null) return;
+  button.addEventListener('click', function () {
+    var old_password = document.getElementById("old_password").value;
+    var new_password = document.getElementById("new_password").value;
+    var repeat_new_password = document.getElementById("repeat_new_password").value;
+
+    if (new_password != repeat_new_password) {
+      addTimedError("The new passwords don't match.");
+      return;
+    }
+
+    ajax.sendAjaxRequest('POST', '/users/settings/change_password', { old_password: old_password, new_password: new_password, new_password_confirmation: repeat_new_password }, function () {
+      if (this.status == 200) addTimedSuccess('Password changed!');else addTimedError(this.responseText);
+    });
+  });
+}
+
+changePasswordEvent();
 
 /***/ })
 /******/ ]);

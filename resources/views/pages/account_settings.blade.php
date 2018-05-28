@@ -20,54 +20,70 @@
                   </div>
                   <div class="w-100"></div>
 
-                  <!-- Email change -->
+                  <!-- Email -->
                   <div class="col-2 pb-2">
                       E-mail
                   </div>
-                  <div class="col-8 pb-2">
+                  <div class="col-6 pb-2">
                       {{$user->email}}
                   </div>
 
                   <div class="w-100 mt-3"></div>
 
-                  <!-- Password Change -->
-                  <div class="col-2 pb-2">
-                      Password
-                  </div>
-                  <div class="col-8 pb-2">
-                      Remember to change your password frequently!
-                  </div>
-                  <div class="col-2 pb-2" data-toggle="collapse" href="#editPassword" role="button" aria-expanded="false" aria-controls="editPassword">
-                      <button type="button" class="btn btn-outline-info w-80">Change</button>
-                  </div>
-                  <div class="collapse rounded w-100 bg-light px-4 pt-4 pb-3 box-shadow" id="editPassword">
-                      <div class="input-group mt-2 mb-4">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text" id="basic-addon1">Old Password</span>
-                          </div>
-                          <input type="password" class="form-control" placeholder="Old" aria-label="Username" aria-describedby="basic-addon1">
-                      </div>
-                      <div class="input-group mb-4">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text" id="basic-addon1">New Password</span>
-                          </div>
-                          <input type="password" class="form-control" placeholder="New" aria-label="Username" aria-describedby="basic-addon1">
-                      </div>
-                      <div class="input-group mb-2">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text" id="basic-addon1">Repeat new Password</span>
-                          </div>
-                          <input type="password" class="form-control" placeholder="New" aria-label="Username" aria-describedby="basic-addon1">
-                      </div>
-                      <div class="text-center" data-toggle="collapse" href="#editPassword" aria-controls="editPassword">
-                          <button class="btn btn-info mt-3 mb-1" type="button">
-                              <span class="pr-1">
-                                  <i class="far fa-save"></i>
-                              </span>
-                              Update Password
-                          </button>
-                      </div>
-                  </div>
+                  @if (!$user->isRegisteredByAPI())
+                    <!-- Password Change -->
+                    <div class="col-2 pb-2">
+                        Password
+                    </div>
+                    <div class="col-6 pb-2">
+                        Remember to change your password frequently!
+                    </div>
+                    <div class="px-3" data-toggle="collapse" href="#editPassword" role="button" aria-expanded="false" aria-controls="editPassword">
+                        <button type="button" class="btn btn-outline-info">Change</button>
+                    </div>
+                    <div class="px-3" role="button">
+                        <button type="button" class="btn btn-outline-info">Recover</button>
+                    </div>
+
+
+                    <div class="collapse rounded w-100 bg-light px-4 pt-4 pb-3 box-shadow" id="editPassword">
+                        <div class="input-group mt-2 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Old Password</span>
+                            </div>
+                            <input id="old_password" type="password" class="form-control" placeholder="Old" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">New Password</span>
+                            </div>
+                            <input id="new_password" type="password" class="form-control" placeholder="New" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Repeat new Password</span>
+                            </div>
+                            <input id="repeat_new_password" type="password" class="form-control" placeholder="New" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="text-center">
+                            <button id="update_password" class="btn btn-info mt-3 mb-1" type="button">
+                                <span class="pr-1">
+                                    <i class="far fa-save"></i>
+                                </span>
+                                Update Password
+                            </button>
+                        </div>
+                    </div>
+                  @else
+                    <div class="col-2 pb-2">
+                        Platform
+                    </div>
+                    <div class="col-6 pb-2">
+                        {{$user->provider}}
+                    </div>
+                  @endif
+
+                  <div class="w-100 mt-3"></div>
 
               </div>
           </section>

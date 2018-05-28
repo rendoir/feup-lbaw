@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
 use App\User;
 
 class ProfileController extends Controller
@@ -117,6 +117,27 @@ class ProfileController extends Controller
         $notifications = auth()->user()->unreadNotifications()->limit(5)->get();
 
         return view('pages.notifications', compact('notifications'));
+    }
+
+    public function changePassword(Request $request) {
+      if(!Auth::check())
+        return redirect('login');
+
+      if(Auth::user()->isRegisteredByAPI())
+        return response("You can't change your password because you are registered using an external platform", 403);
+
+      if(!Hash::check($request->get('old_password'), Auth::user()->password))
+        return response('The old password is incorrect!', 400);
+
+      $validator = Validator::make($request->all(), [
+            'new_password' => 'required|string|min:6|confirmed',
+      ]);
+
+      if($validator->fails())
+        return response($validator->errors()->first(), 400);
+
+      Auth::user()->password = bcrypt($request->get('new_password'));
+      Auth::user()->save();
     }
 
 }
