@@ -3,7 +3,7 @@
     $content = $message->message_version;
     $score = $message->score;
 ?>
-<a class="card my-3 question-card <?= ($question->correct_answer != null ? 'border-success' : '') ?>" href="{{ route('questions', ['id' => $question->id]) }}">
+<div class="card my-3 question-card <?= ($question->correct_answer != null ? 'border-success' : '') ?>" onclick="location.href='{{ route('questions', ['id' => $question->id]) }}'">
     <div class="row mx-0">
         <div class="col-sm-2 py-3 border-right rounded-left d-flex flex-column justify-content-around bg-light">
             <div>
@@ -32,4 +32,4 @@
             </div>
         </div>
     </div>
-</a>
+</div>

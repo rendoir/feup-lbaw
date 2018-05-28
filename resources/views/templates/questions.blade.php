@@ -1,7 +1,7 @@
 @verbatim
     <template id="questions">
         {{#questions}}
-        <a class="card my-3 question-card {{#correct_answer}}border-success{{/correct_answer}}" href="/questions/{{question_id}}">
+        <div class="card my-3 question-card {{#correct_answer}}border-success{{/correct_answer}}" onclick="location.href='/questions/{{question_id}}'">
             <div class="row mx-0">
                 <div class="col-sm-2 py-3 border-right rounded-left d-flex flex-column justify-content-around bg-light">
                     <div>
@@ -27,20 +27,20 @@
                             <small>Created by - </small>
                         </p>
                         <div class="ml-2 mr-auto">
-                            <span href="/users/{{author}}">{{author}}</span>
+                            <a href="/users/{{author}}">{{author}}</a>
                             {{#have_badge}}
                                 <span class="badge badge-success">{{badge}}</span>
                             {{/have_badge}}
                         </div>
                         <div>
                             {{#categories}}
-                                <span class="badge badge-dark">{{name}}</span>
+                              <a class="badge badge-dark tag" href="/questions?search=[{{name}}]">{{name}}</a> 
                             {{/categories}}
                         </div>
                     </div>
                 </div>
             </div>
-        </a>
+        </div>
         {{/questions}}
     </template>
 @endverbatim

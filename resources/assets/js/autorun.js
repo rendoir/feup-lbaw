@@ -1,49 +1,51 @@
 let ajax = require('./ajax.js');
 let Mustache = require('mustache');
 
-let pages_num = [0,0,0,0];
-let page_enum = {"nav-new" : 0, "nav-hot" : 1, "nav-voted" : 2, "nav-active" : 3};
-let urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions"];
-let endOfPage = false;
-let questionType = $('div.tab-pane.active.show')[0];
-if (questionType != null)
-    questionType = questionType.id;
-let url = urls[page_enum[questionType]];
-
-// GET questions on certain page
-function getQuestions(pageNum, handler) {
-    if (questionType == null)
-        return null;
-
-    defaultHandler = (data) => {
-        let template = $('template#questions')[0];
-        let questions = null;
-
-        try {
-            questions = JSON.parse(data.target.responseText)
-        } catch (e) {}
-
-        let mustacheRender = Mustache.render(template.innerHTML, questions);
-        if(pages_num[page_enum[questionType]] == 0){
-            pages_num[page_enum[questionType]]++;
-            $('div#' + questionType)[0].innerHTML = mustacheRender;
-        }
-        else
-            $('div#' + questionType)[0].innerHTML += mustacheRender;
-
-        if(questions.questions.length != 0)
-            endOfPage = false;
-    };
-
-    if(handler == null)
-        handler = defaultHandler;
-
-    ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
-}
-
 // GET side profile info
 if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
-        ajax.sendAjaxRequest('GET', "/min-profile", null,(data) => {
+    let pages_num = [0,0,0,0];
+    let page_enum = {"nav-new" : 0, "nav-hot" : 1, "nav-voted" : 2, "nav-active" : 3};
+    let urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions"];
+    let endOfPage = false;
+    let questionType = $('div.tab-pane.active.show')[0];
+    if (questionType != null)
+        questionType = questionType.id;
+    let url = urls[page_enum[questionType]];
+
+
+    // GET questions on certain page
+    function getQuestions(pageNum, handler) {
+        if (questionType == null)
+            return null;
+
+        defaultHandler = (data) => {
+            $('div.loader-ellips').removeClass('show');
+            let template = $('template#questions')[0];
+            let questions = null;
+
+            try {
+                questions = JSON.parse(data.target.responseText)
+            } catch (e) {}
+
+            let mustacheRender = Mustache.render(template.innerHTML, questions);
+            if(pages_num[page_enum[questionType]] == 0){
+                pages_num[page_enum[questionType]]++;
+                $('div#' + questionType)[0].innerHTML = mustacheRender;
+            }
+            else
+                $('div#' + questionType)[0].innerHTML += mustacheRender;
+
+            if(questions.questions.length != 0)
+                endOfPage = false;
+        };
+
+        if(handler == null)
+            handler = defaultHandler;
+        $('div.loader-ellips').addClass('show');
+        ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
+    }
+
+    ajax.sendAjaxRequest('GET', "/min-profile", null,(data) => {
         let template = $('template#minProfile')[0];
         let info = null;
         if (template == null)
@@ -110,6 +112,108 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         questionType = "nav-active";
         url = urls[page_enum[questionType]];
         if(pages_num[3] == 0){
+            getQuestions(1);
+        }
+    });
+
+    $(window).scroll(function () {
+        if (!endOfPage) {
+            if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                endOfPage = true;
+                pages_num[page_enum[questionType]]++;
+                getQuestions(pages_num[page_enum[questionType]]);
+            }
+        }
+    });
+}
+
+if(window.location.pathname.match( /users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/ ) != null){
+    alert("ola");
+
+    let pages_num = [0,0,0];
+    let page_enum = {"nav-questions" : 0, "nav-answers" : 1, "nav-comments" : 2};
+    let urls = ["/getQuestions", "/getAnswers", "/getComments"];
+    let endOfPage = false;
+    let questionType = $('div.tab-pane.active.show')[0];
+    if (questionType != null)
+        questionType = questionType.id;
+    let url = urls[page_enum[questionType]];
+
+
+    // GET questions on certain page
+    function getQuestions(pageNum, handler) {
+        if (questionType == null)
+            return null;
+
+        defaultHandler = (data) => {
+            $('div.loader-ellips').removeClass('show');
+            let template = $('template#questions')[0];
+            let questions = null;
+
+            try {
+                questions = JSON.parse(data.target.responseText)
+            } catch (e) {}
+
+            let mustacheRender = Mustache.render(template.innerHTML, questions);
+            if(pages_num[page_enum[questionType]] == 0){
+                pages_num[page_enum[questionType]]++;
+                $('div#' + questionType)[0].innerHTML = mustacheRender;
+            }
+            else
+                $('div#' + questionType)[0].innerHTML += mustacheRender;
+
+            if(questions.questions.length != 0)
+                endOfPage = false;
+        };
+
+        if(handler == null)
+            handler = defaultHandler;
+        $('div.loader-ellips').addClass('show');
+        ajax.sendAjaxRequest('GET', "/users/" + $('h2#username')[0].innerHTML + url + "?page=" + pageNum, null, handler);
+    }
+
+    pages_num[page_enum[questionType]]++;
+    getQuestions(pages_num[page_enum[questionType]], function (data) {
+        let template = $('template#questions')[0];
+        let questions = null;
+
+        try {
+            questions = JSON.parse(data.target.responseText)
+        } catch (e) {
+        }
+
+        let mustacheRender = Mustache.render(template.innerHTML, questions);
+        let nav = $('div#' + questionType)[0].innerHTML;
+        $('div#nav-questions')[0].innerHTML = nav;
+        $('div#nav-answers')[0].innerHTML = nav;
+        $('div#nav-comments')[0].innerHTML = nav;
+        $('div#' + questionType)[0].innerHTML = mustacheRender;
+    });
+
+    $('a#nav-questions-tab')[0].addEventListener("click", function () {
+        if(questionType == "nav-questions")
+            return;
+        questionType = "nav-questions";
+        url = urls[page_enum[questionType]];
+        if(pages_num[0] == 0){
+            getQuestions(1);
+        }
+    });
+    $('a#nav-answers-tab')[0].addEventListener("click", function () {
+        if(questionType == "nav-answers")
+            return;
+        questionType = "nav-answers";
+        url = urls[page_enum[questionType]];
+        if(pages_num[1] == 0){
+            getQuestions(1);
+        }
+    });
+    $('a#nav-comments-tab')[0].addEventListener("click", function () {
+        if(questionType == "nav-comments")
+            return;
+        questionType = "nav-comments";
+        url = urls[page_enum[questionType]]
+        if(pages_num[2] == 0){
             getQuestions(1);
         }
     });

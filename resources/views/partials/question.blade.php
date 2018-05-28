@@ -5,7 +5,7 @@
     $score = $message->score;
     $message_id = $message->id;
 ?>
-<a class="card my-3 question-card <?= ($question->correct_answer != null ? 'border-success' : '') ?>" href="{{ route('questions', ['id' => $question->id]) }}">
+<div class="card my-3 question-card <?= ($question->correct_answer != null ? 'border-success' : '') ?>" onclick="location.href='{{ route('questions', ['id' => $question->id]) }}'">
     <div class="row mx-0">
         <div class="col-sm-2 py-3 border-right rounded-left d-flex flex-column justify-content-around bg-light">
             <div>
@@ -29,7 +29,7 @@
             </div>
             <div class="card-footer bg-transparent d-flex justify-content-between">
                 <p class="card-text mb-0">
-                    <small>Created by - </small><span href="/users/{{$author->username}}" role="link">{{$author->username}}</span>
+                    <small>Created by - </small><a href="/users/{{$author->username}}">{{$author->username}}</a>
                 </p>
                 <div class="ml-2 mr-auto">
                     <span class="badge badge-success">{{$author->getBadge()}}</span>
@@ -40,4 +40,4 @@
             </div>
         </div>
     </div>
-</a>
+</div>

@@ -19,7 +19,7 @@
                 <div>
                     <img class="rounded-circle img-profile-big" src="<?=$user->getImage('profile')?>" alt="UserImage">
                 </div>
-                <h2 class="card-text my-3"><?=$user->username?></h2>
+                <h2 id="username" class="card-text my-3"><?=$user->username?></h2>
                 <p><?=$user->biography != null ? $user->biography : 'Apparently, this user prefers to keep an air of mystery about himself.'?></p>
             </div>
         </div>
@@ -33,11 +33,11 @@
             </div>
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-questions" role="tab" aria-controls="nav-questions"
+                    <a class="nav-item nav-link active" id="nav-questions-tab" data-toggle="tab" href="#nav-questions" role="tab" aria-controls="nav-questions"
                         aria-selected="true">Questions</a>
-                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-answers" role="tab" aria-controls="nav-answers"
+                    <a class="nav-item nav-link" id="nav-answers-tab" data-toggle="tab" href="#nav-answers" role="tab" aria-controls="nav-answers"
                         aria-selected="false">Answers</a>
-                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-comments"
+                    <a class="nav-item nav-link" id="nav-comments-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-comments"
                         aria-selected="false">Comments</a>
                     @if (Auth::id() == $user->id)
                     <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-marked" role="tab" aria-controls="nav-marked"
@@ -86,9 +86,7 @@
             <div class="card">
                 <div class="card-body text-center">
                     <h4 class="card-text my-2">Control Panel</h4>
-                    <div class="d-flex flex-column justify-content-center">
-                        <span class="badge badge-success">{{$user->getBadge()}}</span>
-                    </div>
+                    <span class="badge badge-success">{{$user->getBadge()}}</span>
                     <div class="my-3">
                         <p>Reputation Points</p>
                         <i class="fas fa-trophy"></i>

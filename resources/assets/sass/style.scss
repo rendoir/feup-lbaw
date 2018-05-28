@@ -367,8 +367,79 @@ nav {
 }
 
 .marked, .marked i {
-  color: var(--azure) !important;
-  background-color: var(--medium-aquamarine) !important;
+    color: var(--azure) !important;
+    background-color: var(--medium-aquamarine) !important;
+}
+
+.loader-ellips.show{
+    display: block;
+}
+
+.loader-ellips {
+    display: none;
+    font-size: 20px; /* change size here */
+    position: relative;
+    width: 4em;
+    height: 1em;
+    margin: 10px auto;
+}
+
+.loader-ellips__dot {
+    display: block;
+    width: 1em;
+    height: 1em;
+    border-radius: 0.5em;
+    background: #555; /* change color here */
+    position: absolute;
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+}
+
+.loader-ellips__dot:nth-child(1),
+.loader-ellips__dot:nth-child(2) {
+    left: 0;
+}
+.loader-ellips__dot:nth-child(3) { left: 1.5em; }
+.loader-ellips__dot:nth-child(4) { left: 3em; }
+
+@keyframes reveal {
+    from { transform: scale(0.001); }
+    to { transform: scale(1); }
+}
+
+@keyframes slide {
+    to { transform: translateX(1.5em) }
+}
+
+.loader-ellips__dot:nth-child(1) {
+    animation-name: reveal;
+}
+
+.loader-ellips__dot:nth-child(2),
+.loader-ellips__dot:nth-child(3) {
+    animation-name: slide;
+}
+
+.loader-ellips__dot:nth-child(4) {
+    animation-name: reveal;
+    animation-direction: reverse;
+}
+
+.question-card, #notifications, #login, .dropdown, .vote, .mark, #bookmark {
+  cursor: pointer;
+}
+
+a, a:hover, {
+  text-decoration: none;
+}
+
+.question-card a:hover {
+  color: #0056b3;
+}
+
+a.tag {
+  color: white !important;
 }
 
 
