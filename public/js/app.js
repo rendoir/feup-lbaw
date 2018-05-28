@@ -92,7 +92,7 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mustache = __webpack_require__(2);
+var Mustache = __webpack_require__(3);
 
 function displayError(errorMessage) {
     return displayMessage(errorMessage, false);
@@ -122,6 +122,170 @@ module.exports = {
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var errors = __webpack_require__(1);
+
+decodeHTML = function decodeHTML(html) {
+	var txt = document.createElement('textarea');
+	txt.innerHTML = html;
+	return txt.value;
+};
+
+function applyMarkdown() {
+	document.addEventListener("DOMContentLoaded", function () {
+		var markdown_content = document.querySelectorAll(".markdown");
+
+		var instance = new Object();
+		instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+
+		for (var i = 0; i < markdown_content.length; i++) {
+			markdown_content[i].style.visibility = "visible";
+			var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown_content[i].innerHTML));
+			markdown_content[i].innerHTML = bound();
+		}
+	});
+}
+
+applyMarkdown();
+
+function bookmarkEvent() {
+	var bookmark = document.querySelector("#bookmark");
+	if (bookmark == null) return;
+	var i = bookmark.querySelector("i");
+	bookmark.addEventListener("click", function () {
+		var message_id = bookmark.getAttribute('data-message-id');
+		var is_active = bookmark.className == 'active';
+		var method = is_active ? 'delete' : 'post';
+		var url = '/users/bookmarks/' + message_id;
+		var data = { question_id: message_id };
+		ajax.sendAjaxRequest(method, url, data, function () {
+			if (this.status == 200) {
+				if (is_active) {
+					bookmark.className = 'inactive';
+					i.className = i.className.replace('fas', 'far');
+				} else {
+					bookmark.className = 'active';
+					i.className = i.className.replace('far', 'fas');
+				}
+			}
+		});
+	});
+}
+
+bookmarkEvent();
+
+function addVoteEvent(container) {
+	var vote_buttons = document.querySelectorAll(container + ' .vote');
+	var scores = document.querySelectorAll(container + ' .score');
+	voteEvent(vote_buttons, scores);
+}
+
+function voteEvent(vote_buttons, scores) {
+	if (vote_buttons == null) return;
+
+	var _loop = function _loop(i) {
+		var button = vote_buttons[i];
+		button.addEventListener('click', function () {
+			var message_id = button.dataset.message_id;
+			var positive = button.dataset.positive;
+			var url = '/messages/' + message_id + '/vote';
+			var data = { positive: positive };
+			ajax.sendAjaxRequest('post', url, data, function () {
+				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
+					var alert_elem = errors.displayError("You cannot vote your messages.");
+					$(alert_elem).delay(4000).slideUp(500, function () {
+						$(this).remove();
+					});
+				} else if (this.status == 200) {
+					if (button.classList.contains('discrete')) {
+						button.classList.remove('discrete');
+						var pair_i = positive === 'true' ? i + 1 : i - 1;
+						if (!vote_buttons[pair_i].classList.contains('discrete')) vote_buttons[pair_i].classList.add('discrete');
+					} else button.classList.add('discrete');
+					var score = scores[Math.floor(i / 2)];
+					score.innerHTML = JSON.parse(this.responseText).score;
+				}
+			});
+		});
+	};
+
+	for (var i = 0; i < vote_buttons.length; i++) {
+		_loop(i);
+	}
+}
+
+addVoteEvent('#question-body');
+
+function addMarkCorrectEvent() {
+	var answers = document.querySelectorAll(".answer");
+	var _iteratorNormalCompletion = true;
+	var _didIteratorError = false;
+	var _iteratorError = undefined;
+
+	try {
+		for (var _iterator = answers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var answer = _step.value;
+
+			markCorrectEvent(answer);
+		}
+	} catch (err) {
+		_didIteratorError = true;
+		_iteratorError = err;
+	} finally {
+		try {
+			if (!_iteratorNormalCompletion && _iterator.return) {
+				_iterator.return();
+			}
+		} finally {
+			if (_didIteratorError) {
+				throw _iteratorError;
+			}
+		}
+	}
+}
+
+function markCorrectEvent(answer) {
+	var button = answer.querySelector(".mark");
+	if (button == null) return;
+	button.addEventListener('click', function () {
+		var answer_id = button.dataset.message_id;
+		var url = '/messages/' + answer_id + '/mark_correct';
+		ajax.sendAjaxRequest('post', url, null, function () {
+			if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
+				var alert_elem = errors.displayError("You cannot mark this answer as correct.");
+				$(alert_elem).delay(4000).slideUp(500, function () {
+					$(this).remove();
+				});
+			} else if (this.status == 200) {
+				if (button.classList.contains('marked')) {
+					button.classList.remove('marked');
+					answer.classList.remove('border-success');
+				} else {
+					var old_correct = document.querySelector(".answer.border-success");
+					if (old_correct != null) {
+						old_correct.classList.remove('border-success');
+						var old_correct_button = old_correct.querySelector(".mark.marked");
+						if (old_correct_button != null) old_correct_button.classList.remove('marked');
+					}
+					button.classList.add('marked');
+					answer.classList.add('border-success');
+				}
+			}
+		});
+	});
+}
+
+module.exports = {
+	addVoteEvent: addVoteEvent,
+	addMarkCorrectEvent: addMarkCorrectEvent,
+	markCorrectEvent: markCorrectEvent,
+	voteEvent: voteEvent
+};
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -760,10 +924,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mustache = __webpack_require__(2);
+var Mustache = __webpack_require__(3);
 
 function createComments(response, message_id) {
 
@@ -835,7 +999,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 function getAnswersURL() {
@@ -852,14 +1016,14 @@ module.exports = {
 };
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var messages = __webpack_require__(8);
-var commentsViewer = __webpack_require__(22);
-var commentsCreator = __webpack_require__(23);
-var commentsEditor = __webpack_require__(6);
-var commentsRemover = __webpack_require__(24);
+var commentsViewer = __webpack_require__(20);
+var commentsCreator = __webpack_require__(21);
+var commentsEditor = __webpack_require__(7);
+var commentsRemover = __webpack_require__(22);
 
 function addEventListeners() {
 
@@ -915,11 +1079,11 @@ module.exports = {
 };
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
-var utils = __webpack_require__(3);
+var utils = __webpack_require__(4);
 
 // Adding edit capability to freshly added comment
 function enableEditMode(message_id) {
@@ -1010,170 +1174,6 @@ function getPreviousComment(inputNode, previousNode) {
 
 module.exports = {
     enableEditMode: enableEditMode
-};
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ajax = __webpack_require__(0);
-var errors = __webpack_require__(1);
-
-decodeHTML = function decodeHTML(html) {
-	var txt = document.createElement('textarea');
-	txt.innerHTML = html;
-	return txt.value;
-};
-
-function applyMarkdown() {
-	document.addEventListener("DOMContentLoaded", function () {
-		var markdown_content = document.querySelectorAll(".markdown");
-
-		var instance = new Object();
-		instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
-
-		for (var i = 0; i < markdown_content.length; i++) {
-			markdown_content[i].style.visibility = "visible";
-			var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown_content[i].innerHTML));
-			markdown_content[i].innerHTML = bound();
-		}
-	});
-}
-
-applyMarkdown();
-
-function bookmarkEvent() {
-	var bookmark = document.querySelector("#bookmark");
-	if (bookmark == null) return;
-	var i = bookmark.querySelector("i");
-	bookmark.addEventListener("click", function () {
-		var message_id = bookmark.getAttribute('data-message-id');
-		var is_active = bookmark.className == 'active';
-		var method = is_active ? 'delete' : 'post';
-		var url = '/users/bookmarks/' + message_id;
-		var data = { question_id: message_id };
-		ajax.sendAjaxRequest(method, url, data, function () {
-			if (this.status == 200) {
-				if (is_active) {
-					bookmark.className = 'inactive';
-					i.className = i.className.replace('fas', 'far');
-				} else {
-					bookmark.className = 'active';
-					i.className = i.className.replace('far', 'fas');
-				}
-			}
-		});
-	});
-}
-
-bookmarkEvent();
-
-function addVoteEvent(container) {
-	var vote_buttons = document.querySelectorAll(container + ' .vote');
-	var scores = document.querySelectorAll(container + ' .score');
-	voteEvent(vote_buttons, scores);
-}
-
-function voteEvent(vote_buttons, scores) {
-	if (vote_buttons == null) return;
-
-	var _loop = function _loop(i) {
-		var button = vote_buttons[i];
-		button.addEventListener('click', function () {
-			var message_id = button.dataset.message_id;
-			var positive = button.dataset.positive;
-			var url = '/messages/' + message_id + '/vote';
-			var data = { positive: positive };
-			ajax.sendAjaxRequest('post', url, data, function () {
-				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
-					var alert_elem = errors.displayError("You cannot vote your messages.");
-					$(alert_elem).delay(4000).slideUp(500, function () {
-						$(this).remove();
-					});
-				} else if (this.status == 200) {
-					if (button.classList.contains('discrete')) {
-						button.classList.remove('discrete');
-						var pair_i = positive === 'true' ? i + 1 : i - 1;
-						if (!vote_buttons[pair_i].classList.contains('discrete')) vote_buttons[pair_i].classList.add('discrete');
-					} else button.classList.add('discrete');
-					var score = scores[Math.floor(i / 2)];
-					score.innerHTML = JSON.parse(this.responseText).score;
-				}
-			});
-		});
-	};
-
-	for (var i = 0; i < vote_buttons.length; i++) {
-		_loop(i);
-	}
-}
-
-addVoteEvent('#question-body');
-
-function addMarkCorrectEvent() {
-	var answers = document.querySelectorAll(".answer");
-	var _iteratorNormalCompletion = true;
-	var _didIteratorError = false;
-	var _iteratorError = undefined;
-
-	try {
-		for (var _iterator = answers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-			var answer = _step.value;
-
-			markCorrectEvent(answer);
-		}
-	} catch (err) {
-		_didIteratorError = true;
-		_iteratorError = err;
-	} finally {
-		try {
-			if (!_iteratorNormalCompletion && _iterator.return) {
-				_iterator.return();
-			}
-		} finally {
-			if (_didIteratorError) {
-				throw _iteratorError;
-			}
-		}
-	}
-}
-
-function markCorrectEvent(answer) {
-	var button = answer.querySelector(".mark");
-	if (button == null) return;
-	button.addEventListener('click', function () {
-		var answer_id = button.dataset.message_id;
-		var url = '/messages/' + answer_id + '/mark_correct';
-		ajax.sendAjaxRequest('post', url, null, function () {
-			if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
-				var alert_elem = errors.displayError("You cannot mark this answer as correct.");
-				$(alert_elem).delay(4000).slideUp(500, function () {
-					$(this).remove();
-				});
-			} else if (this.status == 200) {
-				if (button.classList.contains('marked')) {
-					button.classList.remove('marked');
-					answer.classList.remove('border-success');
-				} else {
-					var old_correct = document.querySelector(".answer.border-success");
-					if (old_correct != null) {
-						old_correct.classList.remove('border-success');
-						var old_correct_button = old_correct.querySelector(".mark.marked");
-						if (old_correct_button != null) old_correct_button.classList.remove('marked');
-					}
-					button.classList.add('marked');
-					answer.classList.add('border-success');
-				}
-			}
-		});
-	});
-}
-
-module.exports = {
-	addVoteEvent: addVoteEvent,
-	addMarkCorrectEvent: addMarkCorrectEvent,
-	markCorrectEvent: markCorrectEvent,
-	voteEvent: voteEvent
 };
 
 /***/ }),
@@ -1307,8 +1307,8 @@ module.exports = {
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mustache = __webpack_require__(2);
-var questionPage = __webpack_require__(7);
+var Mustache = __webpack_require__(3);
+var questionPage = __webpack_require__(2);
 
 function createAnswer(answer_info) {
 
@@ -1405,7 +1405,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(38);
+module.exports = __webpack_require__(33);
 
 
 /***/ }),
@@ -1413,7 +1413,7 @@ module.exports = __webpack_require__(38);
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(0);
-__webpack_require__(7);
+__webpack_require__(2);
 __webpack_require__(12);
 __webpack_require__(13);
 __webpack_require__(14);
@@ -1421,7 +1421,7 @@ __webpack_require__(15);
 __webpack_require__(16);
 __webpack_require__(17);
 __webpack_require__(18);
-__webpack_require__(5);
+__webpack_require__(6);
 __webpack_require__(27);
 __webpack_require__(28);
 __webpack_require__(29);
@@ -2310,12 +2310,12 @@ window.addEventListener('load', addAnswerEventListeners);
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(9);
-var url = __webpack_require__(4);
-var comments = __webpack_require__(5);
-var question = __webpack_require__(7);
-var common = __webpack_require__(25);
-var answerEditor = __webpack_require__(20);
-var answerRemover = __webpack_require__(21);
+var url = __webpack_require__(5);
+var comments = __webpack_require__(6);
+var question = __webpack_require__(2);
+var common = __webpack_require__(23);
+var answerEditor = __webpack_require__(24);
+var answerRemover = __webpack_require__(25);
 
 function getAnswersRequest() {
 
@@ -2387,91 +2387,9 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-
-function editAnswer(editTrigger) {
-
-    var editBtn = document.getElementById('edit-answer');
-    if (editBtn == null) return;
-
-    var edit_id = editTrigger.getAttribute("data-message-id");
-    if (edit_id == null) return;
-
-    var contentParent = document.querySelector(".answer-content[data-message-id='" + edit_id + "']");
-    if (contentParent == null) return;
-
-    console.log(contentParent);
-
-    // Usar os filhos para progredir
-
-    editBtn.addEventListener('click', function () {
-        //editAnswerRequest(comment_id, answer_id, comment.parentNode);
-    });
-}
-
-module.exports = {
-    editAnswer: editAnswer
-};
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ajax = __webpack_require__(0);
-var alert = __webpack_require__(1);
-var url = __webpack_require__(4);
-
-function removeAnswer(removeTrigger) {
-
-    var removeBtn = document.getElementById('delete-answer');
-    if (removeBtn == null) return;
-
-    var remove_id = removeTrigger.getAttribute("data-message-id");
-    if (remove_id == null) return;
-
-    removeBtn.addEventListener('click', function () {
-        removeAnswerRequest(remove_id);
-    });
-}
-
-function removeAnswerRequest(answer_id) {
-
-    var requestBody = {
-        "answer": answer_id
-    };
-
-    ajax.sendAjaxRequest('delete', url.getAnswerIdURL(answer_id), requestBody, function (data) {
-        removeAnswerHandler(data.target, answer_id);
-    });
-}
-
-function removeAnswerHandler(response, answer_id) {
-    if (response.status == 403) {
-        alert.displayError("You have no permission to delete this answer");
-        return;
-    } else if (response.status != 200) {
-        alert.displayError("Failed to delete the answer");
-        return;
-    }
-
-    var answer = document.getElementById("answer-" + answer_id);
-    if (answer == null) return;
-
-    answer.parentNode.removeChild(answer);
-}
-
-module.exports = {
-    removeAnswer: removeAnswer
-};
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ajax = __webpack_require__(0);
-var alert = __webpack_require__(1);
-var utils = __webpack_require__(3);
-var editor = __webpack_require__(6);
-var questionPage = __webpack_require__(7);
+var utils = __webpack_require__(4);
+var editor = __webpack_require__(7);
+var questionPage = __webpack_require__(2);
 
 function viewCommentsRequest(message_id) {
 
@@ -2535,13 +2453,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 23 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(3);
-var editor = __webpack_require__(6);
+var utils = __webpack_require__(4);
+var editor = __webpack_require__(7);
 
 function addCommentRequest(message_id) {
 
@@ -2593,12 +2511,12 @@ module.exports = {
 };
 
 /***/ }),
-/* 24 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(3);
+var utils = __webpack_require__(4);
 
 function removeComment(commentTrashBtn) {
 
@@ -2652,7 +2570,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 25 */
+/* 23 */
 /***/ (function(module, exports) {
 
 function sortAnswers() {
@@ -2680,14 +2598,96 @@ module.exports = {
 };
 
 /***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var alert = __webpack_require__(1);
+
+function editAnswer(editTrigger) {
+
+    var editBtn = document.getElementById('edit-answer');
+    if (editBtn == null) return;
+
+    var edit_id = editTrigger.getAttribute("data-message-id");
+    if (edit_id == null) return;
+
+    var contentParent = document.querySelector(".answer-content[data-message-id='" + edit_id + "']");
+    if (contentParent == null) return;
+
+    console.log(contentParent);
+
+    // Usar os filhos para progredir
+
+    editBtn.addEventListener('click', function () {
+        //editAnswerRequest(comment_id, answer_id, comment.parentNode);
+    });
+}
+
+module.exports = {
+    editAnswer: editAnswer
+};
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var alert = __webpack_require__(1);
+var url = __webpack_require__(5);
+
+function removeAnswer(removeTrigger) {
+
+    var removeBtn = document.getElementById('delete-answer');
+    if (removeBtn == null) return;
+
+    var remove_id = removeTrigger.getAttribute("data-message-id");
+    if (remove_id == null) return;
+
+    removeBtn.addEventListener('click', function () {
+        removeAnswerRequest(remove_id);
+    });
+}
+
+function removeAnswerRequest(answer_id) {
+
+    var requestBody = {
+        "answer": answer_id
+    };
+
+    ajax.sendAjaxRequest('delete', url.getAnswerIdURL(answer_id), requestBody, function (data) {
+        removeAnswerHandler(data.target, answer_id);
+    });
+}
+
+function removeAnswerHandler(response, answer_id) {
+    if (response.status == 403) {
+        alert.displayError("You have no permission to delete this answer");
+        return;
+    } else if (response.status != 200) {
+        alert.displayError("Failed to delete the answer");
+        return;
+    }
+
+    var answer = document.getElementById("answer-" + answer_id);
+    if (answer == null) return;
+
+    answer.parentNode.removeChild(answer);
+}
+
+module.exports = {
+    removeAnswer: removeAnswer
+};
+
+/***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(9);
-var url = __webpack_require__(4);
-var comments = __webpack_require__(5);
+var url = __webpack_require__(5);
+var comments = __webpack_require__(6);
 
 function addAnswerRequest(message_id) {
 
@@ -2804,7 +2804,7 @@ changePasswordEvent();
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
-var Mustache = __webpack_require__(2);
+var Mustache = __webpack_require__(3);
 
 // GET side profile info
 if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
@@ -3018,9 +3018,9 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
-window.Pusher = __webpack_require__(36);
+window.Pusher = __webpack_require__(31);
 
 
 var ajax = __webpack_require__(0);
@@ -3100,12 +3100,7 @@ function makeNotificationText(notification) {
 }
 
 /***/ }),
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -7293,7 +7288,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 37 */
+/* 32 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -8091,7 +8086,7 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 38 */
+/* 33 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
