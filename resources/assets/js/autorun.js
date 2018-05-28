@@ -128,10 +128,10 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
 }
 
 if(window.location.pathname.match( /users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/ ) != null){
-    alert("ola");
-
     let pages_num = [0,0,0];
     let page_enum = {"nav-questions" : 0, "nav-answers" : 1, "nav-comments" : 2};
+    let templates = ['template#questions', 'template#answers', 'template#comments'];
+    let t = ['#total-questions', '#total-answers', '#total-comments'];
     let urls = ["/getQuestions", "/getAnswers", "/getComments"];
     let endOfPage = false;
     let questionType = $('div.tab-pane.active.show')[0];
@@ -147,23 +147,30 @@ if(window.location.pathname.match( /users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/ ) != 
 
         defaultHandler = (data) => {
             $('div.loader-ellips').removeClass('show');
-            let template = $('template#questions')[0];
+            let templateQuery = templates[page_enum[questionType]];
+            let template = document.querySelector(templateQuery);
             let questions = null;
 
             try {
                 questions = JSON.parse(data.target.responseText)
             } catch (e) {}
 
+            if(document.querySelector(t[page_enum[questionType]]).classList.contains("template-for-fill")) {
+                document.querySelector(t[page_enum[questionType]]).classList.remove("template-for-fill");
+                document.querySelector(t[page_enum[questionType]]).innerHTML = questions.total;
+            }
+
             let mustacheRender = Mustache.render(template.innerHTML, questions);
+
+            if(document.querySelector(t[page_enum[questionType]]).innerHTML > 5 * pages_num[page_enum[questionType]])
+                endOfPage = false;
+
             if(pages_num[page_enum[questionType]] == 0){
                 pages_num[page_enum[questionType]]++;
                 $('div#' + questionType)[0].innerHTML = mustacheRender;
             }
             else
                 $('div#' + questionType)[0].innerHTML += mustacheRender;
-
-            if(questions.questions.length != 0)
-                endOfPage = false;
         };
 
         if(handler == null)
@@ -172,23 +179,7 @@ if(window.location.pathname.match( /users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/ ) != 
         ajax.sendAjaxRequest('GET', "/users/" + $('h2#username')[0].innerHTML + url + "?page=" + pageNum, null, handler);
     }
 
-    pages_num[page_enum[questionType]]++;
-    getQuestions(pages_num[page_enum[questionType]], function (data) {
-        let template = $('template#questions')[0];
-        let questions = null;
-
-        try {
-            questions = JSON.parse(data.target.responseText)
-        } catch (e) {
-        }
-
-        let mustacheRender = Mustache.render(template.innerHTML, questions);
-        let nav = $('div#' + questionType)[0].innerHTML;
-        $('div#nav-questions')[0].innerHTML = nav;
-        $('div#nav-answers')[0].innerHTML = nav;
-        $('div#nav-comments')[0].innerHTML = nav;
-        $('div#' + questionType)[0].innerHTML = mustacheRender;
-    });
+    getQuestions(pages_num[page_enum[questionType]]);
 
     $('a#nav-questions-tab')[0].addEventListener("click", function () {
         if(questionType == "nav-questions")
@@ -196,7 +187,7 @@ if(window.location.pathname.match( /users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/ ) != 
         questionType = "nav-questions";
         url = urls[page_enum[questionType]];
         if(pages_num[0] == 0){
-            getQuestions(1);
+            getQuestions(0);
         }
     });
     $('a#nav-answers-tab')[0].addEventListener("click", function () {
@@ -205,16 +196,16 @@ if(window.location.pathname.match( /users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/ ) != 
         questionType = "nav-answers";
         url = urls[page_enum[questionType]];
         if(pages_num[1] == 0){
-            getQuestions(1);
+            getQuestions(0);
         }
     });
     $('a#nav-comments-tab')[0].addEventListener("click", function () {
         if(questionType == "nav-comments")
             return;
         questionType = "nav-comments";
-        url = urls[page_enum[questionType]]
+        url = urls[page_enum[questionType]];
         if(pages_num[2] == 0){
-            getQuestions(1);
+            getQuestions(0);
         }
     });
 
