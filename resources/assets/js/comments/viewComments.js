@@ -2,6 +2,7 @@ var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./commentsUtils.js');
 var editor = require('./editComment.js');
+var questionPage = require('../question.js');
 
 function viewCommentsRequest(message_id) {
 
@@ -26,10 +27,21 @@ function getCommentsHandler(response, message_id) {
         utils.createComments(responseJSON, message_id);
 
         // Enabling edition of freshly added comments
-        for (let comment of responseJSON.comments)
+        for (let comment of responseJSON.comments) {
             editor.enableEditMode(comment.id);
+            enableVote(comment.id);
+        }
     }
     else alert.displayError("Failed to retrieve the requested Comments");
+}
+
+function enableVote(message_id) {
+    let buttons = document.querySelectorAll(".vote[data-message_id='" + message_id + "']");
+    if (buttons == null || buttons.length == 0)
+        return;
+    let scores = buttons[0].parentElement.querySelectorAll(".score");
+
+    questionPage.voteEvent(buttons, scores);
 }
 
 module.exports = {

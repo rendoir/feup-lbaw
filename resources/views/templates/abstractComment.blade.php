@@ -49,15 +49,10 @@
         <p>
             {{content.version}}
         </p>
-        <div class="d-flex flex-wrap mt-3"> 
-            <!--<p class="discrete mr-3">{{score}}</p>-->
-            <btn class="btn btn-link discrete mr-1 p-0">
-                <i class="fas fa-arrow-up p-0"></i>
-            </btn>
-            <span class="mx-2 discrete">{{score}}</span>
-            <btn class="btn btn-link discrete ml-1 mr-2 p-0">
-                <i class="fas fa-arrow-down p-0"></i>
-            </btn>
+        <div class="d-flex flex-wrap mt-3">
+            <i class="vote fas fa-arrow-up p-0 {{discrete_p}}" data-positive="true" data-message_id="{{id}}"></i>
+            <span class="score mx-2 discrete">{{score}}</span>
+            <i class="vote fas fa-arrow-down p-0 {{discrete_n}}" data-positive="false" data-message_id="{{id}}"></i>
             <span class="ml-1 mr-2 discrete">│</span>
             <small class="my-auto">
                 <btn class="btn btn-link discrete p-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Report" data-message-id='{{id}}'>
