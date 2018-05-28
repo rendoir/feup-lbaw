@@ -114,9 +114,10 @@ class ProfileController extends Controller
 
     public function notifications()
     {
+        info("Fetching notifications for user " . auth()->user()->username);
         $notifications = auth()->user()->unreadNotifications()->limit(5)->get();
-
-        return view('pages.notifications', compact('notifications'));
+        info($notifications);
+        return $notifications;
     }
 
     public function changePassword(Request $request) {
