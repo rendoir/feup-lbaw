@@ -1,9 +1,10 @@
-window._ = require('lodash');
-window.$ = window.jQuery = require('jquery');
-require('bootstrap-sass');
+// window.$ = window.jQuery = require('jquery');
+// require('bootstrap-sass');
 
 window.Pusher = require('pusher-js');
 import Echo from "laravel-echo";
+
+var ajax = require('./ajax.js');
 
 window.Pusher.logToConsole = true;
 
@@ -16,21 +17,23 @@ window.Echo = new Echo({
 
 var notifications = [];
 
+// TODO add new notification types here
 const NOTIFICATION_TYPES = {
     newAnswer: 'App\\Notifications\\NewAnswer'
 };
 
 function routeNotification(notification) {
-    var to = '?read=' + notification.id;
+    // signal notification as read on the next request
+    let to = '?read=' + notification.id;
     if(notification.type === NOTIFICATION_TYPES.newAnswer) {
         const answerId = notification.data.answer_id;
-        to = 'answers/' + answerId + to; //TODO: Correct links
+        to = 'questions/' + notification.data.question_id + to;
     }
     return '/' + to;
 }
 
 function makeNotificationText(notification) {
-    var text = '';
+    let text = '';
     if(notification.type === NOTIFICATION_TYPES.newAnswer) {
         const name = notification.data.following_name;
         text += '<strong>' + name + '</strong> answered your question';
@@ -38,44 +41,46 @@ function makeNotificationText(notification) {
     return text;
 }
 
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
     // check if there's a logged in user
     if(Laravel.userId) {
         
         window.Echo.private('App.User.' + window.Laravel.userId)
         .notification((notification) => {
             console.log("eu");
-            addNotifications([notification], '#notifications');
+            addNotifications([notification]);
         });
 
-        $.get('/notifications', function (data) {
-            addNotifications(data, "#notifications");
-        });
+        ajax.sendAjaxRequest('GET', '/api/notifications', null,
+                data => addNotifications(JSON.parse(data.target.responseText))
+        ); // TODO send get request to appropriate API (and create said API)
 
     }
 });
 
-function addNotifications(newNotifications, target) {
-    notifications = _.concat(notifications, newNotifications);
+function addNotifications(newNotifications) {
+    notifications = notifications.concat(newNotifications);
     // show only last 5 notifications
     notifications.slice(0, 5);
-    showNotifications(notifications, target);
+    showNotifications(notifications);
 }
 
-function showNotifications(notifications, target) {
+function showNotifications(notifications) {
     if (notifications.length > 0) {
-        var htmlElements = notifications.map(function (notification) {
-            return makeNotification(notification);
-        });
-        $('#notificationsMenu').html(htmlElements.join(''));
+        let htmlElements = notifications.map(notification => makeNotification(notification));
+        document.querySelector('#notificationsMenu').innerHTML = htmlElements.join('');
     } else {
-        $('#notificationsMenu').html('<div class="dropdown-divider"></div><button type="button class="dropdown-item" href="#">No Unread Notifications</button>');
+        document.querySelector('#notificationsMenu').innerHTML = getNoUnreadNotificationsMessageHtml();
     }
 }
 
 // Make a single notification string
 function makeNotification(notification) {
-    var to = routeNotification(notification);
-    var notificationText = makeNotificationText(notification);
+    let to = routeNotification(notification);
+    let notificationText = makeNotificationText(notification);
     return '<li><a href="' + to + '">' + notificationText + '</a></li>';
+}
+
+function getNoUnreadNotificationsMessageHtml() {
+    return '<p class="text-center">No Unread Notifications</p>';
 }

@@ -20,7 +20,8 @@ class AnswerObserver
 
         // Notify Users who Bookmarked the Question
         foreach ($question->followers as $follower) {
-            $follower->notify(new NewAnswer($user, $answer, false));
+            if ($user->id != $follower->id)
+                $follower->notify(new NewAnswer($user, $answer, false));
         }
 
     }

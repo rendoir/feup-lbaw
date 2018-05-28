@@ -62,6 +62,11 @@ class Question extends Model
         );
     }
 
+    /**
+     * The users who bookmarked this question, and therefore receive
+     * notifications regarding answers/comments to this question.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function followers()
     {
         return $this->belongsToMany(
