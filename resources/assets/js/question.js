@@ -53,6 +53,10 @@ bookmarkEvent();
 function addVoteEvent(container) {
 	let vote_buttons = document.querySelectorAll(container + ' .vote');
 	let scores = document.querySelectorAll(container + ' .score');
+	voteEvent(vote_buttons, scores);
+}
+
+function voteEvent(vote_buttons, scores) {
 	if(vote_buttons == null) return;
 	for (let i = 0; i < vote_buttons.length; i++) {
 		let button = vote_buttons[i];
@@ -134,5 +138,6 @@ function markCorrectEvent(answer) {
 module.exports = {
   addVoteEvent,
 	addMarkCorrectEvent,
-	markCorrectEvent
+	markCorrectEvent,
+	voteEvent
 };
