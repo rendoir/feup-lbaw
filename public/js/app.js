@@ -2761,6 +2761,7 @@ function getQuestions(pageNum, handler) {
     if (questionType == null) return null;
 
     defaultHandler = function defaultHandler(data) {
+        $('div.loader-ellips').removeClass('show');
         var template = $('template#questions')[0];
         var questions = null;
 
@@ -2778,7 +2779,7 @@ function getQuestions(pageNum, handler) {
     };
 
     if (handler == null) handler = defaultHandler;
-
+    $('div.loader-ellips').addClass('show');
     ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
 }
 
@@ -37860,7 +37861,7 @@ module.exports = Echo;
 /* 37 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: spawn /home/bayard/Github/lbaw1763/node_modules/mozjpeg/vendor/cjpeg ENOENT\n    at exports._errnoException (util.js:1020:11)\n    at Process.ChildProcess._handle.onexit (internal/child_process.js:197:32)\n    at onErrorNT (internal/child_process.js:376:16)\n    at _combinedTickCallback (internal/process/next_tick.js:80:11)\n    at process._tickCallback (internal/process/next_tick.js:104:9)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at /home/bayard/Github/lbaw1763/node_modules/img-loader/index.js:45:31\n    at process._tickCallback (internal/process/next_tick.js:109:7)");
 
 /***/ })
 /******/ ]);

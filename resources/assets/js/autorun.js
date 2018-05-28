@@ -16,6 +16,7 @@ function getQuestions(pageNum, handler) {
         return null;
 
     defaultHandler = (data) => {
+        $('div.loader-ellips').removeClass('show');
         let template = $('template#questions')[0];
         let questions = null;
 
@@ -37,7 +38,7 @@ function getQuestions(pageNum, handler) {
 
     if(handler == null)
         handler = defaultHandler;
-
+    $('div.loader-ellips').addClass('show');
     ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
 }
 

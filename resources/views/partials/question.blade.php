@@ -29,7 +29,7 @@
             </div>
             <div class="card-footer bg-transparent d-flex justify-content-between">
                 <p class="card-text mb-0">
-                    <small>Created by - </small><span href="/users/{{$author->username}}" role="link">{{$author->username}}</span>
+                    <small>Created by - </small><span href="/users/{{$author->username}}">{{$author->username}}</span>
                 </p>
                 <div class="ml-2 mr-auto">
                     <span class="badge badge-success">{{$author->getBadge()}}</span>

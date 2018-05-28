@@ -64,6 +64,13 @@
                 @endif
                 </div>
 
+                <div class="loader-ellips">
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                </div>
+
             </div>
             <aside class="col-md-3 mb-3">
                 <div class="aside-content pt-3">
