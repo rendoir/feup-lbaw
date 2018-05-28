@@ -155,18 +155,20 @@ function bookmarkEvent() {
 	if (bookmark == null) return;
 	var i = bookmark.querySelector("i");
 	bookmark.addEventListener("click", function () {
+		$(bookmark).tooltip('hide');
 		var message_id = bookmark.getAttribute('data-message-id');
-		var is_active = bookmark.className == 'active';
-		var method = is_active ? 'delete' : 'post';
+		var is_active = bookmark.classList.contains('active');
 		var url = '/users/bookmarks/' + message_id;
 		var data = { question_id: message_id };
-		ajax.sendAjaxRequest(method, url, data, function () {
+		ajax.sendAjaxRequest('post', url, data, function () {
 			if (this.status == 200) {
 				if (is_active) {
-					bookmark.className = 'inactive';
+					bookmark.classList.add('inactive');
+					bookmark.classList.remove('active');
 					i.className = i.className.replace('fas', 'far');
 				} else {
-					bookmark.className = 'active';
+					bookmark.classList.add('active');
+					bookmark.classList.remove('inactive');
 					i.className = i.className.replace('far', 'fas');
 				}
 			}
@@ -277,11 +279,43 @@ function markCorrectEvent(answer) {
 	});
 }
 
+function addReportEvent(container) {
+	var reports = document.querySelectorAll(container + ' .report');
+	reportEvent(reports);
+}
+
+function reportEvent(reports) {
+	if (reports == null) return;
+
+	var _loop2 = function _loop2(i) {
+		var button = reports[i];
+		button.addEventListener('click', function () {
+			$(bookmark).tooltip('hide');
+			if (!button.classList.contains('discrete')) return;
+			var message_id = button.dataset.message_id;
+			var url = '/messages/' + message_id + '/report';
+			ajax.sendAjaxRequest('post', url, { message_id: message_id }, function () {
+				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 200) {
+					button.classList.remove('discrete');
+				}
+			});
+		});
+	};
+
+	for (var i = 0; i < reports.length; i++) {
+		_loop2(i);
+	}
+}
+
+addReportEvent("#question-body");
+
 module.exports = {
 	addVoteEvent: addVoteEvent,
 	addMarkCorrectEvent: addMarkCorrectEvent,
 	markCorrectEvent: markCorrectEvent,
-	voteEvent: voteEvent
+	voteEvent: voteEvent,
+	addReportEvent: addReportEvent,
+	reportEvent: reportEvent
 };
 
 /***/ }),
@@ -925,23 +959,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports) {
-
-function getAnswersURL() {
-    return window.location.pathname + '/answers';
-}
-
-function getAnswerIdURL(id) {
-    return getAnswersURL() + '/' + id;
-}
-
-module.exports = {
-    getAnswersURL: getAnswersURL,
-    getAnswerIdURL: getAnswerIdURL
-};
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Mustache = __webpack_require__(3);
@@ -1016,6 +1033,23 @@ module.exports = {
 };
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+function getAnswersURL() {
+    return window.location.pathname + '/answers';
+}
+
+function getAnswerIdURL(id) {
+    return getAnswersURL() + '/' + id;
+}
+
+module.exports = {
+    getAnswersURL: getAnswersURL,
+    getAnswerIdURL: getAnswerIdURL
+};
+
+/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1083,7 +1117,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
-var utils = __webpack_require__(5);
+var utils = __webpack_require__(4);
 
 // Adding edit capability to freshly added comment
 function enableEditMode(message_id) {
@@ -2310,7 +2344,7 @@ window.addEventListener('load', addAnswerEventListeners);
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(9);
-var url = __webpack_require__(4);
+var url = __webpack_require__(5);
 var comments = __webpack_require__(6);
 var question = __webpack_require__(2);
 var common = __webpack_require__(23);
@@ -2361,6 +2395,7 @@ function getAnswersHandler() {
         common.sortAnswers();
         comments.addEventListeners();
         question.addVoteEvent('#answers-container');
+        question.addReportEvent('#answers-container');
         question.addMarkCorrectEvent();
 
         // Add event listeners associated to answers' modals
@@ -2387,7 +2422,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(5);
+var utils = __webpack_require__(4);
 var editor = __webpack_require__(7);
 var questionPage = __webpack_require__(2);
 
@@ -2422,6 +2457,7 @@ function getCommentsHandler(response, message_id) {
 
                 editor.enableEditMode(comment.id);
                 enableVote(comment.id);
+                enableReport(comment.id);
             }
         } catch (err) {
             _didIteratorError = true;
@@ -2448,6 +2484,13 @@ function enableVote(message_id) {
     questionPage.voteEvent(buttons, scores);
 }
 
+function enableReport(message_id) {
+    var buttons = document.querySelectorAll(".report[data-message_id='" + message_id + "']");
+    if (buttons == null || buttons.length == 0) return;
+
+    questionPage.reportEvent(buttons);
+}
+
 module.exports = {
     viewCommentsRequest: viewCommentsRequest
 };
@@ -2458,7 +2501,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(5);
+var utils = __webpack_require__(4);
 var editor = __webpack_require__(7);
 
 function addCommentRequest(message_id) {
@@ -2516,7 +2559,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(5);
+var utils = __webpack_require__(4);
 
 function removeComment(commentTrashBtn) {
 
@@ -2603,7 +2646,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var url = __webpack_require__(4);
+var url = __webpack_require__(5);
 
 function editAnswer(editTrigger) {
 
@@ -2684,7 +2727,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var url = __webpack_require__(4);
+var url = __webpack_require__(5);
 
 function removeAnswer(removeTrigger) {
 
@@ -2736,7 +2779,7 @@ module.exports = {
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(9);
-var url = __webpack_require__(4);
+var url = __webpack_require__(5);
 var comments = __webpack_require__(6);
 
 function addAnswerRequest(message_id) {

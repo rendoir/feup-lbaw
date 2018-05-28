@@ -55,7 +55,7 @@
             <i class="vote fas fa-arrow-down p-0 {{discrete_n}}" data-positive="false" data-message_id="{{id}}"></i>
             <span class="ml-1 mr-2 discrete">│</span>
             <small class="my-auto">
-                <btn class="btn btn-link discrete p-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Report" data-message-id='{{id}}'>
+                <btn class="btn btn-link p-0 report {{discrete_r}}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Report" data-message_id='{{id}}'>
                     <i class="fas fa-exclamation-triangle"></i>
                 </btn>
             </small>
