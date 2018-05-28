@@ -14,13 +14,27 @@ class NewAnswer extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    /**
+     * @var User the recipient of this notification (who was following this event).
+     */
     public $following;
+
+    /**
+     * @var Answer the answer which triggered this notification.
+     */
     public $answer;
 
-    public function __construct(User $following, Answer $answer)
+    /**
+     * @var bool Whether this notification's follower is the message's author
+     *  or another type of follower (e.g. someone who bookmarked the message).
+     */
+    public $isAuthor;
+
+    public function __construct(User $following, Answer $answer, $isAuthor = true)
     {
         $this->following = $following;
         $this->answer = $answer;
+        $this->isAuthor = $isAuthor;
     }
 
     public function via($notifiable)
@@ -50,6 +64,7 @@ class NewAnswer extends Notification implements ShouldQueue
                 'following_id' => $this->following->id,
                 'following_name' => $this->following->username,
                 'answer_id' => $this->answer->id,
+                'is_author' => $this->isAuthor,
             ],
         ]);
     }

@@ -110,12 +110,14 @@
 
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('register') }}">New around here? Sign up</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ url('/password/reset') }}">Forgot Password? Click here!</a>
                     </div>
                 </div>
 
                 <!-- Sign up -->
                 <div class="dropdown mx-2">
-                    <a class="btn btn-outline-success" href="{{ route('register') }}" role="button">Sign Up</a>
+                    <a class="btn btn-outline-success" href="{{ route('register') }}" role="button">Sign Up!</a>
                 </div>
 
                 <!-- END OF NAVBAR RIGHT-SIDE OPTIONS -->
