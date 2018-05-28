@@ -101,4 +101,14 @@ class AnswersController extends Controller
             )
         );
     }
+
+    public function deleteAnswer(Request $request)
+    {
+        $answer = Answer::find($request->answer);
+        $message = $answer->message;
+
+        // Checking if the User can delete the answer
+        $this->authorize('delete', $message);
+        $message->delete();
+    }
 }

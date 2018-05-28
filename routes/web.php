@@ -48,6 +48,8 @@ Route::post('ask_question', 'Question\QuestionsController@addQuestion')->name('a
 // Answers
 Route::get('questions/{id}/answers', 'Question\AnswersController@getAnswers');
 Route::post('questions/{id}/answers', 'Question\AnswersController@addAnswer');
+Route::put('questions/{id}/answers/{answer_id}', 'Question\AnswersController@editAnswer');
+Route::delete('questions/{id}/answers/{answer_id}', 'Question\AnswersController@deleteAnswer');
 
 // Comments
 // Comments on Answers
