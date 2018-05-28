@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Bookmark;
 
+use App\Http\Controllers\Question\QuestionsController;
 use Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -26,6 +27,78 @@ class ProfileController extends Controller
         return view('pages.profile', ['user' => $user]);
       else return redirect(route('404'));
     }
+
+    function getQuestions($username = null){
+        if($username === null)
+            return redirect(route('404'));
+
+        $user = User::where('username', $username)->first();
+        $questions = $user->getQuestions();
+        $data = QuestionsController::questionsJSON($questions->paginate(5));
+        $data['total'] = $questions->count();
+        return $data;
+    }
+
+    private function getAnswersJSON($answers){
+        $answers_info = [];
+        foreach ($answers as $answer) {
+            $message = $answer->message;
+            $content = $message->message_version;
+            $question = \App\Question::find($answer->question_id);
+            $answer_info = [
+                "correct_answer" => $question->correct_answer,
+                "question_id" => $answer->question_id,
+                "score" => $message->score,
+                "title" => $question->title,
+                "preview" => substr($content->content, 0, 240)
+            ];
+            array_push($answers_info, $answer_info);
+        }
+        return ["answers" => $answers_info];
+    }
+
+    function getAnswers($username = null){
+        if($username === null)
+            return redirect(route('404'));
+
+        $user = User::where('username', $username)->first();
+        $answers = $user->getAnswers();
+        $data = $this->getAnswersJSON($answers->paginate(5));
+        $data['total'] = $answers->count();
+        return $data;
+    }
+
+    private function getCommentsJSON($comments){
+        $comments_info = [];
+        foreach ($comments as $comment) {
+            $message = $comment->message;
+            $content = $message->message_version;
+            $question = \App\Question::find($comment->commentable_id);
+            if($question == null)
+                $question = \App\Question::find(\App\Answer::find($comment->commentable_id)->question_id);
+            $comment_info = [
+                "correct_answer" => $question->correct_answer,
+                "question_id" => $question->id,
+                "score" => $message->score,
+                "title" => $question->title,
+                "preview" => substr($content->content, 0, 240)
+            ];
+            array_push($comments_info, $comment_info);
+        }
+        return ["comments" => $comments_info];
+    }
+
+    function getComments($username = null){
+        if($username === null)
+            return redirect(route('404'));
+
+        $user = User::where('username', $username)->first();
+        $comments = $user->getComments();
+        $data = $this->getCommentsJSON($comments->paginate(5));
+        $data['total'] = $comments->count();
+        return $data;
+    }
+
 
     function getSettings($username) {
       if(!Auth::check())

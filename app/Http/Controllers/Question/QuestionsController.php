@@ -158,7 +158,7 @@ class QuestionsController extends Controller
         return QuestionsController::questionsJSON($questions);
     }
 
-    private function questionsJSON($questions){
+    public static function questionsJSON($questions){
         $questions_info = [];
         foreach ($questions as $question) {
             $message = $question->message;

@@ -4,9 +4,6 @@
 
 @section('content')
 <?php
-  $questions = $user->getQuestions();
-  $answers = $user->getAnswers();
-  $comments = $user->getComments();
   $bookmarks = $user->getBookmarks();
  ?>
 
@@ -46,27 +43,32 @@
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
+                @include('templates.profile.question_template')
                 <div class="tab-pane fade show active" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab">
-                    <!-- Questions -->
-                    @if ($questions->count() > 0)
-                      @each('partials.profile.question_preview', $questions->get(), 'question')
-                    @else <div class="px-2 py-3">No questions!</div>
-                    @endif
+                    @for ($i = 0; $i < 5; $i++)
+                        @include('partials.profile.question_preview')
+                    @endfor
                 </div>
+                @include('templates.profile.answer_template')
                 <div class="tab-pane fade" id="nav-answers" role="tabpanel" aria-labelledby="nav-answers-tab">
-                    <!-- Answers -->
-                    @if ($answers->count() > 0)
-                      @each('partials.profile.answer_preview', $answers->get(), 'answer')
-                    @else <div class="px-2 py-3">No answers!</div>
-                    @endif
+                    @for ($i = 0; $i < 5; $i++)
+                        @include('partials.profile.answer_preview')
+                    @endfor
                 </div>
+                @include('templates.profile.comment_template')
                 <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
-                    <!-- Comments -->
-                    @if ($comments->count() > 0)
-                      @each('partials.profile.comment_preview', $comments->get(), 'comment')
-                    @else <div class="px-2 py-3">No comments!</div>
-                    @endif
+                    @for ($i = 0; $i < 5; $i++)
+                        @include('partials.profile.answer_preview')
+                    @endfor
                 </div>
+
+                <div class="loader-ellips">
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                </div>
+
                 @if (Auth::id() == $user->id)
                   <div class="tab-pane fade" id="nav-marked" role="tabpanel" aria-labelledby="nav-marked-tab">
                       <!-- Marked Questions -->
@@ -95,15 +97,15 @@
                     <div class="d-flex flex-column align-content-center container">
                         <div class="py-2">
                             <i class="far fa-question-circle"></i>
-                            <span>{{$questions->count()}}</span>
+                            <span id="total-questions" class="template-for-fill">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                         </div>
                         <div class="py-2 border-top">
                             <i class="far fa-hand-peace"></i>
-                            <span>{{$answers->count()}}</span>
+                            <span id="total-answers" class="template-for-fill">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                         </div>
                         <div class="py-2 border-top">
                             <i class="far fa-comment"></i>
-                            <span>{{$comments->count()}}</span>
+                            <span id="total-comments" class="template-for-fill">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                         </div>
                     </div>
                     @if (Auth::id() == $user->id)
@@ -119,7 +121,6 @@
                           <a href="{{ route('settings', ['username' => $user->username]) }}" role="button" class="btn btn-primary w-80">
                               <span class="pr-1">
                                   <i class="fas fa-cog"></i>
-                                  </i>
                               </span>
                               Settings
                           </a>

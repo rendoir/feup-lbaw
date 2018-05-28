@@ -1401,7 +1401,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(10);
-module.exports = __webpack_require__(37);
+module.exports = __webpack_require__(32);
 
 
 /***/ }),
@@ -2881,20 +2881,27 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
 
         defaultHandler = function defaultHandler(data) {
             $('div.loader-ellips').removeClass('show');
-            var template = $('template#questions')[0];
+            var templateQuery = templates[_page_enum[_questionType]];
+            var template = document.querySelector(templateQuery);
             var questions = null;
 
             try {
                 questions = JSON.parse(data.target.responseText);
             } catch (e) {}
 
+            if (document.querySelector(t[_page_enum[_questionType]]).classList.contains("template-for-fill")) {
+                document.querySelector(t[_page_enum[_questionType]]).classList.remove("template-for-fill");
+                document.querySelector(t[_page_enum[_questionType]]).innerHTML = questions.total;
+            }
+
             var mustacheRender = Mustache.render(template.innerHTML, questions);
+
+            if (document.querySelector(t[_page_enum[_questionType]]).innerHTML > 5 * _pages_num[_page_enum[_questionType]]) _endOfPage = false;
+
             if (_pages_num[_page_enum[_questionType]] == 0) {
                 _pages_num[_page_enum[_questionType]]++;
                 $('div#' + _questionType)[0].innerHTML = mustacheRender;
             } else $('div#' + _questionType)[0].innerHTML += mustacheRender;
-
-            if (questions.questions.length != 0) _endOfPage = false;
         };
 
         if (handler == null) handler = defaultHandler;
@@ -2902,39 +2909,24 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
         ajax.sendAjaxRequest('GET', "/users/" + $('h2#username')[0].innerHTML + _url + "?page=" + pageNum, null, handler);
     };
 
-    alert("ola");
-
     var _pages_num = [0, 0, 0];
     var _page_enum = { "nav-questions": 0, "nav-answers": 1, "nav-comments": 2 };
+    var templates = ['template#questions', 'template#answers', 'template#comments'];
+    var t = ['#total-questions', '#total-answers', '#total-comments'];
     var _urls = ["/getQuestions", "/getAnswers", "/getComments"];
     var _endOfPage = false;
     var _questionType = $('div.tab-pane.active.show')[0];
     if (_questionType != null) _questionType = _questionType.id;
     var _url = _urls[_page_enum[_questionType]];
 
-    _pages_num[_page_enum[_questionType]]++;
-    _getQuestions(_pages_num[_page_enum[_questionType]], function (data) {
-        var template = $('template#questions')[0];
-        var questions = null;
-
-        try {
-            questions = JSON.parse(data.target.responseText);
-        } catch (e) {}
-
-        var mustacheRender = Mustache.render(template.innerHTML, questions);
-        var nav = $('div#' + _questionType)[0].innerHTML;
-        $('div#nav-questions')[0].innerHTML = nav;
-        $('div#nav-answers')[0].innerHTML = nav;
-        $('div#nav-comments')[0].innerHTML = nav;
-        $('div#' + _questionType)[0].innerHTML = mustacheRender;
-    });
+    _getQuestions(_pages_num[_page_enum[_questionType]]);
 
     $('a#nav-questions-tab')[0].addEventListener("click", function () {
         if (_questionType == "nav-questions") return;
         _questionType = "nav-questions";
         _url = _urls[_page_enum[_questionType]];
         if (_pages_num[0] == 0) {
-            _getQuestions(1);
+            _getQuestions(0);
         }
     });
     $('a#nav-answers-tab')[0].addEventListener("click", function () {
@@ -2942,7 +2934,7 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
         _questionType = "nav-answers";
         _url = _urls[_page_enum[_questionType]];
         if (_pages_num[1] == 0) {
-            _getQuestions(1);
+            _getQuestions(0);
         }
     });
     $('a#nav-comments-tab')[0].addEventListener("click", function () {
@@ -2950,7 +2942,7 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
         _questionType = "nav-comments";
         _url = _urls[_page_enum[_questionType]];
         if (_pages_num[2] == 0) {
-            _getQuestions(1);
+            _getQuestions(0);
         }
     });
 
@@ -2971,12 +2963,12 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
 // window.$ = window.jQuery = require('jquery');
 // require('bootstrap-sass');
 
-window.Pusher = __webpack_require__(35);
+window.Pusher = __webpack_require__(30);
 
 
 var ajax = __webpack_require__(0);
@@ -3061,12 +3053,7 @@ function getNoUnreadNotificationsMessageHtml() {
 }
 
 /***/ }),
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -7254,7 +7241,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 36 */
+/* 31 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -8052,10 +8039,10 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 37 */
+/* 32 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: spawn /home/bayard/Github/lbaw1763/node_modules/mozjpeg/vendor/cjpeg ENOENT\n    at exports._errnoException (util.js:1020:11)\n    at Process.ChildProcess._handle.onexit (internal/child_process.js:197:32)\n    at onErrorNT (internal/child_process.js:376:16)\n    at _combinedTickCallback (internal/process/next_tick.js:80:11)\n    at process._tickCallback (internal/process/next_tick.js:104:9)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at /home/bayard/Github/lbaw1763/node_modules/img-loader/index.js:45:31\n    at process._tickCallback (internal/process/next_tick.js:109:7)");
 
 /***/ })
 /******/ ]);
