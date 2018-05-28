@@ -16,15 +16,16 @@ var notifications = [];
 
 // TODO add new notification types here
 const NOTIFICATION_TYPES = {
-    newAnswer: 'App\\Notifications\\NewAnswer'
+    newAnswer: 'App\\Notifications\\NewAnswer',
+    newComment: 'App\\Notifications\\NewComment',
 };
 
 function routeNotification(notification) {
     // signal notification as read on the next request
     let to = '?read=' + notification.id;
     if(notification.type === NOTIFICATION_TYPES.newAnswer) {
-        const answerId = notification.data.answer_id;
-        to = 'questions/' + notification.data.question_id + to;
+        const questionId = notification.data.question_id;
+        to = 'questions/' + questionId + to;
     }
     return '/' + to;
 }

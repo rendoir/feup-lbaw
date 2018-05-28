@@ -12,13 +12,31 @@ class NewComment extends Notification implements ShouldQueue
     use Queueable;
 
     /**
+     * @var User the recipient of this notification (who was following this event).
+     */
+    public $following;
+
+    /**
+     * @var Answer the answer which triggered this notification.
+     */
+    public $comment;
+
+    /**
+     * @var bool Whether this notification's follower is the message's author
+     *  or another type of follower (e.g. someone who bookmarked the message).
+     */
+    public $isAuthor;
+
+    /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $following, Comment $comment, $isAuthor = true)
     {
-        //
+        $this->following = $following;
+        $this->comment = $comment;
+        $this->isAuthor = $isAuthor;
     }
 
     /**
@@ -29,21 +47,22 @@ class NewComment extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database', 'broadcast'];
     }
 
     /**
-     * Get the mail representation of the notification.
+     * Get the broadcast representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return BroadcastMessage the message to broadcast
      */
-    public function toMail($notifiable)
+    public function toBroadcast($notifiable)
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        return new BroadcastMessage([
+            'id' => $this->id,
+            'read_at' => null,
+            'data' => $this->toArray($notifiable),
+        ]);
     }
 
     /**
@@ -55,7 +74,11 @@ class NewComment extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            'following_id' => $this->following->id,
+            'following_name' => $this->following->username,
+            'comment_id' => $this->comment->id,
+            'commentable_id' => $this->comment->commentable->id,
+            'is_author' => $this->isAuthor,
         ];
     }
 }

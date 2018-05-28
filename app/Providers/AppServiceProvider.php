@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Observers\AnswerObserver;
+use App\Observers\CommentObserver;
 use App\Answer;
+use App\Comment;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,8 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
         Answer::observe(AnswerObserver::class);
+        Comment::observe(CommentObserver::class);
     }
 
     /**
