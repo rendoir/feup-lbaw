@@ -693,6 +693,13 @@ nav {
   background-color: var(--medium-aquamarine) !important;
 }
 
+.question-card,
+#notifications,
+#login,
+.dropdown {
+  cursor: pointer;
+}
+
 /*************************************************/
 
 /************** Responsive Design ****************/
