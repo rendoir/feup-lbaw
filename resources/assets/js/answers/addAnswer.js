@@ -1,6 +1,7 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./answersUtils.js');
+var url = require('./answersURL.js');
 var comments = require('../comments/comments.js');
 
 function addAnswerRequest(message_id) {
@@ -15,7 +16,7 @@ function addAnswerRequest(message_id) {
     };
 
     ajax.sendAjaxRequest(
-        'post', utils.getAnswersURL(), requestBody, (data) => {
+        'post', url.getAnswersURL(), requestBody, (data) => {
             addAnswerHandler(data.target);
         }
     );

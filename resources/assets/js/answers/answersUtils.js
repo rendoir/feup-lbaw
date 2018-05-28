@@ -1,6 +1,4 @@
 var Mustache = require('mustache');
-var answerEditor = require('./editAnswer.js');
-var answerRemover = require('./removeAnswer.js');
 var questionPage = require('../question.js');
 
 function createAnswer(answer_info) {
@@ -18,14 +16,8 @@ function createAnswer(answer_info) {
     answers.appendChild(placeholder.firstElementChild);
 }
 
-// Function to add the event listeners missing to the freshly added answers: edition and deletion
+// Function to add the event listeners missing to the freshly added answers
 function addMissingEventListeners(placeholder) {
-    $('#editAnswerModal').on('show.bs.modal', function (e) {
-        answerEditor.editAnswer($(e.relatedTarget)[0]);
-    });
-    $('#deleteAnswerModal').on('show.bs.modal', function (e) {
-        answerRemover.removeAnswer($(e.relatedTarget)[0]);
-    });
     questionPage.markCorrectEvent(placeholder.firstElementChild);
 }
 
@@ -50,10 +42,6 @@ function addMarkdownFunction(answer_info) {
             return bound();
         }
     }
-}
-
-function getAnswersURL() {
-    return window.location.pathname + '/answers';
 }
 
 function jumpToElement(elementID) {
@@ -82,6 +70,5 @@ function jumpToElement(elementID) {
 module.exports = {
     createAnswer,
     cleanAnswers,
-    getAnswersURL,
     jumpToElement
 };

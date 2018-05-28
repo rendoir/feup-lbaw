@@ -1,6 +1,3 @@
-// window.$ = window.jQuery = require('jquery');
-// require('bootstrap-sass');
-
 window.Pusher = require('pusher-js');
 import Echo from "laravel-echo";
 
@@ -19,26 +16,18 @@ var notifications = [];
 
 // TODO add new notification types here
 const NOTIFICATION_TYPES = {
-    newAnswer: 'App\\Notifications\\NewAnswer'
+    newAnswer: 'App\\Notifications\\NewAnswer',
+    newComment: 'App\\Notifications\\NewComment',
 };
 
 function routeNotification(notification) {
     // signal notification as read on the next request
     let to = '?read=' + notification.id;
     if(notification.type === NOTIFICATION_TYPES.newAnswer) {
-        const answerId = notification.data.answer_id;
-        to = 'questions/' + notification.data.question_id + to;
+        const questionId = notification.data.question_id;
+        to = 'questions/' + questionId + to;
     }
     return '/' + to;
-}
-
-function makeNotificationText(notification) {
-    let text = '';
-    if(notification.type === NOTIFICATION_TYPES.newAnswer) {
-        const name = notification.data.following_name;
-        text += '<strong>' + name + '</strong> answered your question';
-    }
-    return text;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -47,13 +36,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         window.Echo.private('App.User.' + window.Laravel.userId)
         .notification((notification) => {
-            console.log("eu");
             addNotifications([notification]);
         });
 
         ajax.sendAjaxRequest('GET', '/api/notifications', null,
                 data => addNotifications(JSON.parse(data.target.responseText))
-        ); // TODO send get request to appropriate API (and create said API)
+        );
 
     }
 });
@@ -69,8 +57,6 @@ function showNotifications(notifications) {
     if (notifications.length > 0) {
         let htmlElements = notifications.map(notification => makeNotification(notification));
         document.querySelector('#notificationsMenu').innerHTML = htmlElements.join('');
-    } else {
-        document.querySelector('#notificationsMenu').innerHTML = getNoUnreadNotificationsMessageHtml();
     }
 }
 
@@ -81,6 +67,15 @@ function makeNotification(notification) {
     return '<li><a href="' + to + '">' + notificationText + '</a></li>';
 }
 
-function getNoUnreadNotificationsMessageHtml() {
-    return '<p class="text-center">No Unread Notifications</p>';
+function makeNotificationText(notification) {
+    let text = '';
+    if(notification.type === NOTIFICATION_TYPES.newAnswer) {
+        const name = notification.data.following_name;
+        text += '<strong>' + name + '</strong> answered ';
+        if (notification.data.is_author)
+            text += 'your question.';
+        else
+            text += 'a question you bookmarked.';
+    }
+    return text;
 }

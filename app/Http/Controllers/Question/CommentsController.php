@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MessageController;
 
 class CommentsController extends Controller
 {
@@ -111,16 +112,7 @@ class CommentsController extends Controller
 
         // Checking if the User can edit the comment
         $this->authorize('edit', $message);
-
-        // Placeholder for the version of the comment that is going to be created
-        $version = null;
-
-        DB::transaction(function() use (&$version, &$request, &$message) {
-            $version = MessageVersion::create(['content' => $request->input('content'), 'message_id' => $message->id]);
-        });
-
-        $message->latest_version = $version->id;
-        $message->save();
+        MessageController::editMessage($request, $message);
 
         return response()->json(
             array(
@@ -137,13 +129,6 @@ class CommentsController extends Controller
 
         // Checking if the User can delete the comment
         $this->authorize('delete', $message);
-
-        //DB::transaction( function() use (&$message) {}
-            //$message->delete();
-        //});
-
-        $comment->delete();
-
-        return response()->json(Comment::find($request->comment));
+        $message->delete();
     }
 }

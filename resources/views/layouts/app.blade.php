@@ -44,6 +44,7 @@
                         </div>
                     </span>
                         <div id="notificationsMenu" class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
+                            <p class="text-center">No Unread Notifications.</p>
                             <!-- Notifications populated with JS -->
                         </div>
                     </div>
