@@ -137,13 +137,6 @@ class CommentsController extends Controller
 
         // Checking if the User can delete the comment
         $this->authorize('delete', $message);
-
-        //DB::transaction( function() use (&$message) {}
-            //$message->delete();
-        //});
-
-        $comment->delete();
-
-        return response()->json(Comment::find($request->comment));
+        $message->delete();
     }
 }

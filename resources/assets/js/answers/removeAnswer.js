@@ -19,13 +19,8 @@ function removeAnswer(removeTrigger) {
 
 function removeAnswerRequest(answer_id) {
 
-    let question_id = document.getElementById("question").getAttribute("data-message-id");
-    if (question_id == null)
-        return;
-
     let requestBody = {
-        "asnwer": answer_id,
-        "question": question_id
+        "answer": answer_id,
     };
 
     ajax.sendAjaxRequest(

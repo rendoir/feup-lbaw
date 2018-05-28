@@ -843,7 +843,7 @@ function getAnswersURL() {
 }
 
 function getAnswerIdURL(id) {
-    return getAnswersURL + '/' + id;
+    return getAnswersURL() + '/' + id;
 }
 
 module.exports = {
@@ -1308,8 +1308,6 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var Mustache = __webpack_require__(2);
-var answerEditor = __webpack_require__(20);
-var answerRemover = __webpack_require__(21);
 var questionPage = __webpack_require__(7);
 
 function createAnswer(answer_info) {
@@ -1327,14 +1325,8 @@ function createAnswer(answer_info) {
     answers.appendChild(placeholder.firstElementChild);
 }
 
-// Function to add the event listeners missing to the freshly added answers: edition and deletion
+// Function to add the event listeners missing to the freshly added answers
 function addMissingEventListeners(placeholder) {
-    $('#editAnswerModal').on('show.bs.modal', function (e) {
-        answerEditor.editAnswer($(e.relatedTarget)[0]);
-    });
-    $('#deleteAnswerModal').on('show.bs.modal', function (e) {
-        answerRemover.removeAnswer($(e.relatedTarget)[0]);
-    });
     questionPage.markCorrectEvent(placeholder.firstElementChild);
 }
 
@@ -2322,6 +2314,8 @@ var url = __webpack_require__(4);
 var comments = __webpack_require__(5);
 var question = __webpack_require__(7);
 var common = __webpack_require__(25);
+var answerEditor = __webpack_require__(20);
+var answerRemover = __webpack_require__(21);
 
 function getAnswersRequest() {
 
@@ -2368,7 +2362,19 @@ function getAnswersHandler() {
         comments.addEventListeners();
         question.addVoteEvent('#answers-container');
         question.addMarkCorrectEvent();
+
+        // Add event listeners associated to answers' modals
+        addModalsListeners();
     } else alert.displayError("Failed to retrieve Question's answers");
+}
+
+function addModalsListeners() {
+    $('#editAnswerModal').on('show.bs.modal', function (e) {
+        answerEditor.editAnswer($(e.relatedTarget)[0]);
+    });
+    $('#deleteAnswerModal').on('show.bs.modal', function (e) {
+        answerRemover.removeAnswer($(e.relatedTarget)[0]);
+    });
 }
 
 module.exports = {
@@ -2429,12 +2435,8 @@ function removeAnswer(removeTrigger) {
 
 function removeAnswerRequest(answer_id) {
 
-    var question_id = document.getElementById("question").getAttribute("data-message-id");
-    if (question_id == null) return;
-
     var requestBody = {
-        "asnwer": answer_id,
-        "question": question_id
+        "answer": answer_id
     };
 
     ajax.sendAjaxRequest('delete', url.getAnswerIdURL(answer_id), requestBody, function (data) {

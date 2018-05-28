@@ -5,6 +5,8 @@ var url = require('./answersURL.js');
 var comments = require('../comments/comments.js');
 var question = require('../question.js');
 var common = require('../utils.js');
+var answerEditor = require('./editAnswer.js');
+var answerRemover = require('./removeAnswer.js');
 
 function getAnswersRequest() {
 
@@ -32,8 +34,20 @@ function getAnswersHandler() {
         comments.addEventListeners();
         question.addVoteEvent('#answers-container');
         question.addMarkCorrectEvent();
+
+        // Add event listeners associated to answers' modals
+        addModalsListeners();
     }
     else alert.displayError("Failed to retrieve Question's answers");
+}
+
+function addModalsListeners() {
+    $('#editAnswerModal').on('show.bs.modal', function (e) {
+        answerEditor.editAnswer($(e.relatedTarget)[0]);
+    });
+    $('#deleteAnswerModal').on('show.bs.modal', function (e) {
+        answerRemover.removeAnswer($(e.relatedTarget)[0]);
+    });
 }
 
 module.exports = {

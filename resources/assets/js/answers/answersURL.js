@@ -3,7 +3,7 @@ function getAnswersURL() {
 }
 
 function getAnswerIdURL(id) {
-    return getAnswersURL + '/' + id;
+    return getAnswersURL() + '/' + id;
 }
 
 module.exports = {
