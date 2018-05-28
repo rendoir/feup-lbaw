@@ -25,11 +25,11 @@ class Commentable extends Model
     /**
      * The users who commented on this commentable (participated in the discussion).
      */
-    public function followers()
+    public function get_followers()
     {
-        return $this->get_comments()->map(function ($comment) {
+        return $this->get_comments()->get()->map(function ($comment) {
             return $comment->message->get_author();
-        });
+        })->unique();
     }
 
 }

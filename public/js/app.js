@@ -1405,7 +1405,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(33);
+module.exports = __webpack_require__(30);
 
 
 /***/ }),
@@ -1425,7 +1425,7 @@ __webpack_require__(6);
 __webpack_require__(27);
 __webpack_require__(28);
 __webpack_require__(29);
-__webpack_require__(30);
+__webpack_require__(41);
 
 /***/ }),
 /* 12 */
@@ -3014,13 +3014,29 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
 
 /***/ }),
 /* 30 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
-window.Pusher = __webpack_require__(31);
+window.Pusher = __webpack_require__(42);
 
 
 var ajax = __webpack_require__(0);
@@ -3036,7 +3052,6 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 
 var notifications = [];
 
-// TODO add new notification types here
 var NOTIFICATION_TYPES = {
     newAnswer: 'App\\Notifications\\NewAnswer',
     newComment: 'App\\Notifications\\NewComment'
@@ -3095,12 +3110,17 @@ function makeNotificationText(notification) {
         var name = notification.data.following_name;
         text += '<strong>' + name + '</strong> answered ';
         if (notification.data.is_author) text += 'your question.';else text += 'a question you bookmarked.';
+    } else if (notification.type === NOTIFICATION_TYPES.newComment) {
+        var _name = notification.data.following_name;
+        text += '<strong>' + _name + '</strong> commented ';
+        if (notification.data.is_author) text += 'on your message.';else text += 'on a discussion you\'re participating in.';
     }
+
     return text;
 }
 
 /***/ }),
-/* 31 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -7288,7 +7308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 32 */
+/* 43 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -8084,12 +8104,6 @@ var Echo = function () {
 }();
 
 module.exports = Echo;
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
