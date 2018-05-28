@@ -1401,7 +1401,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(10);
-module.exports = __webpack_require__(32);
+module.exports = __webpack_require__(37);
 
 
 /***/ }),
@@ -2971,12 +2971,12 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
 // window.$ = window.jQuery = require('jquery');
 // require('bootstrap-sass');
 
-window.Pusher = __webpack_require__(30);
+window.Pusher = __webpack_require__(35);
 
 
 var ajax = __webpack_require__(0);
@@ -3061,7 +3061,12 @@ function getNoUnreadNotificationsMessageHtml() {
 }
 
 /***/ }),
-/* 30 */
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -7249,7 +7254,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 31 */
+/* 36 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -8047,7 +8052,7 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 32 */
+/* 37 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
