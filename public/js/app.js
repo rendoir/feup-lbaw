@@ -925,6 +925,23 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports) {
+
+function getAnswersURL() {
+    return window.location.pathname + '/answers';
+}
+
+function getAnswerIdURL(id) {
+    return getAnswersURL() + '/' + id;
+}
+
+module.exports = {
+    getAnswersURL: getAnswersURL,
+    getAnswerIdURL: getAnswerIdURL
+};
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Mustache = __webpack_require__(3);
@@ -999,23 +1016,6 @@ module.exports = {
 };
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-function getAnswersURL() {
-    return window.location.pathname + '/answers';
-}
-
-function getAnswerIdURL(id) {
-    return getAnswersURL() + '/' + id;
-}
-
-module.exports = {
-    getAnswersURL: getAnswersURL,
-    getAnswerIdURL: getAnswerIdURL
-};
-
-/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1083,7 +1083,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 // Adding edit capability to freshly added comment
 function enableEditMode(message_id) {
@@ -1405,7 +1405,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(30);
+module.exports = __webpack_require__(33);
 
 
 /***/ }),
@@ -1425,7 +1425,7 @@ __webpack_require__(6);
 __webpack_require__(27);
 __webpack_require__(28);
 __webpack_require__(29);
-__webpack_require__(41);
+__webpack_require__(30);
 
 /***/ }),
 /* 12 */
@@ -2310,7 +2310,7 @@ window.addEventListener('load', addAnswerEventListeners);
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(9);
-var url = __webpack_require__(5);
+var url = __webpack_require__(4);
 var comments = __webpack_require__(6);
 var question = __webpack_require__(2);
 var common = __webpack_require__(23);
@@ -2387,7 +2387,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var editor = __webpack_require__(7);
 var questionPage = __webpack_require__(2);
 
@@ -2458,7 +2458,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var editor = __webpack_require__(7);
 
 function addCommentRequest(message_id) {
@@ -2516,7 +2516,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 function removeComment(commentTrashBtn) {
 
@@ -2603,6 +2603,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
+var url = __webpack_require__(4);
 
 function editAnswer(editTrigger) {
 
@@ -2615,13 +2616,62 @@ function editAnswer(editTrigger) {
     var contentParent = document.querySelector(".answer-content[data-message-id='" + edit_id + "']");
     if (contentParent == null) return;
 
-    console.log(contentParent);
+    var markdown = contentParent.children[0];
+    if (!markdown.classList.contains("answer-hidden-markdown")) {
+        alert.displayError("Failed to get Answer markdown");
+        return;
+    }
 
-    // Usar os filhos para progredir
+    var editor = document.getElementById("edit-editor");
+    editor.value = markdown.innerHTML;
 
     editBtn.addEventListener('click', function () {
-        //editAnswerRequest(comment_id, answer_id, comment.parentNode);
+        editAnswerRequest(edit_id, contentParent.parentElement, editor);
     });
+}
+
+function editAnswerRequest(answer_id, answerPlaceholder, editor) {
+
+    var requestBody = {
+        "answer": answer_id,
+        "content": editor.value
+    };
+
+    ajax.sendAjaxRequest('put', url.getAnswerIdURL(answer_id), requestBody, function (data) {
+        editAnswerHandler(data.target, answer_id, answerPlaceholder);
+    });
+}
+
+function editAnswerHandler(response, answer_id, answerPlaceholder) {
+    if (response.status == 403) {
+        alert.displayError("You have no permission to edit this answer");
+        return;
+    } else if (response.status != 200) {
+        alert.displayError("Failed to edit the answer");
+        return;
+    }
+
+    var children = answerPlaceholder.children;
+    for (var i = 1; !children[i].classList.contains("badge") && i < children.length - 1; ++i) {
+        answerPlaceholder.removeChild(children[i]);
+        i--;
+    }
+
+    var answer = JSON.parse(response.responseText).answer;
+    var markdown = answer.content.version;
+    children[0].children[0].innerHTML = markdown;
+
+    var js = document.createElement("p");
+    js.innerHTML = markdownToJs(markdown);
+    answerPlaceholder.insertBefore(js, children[2]);
+}
+
+function markdownToJs(markdown) {
+    var instance = new Object();
+    instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+
+    var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown));
+    return bound();
 }
 
 module.exports = {
@@ -2634,7 +2684,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var url = __webpack_require__(5);
+var url = __webpack_require__(4);
 
 function removeAnswer(removeTrigger) {
 
@@ -2686,7 +2736,7 @@ module.exports = {
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(9);
-var url = __webpack_require__(5);
+var url = __webpack_require__(4);
 var comments = __webpack_require__(6);
 
 function addAnswerRequest(message_id) {
@@ -3014,29 +3064,13 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
 
 /***/ }),
 /* 30 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
-window.Pusher = __webpack_require__(42);
+window.Pusher = __webpack_require__(31);
 
 
 var ajax = __webpack_require__(0);
@@ -3120,7 +3154,7 @@ function makeNotificationText(notification) {
 }
 
 /***/ }),
-/* 42 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -7308,7 +7342,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 43 */
+/* 32 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -8104,6 +8138,12 @@ var Echo = function () {
 }();
 
 module.exports = Echo;
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

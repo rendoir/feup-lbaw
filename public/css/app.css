@@ -814,6 +814,10 @@ a.tag {
   color: white !important;
 }
 
+.answer-hidden-markdown {
+  display: none;
+}
+
 /*************************************************/
 
 /************** Responsive Design ****************/
