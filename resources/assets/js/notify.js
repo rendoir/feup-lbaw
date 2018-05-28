@@ -1,6 +1,3 @@
-// window.$ = window.jQuery = require('jquery');
-// require('bootstrap-sass');
-
 window.Pusher = require('pusher-js');
 import Echo from "laravel-echo";
 
@@ -32,22 +29,12 @@ function routeNotification(notification) {
     return '/' + to;
 }
 
-function makeNotificationText(notification) {
-    let text = '';
-    if(notification.type === NOTIFICATION_TYPES.newAnswer) {
-        const name = notification.data.following_name;
-        text += '<strong>' + name + '</strong> answered your question';
-    }
-    return text;
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     // check if there's a logged in user
     if(Laravel.userId) {
         
         window.Echo.private('App.User.' + window.Laravel.userId)
         .notification((notification) => {
-            console.log("eu");
             addNotifications([notification]);
         });
 
@@ -77,4 +64,17 @@ function makeNotification(notification) {
     let to = routeNotification(notification);
     let notificationText = makeNotificationText(notification);
     return '<li><a href="' + to + '">' + notificationText + '</a></li>';
+}
+
+function makeNotificationText(notification) {
+    let text = '';
+    if(notification.type === NOTIFICATION_TYPES.newAnswer) {
+        const name = notification.data.following_name;
+        text += '<strong>' + name + '</strong> answered ';
+        if (notification.data.is_author)
+            text += 'your question.';
+        else
+            text += 'a question you bookmarked.';
+    }
+    return text;
 }

@@ -2973,9 +2973,6 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
-// window.$ = window.jQuery = require('jquery');
-// require('bootstrap-sass');
-
 window.Pusher = __webpack_require__(30);
 
 
@@ -3007,21 +3004,11 @@ function routeNotification(notification) {
     return '/' + to;
 }
 
-function makeNotificationText(notification) {
-    var text = '';
-    if (notification.type === NOTIFICATION_TYPES.newAnswer) {
-        var name = notification.data.following_name;
-        text += '<strong>' + name + '</strong> answered your question';
-    }
-    return text;
-}
-
 document.addEventListener('DOMContentLoaded', function () {
     // check if there's a logged in user
     if (Laravel.userId) {
 
         window.Echo.private('App.User.' + window.Laravel.userId).notification(function (notification) {
-            console.log("eu");
             addNotifications([notification]);
         });
 
@@ -3052,6 +3039,16 @@ function makeNotification(notification) {
     var to = routeNotification(notification);
     var notificationText = makeNotificationText(notification);
     return '<li><a href="' + to + '">' + notificationText + '</a></li>';
+}
+
+function makeNotificationText(notification) {
+    var text = '';
+    if (notification.type === NOTIFICATION_TYPES.newAnswer) {
+        var name = notification.data.following_name;
+        text += '<strong>' + name + '</strong> answered ';
+        if (notification.data.is_author) text += 'your question.';else text += 'a question you bookmarked.';
+    }
+    return text;
 }
 
 /***/ }),
