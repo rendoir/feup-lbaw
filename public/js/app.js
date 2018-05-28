@@ -838,6 +838,167 @@ module.exports = {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var messages = __webpack_require__(7);
+var commentsViewer = __webpack_require__(21);
+var commentsCreator = __webpack_require__(22);
+var commentsEditor = __webpack_require__(5);
+var commentsRemover = __webpack_require__(23);
+
+function addEventListeners() {
+
+    viewCommentsEventListener();
+    addCommentsEventListener();
+    removeCommentsEventListener();
+
+    // Some event listeners are only added when the respective
+    // html elements triggering the events are created
+}
+
+function addSingleEventListeners(message_id) {
+    viewSingleCommentEventListener(message_id);
+    addSingleCommentEventListener(message_id);
+}
+
+function viewCommentsEventListener() {
+    messages.genericClickListener('.show-comments', commentsViewer.viewCommentsRequest);
+}
+
+function viewSingleCommentEventListener(message_id) {
+    messages.genericSingleClickListener('.show-comments', commentsViewer.viewCommentsRequest, message_id);
+}
+
+function addCommentsEventListener() {
+    messages.genericClickListener('.new-comment-submit', commentsCreator.addCommentRequest);
+    messages.genericEnterListener('.new-comment-content', commentsCreator.addCommentRequest);
+}
+
+function addSingleCommentEventListener(message_id) {
+    messages.genericSingleClickListener('.new-comment-submit', commentsCreator.addCommentRequest, message_id);
+    messages.genericSingleEnterListener('.new-comment-content', commentsCreator.addCommentRequest, message_id);
+}
+
+function removeCommentsEventListener() {
+
+    $('#deleteCommentModal').on('show.bs.modal', function (e) {
+        commentsRemover.removeComment($(e.relatedTarget)[0]);
+    });
+
+    /* 
+    let deleteModal = document.querySelector('#deleteCommentModal');
+    if (deleteModal == null)
+        return;
+     deleteModal.addEventListener('show.bs.modal', function(e) {
+        console.log(e.relatedTarget);
+    });
+    */
+}
+
+module.exports = {
+    addEventListeners: addEventListeners
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var utils = __webpack_require__(3);
+
+// Adding edit capability to freshly added comment
+function enableEditMode(message_id) {
+
+    var comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
+    if (comment == null) return; // Comment without edit functionality
+
+    comment.addEventListener('click', function () {
+        setEditMode(message_id);
+    });
+}
+
+function setEditMode(comment_id) {
+
+    var contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
+
+    var contentNode = document.querySelector(contentSelector);
+    if (contentNode == null) return;
+
+    var parentNode = contentNode.parentNode;
+    var content = contentNode.innerText;
+    parentNode.removeChild(contentNode);
+
+    var input = document.createElement("input");
+    input.classList.add('form-control');
+    input.value = content;
+
+    parentNode.insertBefore(input, parentNode.firstChild);
+
+    addKeyListeners(input, contentNode, comment_id);
+}
+
+function addKeyListeners(inputNode, oldNode, comment_id) {
+    inputNode.addEventListener('keyup', function (event) {
+
+        switch (event.keyCode) {
+            // ENTER was pressed
+            case 13:
+                requestEdition(inputNode, oldNode, comment_id);
+                break;
+
+            // ESC was pressed 
+            case 27:
+                getPreviousComment(inputNode, oldNode);
+                return;
+        }
+    });
+}
+
+function requestEdition(inputNode, oldNode, comment_id) {
+
+    var commentsGroup = inputNode.parentNode.parentNode.parentNode;
+    var answer_id = commentsGroup.parentNode.parentNode.getAttribute("data-message-id");
+
+    var requestBody = {
+        "content": inputNode.value,
+        "commentable": answer_id,
+        "comment": comment_id
+    };
+
+    ajax.sendAjaxRequest('put', utils.getUniqueCommentURL(answer_id, comment_id), requestBody, function (data) {
+        editCommentHandler(data.target, inputNode, oldNode);
+    });
+}
+
+function editCommentHandler(response, inputNode, oldNode) {
+    if (response.status == 403) {
+        displayError("You have no permission to edit this comment");
+        return;
+    } else if (response.status != 200) {
+        displayError("Failed to edit the comment");
+        return;
+    }
+
+    var edittedComment = JSON.parse(response.responseText).comment;
+    oldNode.innerText = edittedComment.content.version;
+
+    getPreviousComment(inputNode, oldNode);
+}
+
+function getPreviousComment(inputNode, previousNode) {
+
+    var parentNode = inputNode.parentNode;
+    parentNode.removeChild(inputNode);
+
+    parentNode.insertBefore(previousNode, parentNode.firstChild);
+}
+
+module.exports = {
+    enableEditMode: enableEditMode
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var ajax = __webpack_require__(0);
 var errors = __webpack_require__(1);
 
@@ -994,167 +1155,6 @@ module.exports = {
 };
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var messages = __webpack_require__(7);
-var commentsViewer = __webpack_require__(21);
-var commentsCreator = __webpack_require__(22);
-var commentsEditor = __webpack_require__(6);
-var commentsRemover = __webpack_require__(23);
-
-function addEventListeners() {
-
-    viewCommentsEventListener();
-    addCommentsEventListener();
-    removeCommentsEventListener();
-
-    // Some event listeners are only added when the respective
-    // html elements triggering the events are created
-}
-
-function addSingleEventListeners(message_id) {
-    viewSingleCommentEventListener(message_id);
-    addSingleCommentEventListener(message_id);
-}
-
-function viewCommentsEventListener() {
-    messages.genericClickListener('.show-comments', commentsViewer.viewCommentsRequest);
-}
-
-function viewSingleCommentEventListener(message_id) {
-    messages.genericSingleClickListener('.show-comments', commentsViewer.viewCommentsRequest, message_id);
-}
-
-function addCommentsEventListener() {
-    messages.genericClickListener('.new-comment-submit', commentsCreator.addCommentRequest);
-    messages.genericEnterListener('.new-comment-content', commentsCreator.addCommentRequest);
-}
-
-function addSingleCommentEventListener(message_id) {
-    messages.genericSingleClickListener('.new-comment-submit', commentsCreator.addCommentRequest, message_id);
-    messages.genericSingleEnterListener('.new-comment-content', commentsCreator.addCommentRequest, message_id);
-}
-
-function removeCommentsEventListener() {
-
-    $('#deleteCommentModal').on('show.bs.modal', function (e) {
-        commentsRemover.removeComment($(e.relatedTarget)[0]);
-    });
-
-    /* 
-    let deleteModal = document.querySelector('#deleteCommentModal');
-    if (deleteModal == null)
-        return;
-     deleteModal.addEventListener('show.bs.modal', function(e) {
-        console.log(e.relatedTarget);
-    });
-    */
-}
-
-module.exports = {
-    addEventListeners: addEventListeners
-};
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ajax = __webpack_require__(0);
-var utils = __webpack_require__(3);
-
-// Adding edit capability to freshly added comment
-function enableEditMode(message_id) {
-
-    var comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
-    if (comment == null) return; // Comment without edit functionality
-
-    comment.addEventListener('click', function () {
-        setEditMode(message_id);
-    });
-}
-
-function setEditMode(comment_id) {
-
-    var contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
-
-    var contentNode = document.querySelector(contentSelector);
-    if (contentNode == null) return;
-
-    var parentNode = contentNode.parentNode;
-    var content = contentNode.innerText;
-    parentNode.removeChild(contentNode);
-
-    var input = document.createElement("input");
-    input.classList.add('form-control');
-    input.value = content;
-
-    parentNode.insertBefore(input, parentNode.firstChild);
-
-    addKeyListeners(input, contentNode, comment_id);
-}
-
-function addKeyListeners(inputNode, oldNode, comment_id) {
-    inputNode.addEventListener('keyup', function (event) {
-
-        switch (event.keyCode) {
-            // ENTER was pressed
-            case 13:
-                requestEdition(inputNode, oldNode, comment_id);
-                break;
-
-            // ESC was pressed 
-            case 27:
-                getPreviousComment(inputNode, oldNode);
-                return;
-        }
-    });
-}
-
-function requestEdition(inputNode, oldNode, comment_id) {
-
-    var commentsGroup = inputNode.parentNode.parentNode.parentNode;
-    var answer_id = commentsGroup.parentNode.parentNode.getAttribute("data-message-id");
-
-    var requestBody = {
-        "content": inputNode.value,
-        "commentable": answer_id,
-        "comment": comment_id
-    };
-
-    ajax.sendAjaxRequest('put', utils.getUniqueCommentURL(answer_id, comment_id), requestBody, function (data) {
-        editCommentHandler(data.target, inputNode, oldNode);
-    });
-}
-
-function editCommentHandler(response, inputNode, oldNode) {
-    if (response.status == 403) {
-        displayError("You have no permission to edit this comment");
-        return;
-    } else if (response.status != 200) {
-        displayError("Failed to edit the comment");
-        return;
-    }
-
-    var edittedComment = JSON.parse(response.responseText).comment;
-    oldNode.innerText = edittedComment.content.version;
-
-    getPreviousComment(inputNode, oldNode);
-}
-
-function getPreviousComment(inputNode, previousNode) {
-
-    var parentNode = inputNode.parentNode;
-    parentNode.removeChild(inputNode);
-
-    parentNode.insertBefore(previousNode, parentNode.firstChild);
-}
-
-module.exports = {
-    enableEditMode: enableEditMode
-};
-
-/***/ }),
 /* 7 */
 /***/ (function(module, exports) {
 
@@ -1288,7 +1288,7 @@ module.exports = {
 var Mustache = __webpack_require__(2);
 var answerEditor = __webpack_require__(19);
 var answerRemover = __webpack_require__(20);
-var questionPage = __webpack_require__(4);
+var questionPage = __webpack_require__(6);
 
 function createAnswer(answer_info) {
 
@@ -1404,7 +1404,7 @@ module.exports = __webpack_require__(32);
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(0);
-__webpack_require__(4);
+__webpack_require__(6);
 __webpack_require__(11);
 __webpack_require__(12);
 __webpack_require__(13);
@@ -1412,7 +1412,7 @@ __webpack_require__(14);
 __webpack_require__(15);
 __webpack_require__(16);
 __webpack_require__(17);
-__webpack_require__(5);
+__webpack_require__(4);
 __webpack_require__(26);
 __webpack_require__(27);
 __webpack_require__(28);
@@ -2301,8 +2301,8 @@ window.addEventListener('load', addAnswerEventListeners);
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(8);
-var comments = __webpack_require__(5);
-var question = __webpack_require__(4);
+var comments = __webpack_require__(4);
+var question = __webpack_require__(6);
 var common = __webpack_require__(24);
 
 function getAnswersRequest() {
@@ -2419,7 +2419,7 @@ module.exports = {
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(3);
-var editor = __webpack_require__(6);
+var editor = __webpack_require__(5);
 
 function viewCommentsRequest(message_id) {
 
@@ -2480,7 +2480,7 @@ module.exports = {
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(3);
-var editor = __webpack_require__(6);
+var editor = __webpack_require__(5);
 
 function addCommentRequest(message_id) {
 
@@ -2625,7 +2625,7 @@ module.exports = {
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(8);
-var comments = __webpack_require__(5);
+var comments = __webpack_require__(4);
 
 function addAnswerRequest(message_id) {
 
@@ -3012,7 +3012,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         ajax.sendAjaxRequest('GET', '/api/notifications', null, function (data) {
             return addNotifications(JSON.parse(data.target.responseText));
-        }); // TODO send get request to appropriate API (and create said API)
+        });
     }
 });
 
@@ -3029,8 +3029,6 @@ function showNotifications(notifications) {
             return makeNotification(notification);
         });
         document.querySelector('#notificationsMenu').innerHTML = htmlElements.join('');
-    } else {
-        document.querySelector('#notificationsMenu').innerHTML = getNoUnreadNotificationsMessageHtml();
     }
 }
 
@@ -3039,10 +3037,6 @@ function makeNotification(notification) {
     var to = routeNotification(notification);
     var notificationText = makeNotificationText(notification);
     return '<li><a href="' + to + '">' + notificationText + '</a></li>';
-}
-
-function getNoUnreadNotificationsMessageHtml() {
-    return '<p class="text-center">No Unread Notifications</p>';
 }
 
 /***/ }),

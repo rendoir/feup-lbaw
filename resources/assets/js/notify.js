@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         ajax.sendAjaxRequest('GET', '/api/notifications', null,
                 data => addNotifications(JSON.parse(data.target.responseText))
-        ); // TODO send get request to appropriate API (and create said API)
+        );
 
     }
 });
@@ -69,8 +69,6 @@ function showNotifications(notifications) {
     if (notifications.length > 0) {
         let htmlElements = notifications.map(notification => makeNotification(notification));
         document.querySelector('#notificationsMenu').innerHTML = htmlElements.join('');
-    } else {
-        document.querySelector('#notificationsMenu').innerHTML = getNoUnreadNotificationsMessageHtml();
     }
 }
 
@@ -79,8 +77,4 @@ function makeNotification(notification) {
     let to = routeNotification(notification);
     let notificationText = makeNotificationText(notification);
     return '<li><a href="' + to + '">' + notificationText + '</a></li>';
-}
-
-function getNoUnreadNotificationsMessageHtml() {
-    return '<p class="text-center">No Unread Notifications</p>';
 }

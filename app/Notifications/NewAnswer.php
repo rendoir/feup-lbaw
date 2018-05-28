@@ -44,14 +44,11 @@ class NewAnswer extends Notification implements ShouldQueue
 
     public function toBroadcast($notifiable)
     {
-        $ret = new BroadcastMessage([
+        return new BroadcastMessage([
             'id' => $this->id,
             'read_at' => null,
             'data' => $this->toArray($notifiable),
         ]);
-
-        info($ret); // TODO remove
-        return $ret;
     }
 
     public function toArray($notifiable)
