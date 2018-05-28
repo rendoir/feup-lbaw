@@ -24,7 +24,7 @@
                   <div class="col-2 pb-2">
                       E-mail
                   </div>
-                  <div class="col-6 pb-2">
+                  <div class="col-8 pb-2">
                       {{$user->email}}
                   </div>
 
@@ -35,16 +35,12 @@
                     <div class="col-2 pb-2">
                         Password
                     </div>
-                    <div class="col-6 pb-2">
+                    <div class="col-8 pb-2">
                         Remember to change your password frequently!
                     </div>
                     <div class="px-3" data-toggle="collapse" href="#editPassword" role="button" aria-expanded="false" aria-controls="editPassword">
                         <button type="button" class="btn btn-outline-info">Change</button>
                     </div>
-                    <div class="px-3" role="button">
-                        <button type="button" class="btn btn-outline-info">Recover</button>
-                    </div>
-
 
                     <div class="collapse rounded w-100 bg-light px-4 pt-4 pb-3 box-shadow" id="editPassword">
                         <div class="input-group mt-2 mb-4">
