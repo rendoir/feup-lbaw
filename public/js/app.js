@@ -2387,6 +2387,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
+var url = __webpack_require__(4);
 
 function editAnswer(editTrigger) {
 
@@ -2399,13 +2400,62 @@ function editAnswer(editTrigger) {
     var contentParent = document.querySelector(".answer-content[data-message-id='" + edit_id + "']");
     if (contentParent == null) return;
 
-    console.log(contentParent);
+    var markdown = contentParent.children[0];
+    if (!markdown.classList.contains("answer-hidden-markdown")) {
+        alert.displayError("Failed to get Answer markdown");
+        return;
+    }
 
-    // Usar os filhos para progredir
+    var editor = document.getElementById("edit-editor");
+    editor.value = markdown.innerHTML;
 
     editBtn.addEventListener('click', function () {
-        //editAnswerRequest(comment_id, answer_id, comment.parentNode);
+        editAnswerRequest(edit_id, contentParent.parentElement, editor);
     });
+}
+
+function editAnswerRequest(answer_id, answerPlaceholder, editor) {
+
+    var requestBody = {
+        "answer": answer_id,
+        "content": editor.value
+    };
+
+    ajax.sendAjaxRequest('put', url.getAnswerIdURL(answer_id), requestBody, function (data) {
+        editAnswerHandler(data.target, answer_id, answerPlaceholder);
+    });
+}
+
+function editAnswerHandler(response, answer_id, answerPlaceholder) {
+    if (response.status == 403) {
+        alert.displayError("You have no permission to edit this answer");
+        return;
+    } else if (response.status != 200) {
+        alert.displayError("Failed to edit the answer");
+        return;
+    }
+
+    var children = answerPlaceholder.children;
+    for (var i = 1; !children[i].classList.contains("badge") && i < children.length - 1; ++i) {
+        answerPlaceholder.removeChild(children[i]);
+        i--;
+    }
+
+    var answer = JSON.parse(response.responseText).answer;
+    var markdown = answer.content.version;
+    children[0].children[0].innerHTML = markdown;
+
+    var js = document.createElement("p");
+    js.innerHTML = markdownToJs(markdown);
+    answerPlaceholder.insertBefore(js, children[2]);
+}
+
+function markdownToJs(markdown) {
+    var instance = new Object();
+    instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+
+    var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown));
+    return bound();
 }
 
 module.exports = {
