@@ -2748,43 +2748,44 @@ changePasswordEvent();
 var ajax = __webpack_require__(0);
 var Mustache = __webpack_require__(2);
 
-var pages_num = [0, 0, 0, 0];
-var page_enum = { "nav-new": 0, "nav-hot": 1, "nav-voted": 2, "nav-active": 3 };
-var urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions"];
-var endOfPage = false;
-var questionType = $('div.tab-pane.active.show')[0];
-if (questionType != null) questionType = questionType.id;
-var url = urls[page_enum[questionType]];
-
-// GET questions on certain page
-function getQuestions(pageNum, handler) {
-    if (questionType == null) return null;
-
-    defaultHandler = function defaultHandler(data) {
-        $('div.loader-ellips').removeClass('show');
-        var template = $('template#questions')[0];
-        var questions = null;
-
-        try {
-            questions = JSON.parse(data.target.responseText);
-        } catch (e) {}
-
-        var mustacheRender = Mustache.render(template.innerHTML, questions);
-        if (pages_num[page_enum[questionType]] == 0) {
-            pages_num[page_enum[questionType]]++;
-            $('div#' + questionType)[0].innerHTML = mustacheRender;
-        } else $('div#' + questionType)[0].innerHTML += mustacheRender;
-
-        if (questions.questions.length != 0) endOfPage = false;
-    };
-
-    if (handler == null) handler = defaultHandler;
-    $('div.loader-ellips').addClass('show');
-    ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
-}
-
 // GET side profile info
 if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
+
+    // GET questions on certain page
+    var getQuestions = function getQuestions(pageNum, handler) {
+        if (questionType == null) return null;
+
+        defaultHandler = function defaultHandler(data) {
+            $('div.loader-ellips').removeClass('show');
+            var template = $('template#questions')[0];
+            var questions = null;
+
+            try {
+                questions = JSON.parse(data.target.responseText);
+            } catch (e) {}
+
+            var mustacheRender = Mustache.render(template.innerHTML, questions);
+            if (pages_num[page_enum[questionType]] == 0) {
+                pages_num[page_enum[questionType]]++;
+                $('div#' + questionType)[0].innerHTML = mustacheRender;
+            } else $('div#' + questionType)[0].innerHTML += mustacheRender;
+
+            if (questions.questions.length != 0) endOfPage = false;
+        };
+
+        if (handler == null) handler = defaultHandler;
+        $('div.loader-ellips').addClass('show');
+        ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
+    };
+
+    var pages_num = [0, 0, 0, 0];
+    var page_enum = { "nav-new": 0, "nav-hot": 1, "nav-voted": 2, "nav-active": 3 };
+    var urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions"];
+    var endOfPage = false;
+    var questionType = $('div.tab-pane.active.show')[0];
+    if (questionType != null) questionType = questionType.id;
+    var url = urls[page_enum[questionType]];
+
     ajax.sendAjaxRequest('GET', "/min-profile", null, function (data) {
         var template = $('template#minProfile')[0];
         var info = null;
@@ -2856,6 +2857,98 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
                 endOfPage = true;
                 pages_num[page_enum[questionType]]++;
                 getQuestions(pages_num[page_enum[questionType]]);
+            }
+        }
+    });
+}
+
+if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != null) {
+
+    // GET questions on certain page
+    var _getQuestions = function _getQuestions(pageNum, handler) {
+        if (_questionType == null) return null;
+
+        defaultHandler = function defaultHandler(data) {
+            $('div.loader-ellips').removeClass('show');
+            var template = $('template#questions')[0];
+            var questions = null;
+
+            try {
+                questions = JSON.parse(data.target.responseText);
+            } catch (e) {}
+
+            var mustacheRender = Mustache.render(template.innerHTML, questions);
+            if (_pages_num[_page_enum[_questionType]] == 0) {
+                _pages_num[_page_enum[_questionType]]++;
+                $('div#' + _questionType)[0].innerHTML = mustacheRender;
+            } else $('div#' + _questionType)[0].innerHTML += mustacheRender;
+
+            if (questions.questions.length != 0) _endOfPage = false;
+        };
+
+        if (handler == null) handler = defaultHandler;
+        $('div.loader-ellips').addClass('show');
+        ajax.sendAjaxRequest('GET', "/users/" + $('h2#username')[0].innerHTML + _url + "?page=" + pageNum, null, handler);
+    };
+
+    alert("ola");
+
+    var _pages_num = [0, 0, 0];
+    var _page_enum = { "nav-questions": 0, "nav-answers": 1, "nav-comments": 2 };
+    var _urls = ["/getQuestions", "/getAnswers", "/getComments"];
+    var _endOfPage = false;
+    var _questionType = $('div.tab-pane.active.show')[0];
+    if (_questionType != null) _questionType = _questionType.id;
+    var _url = _urls[_page_enum[_questionType]];
+
+    _pages_num[_page_enum[_questionType]]++;
+    _getQuestions(_pages_num[_page_enum[_questionType]], function (data) {
+        var template = $('template#questions')[0];
+        var questions = null;
+
+        try {
+            questions = JSON.parse(data.target.responseText);
+        } catch (e) {}
+
+        var mustacheRender = Mustache.render(template.innerHTML, questions);
+        var nav = $('div#' + _questionType)[0].innerHTML;
+        $('div#nav-questions')[0].innerHTML = nav;
+        $('div#nav-answers')[0].innerHTML = nav;
+        $('div#nav-comments')[0].innerHTML = nav;
+        $('div#' + _questionType)[0].innerHTML = mustacheRender;
+    });
+
+    $('a#nav-questions-tab')[0].addEventListener("click", function () {
+        if (_questionType == "nav-questions") return;
+        _questionType = "nav-questions";
+        _url = _urls[_page_enum[_questionType]];
+        if (_pages_num[0] == 0) {
+            _getQuestions(1);
+        }
+    });
+    $('a#nav-answers-tab')[0].addEventListener("click", function () {
+        if (_questionType == "nav-answers") return;
+        _questionType = "nav-answers";
+        _url = _urls[_page_enum[_questionType]];
+        if (_pages_num[1] == 0) {
+            _getQuestions(1);
+        }
+    });
+    $('a#nav-comments-tab')[0].addEventListener("click", function () {
+        if (_questionType == "nav-comments") return;
+        _questionType = "nav-comments";
+        _url = _urls[_page_enum[_questionType]];
+        if (_pages_num[2] == 0) {
+            _getQuestions(1);
+        }
+    });
+
+    $(window).scroll(function () {
+        if (!_endOfPage) {
+            if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                _endOfPage = true;
+                _pages_num[_page_enum[_questionType]]++;
+                _getQuestions(_pages_num[_page_enum[_questionType]]);
             }
         }
     });
