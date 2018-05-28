@@ -798,6 +798,19 @@ nav {
   cursor: pointer;
 }
 
+a,
+a:hover {
+  text-decoration: none;
+}
+
+.question-card a:hover {
+  color: #0056b3;
+}
+
+a.tag {
+  color: white !important;
+}
+
 /*************************************************/
 
 /************** Responsive Design ****************/
