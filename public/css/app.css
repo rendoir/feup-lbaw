@@ -794,7 +794,10 @@ nav {
 .question-card,
 #notifications,
 #login,
-.dropdown {
+.dropdown,
+.vote,
+.mark,
+#bookmark {
   cursor: pointer;
 }
 
