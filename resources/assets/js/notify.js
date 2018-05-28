@@ -70,14 +70,8 @@ function showNotifications(notifications, target) {
         $('#notificationsMenu').html(htmlElements.join(''));
     } else {
         $('#notificationsMenu').html('<div class="dropdown-divider"></div><button type="button class="dropdown-item" href="#">No Unread Notifications</button>');
+    }
 }
-}
-
-// <button class="dropdown-item" type="button">
-//                 <i class="fa fa-thumbs-up"></i>
-//                 JohnDoe00 upvoted your Question
-//               </button>
-//                <div class="dropdown-divider"></div>
 
 // Make a single notification string
 function makeNotification(notification) {

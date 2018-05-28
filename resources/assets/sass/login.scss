@@ -15,9 +15,10 @@
   src: url('../fonts/poppins/Poppins-Bold.ttf');
 }
 
-@font-face {
-  font-family: Poppins-SemiBold;
-  src: url('../fonts/poppins/Poppins-SemiBold.ttf');
+body#login-page {
+  height: 100%;
+  font-family: Poppins-Regular, sans-serif;
+  padding-bottom: 0px;
 }
 
 #login-page {
@@ -28,11 +29,6 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-  }
-
-  body, html {
-    height: 100%;
-    font-family: Poppins-Regular, sans-serif;
   }
 
   /*---------------------------------------------*/
