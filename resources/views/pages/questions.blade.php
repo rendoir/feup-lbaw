@@ -76,7 +76,7 @@
                                 <h3 class="card-text mb-0 template-for-fill">&nbsp</h3>
                                 <div class="my-3">
                                     <i class="fas fa-trophy"></i>
-                                    <span class="template-for-fill">&nbsp</span>
+                                    <span class="template-for-fill">&nbsp&nbsp&nbsp</span>
                                 </div>
                                 <div class="row">
                                     <div class="col-4 px-1 border-right">
