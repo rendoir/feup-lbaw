@@ -70,20 +70,17 @@ class ProfileController extends Controller
       $user->save();
     }
 
-    public function addBookmark(Request $request) {
+    public function bookmark(Request $request) {
       if(!Auth::check())
         return response('You must login to manage your bookmarks', 403);
 
-      DB::table('bookmarks')->insert(['question_id' => $request->question_id, 'user_id' => Auth::id()]);
-    }
-
-    public function deleteBookmark(Request $request) {
-      if(!Auth::check())
-        return response('You must login to manage your bookmarks', 403);
-
-      DB::table('bookmarks')->where('user_id', '=', Auth::id())
-        ->where('question_id', '=', $request->question_id)
-        ->delete();
+      if(Auth::user()->hasBookmarkOn($request->question_id)) {
+        DB::table('bookmarks')->where('user_id', '=', Auth::id())
+          ->where('question_id', '=', $request->question_id)
+          ->delete();
+      } else {
+        DB::table('bookmarks')->insert(['question_id' => $request->question_id, 'user_id' => Auth::id()]);
+      }
     }
 
     public function getMinProfile(){

@@ -34,6 +34,7 @@ class CommentsController extends Controller
         $content = $message->message_version;
         $author = $message->get_author();
         $positive = $message->getVote();
+        $has_report = Auth::check() ? Auth::user()->hasReportOn($message->id) : false;
 
         return array(
             "id" => $comment->id,
@@ -43,6 +44,7 @@ class CommentsController extends Controller
             "is_owner" => ($author->id == Auth::id()),
             "discrete_p" => $positive === true ? '' : 'discrete',
             "discrete_n" => $positive === false ? '' : 'discrete',
+            "discrete_r" => $has_report ? '' : 'discrete',
             "content" => array (
                 "version" => $content->content,
                 "creation_time" => $content->creation_time,

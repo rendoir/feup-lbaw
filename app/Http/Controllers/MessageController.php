@@ -61,4 +61,12 @@ class MessageController extends Controller
     else $answer->question->correct_answer = $answer->id;
     $answer->question->save();
   }
+
+  public function report(Request $request) {
+    if(!Auth::check())
+      return response('You must login to report your bookmarks', 403);
+
+    if(!Auth::user()->hasReportOn($request->message_id))
+      DB::table('reports')->insert(['message_id' => $request->message_id, 'user_id' => Auth::id()]);
+  }
 }

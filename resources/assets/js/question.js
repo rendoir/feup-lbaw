@@ -29,18 +29,20 @@ function bookmarkEvent() {
 	if(bookmark == null) return;
 	let i = bookmark.querySelector("i");
 	bookmark.addEventListener("click", function() {
+		$(bookmark).tooltip('hide');
 		let message_id = bookmark.getAttribute('data-message-id');
-		let is_active = bookmark.className == 'active';
-		let method = is_active ? 'delete' : 'post';
+		let is_active = bookmark.classList.contains('active');
 		let url = '/users/bookmarks/' + message_id;
 		let data = { question_id: message_id };
-		ajax.sendAjaxRequest(method, url, data, function() {
+		ajax.sendAjaxRequest('post', url, data, function() {
 			if(this.status == 200){
 				if(is_active) {
-					bookmark.className = 'inactive';
+					bookmark.classList.add('inactive');
+					bookmark.classList.remove('active');
 					i.className = i.className.replace('fas', 'far');
 				} else {
-					bookmark.className = 'active';
+					bookmark.classList.add('active');
+					bookmark.classList.remove('inactive');
 					i.className = i.className.replace('far', 'fas');
 				}
 			}
@@ -135,9 +137,41 @@ function markCorrectEvent(answer) {
 	});
 }
 
+function addReportEvent(container) {
+	let reports = document.querySelectorAll(container + ' .report');
+	reportEvent(reports);
+}
+
+function reportEvent(reports) {
+	if(reports == null) return;
+	for (let i = 0; i < reports.length; i++) {
+		let button = reports[i];
+		button.addEventListener('click', function() {
+			$(bookmark).tooltip('hide');
+			if(!button.classList.contains('discrete'))
+				return;
+			let message_id = button.dataset.message_id;
+			let url = '/messages/' + message_id + '/report';
+			ajax.sendAjaxRequest('post', url, {message_id: message_id}, function() {
+				if(this.status == 401)
+					window.location = "/login";
+				else if (this.status == 404)
+					window.location = "/404";
+				else if (this.status == 200) {
+					button.classList.remove('discrete');
+				}
+			});
+		});
+	}
+}
+
+addReportEvent("#question-body");
+
 module.exports = {
   addVoteEvent,
 	addMarkCorrectEvent,
 	markCorrectEvent,
-	voteEvent
+	voteEvent,
+	addReportEvent,
+	reportEvent
 };

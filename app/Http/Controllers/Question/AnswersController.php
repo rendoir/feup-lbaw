@@ -36,6 +36,7 @@ class AnswersController extends Controller
         $positive = $message->getVote();
         $correct = $answer->question->correct_answer == $answer->id;
         $logged_user_badge = Auth::check() ? Auth::user()->getBadge() : '';
+        $has_report = Auth::check() ? Auth::user()->hasReportOn($message->id) : false;
 
         return array(
             "id" => $answer->id,
@@ -47,6 +48,7 @@ class AnswersController extends Controller
             "num_comments" => $answer->num_comments(),
             "discrete_p" => $positive === true ? '' : 'discrete',
             "discrete_n" => $positive === false ? '' : 'discrete',
+            "discrete_r" => $has_report ? '' : 'discrete',
             'correct' => $correct,
             'author_badge' => $author->getBadge(),
             "content" => array (
