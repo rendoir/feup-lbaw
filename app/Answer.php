@@ -14,6 +14,10 @@ class Answer extends Model
         return $this->hasOne('App\Message', 'id');
     }
 
+    public function question() {
+        return $this->hasOne('App\Question', 'id', 'question_id');
+    }
+
     public function commentable() {
         return $this->hasOne('App\Commentable', 'id');
     }

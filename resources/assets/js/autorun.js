@@ -5,11 +5,16 @@ let pages_num = [0,0,0,0];
 let page_enum = {"nav-new" : 0, "nav-hot" : 1, "nav-voted" : 2, "nav-active" : 3};
 let urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions"];
 let endOfPage = false;
-let questionType = $('div.tab-pane.active.show')[0].id;
+let questionType = $('div.tab-pane.active.show')[0];
+if (questionType != null)
+    questionType = questionType.id;
 let url = urls[page_enum[questionType]];
 
 // GET questions on certain page
 function getQuestions(pageNum, handler) {
+    if (questionType == null)
+        return null;
+
     defaultHandler = (data) => {
         let template = $('template#questions')[0];
         let questions = null;
@@ -29,8 +34,10 @@ function getQuestions(pageNum, handler) {
         if(questions.questions.length != 0)
             endOfPage = false;
     };
+
     if(handler == null)
         handler = defaultHandler;
+
     ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
 }
 
@@ -39,6 +46,8 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         ajax.sendAjaxRequest('GET', "/min-profile", null,(data) => {
         let template = $('template#minProfile')[0];
         let info = null;
+        if (template == null)
+            return;
 
         try {
             info = JSON.parse(data.target.responseText)

@@ -3,7 +3,7 @@ FROM php:7.1
 #Install dependencies
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends libpq-dev git zlib1g-dev
-RUN docker-php-ext-install pgsql pdo_pgsql pdo mbstring zip
+RUN docker-php-ext-install pgsql pdo_pgsql pdo mbstring zip curl
 
 # Install Composer
 # RUN curl --silent --show-error https://getcomposer.org/installer | php

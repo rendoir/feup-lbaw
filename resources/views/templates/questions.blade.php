@@ -1,5 +1,4 @@
 @verbatim
-
     <template id="questions">
         {{#questions}}
         <a class="card my-3 question-card {{#correct_answer}}border-success{{/correct_answer}}" href="/questions/{{question_id}}">
@@ -25,10 +24,10 @@
                     </div>
                     <div class="card-footer bg-transparent d-flex justify-content-between">
                         <p class="card-text mb-0">
-                            <small>Created by -</small>
+                            <small>Created by - </small>
                         </p>
                         <div class="ml-2 mr-auto">
-                            <span>{{author}}</span>
+                            <span href="/users/{{author}}">{{author}}</span>
                             {{#have_badge}}
                                 <span class="badge badge-success">{{badge}}</span>
                             {{/have_badge}}
@@ -44,5 +43,4 @@
         </a>
         {{/questions}}
     </template>
-
 @endverbatim

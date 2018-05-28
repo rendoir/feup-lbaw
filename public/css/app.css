@@ -72,6 +72,71 @@ fieldset[disabled] .btn-github.focus {
   background-color: #fff;
 }
 
+.btn-google {
+  color: #fff;
+  background-color: #dd4b39;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-google:focus,
+.btn-google.focus {
+  color: #fff;
+  background-color: #c23321;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-google:hover {
+  color: #fff;
+  background-color: #c23321;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-google:active,
+.btn-google.active,
+.open > .dropdown-toggle.btn-google {
+  color: #fff;
+  background-color: #c23321;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-google:active:hover,
+.btn-google.active:hover,
+.open > .dropdown-toggle.btn-google:hover,
+.btn-google:active:focus,
+.btn-google.active:focus,
+.open > .dropdown-toggle.btn-google:focus,
+.btn-google:active.focus,
+.btn-google.active.focus,
+.open > .dropdown-toggle.btn-google.focus {
+  color: #fff;
+  background-color: #a32b1c;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-google:active,
+.btn-google.active,
+.open > .dropdown-toggle.btn-google {
+  background-image: none;
+}
+
+.btn-google.disabled:hover,
+.btn-google[disabled]:hover,
+fieldset[disabled] .btn-google:hover,
+.btn-google.disabled:focus,
+.btn-google[disabled]:focus,
+fieldset[disabled] .btn-google:focus,
+.btn-google.disabled.focus,
+.btn-google[disabled].focus,
+fieldset[disabled] .btn-google.focus {
+  background-color: #dd4b39;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-google .badge {
+  color: #dd4b39;
+  background-color: #fff;
+}
+
 :root {
   --azure: #FAFEFE;
   --pattens-blue: #D2DEE7;
@@ -620,6 +685,12 @@ nav {
 .template-for-fill {
   background-color: #DDD;
   border-radius: 0.2em;
+}
+
+.marked,
+.marked i {
+  color: var(--azure) !important;
+  background-color: var(--medium-aquamarine) !important;
 }
 
 /*************************************************/
@@ -1406,9 +1477,10 @@ ul.suggestions > li > tag > div {
   src: url(/fonts/Poppins-Bold.ttf?7940efc40d8e3b477e16cc41b0287139);
 }
 
-@font-face {
-  font-family: Poppins-SemiBold;
-  src: url(/fonts/Poppins-SemiBold.ttf?e63b93dfac2600782654e2b87910d681);
+body#login-page {
+  height: 100%;
+  font-family: Poppins-Regular, sans-serif;
+  padding-bottom: 0px;
 }
 
 #login-page {
@@ -1441,12 +1513,6 @@ ul.suggestions > li > tag > div {
   padding: 0px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-}
-
-#login-page body,
-#login-page html {
-  height: 100%;
-  font-family: Poppins-Regular, sans-serif;
 }
 
 #login-page a {
@@ -1693,7 +1759,7 @@ ul.suggestions > li > tag > div {
   display: block;
   position: relative;
   z-index: 1;
-  border-radius: 25px;
+  border-radius: 5px;
   overflow: hidden;
   margin: 0 auto;
 }
@@ -1794,6 +1860,12 @@ ul.suggestions > li > tag > div {
     visibility: visible;
     opacity: 1;
   }
+}
+
+#external-signins {
+  text-align: center;
+  border-radius: 5px;
+  color: white;
 }
 
 .skeleton {

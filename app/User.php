@@ -10,31 +10,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    // Don't add create and update timestamps in database.
     public $timestamps  = false;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'username', 'email', 'password_hash'
+        'username', 'email', 'password', 'provider', 'provider_id'
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password_hash'
-    ];
-
-    public function getAuthPassword()
-    {
-        return $this->attributes['password_hash'];
-    }
 
     public function getBadgeAttainments() {
         return $this->hasMany('App\BadgeAttainment');
@@ -86,5 +66,9 @@ class User extends Authenticatable
                       ->where('question_id', '=', $question_id)
                       ->count() > 0;
 
+    }
+
+    public function isRegisteredByAPI() {
+      return $this->provider !== null;
     }
 }

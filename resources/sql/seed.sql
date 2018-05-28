@@ -14,9 +14,6 @@ DROP TABLE IF EXISTS comments CASCADE;
 DROP TABLE IF EXISTS message_versions CASCADE;
 DROP TABLE IF EXISTS votes CASCADE;
 DROP TABLE IF EXISTS badges CASCADE;
-DROP TABLE IF EXISTS notifications CASCADE;
-DROP TABLE IF EXISTS commentable_notifications CASCADE;
-DROP TABLE IF EXISTS badge_notifications CASCADE;
 DROP TABLE IF EXISTS badge_attainments CASCADE;
 DROP TABLE IF EXISTS reports CASCADE;
 DROP TABLE IF EXISTS bookmarks CASCADE;
@@ -25,10 +22,12 @@ CREATE TABLE users (
     id BIGSERIAL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
-    password_hash TEXT NOT NULL,
+    password TEXT,
     biography TEXT,
     reputation REAL NOT NULL DEFAULT 0.0,
-    remember_token VARCHAR(100)
+    remember_token VARCHAR(100),
+    provider TEXT,
+    provider_id TEXT
 );
 
 CREATE TABLE moderators (
@@ -105,24 +104,6 @@ CREATE TABLE badges (
     description TEXT NOT NULL
 );
 
-CREATE TABLE notifications (
-    id BIGSERIAL PRIMARY KEY,
-    "date" TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    read BOOLEAN NOT NULL DEFAULT FALSE,
-    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE
-);
-
-CREATE TABLE commentable_notifications (
-    id BIGINT PRIMARY KEY REFERENCES notifications(id) ON DELETE CASCADE,
-    notified_msg BIGINT NOT NULL REFERENCES commentables(id) ON DELETE CASCADE,
-    trigger_msg BIGINT NOT NULL REFERENCES messages(id) ON DELETE CASCADE
-);
-
-CREATE TABLE badge_notifications (
-    id BIGINT PRIMARY KEY REFERENCES notifications(id) ON DELETE CASCADE,
-    badge_id BIGINT NOT NULL REFERENCES badges(id) ON DELETE CASCADE
-);
-
 CREATE TABLE badge_attainments (
     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     badge_id SMALLINT NOT NULL REFERENCES badges(id) ON DELETE CASCADE,
@@ -146,7 +127,6 @@ ALTER TABLE messages
 DROP INDEX IF EXISTS comment_commentable CASCADE;
 DROP INDEX IF EXISTS message_version_message CASCADE;
 DROP INDEX IF EXISTS message_author CASCADE;
-DROP INDEX IF EXISTS notification_user CASCADE;
 DROP INDEX IF EXISTS category_name CASCADE;
 DROP INDEX IF EXISTS question_title CASCADE;
 DROP INDEX IF EXISTS unique_lowercase_username CASCADE;
@@ -157,7 +137,6 @@ DROP INDEX IF EXISTS unique_lowercase_email CASCADE;
 CREATE INDEX comment_commentable ON comments USING btree(commentable_id);
 CREATE INDEX message_version_message ON message_versions USING btree(message_id);
 CREATE INDEX message_author ON messages USING btree(author);
-CREATE INDEX notification_user ON notifications USING btree(user_id);
 
 CREATE INDEX category_name ON categories USING gin(to_tsvector('english', name));
 CREATE INDEX question_title ON questions USING gin(search);
@@ -183,9 +162,6 @@ DROP FUNCTION IF EXISTS award_moderator_trusted();
 DROP FUNCTION IF EXISTS check_own_vote();
 DROP FUNCTION IF EXISTS insert_report();
 DROP FUNCTION IF EXISTS delete_report();
-DROP FUNCTION IF EXISTS gen_comment_notification();
-DROP FUNCTION IF EXISTS gen_answer_notification();
-DROP FUNCTION IF EXISTS gen_badge_notification();
 DROP FUNCTION IF EXISTS update_message_version();
 DROP FUNCTION IF EXISTS update_question_title_search();
 
@@ -206,9 +182,6 @@ DROP TRIGGER IF EXISTS award_moderator_trusted ON badge_attainments;
 DROP TRIGGER IF EXISTS check_own_vote ON votes;
 DROP TRIGGER IF EXISTS insert_report ON reports;
 DROP TRIGGER IF EXISTS delete_report ON reports;
-DROP TRIGGER IF EXISTS gen_comment_notification ON comments;
-DROP TRIGGER IF EXISTS gen_answer_notification ON answers;
-DROP TRIGGER IF EXISTS gen_badge_notification ON badge_attainments;
 DROP TRIGGER IF EXISTS update_message_version ON message_versions;
 DROP TRIGGER IF EXISTS update_question_title_search_index ON questions;
 
@@ -353,7 +326,7 @@ CREATE FUNCTION delete_score_vote() RETURNS TRIGGER AS $$
         SET score = score + 1
         WHERE OLD.message_id = messages.id;
     END IF;
-    RETURN NEW;
+    RETURN OLD;
   END;
 $$ LANGUAGE plpgsql;
 
@@ -526,52 +499,6 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER delete_report
   BEFORE DELETE ON reports
   FOR EACH ROW EXECUTE PROCEDURE delete_report();
-
-CREATE FUNCTION gen_comment_notification() RETURNS TRIGGER AS $$
-  DECLARE current_id BIGINT;
-  DECLARE notified_user BIGINT;
-  BEGIN
-    SELECT INTO current_id nextval(pg_get_serial_sequence('notifications', 'id'));
-    SELECT INTO notified_user author FROM messages WHERE messages.id = NEW.commentable_id;
-    INSERT INTO notifications (id, user_id) VALUES (current_id, notified_user);
-    INSERT INTO commentable_notifications (id, notified_msg, trigger_msg) VALUES (current_id, NEW.commentable_id, NEW.id);
-    RETURN NEW;
-  END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER gen_comment_notification
-  AFTER INSERT ON comments
-  FOR EACH ROW EXECUTE PROCEDURE gen_comment_notification();
-
-CREATE FUNCTION gen_answer_notification() RETURNS TRIGGER AS $$
-  DECLARE current_id BIGINT;
-  DECLARE notified_user BIGINT;
-  BEGIN
-    SELECT INTO current_id nextval(pg_get_serial_sequence('notifications', 'id'));
-    SELECT INTO notified_user author FROM messages WHERE messages.id = NEW.question_id;
-    INSERT INTO notifications (id, user_id) VALUES (current_id, notified_user);
-    INSERT INTO commentable_notifications (id, notified_msg, trigger_msg) VALUES (current_id, NEW.question_id, NEW.id);
-    RETURN NEW;
-  END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER gen_answer_notification
-  AFTER INSERT ON answers
-  FOR EACH ROW EXECUTE PROCEDURE gen_answer_notification();
-
-CREATE FUNCTION gen_badge_notification() RETURNS TRIGGER AS $$
-  DECLARE current_id BIGINT;
-  BEGIN
-    SELECT INTO current_id nextval(pg_get_serial_sequence('notifications', 'id'));
-    INSERT INTO notifications (id, user_id) VALUES (current_id, NEW.user_id);
-    INSERT INTO badge_notifications (id, badge_id) VALUES (current_id, NEW.badge_id);
-    RETURN NEW;
-  END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER gen_badge_notification
-  AFTER INSERT ON badge_attainments
-  FOR EACH ROW EXECUTE PROCEDURE gen_badge_notification();
 
 CREATE FUNCTION update_message_version() RETURNS TRIGGER AS $$
   BEGIN

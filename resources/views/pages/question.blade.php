@@ -9,6 +9,7 @@ $author = $message->get_author();
 $score = $message->score;
 $answers = $question->answers();
 $num_answers = $question->get_num_answers();
+$positive = $message->getVote();
 ?>
 
 @section('question-title')
@@ -38,6 +39,7 @@ $num_answers = $question->get_num_answers();
                 <div class="collapse" id="QuestionComments">
                     <div class="card-footer comments-card">
                         <div class="d-flex list-group list-group-flush">
+                            <!-- TODO Replace -->
                             <div class="list-group-item px-0 bg-transparent">
                                 <div class="row mx-sm-0">
                                     <div class="col-1 my-auto text-center">
@@ -54,48 +56,6 @@ $num_answers = $question->get_num_answers();
                                     </div>
                                 </div>
                             </div>
-                            <div class="list-group-item px-0 bg-transparent">
-                                <div class="row mx-sm-0">
-                                    <div class="col-1 my-1 text-center">
-                                        <p class="text-center mb-0 w-100">1</p>
-                                    </div>
-                                    <div class="col-11 my-1 pl-4">
-                                        <p>Etiam semper lacus eu dolor dictum, a odio laoreet. Praesent luctus hendrerit
-                                            dapibus.
-                                        </p>
-                                        <p class="text-right discrete">
-                                            jflcarvalho
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="list-group-item px-0 bg-transparent">
-                                <div class="row mx-sm-0">
-                                    <div class="col-1 my-auto text-center">
-                                        <p class="text-center mb-0 w-100">1</p>
-                                    </div>
-                                    <div class="col-11 my-auto pl-4">
-                                        <p>This is a sample comment!! *Insert meme here*</p>
-                                        <p class="text-right discrete">
-                                            EdgarACarneiro
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="list-group-item px-0 bg-transparent">
-                                <div class="row mx-sm-0">
-                                    <div class="col-1 my-auto text-center">
-                                        <p class="text-center mb-0 w-100">-1</p>
-                                    </div>
-                                    <div class="col-11 my-auto pl-4">
-                                        <p>Etiam semper lacus eu dolor dictum, a dictum odio laoreet. Praesent luctus
-                                            hendrerit dapibus. Bada badu badumtsss.</p>
-                                        <p class="text-right discrete">
-                                            rendoir
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,29 +63,46 @@ $num_answers = $question->get_num_answers();
             </div>
             <div class="col-md-3 p-3 d-flex flex-column justify-content-between">
                 <div>
+                    <div style="display: inline-block">
                     <div>
                         <span class="font-weight-bold w-100">Answers: </span>
                         <span class="w-100">{{$num_answers}}</span>
                     </div>
                     <div>
                         <span class="font-weight-bold w-100">Votes: </span>
-                        <span class="w-100">{{$score}}</span>
+                        <span class="w-100 score">{{$score}}</span>
+                    </div>
                     </div>
                     @if (Auth::check())
                       <?php
                         $has_bookmark = Auth::user()->hasBookmarkOn($question->id);
                       ?>
-                      <span id="bookmark" class="{{$has_bookmark ? 'active' : 'inactive'}}" data-message-id="{{$question->id}}"><i class="{{$has_bookmark ? 'fas' : 'far'}} fa-heart"></i></span>
+                      <div style="display: inline-block; height: 100%; float: right; position: relative;">
+                        <span style="font-size: 1.5em; position: absolute; top: 50%; transform: translate(-50%,-50%);" id="bookmark" class="{{$has_bookmark ? 'active' : 'inactive'}}" data-message-id="{{$question->id}}"><i class="{{$has_bookmark ? 'fas' : 'far'}} fa-heart"></i></span>
+                      </div>
                     @endif
+                </div>
+
+                <div>
+                  @if (Auth::check())
+                  <div class="row" style="font-size: 1.5em;">
+                        <div class="col-6 text-center">
+                            <i class="vote fas fa-thumbs-up <?=$positive === true ? '' : 'discrete';?>" data-message_id="{{$message->id}}" data-positive="true"></i>
+                        </div>
+                        <div class="col-6 border-left text-center">
+                            <i class="vote fas fa-thumbs-down <?=$positive === false ? '' : 'discrete';?>" data-message_id="{{$message->id}}" data-positive="false"></i>
+                        </div>
+                    </div>
+                  @endif
                 </div>
 
                 <div>
                     <div class="d-flex">
                         <p class="mb-0">
-                            <small>Created by - &nbsp</small>
+                            <small>Created by - </small>
+                            <a href="/users/{{$author->username}}">{{$author->username}}</a>
                         </p>
                         <div class="mr-auto">
-                            <span>{{$author->username}}</span>
                             <span class="badge badge-success">{{$author->getBadge()}}</span>
                         </div>
                     </div>
@@ -140,7 +117,7 @@ $num_answers = $question->get_num_answers();
 
 <section class="container">
     <div class="row">
-        <div id="answers-container" class="col-md-9">
+        <div class="col-md-9">
             @if (Auth::check())
             <!-- Text editor -->
             <div class="card mt-3">
@@ -154,9 +131,11 @@ $num_answers = $question->get_num_answers();
             </div>
             @endif
 
-            @for($i = 0 ; $i < 6; ++$i)
-                @include('partials.answer')
-            @endfor
+            <div id="answers-container">
+              @for($i = 0 ; $i < $num_answers && $i < 10; ++$i)
+                  @include('partials.answer')
+              @endfor
+          </div>
         </div>
         <!-- related questions -->
         <aside class="col-md-3 mt-3">
@@ -173,12 +152,58 @@ $num_answers = $question->get_num_answers();
     </div>
 </section>
 
+<!-- Answer edition' modal -->
+<div class="modal fade" id="editAnswerModal" tabindex="-1" role="dialog" aria-labelledby="editAnswerModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="deleteCommentModalLabel">Edit Answer</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <section class="main-content question-editor">
+                    <textarea id="edit-editor" name="messageContent">
+                    </textarea>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button id="edit-answer" type="button" class="btn btn-outline-danger" data-dismiss="modal">Edit</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Answer deletion' modal -->
+<div class="modal fade" id="deleteAnswerModal" tabindex="-1" role="dialog" aria-labelledby="deleteAnswerModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="deleteCommentModalLabel">Delete Answer</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this answer? <br>
+                The process is irreversible.
+            </div>
+            <div class="modal-footer">
+                <button id="delete-answer" type="button" class="btn btn-outline-danger" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Comments' modal -->
 <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="deleteCommentModalLabel">Delete</h4>
+                <h4 class="modal-title" id="deleteCommentModalLabel">Delete Comment</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>

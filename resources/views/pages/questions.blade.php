@@ -104,7 +104,7 @@
                             <h5 class="card-title">Have a Question?</h5>
                             <form id="form_ask_question" name="ask_question" action="{{ url('ask_question') }}">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                    <input name="title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                                 </div>
                                 <button type="submit" class="btn btn-outline-info w-100">Ask!</button>
                             </form>

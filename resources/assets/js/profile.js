@@ -29,10 +29,9 @@ function uploadImage(abbr, type) {
       }
       else if (e.target.status == 403) {
         window.location.replace('/login');
-      }
-      else {
-        let alert_elem = errors.displayError("Error changing your image.");
-        $(alert_elem).fadeTo(2000, 500).slideUp(500, function () {
+      } else {
+        let alert_elem = errors.displayError(JSON.parse(this.responseText).image[0]);
+        $(alert_elem).delay(4000).slideUp(500, function () {
           $(this).remove();
         });
       }
@@ -69,11 +68,9 @@ function editBiographyHandler(e) {
   }
   else if (e.target.status == 403) {
     window.location.replace('/login');
-  }
-  else
-    alert_elem = errors.displayError("Error changing your biography.");
+  } else alert_elem = errors.displayError("Error changing your biography.");
 
-  $(alert_elem).fadeTo(2000, 500).slideUp(500, function () {
+  $(alert_elem).delay(4000).slideUp(500, function () {
     $(this).remove();
   });
 }

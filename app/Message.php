@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 
 class Message extends Model
@@ -27,5 +28,12 @@ class Message extends Model
 
     public function get_versions() {
         return $this->hasMany('App\MessageVersion');
+    }
+
+    public function getVote() {
+      $vote = Vote::where('user_id', Auth::id())->where('message_id', $this->id)->first();
+      if($vote != null)
+        return $vote->positive;
+      return null;
     }
 }

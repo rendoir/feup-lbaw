@@ -68,30 +68,24 @@ Route::get('tag_list', 'TagsController@getAllTags');
 //Profile
 Route::get('users/{username?}', 'ProfileController@getProfile')->name('profile');
 Route::get('users/{username}/edit', 'ProfileController@getEditProfile')->name('edit_profile');
+Route::get('users/{username}/settings', 'ProfileController@getSettings')->name('settings');
 Route::post('users/edit/image/{type}', 'ProfileController@imageUpload');
 Route::post('users/edit/biography', 'ProfileController@editBiography');
 Route::post('users/bookmarks/{question_id}', 'ProfileController@addBookmark');
 Route::delete('users/bookmarks/{question_id}', 'ProfileController@deleteBookmark');
+Route::post('users/settings/change_password', 'ProfileController@changePassword');
 
-// Testing Notifications' Server
-Route::get('test/notifications-view', function() {
-    return view('notifications_test');
-});
 
-Route::get('test/notifications-hello-world', function() {
-  require __DIR__ . '/../vendor/autoload.php';
+//Messages
+Route::post('messages/{id}/vote', 'MessageController@vote');
+Route::post('messages/{id}/mark_correct', 'MessageController@markCorrect');
 
-  $options = array(
-    'cluster' => 'eu',
-    'encrypted' => true
-  );
-  $pusher = new Pusher\Pusher(
-    '***REMOVED***',
-    '***REMOVED***',
-    '***REMOVED***',
-    $options
-  );
+Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
-  $data['message'] = 'hello world';
-  $pusher->trigger('my-channel', 'my-event', $data);
-});
+Route::get('/notifications', 'ProfileController@notifications');
+
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');

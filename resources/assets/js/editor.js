@@ -1,7 +1,4 @@
-var editor_element = document.getElementById("editor");
-
-if (editor_element != null) {
-    
+function editor(editor_element) {
     var simplemde = new SimpleMDE({
         renderingConfig: { codeSyntaxHighlighting: true }, element: editor_element, forceSync: true, toolbar: ["bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list", "ordered-list", "link", "image", "table", "horizontal-rule", "preview",
             {
@@ -67,6 +64,15 @@ if (editor_element != null) {
                 title: "Toggle Side by Side",
             }]
     });
-
     simplemde.value("");
 }
+
+function createEditor(selector) {
+    var editor_element = document.getElementById(selector);
+    if (editor_element != null) {
+        editor(editor_element);
+    }
+}
+
+createEditor("editor");
+createEditor("edit-editor");

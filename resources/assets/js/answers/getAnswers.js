@@ -2,6 +2,8 @@ var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./answersUtils.js');
 var comments = require('../comments/comments.js');
+var question = require('../question.js');
+var common = require('../utils.js');
 
 function getAnswersRequest() {
 
@@ -25,8 +27,10 @@ function getAnswersHandler() {
         for (let answer of responseJSON.answers)
             utils.createAnswer({ 'answer': answer, 'is_authenticated': responseJSON.is_authenticated });
 
-        // Add event listeners for handling comments
+        common.sortAnswers();
         comments.addEventListeners();
+        question.addVoteEvent('#answers-container');
+        question.addMarkCorrectEvent();
     }
     else alert.displayError("Failed to retrieve Question's answers");
 }

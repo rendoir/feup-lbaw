@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 
 use App\Bookmark;
 
+use Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
 use App\User;
 
 class ProfileController extends Controller
@@ -26,6 +27,12 @@ class ProfileController extends Controller
       else return redirect(route('404'));
     }
 
+    function getSettings($username) {
+      if(!Auth::check())
+        return redirect('login');
+      return view('pages.account_settings', ['user' => Auth::user()]);
+    }
+
     function getEditProfile($username) {
       if(!Auth::check())
         return redirect('login');
@@ -35,11 +42,15 @@ class ProfileController extends Controller
     public function imageUpload(Request $request, $type)
     {
       if(!Auth::check())
-        return response()->setStatusCode(403);
+        return response('You must login to edit your profile', 401);
 
-      $this->validate($request, [
-          'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+      $validator = Validator::make($request->all(), [
+        'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
       ]);
+
+      if ($validator->fails()) {
+          return response()->json($validator->errors(),400);
+      }
 
       $image = $request->file('image');
       $name = Auth::id();
@@ -52,7 +63,7 @@ class ProfileController extends Controller
 
     public function editBiography(Request $request) {
       if(!Auth::check())
-        return response()->setStatusCode(403);
+        return response('You must login to edit your profile', 403);
 
       $user = Auth::user();
       $user->biography = $request->biography;
@@ -61,14 +72,14 @@ class ProfileController extends Controller
 
     public function addBookmark(Request $request) {
       if(!Auth::check())
-        return response()->setStatusCode(403);
+        return response('You must login to manage your bookmarks', 403);
 
       DB::table('bookmarks')->insert(['question_id' => $request->question_id, 'user_id' => Auth::id()]);
     }
 
     public function deleteBookmark(Request $request) {
       if(!Auth::check())
-        return response()->setStatusCode(403);
+        return response('You must login to manage your bookmarks', 403);
 
       DB::table('bookmarks')->where('user_id', '=', Auth::id())
         ->where('question_id', '=', $request->question_id)
@@ -100,4 +111,33 @@ class ProfileController extends Controller
 
         return json_encode($info);
     }
+
+    public function notifications()
+    {
+        $notifications = auth()->user()->unreadNotifications()->limit(5)->get();
+
+        return view('pages.notifications', compact('notifications'));
+    }
+
+    public function changePassword(Request $request) {
+      if(!Auth::check())
+        return redirect('login');
+
+      if(Auth::user()->isRegisteredByAPI())
+        return response("You can't change your password because you are registered using an external platform", 403);
+
+      if(!Hash::check($request->get('old_password'), Auth::user()->password))
+        return response('The old password is incorrect!', 400);
+
+      $validator = Validator::make($request->all(), [
+            'new_password' => 'required|string|min:6|confirmed',
+      ]);
+
+      if($validator->fails())
+        return response($validator->errors()->first(), 400);
+
+      Auth::user()->password = bcrypt($request->get('new_password'));
+      Auth::user()->save();
+    }
+
 }

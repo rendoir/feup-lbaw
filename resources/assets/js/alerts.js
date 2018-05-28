@@ -11,12 +11,12 @@ function displaySuccess(successMessage) {
 function displayMessage(message, isSuccess) {
 
     let template = document.querySelector("template#alert-template").innerHTML;
-    let placeholder = document.createElement("span");
+    let placeholder = document.createElement("div");
 
     placeholder.innerHTML = Mustache.render(template, { message: message, isSucess: isSuccess });
 
-    let header = document.querySelector("header");
-    header.appendChild(placeholder);
+    let header = document.querySelector("#navbar");
+    header.insertAdjacentElement("afterend", placeholder);
 
     return placeholder;
 }
