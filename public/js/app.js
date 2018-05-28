@@ -2709,7 +2709,8 @@ var pages_num = [0, 0, 0, 0];
 var page_enum = { "nav-new": 0, "nav-hot": 1, "nav-voted": 2, "nav-active": 3 };
 var urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions"];
 var endOfPage = false;
-var questionType = $('div.tab-pane.active.show')[0].id;
+var questionType = $('div.tab-pane.active.show')[0];
+if (questionType != null) questionType = questionType.id;
 var url = urls[page_enum[questionType]];
 
 // GET questions on certain page

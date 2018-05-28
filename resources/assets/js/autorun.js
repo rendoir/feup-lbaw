@@ -5,7 +5,9 @@ let pages_num = [0,0,0,0];
 let page_enum = {"nav-new" : 0, "nav-hot" : 1, "nav-voted" : 2, "nav-active" : 3};
 let urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions"];
 let endOfPage = false;
-let questionType = $('div.tab-pane.active.show')[0].id;
+let questionType = $('div.tab-pane.active.show')[0];
+if (questionType != null)
+    questionType = questionType.id;
 let url = urls[page_enum[questionType]];
 
 // GET questions on certain page
