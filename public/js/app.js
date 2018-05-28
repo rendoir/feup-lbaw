@@ -3080,7 +3080,8 @@ var notifications = [];
 
 var NOTIFICATION_TYPES = {
     newAnswer: 'App\\Notifications\\NewAnswer',
-    newComment: 'App\\Notifications\\NewComment'
+    newComment: 'App\\Notifications\\NewComment',
+    newBadgeAttainment: 'App\\Notifications\\NewBadgeAttainment'
 };
 
 function routeNotification(notification) {
@@ -3132,14 +3133,16 @@ function makeNotification(notification) {
 
 function makeNotificationText(notification) {
     var text = '';
+    var name = notification.data.following_name;
+
     if (notification.type === NOTIFICATION_TYPES.newAnswer) {
-        var name = notification.data.following_name;
         text += '<strong>' + name + '</strong> answered ';
         if (notification.data.is_author) text += 'your question.';else text += 'a question you bookmarked.';
     } else if (notification.type === NOTIFICATION_TYPES.newComment) {
-        var _name = notification.data.following_name;
-        text += '<strong>' + _name + '</strong> commented ';
+        text += '<strong>' + name + '</strong> commented ';
         if (notification.data.is_author) text += 'on your message.';else text += 'on a discussion you\'re participating in.';
+    } else if (notification.type === NOTIFICATION_TYPES.newBadgeAttainment) {
+        text += 'You got a new <strong>' + notification.badge_type + '</strong> badge!';
     }
 
     return text;

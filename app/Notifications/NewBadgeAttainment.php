@@ -49,7 +49,7 @@ class NewBadgeAttainment extends Notification implements ShouldQueue
         return [
             'following_id' => $this->following->id,
             'following_name' => $this->following->username,
-            // TODO
+            'badge_type' => $this->badge->name,
         ];
     }
 }
