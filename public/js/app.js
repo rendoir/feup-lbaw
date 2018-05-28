@@ -1400,7 +1400,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(10);
-module.exports = __webpack_require__(36);
+module.exports = __webpack_require__(37);
 
 
 /***/ }),
@@ -1418,9 +1418,9 @@ __webpack_require__(16);
 __webpack_require__(17);
 __webpack_require__(4);
 __webpack_require__(26);
-__webpack_require__(48);
 __webpack_require__(27);
 __webpack_require__(28);
+__webpack_require__(29);
 
 /***/ }),
 /* 11 */
@@ -2704,6 +2704,48 @@ tagSearchEvent();
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
+var alerts = __webpack_require__(1);
+
+function addTimedError(msg) {
+  var error = alerts.displayError(msg);
+  $(error).delay(4000).slideUp(500, function () {
+    $(this).remove();
+  });
+}
+
+function addTimedSuccess(msg) {
+  var success = alerts.displaySuccess(msg);
+  $(success).delay(4000).slideUp(500, function () {
+    $(this).remove();
+  });
+}
+
+function changePasswordEvent() {
+  var button = document.getElementById('update_password');
+  if (button == null) return;
+  button.addEventListener('click', function () {
+    var old_password = document.getElementById("old_password").value;
+    var new_password = document.getElementById("new_password").value;
+    var repeat_new_password = document.getElementById("repeat_new_password").value;
+
+    if (new_password != repeat_new_password) {
+      addTimedError("The new passwords don't match.");
+      return;
+    }
+
+    ajax.sendAjaxRequest('POST', '/users/settings/change_password', { old_password: old_password, new_password: new_password, new_password_confirmation: repeat_new_password }, function () {
+      if (this.status == 200) addTimedSuccess('Password changed!');else addTimedError(this.responseText);
+    });
+  });
+}
+
+changePasswordEvent();
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
 var Mustache = __webpack_require__(2);
 
 var pages_num = [0, 0, 0, 0];
@@ -2819,18 +2861,18 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
 }
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
-window._ = __webpack_require__(29);
-window.$ = window.jQuery = __webpack_require__(32);
-__webpack_require__(33);
+window._ = __webpack_require__(30);
+window.$ = window.jQuery = __webpack_require__(33);
+__webpack_require__(34);
 
-window.Pusher = __webpack_require__(34);
+window.Pusher = __webpack_require__(35);
 
 
 window.Pusher.logToConsole = true;
@@ -2899,12 +2941,6 @@ function showNotifications(notifications, target) {
     }
 }
 
-// <button class="dropdown-item" type="button">
-//                 <i class="fa fa-thumbs-up"></i>
-//                 JohnDoe00 upvoted your Question
-//               </button>
-//                <div class="dropdown-divider"></div>
-
 // Make a single notification string
 function makeNotification(notification) {
     var to = routeNotification(notification);
@@ -2913,7 +2949,7 @@ function makeNotification(notification) {
 }
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -20023,10 +20059,10 @@ function makeNotification(notification) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(30), __webpack_require__(31)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31), __webpack_require__(32)(module)))
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 var g;
@@ -20053,7 +20089,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -20081,7 +20117,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -30452,7 +30488,7 @@ return jQuery;
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports) {
 
 /*!
@@ -32835,7 +32871,7 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -37023,7 +37059,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -37821,63 +37857,10 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ajax = __webpack_require__(0);
-var alerts = __webpack_require__(1);
-
-function addTimedError(msg) {
-  var error = alerts.displayError(msg);
-  $(error).delay(4000).slideUp(500, function () {
-    $(this).remove();
-  });
-}
-
-function addTimedSuccess(msg) {
-  var success = alerts.displaySuccess(msg);
-  $(success).delay(4000).slideUp(500, function () {
-    $(this).remove();
-  });
-}
-
-function changePasswordEvent() {
-  var button = document.getElementById('update_password');
-  if (button == null) return;
-  button.addEventListener('click', function () {
-    var old_password = document.getElementById("old_password").value;
-    var new_password = document.getElementById("new_password").value;
-    var repeat_new_password = document.getElementById("repeat_new_password").value;
-
-    if (new_password != repeat_new_password) {
-      addTimedError("The new passwords don't match.");
-      return;
-    }
-
-    ajax.sendAjaxRequest('POST', '/users/settings/change_password', { old_password: old_password, new_password: new_password, new_password_confirmation: repeat_new_password }, function () {
-      if (this.status == 200) addTimedSuccess('Password changed!');else addTimedError(this.responseText);
-    });
-  });
-}
-
-changePasswordEvent();
 
 /***/ })
 /******/ ]);

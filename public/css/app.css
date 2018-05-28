@@ -1477,9 +1477,10 @@ ul.suggestions > li > tag > div {
   src: url(/fonts/Poppins-Bold.ttf?7940efc40d8e3b477e16cc41b0287139);
 }
 
-@font-face {
-  font-family: Poppins-SemiBold;
-  src: url(/fonts/Poppins-SemiBold.ttf?e63b93dfac2600782654e2b87910d681);
+body#login-page {
+  height: 100%;
+  font-family: Poppins-Regular, sans-serif;
+  padding-bottom: 0px;
 }
 
 #login-page {
@@ -1512,12 +1513,6 @@ ul.suggestions > li > tag > div {
   padding: 0px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-}
-
-#login-page body,
-#login-page html {
-  height: 100%;
-  font-family: Poppins-Regular, sans-serif;
 }
 
 #login-page a {
