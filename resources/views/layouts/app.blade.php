@@ -108,7 +108,9 @@
             </form>
 
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('register') }}">New around here? Sign up</a>
+            <a class="dropdown-item" href="{{ route('register') }}">New around here? Sign up!</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ url('/password/reset') }}">Forgot Password? Click here!</a>
           </div>
         </div>
 
