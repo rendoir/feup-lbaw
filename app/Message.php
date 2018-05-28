@@ -17,7 +17,7 @@ class Message extends Model
     }
 
     public function get_author() {
-        return $this->hasOne('App\User', 'author');
+        return User::find($this->author);
     }
 
     public function was_edited() {
