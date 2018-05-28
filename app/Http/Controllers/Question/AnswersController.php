@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MessageController;
 
 class AnswersController extends Controller
 {
@@ -95,6 +96,28 @@ class AnswersController extends Controller
             MessageVersion::create(['content' => $request->input('content'), 'message_id' => $answer_id]);
             $answer = Answer::create(['id' => $answer_id, 'question_id' => $request->question]);
         });
+
+        return response()->json(
+            array(
+                "answer" => $this->getAnswerJSON($answer),
+                "is_authenticated" => true
+            )
+        );
+    }
+
+        /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function editAnswer(Request $request)
+    {
+        $answer = Answer::find($request->answer);
+        $message = $answer->message;
+
+        // Checking if the User can edit the answer
+        $this->authorize('edit', $message);
+        MessageController::editMessage($request, $message);
 
         return response()->json(
             array(

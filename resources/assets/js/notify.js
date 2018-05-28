@@ -1,7 +1,7 @@
 window.Pusher = require('pusher-js');
 import Echo from "laravel-echo";
 
-var ajax = require('./ajax.js');
+let ajax = require('./ajax.js');
 
 window.Pusher.logToConsole = true;
 
@@ -12,9 +12,8 @@ window.Echo = new Echo({
     encrypted: false
 });
 
-var notifications = [];
+let notifications = [];
 
-// TODO add new notification types here
 const NOTIFICATION_TYPES = {
     newAnswer: 'App\\Notifications\\NewAnswer',
     newComment: 'App\\Notifications\\NewComment',
@@ -69,13 +68,22 @@ function makeNotification(notification) {
 
 function makeNotificationText(notification) {
     let text = '';
-    if(notification.type === NOTIFICATION_TYPES.newAnswer) {
+    if (notification.type === NOTIFICATION_TYPES.newAnswer) {
         const name = notification.data.following_name;
         text += '<strong>' + name + '</strong> answered ';
         if (notification.data.is_author)
             text += 'your question.';
         else
             text += 'a question you bookmarked.';
+
+    } else if (notification.type === NOTIFICATION_TYPES.newComment) {
+        const name = notification.data.following_name;
+        text += '<strong>' + name + '</strong> commented ';
+        if (notification.data.is_author)
+            text += 'on your message.';
+        else
+            text += 'on a discussion you\'re participating in.';
     }
+
     return text;
 }

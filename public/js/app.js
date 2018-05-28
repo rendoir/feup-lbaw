@@ -2646,6 +2646,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
+var url = __webpack_require__(5);
 
 function editAnswer(editTrigger) {
 
@@ -2658,13 +2659,62 @@ function editAnswer(editTrigger) {
     var contentParent = document.querySelector(".answer-content[data-message-id='" + edit_id + "']");
     if (contentParent == null) return;
 
-    console.log(contentParent);
+    var markdown = contentParent.children[0];
+    if (!markdown.classList.contains("answer-hidden-markdown")) {
+        alert.displayError("Failed to get Answer markdown");
+        return;
+    }
 
-    // Usar os filhos para progredir
+    var editor = document.getElementById("edit-editor");
+    editor.value = markdown.innerHTML;
 
     editBtn.addEventListener('click', function () {
-        //editAnswerRequest(comment_id, answer_id, comment.parentNode);
+        editAnswerRequest(edit_id, contentParent.parentElement, editor);
     });
+}
+
+function editAnswerRequest(answer_id, answerPlaceholder, editor) {
+
+    var requestBody = {
+        "answer": answer_id,
+        "content": editor.value
+    };
+
+    ajax.sendAjaxRequest('put', url.getAnswerIdURL(answer_id), requestBody, function (data) {
+        editAnswerHandler(data.target, answer_id, answerPlaceholder);
+    });
+}
+
+function editAnswerHandler(response, answer_id, answerPlaceholder) {
+    if (response.status == 403) {
+        alert.displayError("You have no permission to edit this answer");
+        return;
+    } else if (response.status != 200) {
+        alert.displayError("Failed to edit the answer");
+        return;
+    }
+
+    var children = answerPlaceholder.children;
+    for (var i = 1; !children[i].classList.contains("badge") && i < children.length - 1; ++i) {
+        answerPlaceholder.removeChild(children[i]);
+        i--;
+    }
+
+    var answer = JSON.parse(response.responseText).answer;
+    var markdown = answer.content.version;
+    children[0].children[0].innerHTML = markdown;
+
+    var js = document.createElement("p");
+    js.innerHTML = markdownToJs(markdown);
+    answerPlaceholder.insertBefore(js, children[2]);
+}
+
+function markdownToJs(markdown) {
+    var instance = new Object();
+    instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+
+    var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown));
+    return bound();
 }
 
 module.exports = {
@@ -2971,20 +3021,27 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
 
         defaultHandler = function defaultHandler(data) {
             $('div.loader-ellips').removeClass('show');
-            var template = $('template#questions')[0];
+            var templateQuery = templates[_page_enum[_questionType]];
+            var template = document.querySelector(templateQuery);
             var questions = null;
 
             try {
                 questions = JSON.parse(data.target.responseText);
             } catch (e) {}
 
+            if (document.querySelector(t[_page_enum[_questionType]]).classList.contains("template-for-fill")) {
+                document.querySelector(t[_page_enum[_questionType]]).classList.remove("template-for-fill");
+                document.querySelector(t[_page_enum[_questionType]]).innerHTML = questions.total;
+            }
+
             var mustacheRender = Mustache.render(template.innerHTML, questions);
+
+            if (document.querySelector(t[_page_enum[_questionType]]).innerHTML > 5 * _pages_num[_page_enum[_questionType]]) _endOfPage = false;
+
             if (_pages_num[_page_enum[_questionType]] == 0) {
                 _pages_num[_page_enum[_questionType]]++;
                 $('div#' + _questionType)[0].innerHTML = mustacheRender;
             } else $('div#' + _questionType)[0].innerHTML += mustacheRender;
-
-            if (questions.questions.length != 0) _endOfPage = false;
         };
 
         if (handler == null) handler = defaultHandler;
@@ -2992,39 +3049,24 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
         ajax.sendAjaxRequest('GET', "/users/" + $('h2#username')[0].innerHTML + _url + "?page=" + pageNum, null, handler);
     };
 
-    alert("ola");
-
     var _pages_num = [0, 0, 0];
     var _page_enum = { "nav-questions": 0, "nav-answers": 1, "nav-comments": 2 };
+    var templates = ['template#questions', 'template#answers', 'template#comments'];
+    var t = ['#total-questions', '#total-answers', '#total-comments'];
     var _urls = ["/getQuestions", "/getAnswers", "/getComments"];
     var _endOfPage = false;
     var _questionType = $('div.tab-pane.active.show')[0];
     if (_questionType != null) _questionType = _questionType.id;
     var _url = _urls[_page_enum[_questionType]];
 
-    _pages_num[_page_enum[_questionType]]++;
-    _getQuestions(_pages_num[_page_enum[_questionType]], function (data) {
-        var template = $('template#questions')[0];
-        var questions = null;
-
-        try {
-            questions = JSON.parse(data.target.responseText);
-        } catch (e) {}
-
-        var mustacheRender = Mustache.render(template.innerHTML, questions);
-        var nav = $('div#' + _questionType)[0].innerHTML;
-        $('div#nav-questions')[0].innerHTML = nav;
-        $('div#nav-answers')[0].innerHTML = nav;
-        $('div#nav-comments')[0].innerHTML = nav;
-        $('div#' + _questionType)[0].innerHTML = mustacheRender;
-    });
+    _getQuestions(_pages_num[_page_enum[_questionType]]);
 
     $('a#nav-questions-tab')[0].addEventListener("click", function () {
         if (_questionType == "nav-questions") return;
         _questionType = "nav-questions";
         _url = _urls[_page_enum[_questionType]];
         if (_pages_num[0] == 0) {
-            _getQuestions(1);
+            _getQuestions(0);
         }
     });
     $('a#nav-answers-tab')[0].addEventListener("click", function () {
@@ -3032,7 +3074,7 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
         _questionType = "nav-answers";
         _url = _urls[_page_enum[_questionType]];
         if (_pages_num[1] == 0) {
-            _getQuestions(1);
+            _getQuestions(0);
         }
     });
     $('a#nav-comments-tab')[0].addEventListener("click", function () {
@@ -3040,7 +3082,7 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
         _questionType = "nav-comments";
         _url = _urls[_page_enum[_questionType]];
         if (_pages_num[2] == 0) {
-            _getQuestions(1);
+            _getQuestions(0);
         }
     });
 
@@ -3079,7 +3121,6 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 
 var notifications = [];
 
-// TODO add new notification types here
 var NOTIFICATION_TYPES = {
     newAnswer: 'App\\Notifications\\NewAnswer',
     newComment: 'App\\Notifications\\NewComment'
@@ -3138,7 +3179,12 @@ function makeNotificationText(notification) {
         var name = notification.data.following_name;
         text += '<strong>' + name + '</strong> answered ';
         if (notification.data.is_author) text += 'your question.';else text += 'a question you bookmarked.';
+    } else if (notification.type === NOTIFICATION_TYPES.newComment) {
+        var _name = notification.data.following_name;
+        text += '<strong>' + _name + '</strong> commented ';
+        if (notification.data.is_author) text += 'on your message.';else text += 'on a discussion you\'re participating in.';
     }
+
     return text;
 }
 

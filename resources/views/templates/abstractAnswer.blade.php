@@ -64,6 +64,7 @@
         <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
             <div class="card-body p-1 p-sm-4">
                 <p class="card-text {{#is_owner}}answer-content" data-message-id="{{id}}{{/is_owner}}">
+                    <span class="answer-hidden-markdown">{{content.version}}</span>
                     {{#markdown}}{{content.version}}{{/markdown}}
 
                     {{#was_edited}}

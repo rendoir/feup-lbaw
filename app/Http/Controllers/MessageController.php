@@ -6,6 +6,7 @@ use App\Message;
 use App\Vote;
 use App\Question;
 use App\Answer;
+use App\MessageVersion;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -69,4 +70,17 @@ class MessageController extends Controller
     if(!Auth::user()->hasReportOn($request->message_id))
       DB::table('reports')->insert(['message_id' => $request->message_id, 'user_id' => Auth::id()]);
   }
+
+    public static function editMessage(&$request,  &$message) {
+
+        // Placeholder for the version of the comment that is going to be created
+        $version = null;
+
+        DB::transaction(function() use (&$version, &$request, &$message) {
+            $version = MessageVersion::create(['content' => $request->input('content'), 'message_id' => $message->id]);
+        });
+
+        $message->latest_version = $version->id;
+        $message->save();
+    }
 }

@@ -75,6 +75,9 @@ Route::post('users/edit/image/{type}', 'ProfileController@imageUpload');
 Route::post('users/edit/biography', 'ProfileController@editBiography');
 Route::post('users/bookmarks/{question_id}', 'ProfileController@bookmark');
 Route::post('users/settings/change_password', 'ProfileController@changePassword');
+Route::get('users/{username?}/getQuestions', 'ProfileController@getQuestions');
+Route::get('users/{username?}/getAnswers', 'ProfileController@getAnswers');
+Route::get('users/{username?}/getComments', 'ProfileController@getComments');
 
 
 //Messages
