@@ -61,4 +61,12 @@ class Question extends Model
             'category_id'
         );
     }
+
+    public function followers()
+    {
+        return $this->belongsToMany(
+            'App\User',
+            'bookmarks'
+        );
+    }
 }

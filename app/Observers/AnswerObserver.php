@@ -11,11 +11,17 @@ class AnswerObserver
     public function created(Answer $answer)
     {
         $user = $answer->message->get_author();
-        $question = Question::find($answer->question_id);
-        $message = $question->message;
-        $author = $message->get_author();
-        // foreach ($user->followers as $follower) {
-            $author->notify(new NewAnswer($user, $answer));
-        // }
+        $question = $answer->question;
+        $question_author = $question->message->get_author();
+
+        // Notify Question's Author
+        if ($user->id != $question_author->id)
+            $question_author->notify(new NewAnswer($user, $answer, true));
+
+        // Notify Users who Bookmarked the Question
+        foreach ($question->followers as $follower) {
+            $follower->notify(new NewAnswer($user, $answer, false));
+        }
+
     }
 }
