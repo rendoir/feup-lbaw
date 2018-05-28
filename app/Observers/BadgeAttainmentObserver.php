@@ -14,8 +14,7 @@ class BadgeAttainmentObserver
         $badge = $badge_attainment->get_badge();
         $user = $badge_attainment->get_user();
 
-        var_dump($badge);
-        var_dump($user);
+        info("new badge for user " . $user->username);
 
         $user->notify(new NewBadgeAttainment($user, $badge));
     }

@@ -959,6 +959,23 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports) {
+
+function getAnswersURL() {
+    return window.location.pathname + '/answers';
+}
+
+function getAnswerIdURL(id) {
+    return getAnswersURL() + '/' + id;
+}
+
+module.exports = {
+    getAnswersURL: getAnswersURL,
+    getAnswerIdURL: getAnswerIdURL
+};
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Mustache = __webpack_require__(3);
@@ -1033,23 +1050,6 @@ module.exports = {
 };
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-function getAnswersURL() {
-    return window.location.pathname + '/answers';
-}
-
-function getAnswerIdURL(id) {
-    return getAnswersURL() + '/' + id;
-}
-
-module.exports = {
-    getAnswersURL: getAnswersURL,
-    getAnswerIdURL: getAnswerIdURL
-};
-
-/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1117,7 +1117,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 // Adding edit capability to freshly added comment
 function enableEditMode(message_id) {
@@ -2344,7 +2344,7 @@ window.addEventListener('load', addAnswerEventListeners);
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(9);
-var url = __webpack_require__(5);
+var url = __webpack_require__(4);
 var comments = __webpack_require__(6);
 var question = __webpack_require__(2);
 var common = __webpack_require__(23);
@@ -2422,7 +2422,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var editor = __webpack_require__(7);
 var questionPage = __webpack_require__(2);
 
@@ -2501,7 +2501,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var editor = __webpack_require__(7);
 
 function addCommentRequest(message_id) {
@@ -2559,7 +2559,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 function removeComment(commentTrashBtn) {
 
@@ -2646,7 +2646,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var url = __webpack_require__(5);
+var url = __webpack_require__(4);
 
 function editAnswer(editTrigger) {
 
@@ -2727,7 +2727,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var url = __webpack_require__(5);
+var url = __webpack_require__(4);
 
 function removeAnswer(removeTrigger) {
 
@@ -2779,7 +2779,7 @@ module.exports = {
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(9);
-var url = __webpack_require__(5);
+var url = __webpack_require__(4);
 var comments = __webpack_require__(6);
 
 function addAnswerRequest(message_id) {
