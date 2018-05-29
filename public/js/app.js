@@ -3009,28 +3009,36 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
             getQuestions(1);
         }
     });
+    var last_search = void 0;
     $('button#search-button-nav')[0].addEventListener("click", function (event) {
         event.preventDefault();
-        $('a.nav-item.nav-link.active').removeClass("active").removeClass("show");
-        $('div.tab-pane.active.show').removeClass("active").removeClass("show");
-        $('div#nav-search').addClass("active").addClass("show");
-        questionType = "nav-search";
         var search = $('input#search-input-nav').val();
         url = "/questions/search?search=" + search;
-        window.history.pushState("", "", '/questions?search=' + search);
-        pages_num[4] = 0;
-        getQuestions(1);
+        if (last_search != url) {
+            $('a.nav-item.nav-link.active').removeClass("active").removeClass("show");
+            $('div.tab-pane.active.show').removeClass("active").removeClass("show");
+            $('div#nav-search').addClass("active").addClass("show");
+            questionType = "nav-search";
+            last_search = url;
+            window.history.pushState("", "", '/questions?search=' + search);
+            pages_num[4] = 0;
+            getQuestions(1);
+        }
     });
-    $('input#search-input-nav').on("change paste keyup", function () {
-        $('a.nav-item.nav-link.active').removeClass("active").removeClass("show");
-        $('div.tab-pane.active.show').removeClass("active").removeClass("show");
-        $('div#nav-search').addClass("active").addClass("show");
-        questionType = "nav-search";
+    $('input#search-input-nav').on("change paste keyup", function (event) {
+        event.preventDefault();
         var search = $('input#search-input-nav').val();
         url = "/questions/search?search=" + search;
-        window.history.pushState("", "", '/questions?search=' + search);
-        pages_num[4] = 0;
-        getQuestions(1);
+        if (last_search != url) {
+            $('a.nav-item.nav-link.active').removeClass("active").removeClass("show");
+            $('div.tab-pane.active.show').removeClass("active").removeClass("show");
+            $('div#nav-search').addClass("active").addClass("show");
+            questionType = "nav-search";
+            last_search = url;
+            window.history.pushState("", "", '/questions?search=' + search);
+            pages_num[4] = 0;
+            getQuestions(1);
+        }
     });
 
     $(window).scroll(function () {
