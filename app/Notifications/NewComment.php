@@ -82,6 +82,16 @@ class NewComment extends Notification implements ShouldQueue
             'comment_id' => $this->comment->id,
             'commentable_id' => $this->comment->commentable->id,
             'is_author' => $this->isAuthor,
+            'question_id' => $this->getQuestionId(),
         ];
+    }
+
+    private function getQuestionId() {
+        $q = $this->comment->commentable->get_question();
+        if ($q == NULL) {
+            $q = $this->comment->commentable->get_answer()->question;
+        }
+
+        return $q->id;
     }
 }

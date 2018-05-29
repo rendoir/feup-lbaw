@@ -355,7 +355,7 @@ function removeQuestion(delTrigger) {
 		var _this = this;
 
 		ajax.sendAjaxRequest('delete', window.location + '/delete', { "question": question_id }, function () {
-			if (_this.status == 401) window.location = "/login";else if (_this.status == 404) window.location = "/404";else if (_this.status != 200) errors.displayError("Failed to delete the question");
+			if (_this.status == 401) window.location = "/login";else if (_this.status == 404) window.location = "/404";else if (_this.status != 200) window.location = '/questions/recent';else errors.displayError("Failed to delete the question");
 		});
 	});
 }
@@ -3272,10 +3272,14 @@ var NOTIFICATION_TYPES = {
 function routeNotification(notification) {
     // signal notification as read on the next request
     var to = '?read=' + notification.id;
-    if (notification.type === NOTIFICATION_TYPES.newAnswer) {
-        var questionId = notification.data.question_id;
-        to = 'questions/' + questionId + to;
+    switch (notification.type) {
+        case NOTIFICATION_TYPES.newAnswer:
+        case NOTIFICATION_TYPES.newComment:
+            var questionId = notification.data.question_id;
+            to = 'questions/' + questionId + to;
+            break;
     }
+
     return '/' + to;
 }
 

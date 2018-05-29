@@ -208,6 +208,8 @@ function removeQuestion(delTrigger) {
 				else if (this.status == 404)
 					window.location = "/404";
 				else if (this.status != 200)
+					window.location = '/questions/recent';
+				else
 					errors.displayError("Failed to delete the question");
 			}
 		);
