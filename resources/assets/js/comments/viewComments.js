@@ -1,19 +1,32 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./commentsUtils.js');
+var url = require('./commentsURL.js');;
 var editor = require('./editComment.js');
 var questionPage = require('../question.js');
 
-function viewCommentsRequest(message_id) {
+function viewQuestionComments(message_id) {
+    viewCommentsRequest(message_id, url.getQuestionCommentsURL());
+}
 
+function viewAnswerComments(message_id) {
+    viewCommentsRequest(message_id, url.getAnswerCommentsURL(message_id));
+}
+
+function viewCommentsRequest(message_id, urlString) {
     // If area already expanded, its only closing, so not worth making ajax request
     if (utils.getCommentsDropDown(message_id).classList.contains('show')) {
         utils.toggleShowMsg(message_id, true);
         return;
     }
+    console.log('urmoma');
+    if (urlString == url.getQuestionCommentsURL()) {
+        console.log(boi + " " + message_id);
+        return;
+    }
 
     ajax.sendAjaxRequest(
-        'get', utils.getCommentsURL(message_id), {}, (data) => {
+        'get', urlString, {}, (data) => {
             getCommentsHandler(data.target, message_id);
         }
     );
@@ -45,5 +58,6 @@ function enableVote(message_id) {
 }
 
 module.exports = {
-    viewCommentsRequest
+    viewAnswerComments,
+    viewQuestionComments
 };

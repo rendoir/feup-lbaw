@@ -31,8 +31,8 @@ $positive = $message->getVote();
                 <div class="markdown main-content display-content" style="visibility: hidden;">{{$content->content}}</div>
                 <!-- Question Comments -->
                 <div class="text-center">
-                    <button class="btn btn-secundary my-4" type="button" data-toggle="collapse" data-target="#QuestionComments" aria-expanded="false"
-                        aria-controls="QuestionComments">
+                    <button class="btn btn-secundary my-4 show-question-comments" type="button" data-toggle="collapse" data-target="#QuestionComments"
+                    aria-expanded="false" aria-controls="QuestionComments" data-message-id="{{$message->id}}">
                         Show Question Comments
                     </button>
                 </div>

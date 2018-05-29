@@ -20,7 +20,7 @@ function addSingleEventListeners(message_id) {
 }
 
 function viewCommentsEventListener() {
-    messages.genericClickListener('.show-comments', commentsViewer.viewCommentsRequest);
+    messages.genericClickListener('.show-comments', commentsViewer.viewAnswerComments);
 }
 
 function viewSingleCommentEventListener(message_id) {
@@ -38,21 +38,18 @@ function addSingleCommentEventListener(message_id) {
 }
 
 function removeCommentsEventListener() {
-
     $('#deleteCommentModal').on('show.bs.modal', function (e) {
         commentsRemover.removeComment($(e.relatedTarget)[0]);
     });
-
-    /* 
-    let deleteModal = document.querySelector('#deleteCommentModal');
-    if (deleteModal == null)
-        return;
-
-    deleteModal.addEventListener('show.bs.modal', function(e) {
-        console.log(e.relatedTarget);
-    });
-    */
 }
+
+function addQuestionCommentsListeners() {
+    // For getting the comments
+    messages.genericClickListener('.show-question-comments', commentsViewer.viewQuestionComments);
+    // For adding new comments
+}
+
+window.addEventListener('load', addQuestionCommentsListeners);
 
 module.exports = {
     addEventListeners

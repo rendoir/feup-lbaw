@@ -1,6 +1,7 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
 var utils = require('./commentsUtils.js');
+var url = require('./commentsURL.js');
 var editor = require('./editComment.js');
 
 function addCommentRequest(message_id) {
@@ -17,7 +18,7 @@ function addCommentRequest(message_id) {
     };
 
     ajax.sendAjaxRequest(
-        'post', utils.getCommentsURL(message_id), requestBody, (data) => {
+        'post', url.getAnswerCommentsURL(message_id), requestBody, (data) => {
             addCommentHandler(data.target, message_id);
         }
     );

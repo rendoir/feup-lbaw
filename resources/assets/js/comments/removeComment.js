@@ -1,6 +1,6 @@
 var ajax = require('../ajax.js');
 var alert = require('../alerts.js');
-var utils = require('./commentsUtils.js');
+var url = require('./commentsURL.js');
 
 function removeComment(commentTrashBtn) {
 
@@ -29,7 +29,7 @@ function removeCommentRequest(comment_id, answer_id, commentNode) {
     };
 
     ajax.sendAjaxRequest(
-        'delete', utils.getUniqueCommentURL(answer_id, comment_id), requestBody, (data) => {
+        'delete', url.getUniqueAnswerCommentURL(answer_id, comment_id), requestBody, (data) => {
             removeCommentHandler(data.target, commentNode);
         }
     );

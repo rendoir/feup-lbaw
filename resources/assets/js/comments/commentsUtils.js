@@ -36,14 +36,6 @@ function getCommentsDropDown(message_id) {
     return document.querySelector(commentSelector);
 }
 
-function getCommentsURL(message_id) {
-    return window.location.pathname + '/answers/' + message_id + '/comments';
-}
-
-function getUniqueCommentURL(commentable_id, comment_id) {
-    return getCommentsURL(commentable_id) + '/' + comment_id;
-}
-
 /**
  * 
  * @param {String} message_id 
@@ -67,7 +59,5 @@ module.exports = {
     createComments,
     createCommentHTML,
     getCommentsDropDown,
-    getCommentsURL,
-    getUniqueCommentURL,
     toggleShowMsg
 };

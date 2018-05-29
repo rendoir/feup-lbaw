@@ -979,14 +979,6 @@ function getCommentsDropDown(message_id) {
     return document.querySelector(commentSelector);
 }
 
-function getCommentsURL(message_id) {
-    return window.location.pathname + '/answers/' + message_id + '/comments';
-}
-
-function getUniqueCommentURL(commentable_id, comment_id) {
-    return getCommentsURL(commentable_id) + '/' + comment_id;
-}
-
 /**
  * 
  * @param {String} message_id 
@@ -1010,8 +1002,6 @@ module.exports = {
     createComments: createComments,
     createCommentHTML: createCommentHTML,
     getCommentsDropDown: getCommentsDropDown,
-    getCommentsURL: getCommentsURL,
-    getUniqueCommentURL: getUniqueCommentURL,
     toggleShowMsg: toggleShowMsg
 };
 
@@ -1041,7 +1031,7 @@ function addSingleEventListeners(message_id) {
 }
 
 function viewCommentsEventListener() {
-    messages.genericClickListener('.show-comments', commentsViewer.viewCommentsRequest);
+    messages.genericClickListener('.show-comments', commentsViewer.viewAnswerComments);
 }
 
 function viewSingleCommentEventListener(message_id) {
@@ -1059,20 +1049,18 @@ function addSingleCommentEventListener(message_id) {
 }
 
 function removeCommentsEventListener() {
-
     $('#deleteCommentModal').on('show.bs.modal', function (e) {
         commentsRemover.removeComment($(e.relatedTarget)[0]);
     });
-
-    /* 
-    let deleteModal = document.querySelector('#deleteCommentModal');
-    if (deleteModal == null)
-        return;
-     deleteModal.addEventListener('show.bs.modal', function(e) {
-        console.log(e.relatedTarget);
-    });
-    */
 }
+
+function addQuestionCommentsListeners() {
+    // For getting the comments
+    messages.genericClickListener('.show-question-comments', commentsViewer.viewQuestionComments);
+    // For adding new comments
+}
+
+window.addEventListener('load', addQuestionCommentsListeners);
 
 module.exports = {
     addEventListeners: addEventListeners
@@ -1083,7 +1071,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
-var utils = __webpack_require__(5);
+var url = __webpack_require__(44);
 
 // Adding edit capability to freshly added comment
 function enableEditMode(message_id) {
@@ -1144,7 +1132,7 @@ function requestEdition(inputNode, oldNode, comment_id) {
         "comment": comment_id
     };
 
-    ajax.sendAjaxRequest('put', utils.getUniqueCommentURL(answer_id, comment_id), requestBody, function (data) {
+    ajax.sendAjaxRequest('put', url.getUniqueAnswerCommentURL(answer_id, comment_id), requestBody, function (data) {
         editCommentHandler(data.target, inputNode, oldNode);
     });
 }
@@ -1188,7 +1176,7 @@ function genericClickListener(selector, method) {
     if (messages == null) return;
 
     var _loop = function _loop(message) {
-
+        console.log(message);
         var ref_message_id = message.getAttribute('data-message-id');
         if (ref_message_id == null) return {
                 v: void 0
@@ -2388,18 +2376,31 @@ module.exports = {
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(5);
+var url = __webpack_require__(44);;
 var editor = __webpack_require__(7);
 var questionPage = __webpack_require__(2);
 
-function viewCommentsRequest(message_id) {
+function viewQuestionComments(message_id) {
+    viewCommentsRequest(message_id, url.getQuestionCommentsURL());
+}
 
+function viewAnswerComments(message_id) {
+    viewCommentsRequest(message_id, url.getAnswerCommentsURL(message_id));
+}
+
+function viewCommentsRequest(message_id, urlString) {
     // If area already expanded, its only closing, so not worth making ajax request
     if (utils.getCommentsDropDown(message_id).classList.contains('show')) {
         utils.toggleShowMsg(message_id, true);
         return;
     }
+    console.log('urmoma');
+    if (urlString == url.getQuestionCommentsURL()) {
+        console.log(boi + " " + message_id);
+        return;
+    }
 
-    ajax.sendAjaxRequest('get', utils.getCommentsURL(message_id), {}, function (data) {
+    ajax.sendAjaxRequest('get', urlString, {}, function (data) {
         getCommentsHandler(data.target, message_id);
     });
 }
@@ -2449,7 +2450,8 @@ function enableVote(message_id) {
 }
 
 module.exports = {
-    viewCommentsRequest: viewCommentsRequest
+    viewAnswerComments: viewAnswerComments,
+    viewQuestionComments: viewQuestionComments
 };
 
 /***/ }),
@@ -2459,6 +2461,7 @@ module.exports = {
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
 var utils = __webpack_require__(5);
+var url = __webpack_require__(44);
 var editor = __webpack_require__(7);
 
 function addCommentRequest(message_id) {
@@ -2473,7 +2476,7 @@ function addCommentRequest(message_id) {
         "commentable": message_id
     };
 
-    ajax.sendAjaxRequest('post', utils.getCommentsURL(message_id), requestBody, function (data) {
+    ajax.sendAjaxRequest('post', url.getAnswerCommentsURL(message_id), requestBody, function (data) {
         addCommentHandler(data.target, message_id);
     });
 }
@@ -2516,7 +2519,7 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(5);
+var url = __webpack_require__(44);
 
 function removeComment(commentTrashBtn) {
 
@@ -2542,7 +2545,7 @@ function removeCommentRequest(comment_id, answer_id, commentNode) {
         "commentable": answer_id
     };
 
-    ajax.sendAjaxRequest('delete', utils.getUniqueCommentURL(answer_id, comment_id), requestBody, function (data) {
+    ajax.sendAjaxRequest('delete', url.getUniqueAnswerCommentURL(answer_id, comment_id), requestBody, function (data) {
         removeCommentHandler(data.target, commentNode);
     });
 }
@@ -8135,7 +8138,44 @@ module.exports = Echo;
 /* 33 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: spawn /home/bayard/Github/lbaw1763/node_modules/mozjpeg/vendor/cjpeg ENOENT\n    at exports._errnoException (util.js:1020:11)\n    at Process.ChildProcess._handle.onexit (internal/child_process.js:197:32)\n    at onErrorNT (internal/child_process.js:376:16)\n    at _combinedTickCallback (internal/process/next_tick.js:80:11)\n    at process._tickCallback (internal/process/next_tick.js:104:9)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at /home/bayard/Github/lbaw1763/node_modules/img-loader/index.js:45:31\n    at process._tickCallback (internal/process/next_tick.js:109:7)");
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */
+/***/ (function(module, exports) {
+
+function getAnswerCommentsURL(message_id) {
+    return window.location.pathname + '/answers/' + message_id + '/comments';
+}
+
+function getUniqueAnswerCommentURL(commentable_id, comment_id) {
+    return getAnswerCommentsURL(commentable_id) + '/' + comment_id;
+}
+
+function getQuestionCommentsURL() {
+    return window.location.pathname + '/comments';
+}
+
+function getUniqueQuestionCommentURL() {
+    return window.location.pathname + '/comments';
+}
+
+module.exports = {
+    getAnswerCommentsURL: getAnswerCommentsURL,
+    getUniqueAnswerCommentURL: getUniqueAnswerCommentURL,
+    getQuestionCommentsURL: getQuestionCommentsURL,
+    getUniqueQuestionCommentURL: getUniqueQuestionCommentURL
+};
 
 /***/ })
 /******/ ]);

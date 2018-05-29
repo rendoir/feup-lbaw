@@ -1,5 +1,5 @@
 var ajax = require('../ajax.js');
-var utils = require('./commentsUtils.js');
+var url = require('./commentsURL.js');
 
 // Adding edit capability to freshly added comment
 function enableEditMode(message_id) {
@@ -63,7 +63,7 @@ function requestEdition(inputNode, oldNode, comment_id) {
     };
 
     ajax.sendAjaxRequest(
-        'put', utils.getUniqueCommentURL(answer_id, comment_id), requestBody, (data) => {
+        'put', url.getUniqueAnswerCommentURL(answer_id, comment_id), requestBody, (data) => {
             editCommentHandler(data.target, inputNode, oldNode);
         }
     );
