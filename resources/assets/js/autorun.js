@@ -138,6 +138,17 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         pages_num[4] = 0;
         getQuestions(1);
     });
+    $('input#search-input-nav').on("change paste keyup", function() {
+        $('a.nav-item.nav-link.active').removeClass("active").removeClass("show");
+        $('div.tab-pane.active.show').removeClass("active").removeClass("show");
+        $('div#nav-search').addClass("active").addClass("show");
+        questionType = "nav-search";
+        let search = $('input#search-input-nav').val();
+        url = "/questions/search?search=" + search;
+        window.history.pushState("", "", '/questions?search=' + search);
+        pages_num[4] = 0;
+        getQuestions(1);
+    });
 
     $(window).scroll(function () {
         if (!endOfPage) {
