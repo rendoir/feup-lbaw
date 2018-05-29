@@ -3099,9 +3099,31 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
 } else if (window.location.pathname.match(/questions\/\d/) != null) {
     var categories = $('div#categories')[0].children;
     var tags = "";
-    for(var category of categories){
-        tags += '[' + category.innerHTML + ']';
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = categories[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var category = _step.value;
+
+            tags += '[' + category.innerHTML + ']';
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
     }
+
     ajax.sendAjaxRequest('GET', "/questions/search?num_per_page=3&operator=or&search=" + tags, null, function (data) {
         var template = $('template#related')[0];
         var info = null;
@@ -8284,7 +8306,7 @@ module.exports = Echo;
 /* 34 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: spawn /home/bayard/Github/lbaw1763/node_modules/mozjpeg/vendor/cjpeg ENOENT\n    at exports._errnoException (util.js:1020:11)\n    at Process.ChildProcess._handle.onexit (internal/child_process.js:197:32)\n    at onErrorNT (internal/child_process.js:376:16)\n    at _combinedTickCallback (internal/process/next_tick.js:80:11)\n    at process._tickCallback (internal/process/next_tick.js:104:9)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at /home/bayard/Github/lbaw1763/node_modules/img-loader/index.js:45:31\n    at process._tickCallback (internal/process/next_tick.js:109:7)");
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

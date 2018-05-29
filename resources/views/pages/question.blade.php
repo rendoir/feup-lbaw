@@ -129,6 +129,7 @@ $positive = $message->getVote();
                   @endif
                   @endif
                 </div>
+
             </div>
         </main>
     </div>
@@ -159,14 +160,14 @@ $positive = $message->getVote();
         <!-- related questions -->
         <aside class="col-md-3 mt-3">
             <div class="aside-content" style="top: 150px">
-                <div class="card">
-                    <div class="card-header bg-transparent">Related Questions</div>
-                    <div id="related-questions">
-                        @include('templates.related_template')
-                        @for ($i = 0; $i < 3; $i++)
-                            @include('partials.related')
-                        @endfor
-                    </div>
+                <div class="text-center">
+                    <h4>Related Questions</h4>
+                </div>
+                <div id="related-questions">
+                    @include('templates.related_template')
+                    @for ($i = 0; $i < 3; $i++)
+                        @include('partials.related')
+                    @endfor
                 </div>
             </div>
         </aside>

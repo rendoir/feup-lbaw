@@ -1,7 +1,7 @@
 @verbatim
     <template id="related">
         {{#questions}}
-        <div class="card question-card border-success {{#correct_answer}}border-success{{/correct_answer}}" onclick="location.href='/questions/{{question_id}}'" style="margin-bottom: -1px">
+        <div class="card question-card border-success {{#correct_answer}}border-success{{/correct_answer}} my-2" onclick="location.href='/questions/{{question_id}}'" style="margin-bottom: -1px">
             <div class="card-body p-2">
                 <span class="card-title">{{title}}</span>
             </div>
