@@ -17,20 +17,20 @@
                                     <label for="username">
                                         <small>Username</small>
                                     </label>
-                                    <input name="name" type="text" class="form-control" id="username" placeholder="Your username here" required>
+                                    <input name="name" type="text" class="form-control" id="username-register" placeholder="Your username here" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">
                                         <small>Email address</small>
                                     </label>
-                                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Your email here" required>
+                                    <input name="email" type="email" class="form-control" id="email-register" aria-describedby="emailHelp" placeholder="Your email here" required>
                                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">
                                         <small>Password</small>
                                     </label>
-                                    <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
+                                    <input name="password" type="password" class="form-control" id="password-register" placeholder="Password" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="confirm_password">
