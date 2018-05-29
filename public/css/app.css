@@ -877,10 +877,6 @@ a.tag {
     margin-right: 0.5rem;
   }
 
-  nav {
-    padding: 1rem !important;
-  }
-
   /* Account Page */
 
   #account-settings > .col-2.pb-2 {
@@ -953,10 +949,6 @@ a.tag {
   nav > .navbar-collapse > .form-inline > input {
     width: 60% !important;
     margin-right: 0.5rem;
-  }
-
-  nav {
-    padding: 1rem !important;
   }
 
   /* Tags page */
