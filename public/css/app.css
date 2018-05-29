@@ -861,7 +861,7 @@ a.tag {
 }
 
 .banned {
-  background-color: #ffc8c8 !important;
+  display: none !important;
 }
 
 /*************************************************/
