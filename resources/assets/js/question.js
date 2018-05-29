@@ -26,17 +26,17 @@ applyMarkdown();
 
 function bookmarkEvent() {
 	let bookmark = document.querySelector("#bookmark");
-	if(bookmark == null) return;
+	if (bookmark == null) return;
 	let i = bookmark.querySelector("i");
-	bookmark.addEventListener("click", function() {
+	bookmark.addEventListener("click", function () {
 		$(bookmark).tooltip('hide');
 		let message_id = bookmark.getAttribute('data-message-id');
 		let is_active = bookmark.classList.contains('active');
 		let url = '/users/bookmarks/' + message_id;
 		let data = { question_id: message_id };
-		ajax.sendAjaxRequest('post', url, data, function() {
-			if(this.status == 200){
-				if(is_active) {
+		ajax.sendAjaxRequest('post', url, data, function () {
+			if (this.status == 200) {
+				if (is_active) {
 					bookmark.classList.add('inactive');
 					bookmark.classList.remove('active');
 					i.className = i.className.replace('fas', 'far');
@@ -46,7 +46,7 @@ function bookmarkEvent() {
 					i.className = i.className.replace('far', 'fas');
 				}
 			}
-	  });
+		});
 	});
 }
 
@@ -59,32 +59,32 @@ function addVoteEvent(container) {
 }
 
 function voteEvent(vote_buttons, scores) {
-	if(vote_buttons == null) return;
+	if (vote_buttons == null) return;
 	for (let i = 0; i < vote_buttons.length; i++) {
 		let button = vote_buttons[i];
-		button.addEventListener('click', function() {
+		button.addEventListener('click', function () {
 			let message_id = button.dataset.message_id;
 			let positive = button.dataset.positive;
 			let url = '/messages/' + message_id + '/vote';
 			let data = { positive: positive };
-			ajax.sendAjaxRequest('post', url, data, function() {
-				if(this.status == 401)
+			ajax.sendAjaxRequest('post', url, data, function () {
+				if (this.status == 401)
 					window.location = "/login";
 				else if (this.status == 404)
 					window.location = "/404";
 				else if (this.status == 403) {
 					let alert_elem = errors.displayError("You cannot vote your messages.");
 					$(alert_elem).delay(4000).slideUp(500, function () {
-	          $(this).remove();
-	        });
-				}	else if (this.status == 200) {
-					if(button.classList.contains('discrete')) {
+						$(this).remove();
+					});
+				} else if (this.status == 200) {
+					if (button.classList.contains('discrete')) {
 						button.classList.remove('discrete');
-						let pair_i = positive === 'true' ? (i+1) : (i-1);
-						if(!vote_buttons[pair_i].classList.contains('discrete'))
+						let pair_i = positive === 'true' ? (i + 1) : (i - 1);
+						if (!vote_buttons[pair_i].classList.contains('discrete'))
 							vote_buttons[pair_i].classList.add('discrete');
-					}	else button.classList.add('discrete');
-					let score = scores[Math.floor(i/2)];
+					} else button.classList.add('discrete');
+					let score = scores[Math.floor(i / 2)];
 					score.innerHTML = JSON.parse(this.responseText).score;
 				}
 			});
@@ -96,19 +96,19 @@ addVoteEvent('#question-body');
 
 function addMarkCorrectEvent() {
 	let answers = document.querySelectorAll(".answer");
-	for(let answer of answers) {
+	for (let answer of answers) {
 		markCorrectEvent(answer);
 	}
 }
 
 function markCorrectEvent(answer) {
 	let button = answer.querySelector(".mark");
-	if(button == null) return;
-	button.addEventListener('click', function() {
+	if (button == null) return;
+	button.addEventListener('click', function () {
 		let answer_id = button.dataset.message_id;
 		let url = '/messages/' + answer_id + '/mark_correct';
-		ajax.sendAjaxRequest('post', url, null, function() {
-			if(this.status == 401)
+		ajax.sendAjaxRequest('post', url, null, function () {
+			if (this.status == 401)
 				window.location = "/login";
 			else if (this.status == 404)
 				window.location = "/404";
@@ -117,16 +117,16 @@ function markCorrectEvent(answer) {
 				$(alert_elem).delay(4000).slideUp(500, function () {
 					$(this).remove();
 				});
-			}	else if (this.status == 200) {
-				if(button.classList.contains('marked')) {
+			} else if (this.status == 200) {
+				if (button.classList.contains('marked')) {
 					button.classList.remove('marked');
 					answer.classList.remove('border-success');
-				}	else {
+				} else {
 					let old_correct = document.querySelector(".answer.border-success");
-					if(old_correct != null) {
+					if (old_correct != null) {
 						old_correct.classList.remove('border-success');
 						let old_correct_button = old_correct.querySelector(".mark.marked");
-						if(old_correct_button != null)
+						if (old_correct_button != null)
 							old_correct_button.classList.remove('marked');
 					}
 					button.classList.add('marked');
@@ -143,17 +143,17 @@ function addReportEvent(container) {
 }
 
 function reportEvent(reports) {
-	if(reports == null) return;
+	if (reports == null) return;
 	for (let i = 0; i < reports.length; i++) {
 		let button = reports[i];
-		button.addEventListener('click', function() {
+		button.addEventListener('click', function () {
 			$(bookmark).tooltip('hide');
-			if(!button.classList.contains('discrete'))
+			if (!button.classList.contains('discrete'))
 				return;
 			let message_id = button.dataset.message_id;
 			let url = '/messages/' + message_id + '/report';
-			ajax.sendAjaxRequest('post', url, {message_id: message_id}, function() {
-				if(this.status == 401)
+			ajax.sendAjaxRequest('post', url, { message_id: message_id }, function () {
+				if (this.status == 401)
 					window.location = "/login";
 				else if (this.status == 404)
 					window.location = "/404";
@@ -167,8 +167,40 @@ function reportEvent(reports) {
 
 addReportEvent("#question-body");
 
+function removeQuestionEvent() {
+	$('#deleteQuestionModal').on('show.bs.modal', function (e) {
+		removeQuestion($(e.relatedTarget)[0]);
+	});
+}
+
+function removeQuestion(delTrigger) {
+	let question_id = delTriger.getAttribute("data-message-id");
+	if (question_id == null)
+		return;
+
+	let deleteBtn = document.getElementById('delete-question');
+	if (deleteBtn == null)
+		return;
+
+	deleteBtn.addEventListener('click', function () {
+		ajax.sendAjaxRequest(
+			'delete',
+			window.location + '/delete',
+			{ "question": question_id },
+			() => {
+				if (this.status == 401)
+					window.location = "/login";
+				else if (this.status == 404)
+					window.location = "/404";
+				else if (this.status != 200)
+					errors.displayError("Failed to delete the question");
+			}
+		);
+	});
+}
+
 module.exports = {
-  addVoteEvent,
+	addVoteEvent,
 	addMarkCorrectEvent,
 	markCorrectEvent,
 	voteEvent,

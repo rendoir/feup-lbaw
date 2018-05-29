@@ -67,6 +67,18 @@ class QuestionsController extends Controller
         return redirect('\ask_question');
     }
 
+    public function deleteQuestion(Request $request)
+    {
+        $question = Question::find($request->question);
+        $message = $question->message;
+
+        // Checking if the User can edit the answer
+        $this->authorize('delete', $message);
+
+        $message->delete();
+        return redirect('/');
+    }
+
     public function showAskQuestionForm(Request $request) {
         $title = $request->get('title');
         return view('pages.ask_question', ['title' => $title]);

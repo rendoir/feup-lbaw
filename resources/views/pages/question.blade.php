@@ -16,8 +16,18 @@ $positive = $message->getVote();
 @section('question-title')
     <section id="question" class="sweet-grey" data-message-id="{{$question->id}}">
         <div class="container py-3">
-            <header class="border-bottom sticky-top">
+            <header class="border-bottom sticky-top d-flex">
                 <h3>{{$question->title}}</h3>
+                @if (Auth::id() == $author->id)
+                <div class="discrete ml-auto mr-1 text-center mt-auto mb-auto">
+                    <a class="discrete mx-1" href="#" role="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <a class="discrete ml-1" data-toggle="modal" href="#deleteQuestionModal" data-message-id='{{$id}}'>
+                        <i class="far fa-trash-alt p-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i>
+                    </a>
+                </div>
+                @endif
             </header>
         </div>
     </section>
@@ -52,27 +62,6 @@ $positive = $message->getVote();
                         </div>
                     </div>
                 @endif
-                <!-- <div class="collapse" id="QuestionComments">
-                    <div class="card-footer comments-card">
-                        <div class="d-flex list-group list-group-flush">
-                            <div class="list-group-item px-0 bg-transparent">
-                                <div class="row mx-sm-0">
-                                    <div class="col-1 my-auto text-center">
-                                        <p class="text-center mb-0 w-100">3</p>
-                                    </div>
-                                    <div class="col-11 my-1 pl-3">
-                                        <p class="px-2">lorem ipsum is a filler text commonly used to demonstrate the textual
-                                            elements of a graphic document or visual presentation. Replacing
-                                            content with placeholder text allows designers to design the form
-                                            of the content before the content itself has been produced.</p>
-                                        <p class="text-right discrete">
-                                            AndreFCruz
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
                 <!-- END Question comments -->
             </div>
@@ -184,12 +173,34 @@ $positive = $message->getVote();
     </div>
 </section>
 
+<!-- Question deletion modal -->
+<div class="modal fade" id="deleteQuestionModal" tabindex="-1" role="dialog" aria-labelledby="deleteQuestionModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="deleteQuestionModalLabel">Delete Question</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this question?<br>
+                The process is irreversible and might affect other users negatively.
+            </div>
+            <div class="modal-footer">
+                <button id="delete-question" type="button" class="btn btn-outline-danger" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Answer edition' modal -->
 <div class="modal fade" id="editAnswerModal" tabindex="-1" role="dialog" aria-labelledby="editAnswerModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="deleteCommentModalLabel">Edit Answer</h4>
+                <h4 class="modal-title" id="deleteAnswerModalLabel">Edit Answer</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>

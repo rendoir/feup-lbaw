@@ -41,9 +41,11 @@ Route::get('getHighlyVotedQuestions', 'Question\QuestionsController@getHighlyVot
 Route::get('questions/active', 'Question\QuestionsController@showActiveQuestions')->name('active_questions'); // Unanswered
 Route::get('getActiveQuestions', 'Question\QuestionsController@getActiveQuestions');
 
+// Questions
 Route::get('questions/{id}', 'Question\QuestionsController@showQuestionPage')->name('questions');
 Route::get('ask_question', 'Question\QuestionsController@showAskQuestionForm')->name('ask_question_form');
 Route::post('ask_question', 'Question\QuestionsController@addQuestion')->name('ask_question');
+Route::delete('questions/{id}/delete', 'Question\QuestionsController@deleteQuestion');
 
 // Answers
 Route::get('questions/{id}/answers', 'Question\AnswersController@getAnswers');

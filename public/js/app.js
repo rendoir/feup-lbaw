@@ -309,6 +309,28 @@ function reportEvent(reports) {
 
 addReportEvent("#question-body");
 
+function removeQuestionEvent() {
+	$('#deleteQuestionModal').on('show.bs.modal', function (e) {
+		removeQuestion($(e.relatedTarget)[0]);
+	});
+}
+
+function removeQuestion(delTrigger) {
+	var question_id = delTriger.getAttribute("data-message-id");
+	if (question_id == null) return;
+
+	var deleteBtn = document.getElementById('delete-question');
+	if (deleteBtn == null) return;
+
+	deleteBtn.addEventListener('click', function () {
+		var _this = this;
+
+		ajax.sendAjaxRequest('delete', window.location + '/delete', { "question": question_id }, function () {
+			if (_this.status == 401) window.location = "/login";else if (_this.status == 404) window.location = "/404";else if (_this.status != 200) errors.displayError("Failed to delete the question");
+		});
+	});
+}
+
 module.exports = {
 	addVoteEvent: addVoteEvent,
 	addMarkCorrectEvent: addMarkCorrectEvent,
@@ -1051,7 +1073,6 @@ function removeCommentsEventListener() {
 }
 
 function addQuestionCommentsListeners() {
-    // For getting the comments
     messages.genericClickListener('.show-question-comments', commentsViewer.viewQuestionComments);
 }
 
