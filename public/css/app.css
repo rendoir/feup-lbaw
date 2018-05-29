@@ -279,7 +279,7 @@ a {
 }
 
 .bg-light {
-  background-color: #F3F4F6 !important;
+  background-color: #DDD !important;
 }
 
 body {
@@ -496,7 +496,7 @@ nav {
 }
 
 .sweet-grey {
-  background: #e9ecef;
+  background: #DDD;
   /* linear-gradient(#e9ecef, #e9ecef); */
 }
 
@@ -1063,6 +1063,10 @@ a.tag {
   #notificationsHeader{
     width: 100%;
   }
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  background-color: rgb(255, 255, 255, 0);
 }
 
 .main-content :first-child {
