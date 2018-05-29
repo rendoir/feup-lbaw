@@ -95,14 +95,14 @@ module.exports = {
 var Mustache = __webpack_require__(3);
 
 function addTimedError(msg) {
-    var error = alerts.displayError(msg);
+    var error = displayError(msg);
     $(error).delay(4000).slideUp(500, function () {
         $(this).remove();
     });
 }
 
 function addTimedSuccess(msg) {
-    var success = alerts.displaySuccess(msg);
+    var success = displaySuccess(msg);
     $(success).delay(4000).slideUp(500, function () {
         $(this).remove();
     });
@@ -131,7 +131,9 @@ function displayMessage(message, isSuccess) {
 
 module.exports = {
     displayError: displayError,
-    displaySuccess: displaySuccess
+    displaySuccess: displaySuccess,
+    addTimedError: addTimedError,
+    addTimedSuccess: addTimedSuccess
 };
 
 /***/ }),
@@ -319,12 +321,12 @@ function reportEvent(reports) {
 					var response = JSON.parse(this.responseText);
 					if (!response.is_banned) return;
 					if (response.type == 'question') {
-						document.getElementById('question').classList.add('banned');
-						document.getElementById('question-body').classList.add('banned');
-						return;
+						window.location = "/";
+					} else {
+						var element = findAncestor(button, response.type);
+						element.parentNode.removeChild(element);
 					}
-					var element = findAncestor(button, response.type);
-					element.classList.add('banned');
+					errors.displaySuccess("A message you've reported has been removed. Thank you for keeping SegFault clean!");
 				}
 			});
 		});

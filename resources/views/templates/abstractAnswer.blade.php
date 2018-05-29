@@ -1,5 +1,6 @@
 @verbatim
-<div id="answer-{{id}}" class="card my-3 answer {{# correct}}border-success{{/ correct}} {{banned}}">
+{{^banned}}
+<div id="answer-{{id}}" class="card my-3 answer {{# correct}}border-success{{/ correct}}">
     <div class="row mx-0">
         {{^is_authenticated}}
         <div class="col-1 d-flex flex-column align-items-start">
@@ -132,4 +133,5 @@
         </div>
     </div>
 </div>
+{{/banned}}
 @endverbatim
