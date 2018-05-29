@@ -3,35 +3,35 @@
 @section('title', 'Account settings')
 
 @section('content')
-<main class="container mt-5">
-          <div class="pb-4 pl-5">
-              <h2>
-                  Account Settings
-              </h2>
-          </div>
+    <main class="container mt-5">
+        <div class="pb-4 pl-5">
+            <h2>
+                Account Settings
+            </h2>
+        </div>
 
-          <section class="card">
-              <div id="account-settings" class="row text-center">
+        <section class="card">
+            <div id="account-settings" class="row text-center">
 
-                  <div class="col-4 py-4">
-                      <h4>
-                          Credentials
-                      </h4>
-                  </div>
-                  <div class="w-100"></div>
+                <div class="col-4 py-4">
+                    <h4>
+                        Credentials
+                    </h4>
+                </div>
+                <div class="w-100"></div>
 
-                  <!-- Email -->
-                  <div class="col-2 pb-2">
-                      E-mail
-                  </div>
-                  <div class="col-8 pb-2">
-                      {{$user->email}}
-                  </div>
+                <!-- Email -->
+                <div class="col-2 pb-2">
+                    E-mail
+                </div>
+                <div class="col-8 pb-2">
+                    {{$user->email}}
+                </div>
 
-                  <div class="w-100 mt-3"></div>
+                <div class="w-100 mt-3"></div>
 
-                  @if (!$user->isRegisteredByAPI())
-                    <!-- Password Change -->
+            @if (!$user->isRegisteredByAPI())
+                <!-- Password Change -->
                     <div class="col-2 pb-2">
                         Password
                     </div>
@@ -70,24 +70,24 @@
                             </button>
                         </div>
                     </div>
-                  @else
+                @else
                     <div class="col-2 pb-2">
                         Platform
                     </div>
-                    <div class="col-6 pb-2">
+                    <div class="col-8 pb-2">
                         {{$user->provider}}
                     </div>
-                  @endif
+                @endif
 
-                  <div class="w-100 mt-3"></div>
+                <div class="w-100 mt-3"></div>
 
-              </div>
-          </section>
+            </div>
+        </section>
 
-          <div class="text-center">
-              <a class="btn btn-primary my-5" href="{{ route('profile', ['username' => $user->username]) }}" role="button">Get back to Profile</a>
-          </div>
-</main>
+        <div class="text-center">
+            <a class="btn btn-primary my-5" href="{{ route('profile', ['username' => $user->username]) }}" role="button">Get back to Profile</a>
+        </div>
+    </main>
 
-@include('templates.alerts')
+    @include('templates.alerts')
 @endsection
