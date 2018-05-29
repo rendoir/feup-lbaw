@@ -2375,12 +2375,13 @@ function editor(editor_element) {
         }]
     });
     simplemde.value("");
+    return simplemde;
 }
 
 function createEditor(selector) {
     var editor_element = document.getElementById(selector);
     if (editor_element != null) {
-        editor(editor_element);
+        $("#" + selector).data("mde", editor(editor_element));
     }
 }
 
@@ -2480,6 +2481,7 @@ function addModalsListeners() {
     });
     $('#deleteAnswerModal').on('show.bs.modal', function (e) {
         answerRemover.removeAnswer($(e.relatedTarget)[0]);
+        e.stopImmediatePropagation();
     });
 }
 
@@ -2746,19 +2748,20 @@ function editAnswer(editTrigger) {
         return;
     }
 
-    var editor = document.getElementById("edit-editor");
-    editor.value = markdown.innerHTML;
+    var editor = $("#edit-editor");
+    var mde = editor.data("mde");
+    mde.value(markdown.innerHTML);
 
     editBtn.addEventListener('click', function () {
-        editAnswerRequest(edit_id, contentParent.parentElement, editor);
+        editAnswerRequest(edit_id, contentParent.parentElement, mde.value());
     });
 }
 
-function editAnswerRequest(answer_id, answerPlaceholder, editor) {
+function editAnswerRequest(answer_id, answerPlaceholder, content) {
 
     var requestBody = {
         "answer": answer_id,
-        "content": editor.value
+        "content": content
     };
 
     ajax.sendAjaxRequest('put', url.getAnswerIdURL(answer_id), requestBody, function (data) {
@@ -2896,12 +2899,9 @@ function addAnswerHandler(response) {
 
     utils.jumpToElement("answer-" + answer_id);
 
-    //Cleaning answer creator content
-    // TODO
-
-    // This does not work
-    var contentNode = document.querySelector(".new-answer-content");
-    contentNode.value = "";
+    //Cleaning answer creator content - works thanks to binding
+    var editor = $("#editor").data("mde");
+    mde.value("");
 }
 
 module.exports = {

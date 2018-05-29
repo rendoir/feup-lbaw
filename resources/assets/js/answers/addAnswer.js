@@ -41,12 +41,9 @@ function addAnswerHandler(response) {
 
     utils.jumpToElement("answer-" + answer_id);
 
-    //Cleaning answer creator content
-    // TODO
-
-    // This does not work
-    let contentNode = document.querySelector(".new-answer-content");
-    contentNode.value = "";
+    //Cleaning answer creator content - works thanks to binding
+    let editor = $("#editor").data("mde");
+    mde.value("");
 }
 
 module.exports = {

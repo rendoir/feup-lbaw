@@ -69,12 +69,13 @@ function editor(editor_element) {
             }]
     });
     simplemde.value("");
+    return simplemde;
 }
 
 function createEditor(selector) {
-    var editor_element = document.getElementById(selector);
+    let editor_element = document.getElementById(selector);
     if (editor_element != null) {
-        editor(editor_element);
+        $("#" + selector).data("mde", editor(editor_element));
     }
 }
 
