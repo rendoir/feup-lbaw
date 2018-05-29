@@ -14,6 +14,14 @@ class Commentable extends Model
         return $this->hasOne('App\Message', 'id');
     }
 
+    public function get_question() {
+        return Question::find($this->id);
+    }
+
+    public function get_answer() {
+        return Answer::find($this->id);
+    }
+
     public function get_comments() {
         return $this->hasMany('App\Comment', 'commentable_id');
     }
