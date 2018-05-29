@@ -76,7 +76,6 @@ class QuestionsController extends Controller
         $this->authorize('delete', $message);
 
         $message->delete();
-        return redirect('/');
     }
 
     public function showAskQuestionForm(Request $request) {
