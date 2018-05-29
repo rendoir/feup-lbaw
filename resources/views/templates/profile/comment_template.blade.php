@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-10">
                     <div class="card-body">
-                        <h5 class="card-title">{{title}}</h5>
+                        <h5 class="card-title">M: {{title}}</h5>
                         <p class="card-text">{{preview}}...</p>
                     </div>
                 </div>
