@@ -42,7 +42,7 @@ function addAnswerHandler(response) {
     utils.jumpToElement("answer-" + answer_id);
 
     //Cleaning answer creator content - works thanks to binding
-    let editor = $("#editor").data("mde");
+    let mde = $("#editor").data("mde");
     mde.value("");
 }
 

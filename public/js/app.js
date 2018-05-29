@@ -2380,8 +2380,13 @@ function editor(editor_element) {
 
 function createEditor(selector) {
     var editor_element = document.getElementById(selector);
+
     if (editor_element != null) {
-        $("#" + selector).data("mde", editor(editor_element));
+        var mde = editor(editor_element);
+        $("#" + selector).data("mde", mde);
+
+        var value = editor_element.getAttribute("value");
+        if (value != null) mde.value(value);
     }
 }
 
@@ -2899,7 +2904,7 @@ function addAnswerHandler(response) {
     utils.jumpToElement("answer-" + answer_id);
 
     //Cleaning answer creator content - works thanks to binding
-    var editor = $("#editor").data("mde");
+    var mde = $("#editor").data("mde");
     mde.value("");
 }
 

@@ -74,8 +74,14 @@ function editor(editor_element) {
 
 function createEditor(selector) {
     let editor_element = document.getElementById(selector);
+    
     if (editor_element != null) {
-        $("#" + selector).data("mde", editor(editor_element));
+        let mde = editor(editor_element)
+        $("#" + selector).data("mde", mde);
+
+        let value = editor_element.getAttribute("value");
+        if (value != null)
+            mde.value(value);
     }
 }
 
