@@ -1,5 +1,5 @@
 @verbatim
-<div id="answer-{{id}}" class="card my-3 answer {{# correct}}border-success{{/ correct}}">
+<div id="answer-{{id}}" class="card my-3 answer {{# correct}}border-success{{/ correct}} {{banned}}">
     <div class="row mx-0">
         {{^is_authenticated}}
         <div class="col-1 d-flex flex-column align-items-start">
@@ -116,7 +116,7 @@
         <!-- COMMENTS -->
         <div class="collapse message-comments w-100" id="MessageComments{{id}}" data-message-id="{{id}}">
         {{#is_authenticated}}
-            <div class="comment-creator card-footer comments-card px-0 px-sm-4">
+            <div class="comment-creator card-footer comments-card px-0 px-sm-4 comment">
                 <div class="d-flex list-group list-group-flush">
                     <div class="list-group-item bg-transparent">
                         <div class="input-group mt-3">

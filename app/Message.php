@@ -4,7 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+
 use App\User;
+use App\Question;
+use App\Answer;
 
 class Message extends Model
 {
@@ -35,5 +38,13 @@ class Message extends Model
       if($vote != null)
         return $vote->positive;
       return null;
+    }
+
+    public static function getType($message_id) {
+      if(Question::find($message_id) != null)
+        return 'question';
+      if(Answer::find($message_id) != null)
+        return 'answer';
+      return 'comment';
     }
 }
