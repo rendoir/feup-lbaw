@@ -3272,10 +3272,14 @@ var NOTIFICATION_TYPES = {
 function routeNotification(notification) {
     // signal notification as read on the next request
     var to = '?read=' + notification.id;
-    if (notification.type === NOTIFICATION_TYPES.newAnswer) {
-        var questionId = notification.data.question_id;
-        to = 'questions/' + questionId + to;
+    switch (notification.type) {
+        case NOTIFICATION_TYPES.newAnswer:
+        case NOTIFICATION_TYPES.newComment:
+            var questionId = notification.data.question_id;
+            to = 'questions/' + questionId + to;
+            break;
     }
+
     return '/' + to;
 }
 

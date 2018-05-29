@@ -23,10 +23,14 @@ const NOTIFICATION_TYPES = {
 function routeNotification(notification) {
     // signal notification as read on the next request
     let to = '?read=' + notification.id;
-    if(notification.type === NOTIFICATION_TYPES.newAnswer) {
-        const questionId = notification.data.question_id;
-        to = 'questions/' + questionId + to;
+    switch (notification.type) {
+        case NOTIFICATION_TYPES.newAnswer:
+        case NOTIFICATION_TYPES.newComment:
+            const questionId = notification.data.question_id;
+            to = 'questions/' + questionId + to;
+            break;
     }
+
     return '/' + to;
 }
 

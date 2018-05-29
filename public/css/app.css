@@ -327,33 +327,33 @@ body > footer {
 }
 
 #notificationsHeader {
-    padding: .5em 1em .25em 1em;
-    background-color: #DDD;
-    border-bottom: 1px solid rgba(0,0,0,.15);
-    border-top-left-radius: .25em;
-    border-top-right-radius: .25em;
-    width: 400px;
-    color: #555;
+  padding: .5em 1em .25em 1em;
+  background-color: #DDD;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  border-top-left-radius: .25em;
+  border-top-right-radius: .25em;
+  width: 400px;
+  color: #555;
 }
 
 #notificationsMenu {
-    padding: 0 1em;
+  padding: 0 1em;
 }
 
 #notificationsMenu > li:not(:last-child) {
-    border-bottom: 1px solid rgba(0,0,0,.15);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 #notificationsMenu > li {
-    padding: .25em 0;
+  padding: .25em 0;
 }
 
 #notificationsMenu > li > a {
-    color: #555;
+  color: #555;
 }
 
 #notificationsMenu > li > a:hover {
-    color: #151515;
+  color: #151515;
 }
 
 #navbar a.nav-item.nav-link,
