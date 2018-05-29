@@ -28,8 +28,8 @@
                 </div>
                 <div class="text-center m-auto">
                     {{#hasComments}}
-                    <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}"
-                    aria-expanded="false" aria-controls="AnswerComments{{id}}" data-message-id="{{id}}">
+                    <a class="show-comments" role="button" data-toggle="collapse" href="#MessageComments{{id}}"
+                    aria-expanded="false" aria-controls="MessageComments{{id}}" data-message-id="{{id}}">
                         Show Comments
                     </a>
                     {{/hasComments}}
@@ -83,7 +83,7 @@
                     <span class="badge badge-success">{{author_badge}}</span>
                 </div>
                 <div class="text-center m-auto">
-                    <a class="show-comments" role="button" data-toggle="collapse" href="#AnswerComments{{id}}" aria-expanded="false" aria-controls="AnswerComments{{id}}" data-message-id="{{id}}">
+                    <a class="show-comments" role="button" data-toggle="collapse" href="#MessageComments{{id}}" aria-expanded="false" aria-controls="MessageComments{{id}}" data-message-id="{{id}}">
                         {{#hasComments}}
                         Show Comments
                         {{/hasComments}}
@@ -114,7 +114,7 @@
         {{/is_authenticated}}
 
         <!-- COMMENTS -->
-        <div class="collapse answer-comments w-100" id="AnswerComments{{id}}" data-message-id="{{id}}">
+        <div class="collapse message-comments w-100" id="MessageComments{{id}}" data-message-id="{{id}}">
         {{#is_authenticated}}
             <div class="comment-creator card-footer comments-card px-0 px-sm-4">
                 <div class="d-flex list-group list-group-flush">
@@ -128,8 +128,8 @@
                     </div>
                 </div>
             </div>
-        </div>
         {{/is_authenticated}}
+        </div>
     </div>
 </div>
 @endverbatim

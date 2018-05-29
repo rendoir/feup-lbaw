@@ -7,6 +7,7 @@ use App\Message;
 use App\MessageVersion;
 use App\Comment;
 use App\Answer;
+use App\Question;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -76,7 +77,7 @@ class CommentsController extends Controller
 
     public function getQuestionComments(Request $request)
     {
-        $commentable = Question::find($request->answer_id)->commentable;
+        $commentable = Question::find($request->id)->commentable;
         $comment_ids = $commentable->get_comments;
 
         return $this->getComments($comment_ids);

@@ -4,6 +4,7 @@
 
 <?php
 $message = $question->message;
+$id = $message->id;
 $content = $message->message_version;
 $author = $message->get_author();
 $score = $message->score;
@@ -31,15 +32,29 @@ $positive = $message->getVote();
                 <div class="markdown main-content display-content" style="visibility: hidden;">{{$content->content}}</div>
                 <!-- Question Comments -->
                 <div class="text-center">
-                    <button class="btn btn-secundary my-4 show-question-comments" type="button" data-toggle="collapse" data-target="#QuestionComments"
-                    aria-expanded="false" aria-controls="QuestionComments" data-message-id="{{$message->id}}">
-                        Show Question Comments
-                    </button>
+                    <a class="btn btn-outline-secondary my-4 show-question-comments" role="button" data-toggle="collapse" href="#MessageComments{{$id}}"
+                    aria-expanded="false" aria-controls="MessageComments{{$id}}" data-message-id="{{$id}}">
+                        Show Comments
+                    </a>
                 </div>
-                <div class="collapse" id="QuestionComments">
+                <div class="collapse message-comments w-100" id="MessageComments{{$id}}" data-message-id="{{$id}}">
+                @if (Auth::check())
+                    <div class="comment-creator card-footer comments-card px-0 px-sm-4">
+                        <div class="d-flex list-group list-group-flush">
+                            <div class="list-group-item bg-transparent">
+                                <div class="input-group mt-3">
+                                    <input class="form-control new-comment-content" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2" type="text" data-message-id="{{$id}}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-success new-comment-submit" type="button" data-message-id="{{$id}}">Add Comment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                <!-- <div class="collapse" id="QuestionComments">
                     <div class="card-footer comments-card">
                         <div class="d-flex list-group list-group-flush">
-                            <!-- TODO Replace -->
                             <div class="list-group-item px-0 bg-transparent">
                                 <div class="row mx-sm-0">
                                     <div class="col-1 my-auto text-center">
@@ -57,7 +72,7 @@ $positive = $message->getVote();
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- END Question comments -->
             </div>
@@ -78,7 +93,7 @@ $positive = $message->getVote();
                         $has_bookmark = Auth::user()->hasBookmarkOn($question->id);
                       ?>
                       <div style="display: inline-block; height: 100%; float: right; position: relative;">
-                        <span style="font-size: 1.5em; position: absolute; top: 50%; transform: translate(-50%,-50%);" id="bookmark" class="{{$has_bookmark ? 'active' : 'inactive'}}" data-message-id="{{$question->id}}"><i class="{{$has_bookmark ? 'fas' : 'far'}} fa-heart"></i></span>
+                        <span style="font-size: 1.5em; position: absolute; top: 50%; transform: translate(-50%,-50%);" id="bookmark" class="{{$has_bookmark ? 'active' : 'inactive'}}" data-message-id="{{$id}}"><i class="{{$has_bookmark ? 'fas' : 'far'}} fa-heart"></i></span>
                       </div>
                     @endif
                 </div>
@@ -87,10 +102,10 @@ $positive = $message->getVote();
                   @if (Auth::check())
                   <div class="row" style="font-size: 1.5em;">
                         <div class="col-6 text-center">
-                            <i class="vote fas fa-thumbs-up <?=$positive === true ? '' : 'discrete';?>" data-message_id="{{$message->id}}" data-positive="true"></i>
+                            <i class="vote fas fa-thumbs-up <?=$positive === true ? '' : 'discrete';?>" data-message_id="{{$id}}" data-positive="true"></i>
                         </div>
                         <div class="col-6 border-left text-center">
-                            <i class="vote fas fa-thumbs-down <?=$positive === false ? '' : 'discrete';?>" data-message_id="{{$message->id}}" data-positive="false"></i>
+                            <i class="vote fas fa-thumbs-down <?=$positive === false ? '' : 'discrete';?>" data-message_id="{{$id}}" data-positive="false"></i>
                         </div>
                     </div>
                   @endif
@@ -126,7 +141,7 @@ $positive = $message->getVote();
                     </textarea>
                 </div>
                 <div class="text-right w-100 pr-4 mb-3">
-                    <button id="answer-creator" class="p-2 align-left btn btn-outline-info px-3" data-message-id="{{$question->id}}">Post answer</button>
+                    <button id="answer-creator" class="p-2 align-left btn btn-outline-info px-3" data-message-id="{{$id}}">Post answer</button>
                 </div>
             </div>
             @endif

@@ -259,6 +259,10 @@ a {
   border-color: var(--jordy-blue) !important;
 }
 
+.btn-outline-secondary:hover {
+  color: white !important;
+}
+
 .btn-info {
   color: var(--azure);
   background-color: var(--jordy-blue) !important;

@@ -19,11 +19,6 @@ function viewCommentsRequest(message_id, urlString) {
         utils.toggleShowMsg(message_id, true);
         return;
     }
-    console.log('urmoma');
-    if (urlString == url.getQuestionCommentsURL()) {
-        console.log(boi + " " + message_id);
-        return;
-    }
 
     ajax.sendAjaxRequest(
         'get', urlString, {}, (data) => {

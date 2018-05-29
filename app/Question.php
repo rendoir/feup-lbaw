@@ -22,7 +22,7 @@ class Question extends Model
 
     public function commentable()
     {
-        return $this->hasOne('App\Commentable');
+        return $this->hasOne('App\Commentable', 'id');
     }
 
     public function correct_answer()

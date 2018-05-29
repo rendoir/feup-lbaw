@@ -975,7 +975,7 @@ function createCommentHTML(comment) {
 }
 
 function getCommentsDropDown(message_id) {
-    var commentSelector = ".answer-comments[data-message-id='" + message_id + "']";
+    var commentSelector = ".message-comments[data-message-id='" + message_id + "']";
     return document.querySelector(commentSelector);
 }
 
@@ -985,7 +985,8 @@ function getCommentsDropDown(message_id) {
  * @param {boolean} show - If true, it's supposed to to 'Show Comments' , if false it's supposed to 'Hide Comments'
  */
 function toggleShowMsg(message_id, show) {
-    var toggler = document.querySelector("a[aria-controls='AnswerComments" + message_id + "']");
+
+    var toggler = document.querySelector("a[aria-controls='MessageComments" + message_id + "']");
 
     if (!show) {
         toggler.innerHTML = "Hide Comments";
@@ -995,7 +996,7 @@ function toggleShowMsg(message_id, show) {
     var numComments = toggler.parentNode.nextElementSibling.firstElementChild;
     var value = numComments.innerText.split(" ")[0];
 
-    toggler.innerHTML = value > 0 ? "Show Comments" : "Add Comment";
+    toggler.innerHTML = isNaN(value) && value > 0 ? "Show Comments" : "Add Comment";
 }
 
 module.exports = {
@@ -1176,7 +1177,7 @@ function genericClickListener(selector, method) {
     if (messages == null) return;
 
     var _loop = function _loop(message) {
-        console.log(message);
+
         var ref_message_id = message.getAttribute('data-message-id');
         if (ref_message_id == null) return {
                 v: void 0
@@ -2392,11 +2393,6 @@ function viewCommentsRequest(message_id, urlString) {
     // If area already expanded, its only closing, so not worth making ajax request
     if (utils.getCommentsDropDown(message_id).classList.contains('show')) {
         utils.toggleShowMsg(message_id, true);
-        return;
-    }
-    console.log('urmoma');
-    if (urlString == url.getQuestionCommentsURL()) {
-        console.log(boi + " " + message_id);
         return;
     }
 

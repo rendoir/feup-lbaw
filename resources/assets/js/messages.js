@@ -5,7 +5,7 @@ function genericClickListener(selector, method) {
         return;
 
     for (let message of messages) {
-        console.log(message);
+        
         let ref_message_id = message.getAttribute('data-message-id');
         if (ref_message_id == null)
             return;
