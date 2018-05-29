@@ -126,20 +126,22 @@
 
         </nav>
     </div>
-    @if ($errors->isNotEmpty())
-        @foreach ($errors->all() as $error)
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <div class="container">
-                    <div class="d-flex justify-content-between">
-                        <div>{{ $error }}</div>
-                        <button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    <div class="container-messages">
+        @if ($errors->isNotEmpty())
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <div class="container">
+                        <div class="d-flex justify-content-between">
+                            <div>{{ $error }}</div>
+                            <button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
-    @endif
+            @endforeach
+        @endif
+    </div>
     @yield('question-title')
 </header>
 
