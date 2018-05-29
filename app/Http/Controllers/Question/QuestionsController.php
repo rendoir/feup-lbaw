@@ -108,15 +108,24 @@ class QuestionsController extends Controller
                         $query->where('id', $tag_id);
                     });
                 }
-                $questions = $query->search($query_string)->paginate($num_per_page);
+                $questions = $query->search($query_string)
+                                   ->join('messages', 'messages.id', '=', 'questions.id')
+                                   ->where('messages.is_banned', false)
+                                   ->paginate($num_per_page);
             }
             else if($operator == 'or') {
                 $questions = Question::whereHas('categories', function($query) use($tag_ids) {
                     $query->whereIn('id', $tag_ids);
-                })->search($query_string)->paginate($num_per_page);
+                })->search($query_string)
+                  ->join('messages', 'messages.id', '=', 'questions.id')
+                  ->where('messages.is_banned', false)
+                  ->paginate($num_per_page);
             }
         }
-        else $questions = Question::search($query_string)->paginate($num_per_page);
+        else $questions = Question::search($query_string)
+                                  ->join('messages', 'messages.id', '=', 'questions.id')
+                                  ->where('messages.is_banned', false)
+                                  ->paginate($num_per_page);
         $questions->appends(['search' => $query_string]);
 
         return QuestionsController::questionsJSON($questions);
@@ -152,6 +161,7 @@ class QuestionsController extends Controller
     public function getRecentQuestions(){
         $questions = Question::join('message_versions', 'questions.id', '=', 'message_versions.message_id')
             ->join('messages', 'messages.latest_version', '=', 'message_versions.id')
+            ->where('messages.is_banned', false)
             ->orderByDesc('creation_time')
             ->paginate(NUM_PER_PAGE);
 
@@ -164,6 +174,8 @@ class QuestionsController extends Controller
             ->select(DB::raw('
                 questions.id, count(answers.id) C
                 '))
+            ->join('messages', 'messages.id', '=', 'questions.id')
+            ->where('messages.is_banned', false)
             ->groupBy('questions.id')
             ->orderByRaw('C DESC')
             ->paginate(NUM_PER_PAGE);
@@ -176,7 +188,7 @@ class QuestionsController extends Controller
     }
 
     public function getHighlyVotedQuestions() {
-        $questions = Question::HighlyVoted()->paginate(NUM_PER_PAGE);
+        $questions = Question::HighlyVoted()->where('messages.is_banned', false)->paginate(NUM_PER_PAGE);
 
         return QuestionsController::questionsJSON($questions);
     }
@@ -185,6 +197,7 @@ class QuestionsController extends Controller
         $questions = Question::whereRaw('correct_answer IS NULL')
             ->join('message_versions', 'questions.id', '=', 'message_versions.message_id')
             ->join('messages', 'messages.latest_version', '=', 'message_versions.id')
+            ->where('messages.is_banned', false)
             ->orderByDesc('creation_time')
             ->paginate(NUM_PER_PAGE);
 
