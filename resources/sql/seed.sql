@@ -162,6 +162,7 @@ DROP FUNCTION IF EXISTS insert_report();
 DROP FUNCTION IF EXISTS delete_report();
 DROP FUNCTION IF EXISTS update_message_version();
 DROP FUNCTION IF EXISTS update_question_title_search();
+DROP FUNCTION IF EXISTS update_question_content_search();
 
 
 DROP TRIGGER IF EXISTS ban_message ON messages;
