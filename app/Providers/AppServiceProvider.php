@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\BadgeAttainment;
+use App\Observers\BadgeAttainmentObserver;
 use Illuminate\Support\ServiceProvider;
 use App\Observers\AnswerObserver;
 use App\Observers\CommentObserver;
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Answer::observe(AnswerObserver::class);
         Comment::observe(CommentObserver::class);
+        BadgeAttainment::observe(BadgeAttainmentObserver::class);
     }
 
     /**

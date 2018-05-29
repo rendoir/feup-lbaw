@@ -155,18 +155,20 @@ function bookmarkEvent() {
 	if (bookmark == null) return;
 	var i = bookmark.querySelector("i");
 	bookmark.addEventListener("click", function () {
+		$(bookmark).tooltip('hide');
 		var message_id = bookmark.getAttribute('data-message-id');
-		var is_active = bookmark.className == 'active';
-		var method = is_active ? 'delete' : 'post';
+		var is_active = bookmark.classList.contains('active');
 		var url = '/users/bookmarks/' + message_id;
 		var data = { question_id: message_id };
-		ajax.sendAjaxRequest(method, url, data, function () {
+		ajax.sendAjaxRequest('post', url, data, function () {
 			if (this.status == 200) {
 				if (is_active) {
-					bookmark.className = 'inactive';
+					bookmark.classList.add('inactive');
+					bookmark.classList.remove('active');
 					i.className = i.className.replace('fas', 'far');
 				} else {
-					bookmark.className = 'active';
+					bookmark.classList.add('active');
+					bookmark.classList.remove('inactive');
 					i.className = i.className.replace('far', 'fas');
 				}
 			}
@@ -277,11 +279,43 @@ function markCorrectEvent(answer) {
 	});
 }
 
+function addReportEvent(container) {
+	var reports = document.querySelectorAll(container + ' .report');
+	reportEvent(reports);
+}
+
+function reportEvent(reports) {
+	if (reports == null) return;
+
+	var _loop2 = function _loop2(i) {
+		var button = reports[i];
+		button.addEventListener('click', function () {
+			$(bookmark).tooltip('hide');
+			if (!button.classList.contains('discrete')) return;
+			var message_id = button.dataset.message_id;
+			var url = '/messages/' + message_id + '/report';
+			ajax.sendAjaxRequest('post', url, { message_id: message_id }, function () {
+				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 200) {
+					button.classList.remove('discrete');
+				}
+			});
+		});
+	};
+
+	for (var i = 0; i < reports.length; i++) {
+		_loop2(i);
+	}
+}
+
+addReportEvent("#question-body");
+
 module.exports = {
 	addVoteEvent: addVoteEvent,
 	addMarkCorrectEvent: addMarkCorrectEvent,
 	markCorrectEvent: markCorrectEvent,
-	voteEvent: voteEvent
+	voteEvent: voteEvent,
+	addReportEvent: addReportEvent,
+	reportEvent: reportEvent
 };
 
 /***/ }),
@@ -2376,6 +2410,7 @@ function getAnswersHandler() {
         common.sortAnswers();
         comments.addEventListeners();
         question.addVoteEvent('#answers-container');
+        question.addReportEvent('#answers-container');
         question.addMarkCorrectEvent();
 
         // Add event listeners associated to answers' modals
@@ -2445,6 +2480,7 @@ function getCommentsHandler(response, message_id) {
 
                 editor.enableEditMode(comment.id);
                 enableVote(comment.id);
+                enableReport(comment.id);
             }
         } catch (err) {
             _didIteratorError = true;
@@ -2469,6 +2505,13 @@ function enableVote(message_id) {
     var scores = buttons[0].parentElement.querySelectorAll(".score");
 
     questionPage.voteEvent(buttons, scores);
+}
+
+function enableReport(message_id) {
+    var buttons = document.querySelectorAll(".report[data-message_id='" + message_id + "']");
+    if (buttons == null || buttons.length == 0) return;
+
+    questionPage.reportEvent(buttons);
 }
 
 module.exports = {
@@ -2908,15 +2951,19 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
 
         if (handler == null) handler = defaultHandler;
         $('div.loader-ellips').addClass('show');
-        ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
+        if (questionType == "nav-search") ajax.sendAjaxRequest('GET', url + "&page=" + pageNum, null, handler);else ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
     };
 
-    var pages_num = [0, 0, 0, 0];
-    var page_enum = { "nav-new": 0, "nav-hot": 1, "nav-voted": 2, "nav-active": 3 };
-    var urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions"];
+    var pages_num = [0, 0, 0, 0, 0];
+    var page_enum = { "nav-new": 0, "nav-hot": 1, "nav-voted": 2, "nav-active": 3, "nav-search": 4 };
+    var urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions", "/questions/search"];
     var endOfPage = false;
     var questionType = $('div.tab-pane.active.show')[0];
     if (questionType != null) questionType = questionType.id;
+    if (questionType == "nav-search") {
+        var search_param = window.location.search;
+        urls[page_enum[questionType]] += search_param;
+    }
     var url = urls[page_enum[questionType]];
 
     ajax.sendAjaxRequest('GET', "/min-profile", null, function (data) {
@@ -2952,6 +2999,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
     });
 
     $('a#nav-new-tab')[0].addEventListener("click", function () {
+        window.history.pushState("", "", '/questions/recent');
         if (questionType == "nav-new") return;
         questionType = "nav-new";
         url = urls[page_enum[questionType]];
@@ -2960,6 +3008,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
         }
     });
     $('a#nav-hot-tab')[0].addEventListener("click", function () {
+        window.history.pushState("", "", '/questions/hot');
         if (questionType == "nav-hot") return;
         questionType = "nav-hot";
         url = urls[page_enum[questionType]];
@@ -2968,6 +3017,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
         }
     });
     $('a#nav-voted-tab')[0].addEventListener("click", function () {
+        window.history.pushState("", "", '/questions/highly-voted');
         if (questionType == "nav-voted") return;
         questionType = "nav-voted";
         url = urls[page_enum[questionType]];
@@ -2976,10 +3026,42 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
         }
     });
     $('a#nav-active-tab')[0].addEventListener("click", function () {
+        window.history.pushState("", "", '/questions/active');
         if (questionType == "nav-active") return;
         questionType = "nav-active";
         url = urls[page_enum[questionType]];
         if (pages_num[3] == 0) {
+            getQuestions(1);
+        }
+    });
+    var last_search = void 0;
+    $('button#search-button-nav')[0].addEventListener("click", function (event) {
+        event.preventDefault();
+        var search = $('input#search-input-nav').val();
+        url = "/questions/search?search=" + search;
+        if (last_search != url) {
+            $('a.nav-item.nav-link.active').removeClass("active").removeClass("show");
+            $('div.tab-pane.active.show').removeClass("active").removeClass("show");
+            $('div#nav-search').addClass("active").addClass("show");
+            questionType = "nav-search";
+            last_search = url;
+            window.history.pushState("", "", '/questions?search=' + search);
+            pages_num[4] = 0;
+            getQuestions(1);
+        }
+    });
+    $('input#search-input-nav').on("change paste keyup", function (event) {
+        event.preventDefault();
+        var search = $('input#search-input-nav').val();
+        url = "/questions/search?search=" + search;
+        if (last_search != url) {
+            $('a.nav-item.nav-link.active').removeClass("active").removeClass("show");
+            $('div.tab-pane.active.show').removeClass("active").removeClass("show");
+            $('div#nav-search').addClass("active").addClass("show");
+            questionType = "nav-search";
+            last_search = url;
+            window.history.pushState("", "", '/questions?search=' + search);
+            pages_num[4] = 0;
             getQuestions(1);
         }
     });
@@ -3105,7 +3187,8 @@ var notifications = [];
 
 var NOTIFICATION_TYPES = {
     newAnswer: 'App\\Notifications\\NewAnswer',
-    newComment: 'App\\Notifications\\NewComment'
+    newComment: 'App\\Notifications\\NewComment',
+    newBadgeAttainment: 'App\\Notifications\\NewBadgeAttainment'
 };
 
 function routeNotification(notification) {
@@ -3157,14 +3240,16 @@ function makeNotification(notification) {
 
 function makeNotificationText(notification) {
     var text = '';
+    var name = notification.data.following_name;
+
     if (notification.type === NOTIFICATION_TYPES.newAnswer) {
-        var name = notification.data.following_name;
         text += '<strong>' + name + '</strong> answered ';
         if (notification.data.is_author) text += 'your question.';else text += 'a question you bookmarked.';
     } else if (notification.type === NOTIFICATION_TYPES.newComment) {
-        var _name = notification.data.following_name;
-        text += '<strong>' + _name + '</strong> commented ';
+        text += '<strong>' + name + '</strong> commented ';
         if (notification.data.is_author) text += 'on your message.';else text += 'on a discussion you\'re participating in.';
+    } else if (notification.type === NOTIFICATION_TYPES.newBadgeAttainment) {
+        text += 'You got a new <strong>' + notification.badge_type + '</strong> badge!';
     }
 
     return text;

@@ -33,6 +33,7 @@ function getAnswersHandler() {
         common.sortAnswers();
         comments.addEventListeners();
         question.addVoteEvent('#answers-container');
+        question.addReportEvent('#answers-container');
         question.addMarkCorrectEvent();
 
         // Add event listeners associated to answers' modals

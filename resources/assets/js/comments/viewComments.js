@@ -38,6 +38,7 @@ function getCommentsHandler(response, message_id) {
         for (let comment of responseJSON.comments) {
             editor.enableEditMode(comment.id);
             enableVote(comment.id);
+            enableReport(comment.id);
         }
     }
     else alert.displayError("Failed to retrieve the requested Comments");
@@ -50,6 +51,14 @@ function enableVote(message_id) {
     let scores = buttons[0].parentElement.querySelectorAll(".score");
 
     questionPage.voteEvent(buttons, scores);
+}
+
+function enableReport(message_id) {
+    let buttons = document.querySelectorAll(".report[data-message_id='" + message_id + "']");
+    if (buttons == null || buttons.length == 0)
+        return;
+
+    questionPage.reportEvent(buttons);
 }
 
 module.exports = {

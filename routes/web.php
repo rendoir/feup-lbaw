@@ -31,7 +31,7 @@ Route::get('min-profile', 'ProfileController@getMinProfile');
 
 // Search questions with string query
 Route::get('questions', 'Question\QuestionsController@showQueriedQuestions');
-
+Route::get('questions/search', 'Question\QuestionsController@getQueriedQuestions');
 Route::get('questions/recent', 'Question\QuestionsController@showRecentQuestions')->name('recent_questions'); // Most recent
 Route::get('getRecentQuestions', 'Question\QuestionsController@getRecentQuestions');
 Route::get('questions/hot', 'Question\QuestionsController@showHotQuestions')->name('hot_questions'); // Most answers
@@ -73,8 +73,7 @@ Route::get('users/{username}/edit', 'ProfileController@getEditProfile')->name('e
 Route::get('users/{username}/settings', 'ProfileController@getSettings')->name('settings');
 Route::post('users/edit/image/{type}', 'ProfileController@imageUpload');
 Route::post('users/edit/biography', 'ProfileController@editBiography');
-Route::post('users/bookmarks/{question_id}', 'ProfileController@addBookmark');
-Route::delete('users/bookmarks/{question_id}', 'ProfileController@deleteBookmark');
+Route::post('users/bookmarks/{question_id}', 'ProfileController@bookmark');
 Route::post('users/settings/change_password', 'ProfileController@changePassword');
 Route::get('users/{username?}/getQuestions', 'ProfileController@getQuestions');
 Route::get('users/{username?}/getAnswers', 'ProfileController@getAnswers');
@@ -84,6 +83,7 @@ Route::get('users/{username?}/getComments', 'ProfileController@getComments');
 //Messages
 Route::post('messages/{id}/vote', 'MessageController@vote');
 Route::post('messages/{id}/mark_correct', 'MessageController@markCorrect');
+Route::post('messages/{id}/report', 'MessageController@report');
 
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');

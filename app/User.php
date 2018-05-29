@@ -65,7 +65,12 @@ class User extends Authenticatable
       return Bookmark::where('user_id', '=', $this->id)
                       ->where('question_id', '=', $question_id)
                       ->count() > 0;
+    }
 
+    public function hasReportOn($message_id) {
+      return Report::where('user_id', '=', $this->id)
+                      ->where('message_id', '=', $message_id)
+                      ->count() > 0;
     }
 
     public function isRegisteredByAPI() {
