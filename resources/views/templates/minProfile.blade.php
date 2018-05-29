@@ -2,7 +2,7 @@
 <template id="minProfile">
     <a href="/users/{{username}}" class="card unnoticed-a hover-box-shadow mb-3">
         <div class="card-img-top-container">
-            <img class="card-img-top" src="{{bg-profile-img}}" alt="Card image cap">
+            <img class="card-img-top" src="{{bg-profile-img}}" alt="Card image cap" style="width: auto; min-width: 100%">
         </div>
         <div class="card-body text-center" style="z-index: 1">
             <img class="rounded-circle img-profile-aside" src="{{profile-img}}" alt="UserImage" height="100px" width="100px">

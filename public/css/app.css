@@ -279,7 +279,7 @@ a {
 }
 
 .bg-light {
-  background-color: #F3F4F6 !important;
+  background-color: #DDD !important;
 }
 
 body {
@@ -289,7 +289,7 @@ body {
   overflow-x: hidden;
   color: #67757c;
   font-weight: 300;
-  min-width: 320px;
+  min-width: 360px;
   min-height: 100vh;
   position: relative;
   padding-bottom: 66px;
@@ -496,7 +496,7 @@ nav {
 }
 
 .sweet-grey {
-  background: #e9ecef;
+  background: #DDD;
   /* linear-gradient(#e9ecef, #e9ecef); */
 }
 
@@ -926,7 +926,7 @@ a.tag {
 
   #sign-up-jumbo p.lead {
     color: #eee;
-    text-shadow: 1px 1px #111111cc;
+    text-shadow: 1px 1px #111111;
   }
 }
 
@@ -1063,6 +1063,10 @@ a.tag {
   #notificationsHeader{
     width: 100%;
   }
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  background-color: rgba(255, 255, 255, 0);
 }
 
 .main-content :first-child {
@@ -1307,7 +1311,7 @@ tags,
 .suggestions {
   display: block;
   border: 1px solid #DDD;
-  padding-right: 0.3em 0.5em;
+  padding-right: 0.3em;
   cursor: text;
   overflow: hidden;
 }
