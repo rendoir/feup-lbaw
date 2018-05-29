@@ -77,29 +77,9 @@ $positive = $message->getVote();
                 <!-- END Question comments -->
             </div>
             <div class="col-md-3 p-3 d-flex flex-column justify-content-between">
-<<<<<<< HEAD
-                <div>
-                    <div style="display: inline-block">
-                    <div>
-                        <span class="font-weight-bold w-100">Answers: </span>
-                        <span class="w-100">{{$num_answers}}</span>
-                    </div>
-                    <div>
-                        <span class="font-weight-bold w-100">Votes: </span>
-                        <span class="w-100 score">{{$score}}</span>
-                    </div>
-                    </div>
-                    @if (Auth::check())
-                      <?php
-                        $has_bookmark = Auth::user()->hasBookmarkOn($question->id);
-                      ?>
-                      <div style="display: inline-block; height: 100%; float: right; position: relative;">
-                        <span style="font-size: 1.5em; position: absolute; top: 50%; transform: translate(-50%,-50%);" id="bookmark" class="{{$has_bookmark ? 'active' : 'inactive'}}" data-message-id="{{$id}}"><i class="{{$has_bookmark ? 'fas' : 'far'}} fa-heart"></i></span>
-=======
                       <div>
                           <span class="font-weight-bold w-100">Answers: </span>
                           <span class="w-100">{{$num_answers}}</span>
->>>>>>> efaa4ce93b81609f975c2d0cd6796db66b8bbe4f
                       </div>
                       <div>
                           <span class="font-weight-bold w-100">Votes: </span>
@@ -136,20 +116,12 @@ $positive = $message->getVote();
                   @if (Auth::check())
                   @if (Auth::id() != $author->id)
                   <div class="row" style="font-size: 1.5em;">
-<<<<<<< HEAD
                         <div class="col-6 text-center">
                             <i class="vote fas fa-thumbs-up <?=$positive === true ? '' : 'discrete';?>" data-message_id="{{$id}}" data-positive="true"></i>
                         </div>
                         <div class="col-6 border-left text-center">
                             <i class="vote fas fa-thumbs-down <?=$positive === false ? '' : 'discrete';?>" data-message_id="{{$id}}" data-positive="false"></i>
                         </div>
-=======
-                    <div class="col-6 text-center">
-                        <i class="vote fas fa-thumbs-up <?=$positive === true ? '' : 'discrete';?>" data-message_id="{{$message->id}}" data-positive="true"></i>
-                    </div>
-                    <div class="col-6 border-left text-center">
-                        <i class="vote fas fa-thumbs-down <?=$positive === false ? '' : 'discrete';?>" data-message_id="{{$message->id}}" data-positive="false"></i>
->>>>>>> efaa4ce93b81609f975c2d0cd6796db66b8bbe4f
                     </div>
                   </div>
                   @endif
