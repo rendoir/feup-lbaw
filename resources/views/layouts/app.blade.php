@@ -27,7 +27,7 @@
                 <!-- Search Bar -->
                 <form class="form-inline" method="GET" action="{{ url('questions') }}">
                     <input id="search-input-nav" class="form-control mx-sm-2" type="text" name="search" placeholder="Search" aria-label="Search"
-                    @if(isset($request) && $request->has('search')) <?php echo 'value="' . htmlspecialchars($_GET['search']) . '"' ?> @endif>
+                    @if(isset($_GET['search'])) <?php echo 'value="' . htmlspecialchars($_GET['search']) . '"' ?> @endif>
                     <button id="search-button-nav" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
@@ -38,15 +38,21 @@
             @if (Auth::check())
                 <!-- Notifications Dropdown -->
                     <div class="dropdown mx-2">
-                    <span class="big-icon" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="pt-1">
-                            <i class="fa fa-bell"></i>
-                        </div>
-                    </span>
-                        <div class="dropdown-menu dropdown-menu-right pt-0" aria-labelledby="notifications">
+                        <span class="big-icon" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="pt-1">
+                                <i class="fa fa-bell"></i>
+                            </div>
+                            <div id="unread-notification" class="notify">
+                                <span class="heartbit"></span>
+                                <span class="point"></span>
+                            </div>
+                        </span>
+                        <div id="drop-notifications" class="dropdown-menu dropdown-menu-right pt-0" aria-labelledby="notifications">
                             <div id="notificationsHeader">Notifications</div>
                             <div id="notificationsMenu">
-                                <p class="text-center">No Unread Notifications.</p>
+                                <li>
+                                    <span class="text-center">No Unread Notifications.</span>
+                                </li>
                                 <!-- Notifications populated with JS -->
                             </div>
                         </div>

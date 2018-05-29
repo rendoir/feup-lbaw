@@ -1,6 +1,10 @@
 function editor(editor_element) {
     var simplemde = new SimpleMDE({
-        renderingConfig: { codeSyntaxHighlighting: true }, element: editor_element, forceSync: true, toolbar: ["bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list", "ordered-list", "link", "image", "table", "horizontal-rule", "preview",
+        autoDownloadFontAwesome: false,
+        spellChecker: false,
+        renderingConfig: { codeSyntaxHighlighting: true },
+        element: editor_element, forceSync: true,
+        toolbar: ["bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list", "ordered-list", "link", "image", "table", "horizontal-rule", "preview",
             {
                 name: "side-by-side",
                 action: function customPreview(editor) {

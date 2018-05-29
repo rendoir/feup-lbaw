@@ -23,10 +23,17 @@ const NOTIFICATION_TYPES = {
 function routeNotification(notification) {
     // signal notification as read on the next request
     let to = '?read=' + notification.id;
-    if(notification.type === NOTIFICATION_TYPES.newAnswer) {
-        const questionId = notification.data.question_id;
-        to = 'questions/' + questionId + to;
+    switch (notification.type) {
+        case NOTIFICATION_TYPES.newAnswer:
+        case NOTIFICATION_TYPES.newComment:
+            const questionId = notification.data.question_id;
+            to = 'questions/' + questionId + to;
+            break;
+        case NOTIFICATION_TYPES.newBadgeAttainment:
+            to = 'users/' + notification.following_name + to;
+            break;
     }
+
     return '/' + to;
 }
 
@@ -57,6 +64,7 @@ function showNotifications(notifications) {
     if (notifications.length > 0) {
         let htmlElements = notifications.map(notification => makeNotification(notification));
         document.querySelector('#notificationsMenu').innerHTML = htmlElements.join('');
+        document.querySelector('#unread-notification').classList.add("show");
     }
 }
 

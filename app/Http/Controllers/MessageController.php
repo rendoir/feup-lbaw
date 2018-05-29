@@ -70,9 +70,11 @@ class MessageController extends Controller
     if(!Auth::user()->hasReportOn($request->message_id))
       DB::table('reports')->insert(['message_id' => $request->message_id, 'user_id' => Auth::id()]);
 
+    $message = DB::table('messages')->where('id', $request->message_id)->first();
+
     $data = [
-      'type' => Message::getType($request->message_id),
-      'is_banned' => Message::find($request->message_id)->first()->is_banned
+      'type' => Message::getType($message->id),
+      'is_banned' => $message->is_banned
     ];
 
     return response()->json($data, 200);

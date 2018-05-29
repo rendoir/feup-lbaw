@@ -95,14 +95,14 @@ module.exports = {
 var Mustache = __webpack_require__(3);
 
 function addTimedError(msg) {
-    var error = alerts.displayError(msg);
+    var error = displayError(msg);
     $(error).delay(4000).slideUp(500, function () {
         $(this).remove();
     });
 }
 
 function addTimedSuccess(msg) {
-    var success = alerts.displaySuccess(msg);
+    var success = displaySuccess(msg);
     $(success).delay(4000).slideUp(500, function () {
         $(this).remove();
     });
@@ -131,7 +131,9 @@ function displayMessage(message, isSuccess) {
 
 module.exports = {
     displayError: displayError,
-    displaySuccess: displaySuccess
+    displaySuccess: displaySuccess,
+    addTimedError: addTimedError,
+    addTimedSuccess: addTimedSuccess
 };
 
 /***/ }),
@@ -318,13 +320,11 @@ function reportEvent(reports) {
 					button.classList.remove('discrete');
 					var response = JSON.parse(this.responseText);
 					if (!response.is_banned) return;
-					if (response.type == 'question') {
-						document.getElementById('question').classList.add('banned');
-						document.getElementById('question-body').classList.add('banned');
-						return;
+					if (!response.type == 'question') {
+						var element = findAncestor(button, response.type);
+						element.parentNode.removeChild(element);
 					}
-					var element = findAncestor(button, response.type);
-					element.classList.add('banned');
+					errors.displaySuccess("The " + response.type + " you've reported has been removed. Thank you for keeping SegFault clean!");
 				}
 			});
 		});
@@ -2311,7 +2311,11 @@ function addEventListeners() {
 
 function editor(editor_element) {
     var simplemde = new SimpleMDE({
-        renderingConfig: { codeSyntaxHighlighting: true }, element: editor_element, forceSync: true, toolbar: ["bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list", "ordered-list", "link", "image", "table", "horizontal-rule", "preview", {
+        autoDownloadFontAwesome: false,
+        spellChecker: false,
+        renderingConfig: { codeSyntaxHighlighting: true },
+        element: editor_element, forceSync: true,
+        toolbar: ["bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list", "ordered-list", "link", "image", "table", "horizontal-rule", "preview", {
             name: "side-by-side",
             action: function customPreview(editor) {
                 var cm = editor.codemirror;
@@ -3272,10 +3276,14 @@ var NOTIFICATION_TYPES = {
 function routeNotification(notification) {
     // signal notification as read on the next request
     var to = '?read=' + notification.id;
-    if (notification.type === NOTIFICATION_TYPES.newAnswer) {
-        var questionId = notification.data.question_id;
-        to = 'questions/' + questionId + to;
+    switch (notification.type) {
+        case NOTIFICATION_TYPES.newAnswer:
+        case NOTIFICATION_TYPES.newComment:
+            var questionId = notification.data.question_id;
+            to = 'questions/' + questionId + to;
+            break;
     }
+
     return '/' + to;
 }
 
@@ -3306,6 +3314,7 @@ function showNotifications(notifications) {
             return makeNotification(notification);
         });
         document.querySelector('#notificationsMenu').innerHTML = htmlElements.join('');
+        document.querySelector('#unread-notification').classList.add("show");
     }
 }
 
