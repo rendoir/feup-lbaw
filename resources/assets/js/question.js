@@ -174,7 +174,8 @@ function removeQuestionEvent() {
 }
 
 function removeQuestion(delTrigger) {
-	let question_id = delTriger.getAttribute("data-message-id");
+
+	let question_id = delTrigger.getAttribute("data-message-id");
 	if (question_id == null)
 		return;
 
@@ -198,6 +199,8 @@ function removeQuestion(delTrigger) {
 		);
 	});
 }
+
+removeQuestionEvent();
 
 module.exports = {
 	addVoteEvent,
