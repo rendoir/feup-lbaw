@@ -22,7 +22,7 @@
 
         <!-- Separators Contents -->
         <div class="row">
-            <div class="tab-content col-md-9" id="nav-tabContent">
+            <div class="tab-content col-md-9 order-12 order-md-1" id="nav-tabContent">
 
                 @include('templates.questions')
 
@@ -74,7 +74,7 @@
                 </div>
 
             </div>
-            <aside class="col-md-3 mb-3">
+            <aside class="col-md-3 mb-3 order-1 order-md-12">
                 <div class="aside-content pt-3">
 
                     @if(Auth::check())

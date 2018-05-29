@@ -26,12 +26,12 @@
             </h5>
         </div>
         <div class="input-group mb-3" style="height: 50px;">
-            <input type="text" name="title" class="form-control" aria-label="Username" aria-describedby="basic-addon1" data-role="tagsinput" value="{{$title}}">
+            <input type="text" name="title" class="form-control" aria-label="Username" aria-describedby="basic-addon1" data-role="tagsinput" value="{{$title}}" required>
         </div>
 
         <!-- Text editor -->
         <section class="main-content question-editor">
-          <textarea id="editor" name="content" value="{{$content}}">
+          <textarea id="editor" name="content" value="{{$content}}" required>
           </textarea>
         </section>
 

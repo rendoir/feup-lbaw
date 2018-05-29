@@ -59,7 +59,8 @@ class QuestionsController extends Controller
                 $tags = explode(',', $request->tags);
                 foreach ($tags as $tag){
                     $tagModel = Category::where('name', $tag)->first();
-                    $question->categories()->attach($tagModel->id);
+                    if($tagModel != null)
+                        $question->categories()->attach($tagModel->id);
                 }
             });
 

@@ -5,7 +5,7 @@ body {
     overflow-x: hidden;
     color: #67757c;
     font-weight: 300;
-    min-width: 320px;
+    min-width: 360px;
     min-height: 100vh;
     position: relative;
     padding-bottom: 66px;
@@ -187,7 +187,7 @@ nav {
 }
 
 .sweet-grey {
-    background: #e9ecef; /* linear-gradient(#e9ecef, #e9ecef); */
+    background: #DDD; /* linear-gradient(#e9ecef, #e9ecef); */
 }
 
 .own-question:hover {
@@ -543,7 +543,7 @@ a.tag {
     /* Sign Up Page */
     #sign-up-jumbo p.lead {
         color: #eee;
-        text-shadow: 1px 1px #111111cc;
+        text-shadow: 1px 1px #111111;
     }
 }
 

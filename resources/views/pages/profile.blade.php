@@ -20,66 +20,6 @@
                 <p><?=$user->biography != null ? $user->biography : 'Apparently, this user prefers to keep an air of mystery about himself.'?></p>
             </div>
         </div>
-
-        <!-- Activity Nav -->
-        <div class="container py-3">
-            <div class="pb-4">
-                <h2>
-                    My Activity
-                </h2>
-            </div>
-            <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-questions-tab" data-toggle="tab" href="#nav-questions" role="tab" aria-controls="nav-questions"
-                        aria-selected="true">Questions</a>
-                    <a class="nav-item nav-link" id="nav-answers-tab" data-toggle="tab" href="#nav-answers" role="tab" aria-controls="nav-answers"
-                        aria-selected="false">Answers</a>
-                    <a class="nav-item nav-link" id="nav-comments-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-comments"
-                        aria-selected="false">Comments</a>
-                    @if (Auth::id() == $user->id)
-                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-marked" role="tab" aria-controls="nav-marked"
-                        aria-selected="false">Marked Questions</a>
-                    @endif
-                </div>
-            </nav>
-            <div class="tab-content" id="nav-tabContent">
-                @include('templates.profile.question_template')
-                <div class="tab-pane fade show active" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab">
-                    @for ($i = 0; $i < 5; $i++)
-                        @include('partials.profile.question_preview')
-                    @endfor
-                </div>
-                @include('templates.profile.answer_template')
-                <div class="tab-pane fade" id="nav-answers" role="tabpanel" aria-labelledby="nav-answers-tab">
-                    @for ($i = 0; $i < 5; $i++)
-                        @include('partials.profile.answer_preview')
-                    @endfor
-                </div>
-                @include('templates.profile.comment_template')
-                <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
-                    @for ($i = 0; $i < 5; $i++)
-                        @include('partials.profile.answer_preview')
-                    @endfor
-                </div>
-
-                <div class="loader-ellips">
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                    <span class="loader-ellips__dot"></span>
-                </div>
-
-                @if (Auth::id() == $user->id)
-                  <div class="tab-pane fade" id="nav-marked" role="tabpanel" aria-labelledby="nav-marked-tab">
-                      <!-- Marked Questions -->
-                      @if ($bookmarks->count() > 0)
-                        @each('partials.question', $bookmarks->get(), 'question')
-                      @else <div class="px-2 py-3">No bookmarks!</div>
-                      @endif
-                  </div>
-                @endif
-            </div>
-        </div>
     </section>
 
     <!-- Side Column -->
@@ -131,5 +71,66 @@
         </div>
     </aside>
 </div>
+    <div class="row">
+        <!-- Activity Nav -->
+        <div class="col-md-9 py-3">
+            <div class="pb-4">
+                <h2>
+                    My Activity
+                </h2>
+            </div>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-questions-tab" data-toggle="tab" href="#nav-questions" role="tab" aria-controls="nav-questions"
+                       aria-selected="true">Questions</a>
+                    <a class="nav-item nav-link" id="nav-answers-tab" data-toggle="tab" href="#nav-answers" role="tab" aria-controls="nav-answers"
+                       aria-selected="false">Answers</a>
+                    <a class="nav-item nav-link" id="nav-comments-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-comments"
+                       aria-selected="false">Comments</a>
+                    @if (Auth::id() == $user->id)
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-marked" role="tab" aria-controls="nav-marked"
+                           aria-selected="false">Marked Questions</a>
+                    @endif
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                @include('templates.profile.question_template')
+                <div class="tab-pane fade show active" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab">
+                    @for ($i = 0; $i < 5; $i++)
+                        @include('partials.profile.question_preview')
+                    @endfor
+                </div>
+                @include('templates.profile.answer_template')
+                <div class="tab-pane fade" id="nav-answers" role="tabpanel" aria-labelledby="nav-answers-tab">
+                    @for ($i = 0; $i < 5; $i++)
+                        @include('partials.profile.answer_preview')
+                    @endfor
+                </div>
+                @include('templates.profile.comment_template')
+                <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+                    @for ($i = 0; $i < 5; $i++)
+                        @include('partials.profile.answer_preview')
+                    @endfor
+                </div>
+
+                <div class="loader-ellips">
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                    <span class="loader-ellips__dot"></span>
+                </div>
+
+                @if (Auth::id() == $user->id)
+                    <div class="tab-pane fade" id="nav-marked" role="tabpanel" aria-labelledby="nav-marked-tab">
+                        <!-- Marked Questions -->
+                        @if ($bookmarks->count() > 0)
+                            @each('partials.question', $bookmarks->get(), 'question')
+                        @else <div class="px-2 py-3">No bookmarks!</div>
+                        @endif
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
 </main>
 @endsection

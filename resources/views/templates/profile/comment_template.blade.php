@@ -1,7 +1,7 @@
 @verbatim
     <template id="comments">
         {{#comments}}
-        <div class="card my-3 question-card {{#correct_answer}}border-success{{/correct_answer}}" onclick="/questions/{{question_id}}">
+        <a class="card my-3 question-card {{#correct_answer}}border-success{{/correct_answer}}" href="/questions/{{question_id}}">
             <div class="row mx-0">
                 <div class="col-sm-2 py-3 border-right rounded-left d-flex flex-column justify-content-around bg-light">
                     <div>
@@ -13,12 +13,12 @@
                 </div>
                 <div class="col-sm-10">
                     <div class="card-body">
-                        <h5 class="card-title">{{title}}</h5>
+                        <h5 class="card-title">M: {{title}}</h5>
                         <p class="card-text">{{preview}}...</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
         {{/comments}}
     </template>
 @endverbatim

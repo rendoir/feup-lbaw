@@ -53,13 +53,6 @@
                 <i class="vote fas fa-arrow-down {{discrete_n}}" data-positive="false" data-message_id="{{id}}"></i>
             </div>
             {{/is_owner}}
-            {{#is_question_owner}}
-            <div class="mb-sm-n-100 mt-3">
-                <button type="button" class="btn btn-outline-success ml-1 mark {{# correct}}marked{{/ correct}}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Mark answer as correct" data-message_id="{{id}}">
-                    <i class="fas fa-check"></i>
-                </button>
-            </div>
-            {{/is_question_owner}}
         </div>
         <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
             <div class="card-body p-1 p-sm-4">
@@ -75,6 +68,13 @@
         </div>
     </div>
     <div class="row mx-0">
+        {{#is_question_owner}}
+        <div class="mb-sm-n-100 mt-3">
+            <button type="button" class="btn btn-outline-success ml-1 mark {{# correct}}marked{{/ correct}}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Mark answer as correct" data-message_id="{{id}}">
+                <i class="fas fa-check"></i>
+            </button>
+        </div>
+        {{/is_question_owner}}
         <div class="col-sm-11 ml-auto">
             <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
                 <div class="text-center">
