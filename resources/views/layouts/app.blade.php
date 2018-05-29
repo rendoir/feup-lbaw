@@ -78,7 +78,7 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <form id="signin_form" class="px-4 py-3" method="POST" action="{{ route('login') }}">
                             {{ csrf_field() }}
-                            <div class="form-gruoup">
+                            <div class="form-group">
                                 <label for="email">E-mail</label>
                                 <input id="email" class="form-control" type="text" name="email"  placeholder="email@example.com" value="{{ old('email') }}" required autofocus>
                             </div>
@@ -100,11 +100,11 @@
                             <!-- Sign-In with External APIs: GitHub and Google -->
                             <a href="{{ url('/auth/github') }}" class="btn btn-github btn-social btn-signin mt-0">
                                 <i class="fab fa-github"></i>
-                                <div>Sign in with Github</div>
+                                <div class="mx-2">Sign in with Github</div>
                             </a>
                             <a href="{{ url('/auth/google') }}" class="btn btn-google btn-social btn-signin mt-0">
                                 <i class="fab fa-google"></i>
-                                <div>Sign in with Google</div>
+                                <div class="mx-2">Sign in with Google</div>
                             </a>
 
                         </form>

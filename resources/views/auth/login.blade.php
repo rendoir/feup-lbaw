@@ -1,7 +1,7 @@
 @extends('layouts.head')
 
 @section('body')
-<body id="login-page">
+    <body id="login-page">
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
@@ -61,29 +61,25 @@
 
                     <div class="text-center p-t-115">
                         <a class="btn btn-link txt1" href="{{ route('password.request') }}">
-                        Forgot Your Password?
+                            Forgot Your Password?
                         </a>
                     </div>
 
                 </form>
 
-                <div class="row mt-1" id="external-signins">
-                    <div class="col mr-1">
-                        <button class="btn btn-social" href="{{ url('/auth/github') }}">
-                            <i class="fab fa-github"></i>
-                            &nbsp;GitHub
-                        </button>
-                    </div>
-                    <div class="col ml-1">
-                        <button class="btn btn-social" href="{{ url('/auth/google') }}">
-                            <i class="fab fa-google"></i>
-                            &nbsp;Google
-                        </button>
-                    </div>
+                <div class="d-inline-flex justify-content-around mt-1" id="external-signins">
+                    <button class="btn btn-social p-1" href="{{ url('/auth/github') }}">
+                        <i class="fab fa-github"></i>
+                        &nbsp;GitHub
+                    </button>
+                    <button class="btn btn-social p-1" href="{{ url('/auth/google') }}">
+                        <i class="fab fa-google"></i>
+                        &nbsp;Google
+                    </button>
                 </div>
 
             </div>
         </div>
     </div>
-</body>
+    </body>
 @endsection
