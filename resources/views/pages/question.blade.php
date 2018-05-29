@@ -13,8 +13,21 @@ $num_answers = $question->get_num_answers();
 $positive = $message->getVote();
 ?>
 
+@if ($message->is_banned)
+<div class="alert alert-danger alert-dismissible m-0" style="width: 100%" role="alert">
+    <div class="container">
+        <div class="d-flex justify-content-between">
+        <div>Careful, this message has been banned!</div>
+        <button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+    </div>
+</div>
+@endif
+
 @section('question-title')
-    <section id="question" class="sweet-grey {{$message->is_banned ? 'banned' : ''}}" data-message-id="{{$question->id}}">
+    <section id="question" class="sweet-grey" data-message-id="{{$question->id}}">
         <div class="container py-3">
             <header class="border-bottom sticky-top d-flex">
                 <h3>{{$question->title}}</h3>
@@ -35,7 +48,7 @@ $positive = $message->getVote();
 
 @section('content')
 
-<section id="question-body" class="sweet-grey {{$message->is_banned ? 'banned' : ''}}">
+<section id="question-body" class="sweet-grey">
     <div class="container">
         <main  class="row" style="overflow-y:auto">
             <div class="col-md-9 p-3">
