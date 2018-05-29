@@ -51,7 +51,7 @@ function toggleShowMsg(message_id, show) {
     }
 
     let numComments = toggler.parentNode.nextElementSibling.firstElementChild;
-    let value = numComments.innerText.split(" ")[0];
+    let value = numComments != null ? numComments.innerText.split(" ")[0] : 0;
 
     toggler.innerHTML = (isNaN(value) && value > 0 ? "Show Comments" : "Add Comment");
 

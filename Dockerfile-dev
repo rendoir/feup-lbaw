@@ -2,7 +2,7 @@ FROM php:7.1
 
 #Install dependencies
 RUN apt-get update
-RUN apt-get install -y --no-install-recommends libpq-dev git zlib1g-dev
+RUN apt-get install -y --no-install-recommends libpq-dev git zlib1g-dev ca-certificates
 RUN docker-php-ext-install pgsql pdo_pgsql pdo mbstring zip curl
 
 # Install Composer

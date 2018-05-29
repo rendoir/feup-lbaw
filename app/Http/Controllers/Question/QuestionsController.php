@@ -48,7 +48,11 @@ class QuestionsController extends Controller
         if (Auth::check()) {
             $question = null;
 
-            DB::transaction(function() use (&$request, &$question) {
+            $tags = explode(',', $request->tags);
+            if (count($tags) > 0 && count($tags) < 6)
+                return response('You must have more than 0 and less than 6 tags on your question', 400);
+
+            DB::transaction(function() use (&$request, &$question, &$tags) {
                 $user = User::find(Auth::id());
                 $message = Message::create(['author' => $user->id]);
 
@@ -56,7 +60,6 @@ class QuestionsController extends Controller
                 $question = Question::create(['id' => $message->id, 'title' => $request->title]);
                 MessageVersion::create(['content' => $request->input('content'), 'message_id' => $message->id]);
 
-                $tags = explode(',', $request->tags);
                 foreach ($tags as $tag){
                     $tagModel = Category::where('name', $tag)->first();
                     if($tagModel != null)
@@ -71,6 +74,10 @@ class QuestionsController extends Controller
 
     public function editQuestion(Request $request)
     {
+        $tags = explode(',', $request->tags);
+        if (count($tags) > 0 && count($tags) < 6)
+            return response('You must have more than 0 and less than 6 tags on your question', 400);
+
         $question = Question::find($request->question);
         $message = $question->message;
 
@@ -78,7 +85,7 @@ class QuestionsController extends Controller
         $this->authorize('edit', $message);
         MessageController::editMessage($request, $message);
 
-        /*DB::transaction(function() use (&$request, &$question) {
+        DB::transaction(function() use (&$tags, &$question) {
             foreach ($question->categories() as $cat)
                 $question->categories()->detach();
             $tags = explode(',', $request->tags);
@@ -86,7 +93,7 @@ class QuestionsController extends Controller
                 $tagModel = Category::where('name', $tag)->first();
                 $question->categories()->attach($tagModel->id);
             }
-        });*/
+        });
 
         $question->title = $request->title;
         $question->save();
