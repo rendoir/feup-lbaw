@@ -157,8 +157,19 @@ class QuestionsController extends Controller
         return QuestionsController::questionsJSON($questions);
     }
 
-    public function getHotQuestions() { // TODO order by most answers
-        $questions = Question::paginate(NUM_PER_PAGE);
+    public function getHotQuestions() {
+        $questions_raw = DB::table('questions')
+            ->join('answers', 'questions.id', '=', 'answers.question_id')
+            ->select(DB::raw('
+                questions.id, count(answers.id) C
+                '))
+            ->groupBy('questions.id')
+            ->orderByRaw('C DESC')
+            ->paginate(NUM_PER_PAGE);
+
+        $questions = array();
+        foreach ($questions_raw as $q)
+            array_push($questions, Question::find($q->id));
 
         return QuestionsController::questionsJSON($questions);
     }
@@ -179,7 +190,7 @@ class QuestionsController extends Controller
         return QuestionsController::questionsJSON($questions);
     }
 
-    public static function questionsJSON($questions){
+    public static function questionsJSON($questions) {
         $questions_info = [];
         foreach ($questions as $question) {
             $message = $question->message;
