@@ -1,45 +1,51 @@
 @extends('layouts.app')
 
+@section('title', 'Reset Password')
+
 @section('content')
+    <section id="login-page">
+    <div class="limiter">
+        <div class="container-login100" style="min-height: {{'calc(100vh - 66px - 3.5em);'}}";>
 
-@if (session('status'))
-<div class="alert alert-success alert-dismissible m-0" style="width: 100%" role="alert">
-  <div class="container">
-    <div class="d-flex justify-content-between">
-      <div>{{ session('status') }}</div>
-      <button type="button" class="close" style="position: inherit; padding: inherit" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
+            <div class="wrap-login100">
+                <form class="login100-form validate-form" method="POST" action="{{ route('password.email') }}">
+                    {{ csrf_field() }}
+                    <span class="login100-form-title p-b-26">
+						Reset Password
+					</span>
+                    <span class="login100-form-title p-b-48">
+						<i class="zmdi zmdi-font"></i>
+					</span>
+
+
+                    <div class="mt-4 wrap-input100 validate-input {{ $errors->has('email') ? ' has-error' : '' }}" data-validate = "Valid email is: a@b.c">
+                        <input id="email" type="text" class="input100" name="email" value="{{ old('email') }}" placeholder="Email" required>
+                        <span class="focus-input100" data-placeholder="Email"></span>
+                    </div>
+
+                    @if ($errors->has('email'))
+                        <span class="help-block">
+                        <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif
+
+                    @if (session('status'))
+                        <span class="help-block">
+                        <strong class="text-success">{{ session('status') }}</strong>
+                        </span>
+                    @endif
+
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button class="login100-form-btn">
+                                Send Reset Request
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-@endif
-
-<div class="container">
-  <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
-      {{ csrf_field() }}
-
-      <div class="pt-4 pb-3 pl-3">
-          <h2>
-              Reset Password
-          </h2>
-      </div>
-
-      <div class="form-group">
-          <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-          <div class="col-md-6">
-              <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-          </div>
-      </div>
-
-      <div class="form-group">
-          <div class="col-md-6 col-md-offset-4">
-              <button type="submit" class="btn btn-primary">
-                  Send Password Reset Link
-              </button>
-          </div>
-      </div>
-  </form>
-</div>
+    </section>
 @endsection
