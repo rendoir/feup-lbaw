@@ -227,14 +227,20 @@ CREATE FUNCTION check_categories() RETURNS TRIGGER AS $$
   DECLARE num_categories SMALLINT;
   DECLARE current RECORD;
   BEGIN
-      IF TG_OP = 'INSERT' THEN
-        current = NEW;
-      ELSE
-        current = OLD;
-      END IF;
-      SELECT INTO num_categories count(*)
-      FROM questions_categories
-      WHERE current.question_id = questions_categories.question_id;
+    IF TG_OP = 'INSERT' THEN
+      current = NEW;
+    ELSE
+      current = OLD;
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM questions WHERE id = current.question_id) THEN
+      RETURN current;
+    END IF;
+
+    SELECT INTO num_categories count(*)
+    FROM questions_categories
+    WHERE current.question_id = questions_categories.question_id;
+
     IF num_categories > 5 THEN
       RAISE EXCEPTION 'A question can only have a maximum of 5 categories';
     ELSIF num_categories < 1 THEN
