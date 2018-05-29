@@ -109,8 +109,8 @@ function displayMessage(message, isSuccess) {
 
     placeholder.innerHTML = Mustache.render(template, { message: message, isSucess: isSuccess });
 
-    var header = document.querySelector("#navbar");
-    header.insertAdjacentElement("afterend", placeholder);
+    var container = document.querySelector(".container-messages");
+    container.appendChild(placeholder);
 
     return placeholder;
 }
