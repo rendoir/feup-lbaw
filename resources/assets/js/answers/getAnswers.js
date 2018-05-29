@@ -48,7 +48,6 @@ function addModalsListeners() {
     });
     $('#deleteAnswerModal').on('show.bs.modal', function (e) {
         answerRemover.removeAnswer($(e.relatedTarget)[0]);
-        e.stopImmediatePropagation();
     });
 }
 
