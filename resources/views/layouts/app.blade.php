@@ -47,7 +47,7 @@
                                 <span class="point"></span>
                             </div>
                         </span>
-                        <div class="dropdown-menu dropdown-menu-right pt-0" aria-labelledby="notifications">
+                        <div id="drop-notifications" class="dropdown-menu dropdown-menu-right pt-0" aria-labelledby="notifications">
                             <div id="notificationsHeader">Notifications</div>
                             <div id="notificationsMenu">
                                 <li>
