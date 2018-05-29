@@ -6,8 +6,12 @@
 
     <section class="container">
 
-      <form method="post" action="/ask_question">
+      <form method="post" action="@if ($isEdition) /edit_question @else /ask_question @endif">
          {{ csrf_field() }}
+
+        @if (($isEdition))
+        <input type="hidden" name="question" class="form-control" value="{{$question_id}}">
+        @endif
 
         <div class="pt-4 pb-3 pl-3">
             <h2>
@@ -27,8 +31,7 @@
 
         <!-- Text editor -->
         <section class="main-content question-editor">
-          <textarea id="editor" name="messageContent" value="onjisdoise">
-          okaedkaemkd
+          <textarea id="editor" name="content" value="{{$content}}">
           </textarea>
         </section>
 

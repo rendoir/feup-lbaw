@@ -14,16 +14,17 @@ $positive = $message->getVote();
 ?>
 
 @section('question-title')
-    <section id="question" class="sweet-grey {{$message->is_banned ? 'banned' : ''}}" data-message-id="{{$question->id}}">
+    <section id="question" class="sweet-grey {{$message->is_banned ? 'banned' : ''}}" data-message-id="{{$id}}">
         <div class="container py-3">
             <header class="border-bottom sticky-top d-flex">
                 <h3>{{$question->title}}</h3>
                 @if (Auth::id() == $author->id)
                 <div class="discrete ml-auto mr-1 text-center mt-auto mb-auto d-flex">
                     <form id="form_edit_question" name="edit_question" action="{{ url('edit_question') }}">
-                        <input type="hidden" class="form-control" name="tytle" value="{{$question->title}}"></span>
+                        <input type="hidden" class="form-control" name="question_id" value="{{$id}}"></span>
+                        <input type="hidden" class="form-control" name="title" value="{{$question->title}}"></span>
                         <input type="hidden" class="form-control" name="content" value="{{$content->content}}"></span>
-                        <input type="hidden" class="form-control" name="tags" value="{{$question->categories}}"></span>
+                        <input type="hidden" class="form-control" name="tags" value="@foreach ($question->categories as $tag) {{$tag->name}} @endforeach"></span>
                         <button type="submit" class="discrete btn btn-link" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                             <i class="fas fa-pencil-alt m-0"></i>
                         </button>

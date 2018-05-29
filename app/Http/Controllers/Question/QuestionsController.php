@@ -11,6 +11,7 @@ use App\QuestionsCategory;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -53,7 +54,7 @@ class QuestionsController extends Controller
 
                 Commentable::create(['id' => $message->id]);
                 $question = Question::create(['id' => $message->id, 'title' => $request->title]);
-                MessageVersion::create(['content' => $request->messageContent, 'message_id' => $message->id]);
+                MessageVersion::create(['content' => $request->input('content'), 'message_id' => $message->id]);
 
                 $tags = explode(',', $request->tags);
                 foreach ($tags as $tag){
@@ -65,6 +66,28 @@ class QuestionsController extends Controller
             return redirect()->route('questions', ['id' => $question->id]);
         }
         return redirect('\ask_question');
+    }
+
+    public function editQuestion(Request $request)
+    {
+        $question = Question::find($request->question);
+        $message = $question->message;
+
+        // Checking if the User can edit the answer
+        $this->authorize('edit', $message);
+        MessageController::editMessage($request, $message);
+
+        /*$question->categories() = "";
+        $tags = explode(',', $request->tags);
+        foreach ($tags as $tag) {
+            $tagModel = Category::where('name', $tag)->first();
+            $question->categories()->attach($tagModel->id);
+        }*/
+
+        $question->title = $request->title;
+        $question->save();
+
+        return redirect()->route('questions', ['id' => $question->id]);
     }
 
     public function deleteQuestion(Request $request)
@@ -83,21 +106,24 @@ class QuestionsController extends Controller
 
         return view('pages.ask_question',
             ['isEdition' => false,
+             'question_id' => null,
              'title' => $title,
-             'content' => "",
-             'tags' => ""]);
+             'tags' => "",
+             'content' => ""]);
     }
 
     public function showEditQuestionForm(Request $request) {
+        $question_id = $request->get('question_id');
         $title = $request->get('title');
-        $content = $request->get('content');
         $tags = $request->get('tags');
-        
+        $content = $request->get('content');
+
         return view('pages.ask_question',
             ['isEdition' => true,
+            'question_id' => $question_id,
             'title' => $title,
-            'content' => $content,
-            'tags' => $tags]);
+            'tags' => $tags,
+            'content' => $content]);
     }
 
     public function getQueriedQuestions(Request $request) {
