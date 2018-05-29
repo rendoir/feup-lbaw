@@ -111,7 +111,7 @@
                     <div class="card">
                         <div class="card-body d-flex flex-column justify-content-center">
                             <h5 class="card-title">Have a Question?</h5>
-                            <form id="form_ask_question" name="ask_question" action="{{ url('ask_question') }}">
+                            <form id="form_edit_question" name="edit_question" action="{{ url('edit_question') }}">
                                 <div class="input-group mb-3">
                                     <input name="title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                                 </div>

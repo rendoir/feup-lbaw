@@ -19,13 +19,18 @@ $positive = $message->getVote();
             <header class="border-bottom sticky-top d-flex">
                 <h3>{{$question->title}}</h3>
                 @if (Auth::id() == $author->id)
-                <div class="discrete ml-auto mr-1 text-center mt-auto mb-auto">
-                    <a class="discrete mx-1" href="#" role="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
-                        <i class="fas fa-pencil-alt"></i>
-                    </a>
-                    <a class="discrete ml-1" data-toggle="modal" href="#deleteQuestionModal" data-message-id='{{$id}}'>
+                <div class="discrete ml-auto mr-1 text-center mt-auto mb-auto d-flex">
+                    <form id="form_edit_question" name="edit_question" action="{{ url('edit_question') }}">
+                        <input type="hidden" class="form-control" name="tytle" value="{{$question->title}}"></span>
+                        <input type="hidden" class="form-control" name="content" value="{{$content->content}}"></span>
+                        <input type="hidden" class="form-control" name="tags" value="{{$question->categories}}"></span>
+                        <button type="submit" class="discrete btn btn-link" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                            <i class="fas fa-pencil-alt m-0"></i>
+                        </button>
+                    </form>
+                    <button class="discrete btn btn-link" data-toggle="modal" href="#deleteQuestionModal" data-message-id='{{$id}}'>
                         <i class="far fa-trash-alt p-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i>
-                    </a>
+                    </button>
                 </div>
                 @endif
             </header>

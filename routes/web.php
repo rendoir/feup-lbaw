@@ -45,6 +45,8 @@ Route::get('getActiveQuestions', 'Question\QuestionsController@getActiveQuestion
 Route::get('questions/{id}', 'Question\QuestionsController@showQuestionPage')->name('questions');
 Route::get('ask_question', 'Question\QuestionsController@showAskQuestionForm')->name('ask_question_form');
 Route::post('ask_question', 'Question\QuestionsController@addQuestion')->name('ask_question');
+Route::get('edit_question', 'Question\QuestionsController@showEditQuestionForm')->name('edit_question_form');
+Route::post('edit_question', 'Question\QuestionsController@editQuestion')->name('edit_question');
 Route::delete('questions/{id}/delete', 'Question\QuestionsController@deleteQuestion');
 
 // Answers

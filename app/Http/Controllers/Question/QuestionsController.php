@@ -80,7 +80,24 @@ class QuestionsController extends Controller
 
     public function showAskQuestionForm(Request $request) {
         $title = $request->get('title');
-        return view('pages.ask_question', ['title' => $title]);
+
+        return view('pages.ask_question',
+            ['isEdition' => false,
+             'title' => $title,
+             'content' => "",
+             'tags' => ""]);
+    }
+
+    public function showEditQuestionForm(Request $request) {
+        $title = $request->get('title');
+        $content = $request->get('content');
+        $tags = $request->get('tags');
+        
+        return view('pages.ask_question',
+            ['isEdition' => true,
+            'title' => $title,
+            'content' => $content,
+            'tags' => $tags]);
     }
 
     public function getQueriedQuestions(Request $request) {
