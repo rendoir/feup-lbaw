@@ -5,5 +5,5 @@ env >> /var/www/.env
 php-fpm7.1 -D
 cd /var/www/
 php artisan db:seed --force
-php artisan migrate:fresh --force
+php artisan migrate --force
 nginx -g "daemon off;"
