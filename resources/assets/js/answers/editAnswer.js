@@ -26,8 +26,13 @@ function editAnswer(editTrigger) {
     let mde = editor.data("mde");    
     mde.value(markdown.innerHTML);
 
-    editBtn.addEventListener('click', function () {
+    let callFunction = function () {
         editAnswerRequest(edit_id, contentParent.parentElement, mde.value());
+    };
+    editBtn.addEventListener('click', callFunction);
+
+    $('#editAnswerModal').on('hide.bs.modal', function (e) {
+        editBtn.removeEventListener('click', callFunction);
     });
 }
 

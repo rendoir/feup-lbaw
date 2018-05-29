@@ -195,7 +195,7 @@ function removeQuestion(delTrigger) {
 	if (deleteBtn == null)
 		return;
 
-	deleteBtn.addEventListener('click', function () {
+	let callFunction = function () {
 		ajax.sendAjaxRequest(
 			'delete',
 			window.location + '/delete',
@@ -211,7 +211,12 @@ function removeQuestion(delTrigger) {
 					errors.displayError("Failed to delete the question");
 			}
 		);
-	});
+	};
+	deleteBtn.addEventListener('click', callFunction);
+
+	$('#deleteQuestionModal').on('hide.bs.modal', function (e) {
+        deleteBtn.removeEventListener('click', callFunction);
+    });
 }
 
 removeQuestionEvent();

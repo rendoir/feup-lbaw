@@ -12,8 +12,13 @@ function removeAnswer(removeTrigger) {
     if (remove_id == null)
         return;
 
-    removeBtn.addEventListener('click', function () {
+    let callFunction = function () {
         removeAnswerRequest(remove_id);
+    };
+    removeBtn.addEventListener('click', callFunction);
+
+    $('#deleteAnswerModal').on('hide.bs.modal', function (e) {
+        removeBtn.removeEventListener('click', callFunction);
     });
 }
 

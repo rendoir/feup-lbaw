@@ -16,8 +16,13 @@ function removeComment(commentTrashBtn) {
     let commentsGroup = comment.parentNode.parentNode.parentNode;
     let answer_id = commentsGroup.parentNode.parentNode.getAttribute("data-message-id");
 
-    deleteBtn.addEventListener('click', function () {
+    let callFunction = function () {
         removeCommentRequest(comment_id, answer_id, comment.parentNode);
+    };
+    deleteBtn.addEventListener('click', callFunction);
+
+    $('#deleteCommentModal').on('hide.bs.modal', function (e) {
+        deleteBtn.removeEventListener('click', callFunction);
     });
 }
 

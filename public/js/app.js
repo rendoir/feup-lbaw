@@ -351,12 +351,17 @@ function removeQuestion(delTrigger) {
 	var deleteBtn = document.getElementById('delete-question');
 	if (deleteBtn == null) return;
 
-	deleteBtn.addEventListener('click', function () {
+	var callFunction = function callFunction() {
 		var _this = this;
 
 		ajax.sendAjaxRequest('delete', window.location + '/delete', { "question": question_id }, function () {
 			if (_this.status == 401) window.location = "/login";else if (_this.status == 404) window.location = "/404";else if (_this.status != 200) window.location = '/questions/recent';else errors.displayError("Failed to delete the question");
 		});
+	};
+	deleteBtn.addEventListener('click', callFunction);
+
+	$('#deleteQuestionModal').on('hide.bs.modal', function (e) {
+		deleteBtn.removeEventListener('click', callFunction);
 	});
 }
 
@@ -2660,8 +2665,13 @@ function removeComment(commentTrashBtn) {
     var commentsGroup = comment.parentNode.parentNode.parentNode;
     var answer_id = commentsGroup.parentNode.parentNode.getAttribute("data-message-id");
 
-    deleteBtn.addEventListener('click', function () {
+    var callFunction = function callFunction() {
         removeCommentRequest(comment_id, answer_id, comment.parentNode);
+    };
+    deleteBtn.addEventListener('click', callFunction);
+
+    $('#deleteCommentModal').on('hide.bs.modal', function (e) {
+        deleteBtn.removeEventListener('click', callFunction);
     });
 }
 
@@ -2756,8 +2766,13 @@ function editAnswer(editTrigger) {
     var mde = editor.data("mde");
     mde.value(markdown.innerHTML);
 
-    editBtn.addEventListener('click', function () {
+    var callFunction = function callFunction() {
         editAnswerRequest(edit_id, contentParent.parentElement, mde.value());
+    };
+    editBtn.addEventListener('click', callFunction);
+
+    $('#editAnswerModal').on('hide.bs.modal', function (e) {
+        editBtn.removeEventListener('click', callFunction);
     });
 }
 
@@ -2825,8 +2840,13 @@ function removeAnswer(removeTrigger) {
     var remove_id = removeTrigger.getAttribute("data-message-id");
     if (remove_id == null) return;
 
-    removeBtn.addEventListener('click', function () {
+    var callFunction = function callFunction() {
         removeAnswerRequest(remove_id);
+    };
+    removeBtn.addEventListener('click', callFunction);
+
+    $('#deleteAnswerModal').on('hide.bs.modal', function (e) {
+        removeBtn.removeEventListener('click', callFunction);
     });
 }
 
