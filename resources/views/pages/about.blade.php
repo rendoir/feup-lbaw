@@ -26,7 +26,7 @@
             <h2>The Team</h2>
         </div>
 
-        <div class="d-flex text-center justify-content-center">
+        <div class="container d-flex text-center justify-content-center">
             <div class="card m-2" style="width: 18rem;">
                 <img class="card-img-top" src="{{ asset('img/profile_andre.jpg') }}" alt="Card image cap">
                 <div class="team-sentences card-body">
