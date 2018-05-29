@@ -40,6 +40,20 @@ $positive = $message->getVote();
         <main  class="row" style="overflow-y:auto">
             <div class="col-md-9 p-3">
                 <div class="markdown main-content display-content" style="visibility: hidden;">{{$content->content}}</div>
+
+                <div class="d-flex">
+                    <p class="mb-0">
+                        <small>Created by - </small>
+                        <a href="/users/{{$author->username}}">{{$author->username}}</a>
+                    </p>
+                    <div class="mr-auto">
+                        <span class="badge badge-success">{{$author->getBadge()}}</span>
+                    </div>
+                    <div id="categories">
+                        @each('partials.category', $question->categories, 'category')
+                    </div>
+                </div>
+
                 <!-- Question Comments -->
                 <div class="text-center">
                     <a class="btn btn-outline-secondary my-4 show-question-comments" role="button" data-toggle="collapse" href="#MessageComments{{$id}}"
@@ -47,7 +61,7 @@ $positive = $message->getVote();
                         Show Comments
                     </a>
                 </div>
-                <div class="collapse message-comments w-100" id="MessageComments{{$id}}" data-message-id="{{$id}}">
+                <div class="collapse message-comments" id="MessageComments{{$id}}" data-message-id="{{$id}}">
                 @if (Auth::check())
                     <div class="comment-creator card-footer comments-card px-0 px-sm-4">
                         <div class="d-flex list-group list-group-flush">
@@ -65,12 +79,12 @@ $positive = $message->getVote();
                 </div>
                 <!-- END Question comments -->
             </div>
-            <div class="col-md-3 p-3 d-flex flex-column justify-content-between">
-                      <div>
+            <div class="col-md-3 p-3">
+                      <div class="mb-3">
                           <span class="font-weight-bold w-100">Answers: </span>
                           <span class="w-100">{{$num_answers}}</span>
                       </div>
-                      <div>
+                      <div class="mb-3">
                           <span class="font-weight-bold w-100">Votes: </span>
                           <span class="w-100 score">{{$score}}</span>
                       </div>
@@ -79,7 +93,7 @@ $positive = $message->getVote();
                           $has_bookmark = Auth::user()->hasBookmarkOn($question->id);
                           $has_report = Auth::user()->hasReportOn($message->id);
                         ?>
-                        <div class="row">
+                        <div class="row mb-3">
                           @if (Auth::id() != $author->id)
                             <div class="col-6 text-center border-right">
                               <button class="btn btn-link report {{$has_report ? '' : 'discrete'}}" style="font-size: 1.5em;" data-toggle="tooltip" data-placement="top" data-original-title="Report" data-message_id='{{$question->id}}'>
@@ -111,25 +125,9 @@ $positive = $message->getVote();
                         <div class="col-6 border-left text-center">
                             <i class="vote fas fa-thumbs-down <?=$positive === false ? '' : 'discrete';?>" data-message_id="{{$id}}" data-positive="false"></i>
                         </div>
-                    </div>
                   </div>
                   @endif
                   @endif
-                </div>
-
-                <div>
-                    <div class="d-flex">
-                        <p class="mb-0">
-                            <small>Created by - </small>
-                            <a href="/users/{{$author->username}}">{{$author->username}}</a>
-                        </p>
-                        <div class="mr-auto">
-                            <span class="badge badge-success">{{$author->getBadge()}}</span>
-                        </div>
-                    </div>
-                    <div>
-                        @each('partials.category', $question->categories, 'category')
-                    </div>
                 </div>
             </div>
         </main>
@@ -160,16 +158,18 @@ $positive = $message->getVote();
         </div>
         <!-- related questions -->
         <aside class="col-md-3 mt-3">
-            <div class="aside-content" style="top: 15%">
+            <div class="aside-content" style="top: 150px">
                 <div class="card">
                     <div class="card-header bg-transparent">Related Questions</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Success card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div id="related-questions">
+                        @include('templates.related_template')
+                        @for ($i = 0; $i < 3; $i++)
+                            @include('partials.related')
+                        @endfor
                     </div>
                 </div>
             </div>
-        </div>
+        </aside>
     </div>
 </section>
 

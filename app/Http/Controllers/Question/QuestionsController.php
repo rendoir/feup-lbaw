@@ -87,6 +87,9 @@ class QuestionsController extends Controller
     public function getQueriedQuestions(Request $request) {
         $query_string = $request->get('search');
         $operator = $request->get('operator');
+        $num_per_page = $request->get('num_per_page');
+        if($num_per_page == null)
+            $num_per_page = NUM_PER_PAGE;
         preg_match_all('/(?<=\[).*?(?=\])/', $query_string, $tag_names);
         $query_string = preg_replace('/\[.*?\]/', "", $query_string);
         $tag_names = $tag_names[0];
@@ -101,15 +104,15 @@ class QuestionsController extends Controller
                     $query->where('id', $tag_id);
                 });
             }
-            $questions = $query->search($query_string)->paginate(NUM_PER_PAGE);
+            $questions = $query->search($query_string)->paginate($num_per_page);
           }
           else if($operator == 'or') {
             $questions = Question::whereHas('categories', function($query) use($tags) {
                           $query->whereIn('id', $tags);
-                      })->search($query_string)->paginate(NUM_PER_PAGE);
+                      })->search($query_string)->paginate($num_per_page);
           }
         }
-        else $questions = Question::search($query_string)->paginate(NUM_PER_PAGE);
+        else $questions = Question::search($query_string)->paginate($num_per_page);
         $questions->appends(['search' => $query_string]);
 
         return QuestionsController::questionsJSON($questions);

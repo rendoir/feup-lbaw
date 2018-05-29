@@ -31,8 +31,9 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
             } catch (e) {}
 
             let mustacheRender = Mustache.render(template.innerHTML, questions);
-            if(pages_num[page_enum[questionType]] == 0){
-                pages_num[page_enum[questionType]]++;
+            if(pageNum == 0){
+                if(pages_num[page_enum[questionType]] == 0)
+                    pages_num[page_enum[questionType]]++;
                 $('div#' + questionType)[0].innerHTML = mustacheRender;
             }
             else
@@ -93,7 +94,7 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         questionType = "nav-new";
         url = urls[page_enum[questionType]];
         if(pages_num[0] == 0){
-            getQuestions(1);
+            getQuestions(0);
         }
     });
     $('a#nav-hot-tab')[0].addEventListener("click", function () {
@@ -103,7 +104,7 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         questionType = "nav-hot";
         url = urls[page_enum[questionType]];
         if(pages_num[1] == 0){
-            getQuestions(1);
+            getQuestions(0);
         }
     });
     $('a#nav-voted-tab')[0].addEventListener("click", function () {
@@ -113,7 +114,7 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         questionType = "nav-voted";
         url = urls[page_enum[questionType]]
         if(pages_num[2] == 0){
-            getQuestions(1);
+            getQuestions(0);
         }
     });
     $('a#nav-active-tab')[0].addEventListener("click", function () {
@@ -123,7 +124,7 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         questionType = "nav-active";
         url = urls[page_enum[questionType]];
         if(pages_num[3] == 0){
-            getQuestions(1);
+            getQuestions(0);
         }
     });
     let last_search;
@@ -139,7 +140,7 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
             last_search = url;
             window.history.pushState("", "", '/questions?search=' + search);
             pages_num[4] = 0;
-            getQuestions(1);
+            getQuestions(0);
         }
     });
     $('input#search-input-nav').on("change paste keyup", function(event) {
@@ -154,7 +155,7 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
             last_search = url;
             window.history.pushState("", "", '/questions?search=' + search);
             pages_num[4] = 0;
-            getQuestions(1);
+            getQuestions(0);
         }
     });
 
@@ -166,6 +167,26 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
                 getQuestions(pages_num[page_enum[questionType]]);
             }
         }
+    });
+}
+else if(window.location.pathname.match( /questions\/\d/ ) != null) {
+    let categories = $('div#categories')[0].children;
+    let tags = "";
+    for(var category of categories){
+        tags += '[' + category.innerHTML + ']';
+    }
+    ajax.sendAjaxRequest('GET', "/questions/search?num_per_page=3&operator=or&search="+tags, null,(data) => {
+        let template = $('template#related')[0];
+        let info = null;
+        if (template == null)
+            return;
+
+        try {
+            info = JSON.parse(data.target.responseText)
+        } catch(e) {}
+
+        let mustacheRender = Mustache.render(template.innerHTML, info);
+        template.parentElement.innerHTML = mustacheRender;
     });
 }
 

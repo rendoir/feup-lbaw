@@ -2962,8 +2962,8 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
             } catch (e) {}
 
             var mustacheRender = Mustache.render(template.innerHTML, questions);
-            if (pages_num[page_enum[questionType]] == 0) {
-                pages_num[page_enum[questionType]]++;
+            if (pageNum == 0) {
+                if (pages_num[page_enum[questionType]] == 0) pages_num[page_enum[questionType]]++;
                 $('div#' + questionType)[0].innerHTML = mustacheRender;
             } else $('div#' + questionType)[0].innerHTML += mustacheRender;
 
@@ -3025,7 +3025,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
         questionType = "nav-new";
         url = urls[page_enum[questionType]];
         if (pages_num[0] == 0) {
-            getQuestions(1);
+            getQuestions(0);
         }
     });
     $('a#nav-hot-tab')[0].addEventListener("click", function () {
@@ -3034,7 +3034,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
         questionType = "nav-hot";
         url = urls[page_enum[questionType]];
         if (pages_num[1] == 0) {
-            getQuestions(1);
+            getQuestions(0);
         }
     });
     $('a#nav-voted-tab')[0].addEventListener("click", function () {
@@ -3043,7 +3043,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
         questionType = "nav-voted";
         url = urls[page_enum[questionType]];
         if (pages_num[2] == 0) {
-            getQuestions(1);
+            getQuestions(0);
         }
     });
     $('a#nav-active-tab')[0].addEventListener("click", function () {
@@ -3052,7 +3052,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
         questionType = "nav-active";
         url = urls[page_enum[questionType]];
         if (pages_num[3] == 0) {
-            getQuestions(1);
+            getQuestions(0);
         }
     });
     var last_search = void 0;
@@ -3068,7 +3068,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
             last_search = url;
             window.history.pushState("", "", '/questions?search=' + search);
             pages_num[4] = 0;
-            getQuestions(1);
+            getQuestions(0);
         }
     });
     $('input#search-input-nav').on("change paste keyup", function (event) {
@@ -3083,7 +3083,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
             last_search = url;
             window.history.pushState("", "", '/questions?search=' + search);
             pages_num[4] = 0;
-            getQuestions(1);
+            getQuestions(0);
         }
     });
 
@@ -3095,6 +3095,24 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
                 getQuestions(pages_num[page_enum[questionType]]);
             }
         }
+    });
+} else if (window.location.pathname.match(/questions\/\d/) != null) {
+    var categories = $('div#categories')[0].children;
+    var tags = "";
+    for(var category of categories){
+        tags += '[' + category.innerHTML + ']';
+    }
+    ajax.sendAjaxRequest('GET', "/questions/search?num_per_page=3&operator=or&search=" + tags, null, function (data) {
+        var template = $('template#related')[0];
+        var info = null;
+        if (template == null) return;
+
+        try {
+            info = JSON.parse(data.target.responseText);
+        } catch (e) {}
+
+        var mustacheRender = Mustache.render(template.innerHTML, info);
+        template.parentElement.innerHTML = mustacheRender;
     });
 }
 
@@ -8266,7 +8284,7 @@ module.exports = Echo;
 /* 34 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: spawn /home/bayard/Github/lbaw1763/node_modules/mozjpeg/vendor/cjpeg ENOENT\n    at exports._errnoException (util.js:1020:11)\n    at Process.ChildProcess._handle.onexit (internal/child_process.js:197:32)\n    at onErrorNT (internal/child_process.js:376:16)\n    at _combinedTickCallback (internal/process/next_tick.js:80:11)\n    at process._tickCallback (internal/process/next_tick.js:104:9)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at /home/bayard/Github/lbaw1763/node_modules/img-loader/index.js:45:31\n    at process._tickCallback (internal/process/next_tick.js:109:7)");
 
 /***/ })
 /******/ ]);
