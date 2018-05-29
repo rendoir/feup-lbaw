@@ -2155,7 +2155,7 @@ Tagify.prototype = {
 function addTags() {
     var input = document.querySelector('input[name=tags]');
     if (input == null) return;
-    ajax.sendAjaxRequest("get", "tag_list", {}, function (event) {
+    ajax.sendAjaxRequest("get", "/tag_list", {}, function (event) {
         var request = event.target;
         var response = JSON.parse(request.response);
         var tag_list = [];
@@ -2166,7 +2166,8 @@ function addTags() {
     });
 }
 
-addTags();
+if(window.location.pathname.match( /ask_question/ ) != null)
+    addTags();
 
 /***/ }),
 /* 15 */
