@@ -3312,6 +3312,7 @@ function showNotifications(notifications) {
             return makeNotification(notification);
         });
         document.querySelector('#notificationsMenu').innerHTML = htmlElements.join('');
+        document.querySelector('#unread-notification').classList.add("show");
     }
 }
 
