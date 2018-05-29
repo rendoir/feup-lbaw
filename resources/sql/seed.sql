@@ -131,6 +131,7 @@ DROP INDEX IF EXISTS category_name CASCADE;
 DROP INDEX IF EXISTS question_title CASCADE;
 DROP INDEX IF EXISTS unique_lowercase_username CASCADE;
 DROP INDEX IF EXISTS unique_lowercase_email CASCADE;
+DROP INDEX IF EXISTS unique_lowercase_category CASCADE;
 
 
 -- We do not use hash indices, due to it being actively discouraged on the PostgreSQL documentation
@@ -144,6 +145,7 @@ CREATE INDEX question_title ON questions USING gin(search);
 -- Uniqueness Constraints for Case Insensitive Username and Email
 CREATE INDEX unique_lowercase_username ON users (lower(username));
 CREATE INDEX unique_lowercase_email ON users (lower(email));
+CREATE INDEX unique_lowercase_category ON categories (lower(name));
 
 
 DROP FUNCTION IF EXISTS ban_message();

@@ -94,23 +94,28 @@ class QuestionsController extends Controller
         $query_string = preg_replace('/\[.*?\]/', "", $query_string);
         $tag_names = $tag_names[0];
 
-        $tags = Category::whereIn('name', $tag_names)->pluck('id')->toArray();
+        $tag_ids = array();
+        foreach ($tag_names as $tag) {
+            $id = Category::whereRaw('lower(name) ILIKE ?', [$tag])->pluck('id');
+            if ($id->isNotEmpty())
+                array_push($tag_ids, $id->first());
+        }
 
-        if(!empty($tags)) {
-          if($operator == 'and' || $operator == null) {
-            $query = Question::query();
-            foreach ($tags as $tag_id) {
-                $query->whereHas('categories', function($query) use($tag_id) {
-                    $query->where('id', $tag_id);
-                });
+        if(!empty($tag_ids)) {
+            if($operator == 'and' || $operator == null) {
+                $query = Question::query();
+                foreach ($tag_ids as $tag_id) {
+                    $query->whereHas('categories', function($query) use($tag_id) {
+                        $query->where('id', $tag_id);
+                    });
+                }
+                $questions = $query->search($query_string)->paginate($num_per_page);
             }
-            $questions = $query->search($query_string)->paginate($num_per_page);
-          }
-          else if($operator == 'or') {
-            $questions = Question::whereHas('categories', function($query) use($tags) {
-                          $query->whereIn('id', $tags);
-                      })->search($query_string)->paginate($num_per_page);
-          }
+            else if($operator == 'or') {
+                $questions = Question::whereHas('categories', function($query) use($tag_ids) {
+                    $query->whereIn('id', $tag_ids);
+                })->search($query_string)->paginate($num_per_page);
+            }
         }
         else $questions = Question::search($query_string)->paginate($num_per_page);
         $questions->appends(['search' => $query_string]);
