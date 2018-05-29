@@ -1,5 +1,4 @@
-/*//////////////////////////////////////////////////////////////////
-[ FONT ]*/
+
 @font-face {
   font-family: Poppins-Regular;
   src: url('../fonts/poppins/Poppins-Regular.ttf');
@@ -22,8 +21,10 @@ body#login-page {
 }
 
 #login-page {
-  /*//////////////////////////////////////////////////////////////////
-  [ RESTYLE TAG ]*/
+
+  #external-signins {
+    width: 100%;
+  }
 
   * {
     margin: 0px;
@@ -31,7 +32,6 @@ body#login-page {
     box-sizing: border-box;
   }
 
-  /*---------------------------------------------*/
   a {
     font-family: Poppins-Regular;
     font-size: 14px;
@@ -45,7 +45,6 @@ body#login-page {
     outline: none !important;
   }
 
-  /*---------------------------------------------*/
   h1,h2,h3,h4,h5,h6 {
     margin: 0px;
   }
@@ -63,8 +62,6 @@ body#login-page {
     list-style-type: none;
   }
 
-
-  /*---------------------------------------------*/
   input {
     outline: none;
     border: none;
@@ -79,7 +76,6 @@ body#login-page {
     border-color: transparent !important;
   }
 
-  /*---------------------------------------------*/
   button {
     outline: none !important;
     border: none;
@@ -94,9 +90,6 @@ body#login-page {
     border: none !important;
   }
 
-
-  /*//////////////////////////////////////////////////////////////////
-  [ Utility ]*/
   .txt1 {
     font-family: Poppins-Regular;
     font-size: 13px;
@@ -110,9 +103,6 @@ body#login-page {
     color: #333333;
     line-height: 1.5;
   }
-
-  /*//////////////////////////////////////////////////////////////////
-  [ login ]*/
 
   .limiter {
     width: 100%;
@@ -141,8 +131,7 @@ body#login-page {
   }
 
 
-  /*------------------------------------------------------------------
-  [ Form ]*/
+  /** FORM **/
 
   .login100-form {
     width: 100%;
@@ -160,8 +149,7 @@ body#login-page {
     font-size: 60px;
   }
 
-  /*------------------------------------------------------------------
-  [ Input ]*/
+  /** INPUT **/
 
   .wrap-input100 {
     width: 100%;
@@ -183,7 +171,6 @@ body#login-page {
     padding: 0 5px;
   }
 
-  /*---------------------------------------------*/
   .focus-input100 {
     position: absolute;
     display: block;
@@ -244,7 +231,6 @@ body#login-page {
     width: 100%;
   }
 
-  /*---------------------------------------------*/
   .btn-show-pass {
     font-size: 15px;
     color: #999999;
@@ -260,8 +246,6 @@ body#login-page {
     transition: all 0.4s;
   }
 
-  /*------------------------------------------------------------------
-  [ Button ]*/
   .container-login100-form-btn {
     display: flex;
     flex-wrap: wrap;
@@ -312,8 +296,7 @@ body#login-page {
   }
 
 
-  /*------------------------------------------------------------------
-  [ Responsive ]*/
+  /** RESPONSIVE **/
 
   @media (max-width: 576px) {
     .wrap-login100 {
@@ -321,10 +304,6 @@ body#login-page {
     }
   }
 
-
-
-  /*------------------------------------------------------------------
-  [ Alert validate ]*/
 
   .validate-input {
     position: relative;

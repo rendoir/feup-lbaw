@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="container-fluid px-0">
+    <main class="container-fluid px-0">
         <div class="jumbotron jumbotron-fluid mb-0" id="jumbotron_signup">
             <div id="sign-up-jumbo" class="container text-dark d-flex flex-row" style="height: 100%;">
                 <div class="p-2 mx-auto">
@@ -11,9 +11,9 @@
                 <div class="p-2 mx-auto text-dark">
                     <div class="card">
                         <div class="card-body">
-                          <form method="POST" action="{{ route('register') }}">
-                               {{ csrf_field() }}
-                               <div class="form-group">
+                            <form method="POST" action="{{ route('register') }}" class="mx-auto">
+                                {{ csrf_field() }}
+                                <div class="form-group">
                                     <label for="username">
                                         <small>Username</small>
                                     </label>
@@ -42,20 +42,26 @@
                                     <input name="accept" type="checkbox" class="form-check-input" id="check" required>
                                     <label class="form-check-label" for="check">I accept the terms and conditions.</label>
                                 </div>
-                                <div class="d-flex flex-column mt-2">
-                                    <button type="submit" class="btn btn-primary mt-2 mx-5">
+
+                                <div class="d-flex flex-column justify-center mx-auto mt-2">
+                                    <button type="submit" class="btn btn-primary mx-5">
                                         Sign up for SegFault
                                     </button>
-                                    <button class="btn btn-social btn-github mt-2 mx-5" href="{{ url('/auth/google') }}">
-                                        <i class="fab fa-github"></i>
-                                        <div>Sign up with Github</div>
-                                    </button>
-                                    <button class="btn btn-social btn-google mt-2 mx-5" href="{{ url('/auth/google') }}">
-                                        <i class="fab fa-google"></i>
-                                        <div>Sign up with Google</div>
-                                    </button>
                                 </div>
+
                             </form>
+
+                            <div class="d-inline-flex flex-column mt-2 justify-center mx-auto">
+                                <button class="btn btn-social btn-github p-1 mb-1 mx-5" href="{{ url('/auth/google') }}">
+                                    <i class="fab fa-github"></i>
+                                    <div>Sign up with Github</div>
+                                </button>
+                                <button class="btn btn-social btn-google p-1 mx-5" href="{{ url('/auth/google') }}">
+                                    <i class="fab fa-google"></i>
+                                    <div>Sign up with Google</div>
+                                </button>
+                            </div>
+
                         </div>
                     </div>
                 </div>
