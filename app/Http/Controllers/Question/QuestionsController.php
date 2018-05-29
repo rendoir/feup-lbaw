@@ -11,6 +11,7 @@ use App\QuestionsCategory;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -53,7 +54,7 @@ class QuestionsController extends Controller
 
                 Commentable::create(['id' => $message->id]);
                 $question = Question::create(['id' => $message->id, 'title' => $request->title]);
-                MessageVersion::create(['content' => $request->messageContent, 'message_id' => $message->id]);
+                MessageVersion::create(['content' => $request->input('content'), 'message_id' => $message->id]);
 
                 $tags = explode(',', $request->tags);
                 foreach ($tags as $tag){
@@ -65,6 +66,28 @@ class QuestionsController extends Controller
             return redirect()->route('questions', ['id' => $question->id]);
         }
         return redirect('\ask_question');
+    }
+
+    public function editQuestion(Request $request)
+    {
+        $question = Question::find($request->question);
+        $message = $question->message;
+
+        // Checking if the User can edit the answer
+        $this->authorize('edit', $message);
+        MessageController::editMessage($request, $message);
+
+        /*$question->categories() = "";
+        $tags = explode(',', $request->tags);
+        foreach ($tags as $tag) {
+            $tagModel = Category::where('name', $tag)->first();
+            $question->categories()->attach($tagModel->id);
+        }*/
+
+        $question->title = $request->title;
+        $question->save();
+
+        return redirect()->route('questions', ['id' => $question->id]);
     }
 
     public function deleteQuestion(Request $request)
@@ -80,7 +103,27 @@ class QuestionsController extends Controller
 
     public function showAskQuestionForm(Request $request) {
         $title = $request->get('title');
-        return view('pages.ask_question', ['title' => $title]);
+
+        return view('pages.ask_question',
+            ['isEdition' => false,
+             'question_id' => null,
+             'title' => $title,
+             'tags' => "",
+             'content' => ""]);
+    }
+
+    public function showEditQuestionForm(Request $request) {
+        $question_id = $request->get('question_id');
+        $title = $request->get('title');
+        $tags = $request->get('tags');
+        $content = $request->get('content');
+
+        return view('pages.ask_question',
+            ['isEdition' => true,
+            'question_id' => $question_id,
+            'title' => $title,
+            'tags' => $tags,
+            'content' => $content]);
     }
 
     public function getQueriedQuestions(Request $request) {
@@ -108,15 +151,24 @@ class QuestionsController extends Controller
                         $query->where('id', $tag_id);
                     });
                 }
-                $questions = $query->search($query_string)->paginate($num_per_page);
+                $questions = $query->search($query_string)
+                                   ->join('messages', 'messages.id', '=', 'questions.id')
+                                   ->where('messages.is_banned', false)
+                                   ->paginate($num_per_page);
             }
             else if($operator == 'or') {
                 $questions = Question::whereHas('categories', function($query) use($tag_ids) {
                     $query->whereIn('id', $tag_ids);
-                })->search($query_string)->paginate($num_per_page);
+                })->search($query_string)
+                  ->join('messages', 'messages.id', '=', 'questions.id')
+                  ->where('messages.is_banned', false)
+                  ->paginate($num_per_page);
             }
         }
-        else $questions = Question::search($query_string)->paginate($num_per_page);
+        else $questions = Question::search($query_string)
+                                  ->join('messages', 'messages.id', '=', 'questions.id')
+                                  ->where('messages.is_banned', false)
+                                  ->paginate($num_per_page);
         $questions->appends(['search' => $query_string]);
 
         return QuestionsController::questionsJSON($questions);
@@ -152,6 +204,7 @@ class QuestionsController extends Controller
     public function getRecentQuestions(){
         $questions = Question::join('message_versions', 'questions.id', '=', 'message_versions.message_id')
             ->join('messages', 'messages.latest_version', '=', 'message_versions.id')
+            ->where('messages.is_banned', false)
             ->orderByDesc('creation_time')
             ->paginate(NUM_PER_PAGE);
 
@@ -164,6 +217,8 @@ class QuestionsController extends Controller
             ->select(DB::raw('
                 questions.id, count(answers.id) C
                 '))
+            ->join('messages', 'messages.id', '=', 'questions.id')
+            ->where('messages.is_banned', false)
             ->groupBy('questions.id')
             ->orderByRaw('C DESC')
             ->paginate(NUM_PER_PAGE);
@@ -176,7 +231,7 @@ class QuestionsController extends Controller
     }
 
     public function getHighlyVotedQuestions() {
-        $questions = Question::HighlyVoted()->paginate(NUM_PER_PAGE);
+        $questions = Question::HighlyVoted()->where('messages.is_banned', false)->paginate(NUM_PER_PAGE);
 
         return QuestionsController::questionsJSON($questions);
     }
@@ -185,6 +240,7 @@ class QuestionsController extends Controller
         $questions = Question::whereRaw('correct_answer IS NULL')
             ->join('message_versions', 'questions.id', '=', 'message_versions.message_id')
             ->join('messages', 'messages.latest_version', '=', 'message_versions.id')
+            ->where('messages.is_banned', false)
             ->orderByDesc('creation_time')
             ->paginate(NUM_PER_PAGE);
 

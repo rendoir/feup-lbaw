@@ -29,6 +29,9 @@ function routeNotification(notification) {
             const questionId = notification.data.question_id;
             to = 'questions/' + questionId + to;
             break;
+        case NOTIFICATION_TYPES.newBadgeAttainment:
+            to = 'users/' + notification.following_name + to;
+            break;
     }
 
     return '/' + to;

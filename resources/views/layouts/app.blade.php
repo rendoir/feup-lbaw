@@ -27,7 +27,7 @@
                 <!-- Search Bar -->
                 <form class="form-inline" method="GET" action="{{ url('questions') }}">
                     <input id="search-input-nav" class="form-control mx-sm-2" type="text" name="search" placeholder="Search" aria-label="Search"
-                    @if(isset($request) && $request->has('search')) <?php echo 'value="' . htmlspecialchars($_GET['search']) . '"' ?> @endif>
+                    @if(isset($_GET['search'])) <?php echo 'value="' . htmlspecialchars($_GET['search']) . '"' ?> @endif>
                     <button id="search-button-nav" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>

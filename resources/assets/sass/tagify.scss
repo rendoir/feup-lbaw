@@ -9,7 +9,7 @@ tags, .suggestions{
 
     display       : block;
     border        : 1px solid #DDD;
-    padding-right : $tagPad;
+    padding-right : nth($tagPad, 2);
     cursor        : text;
     overflow      : hidden;
 
