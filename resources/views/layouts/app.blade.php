@@ -43,9 +43,12 @@
                             <i class="fa fa-bell"></i>
                         </div>
                     </span>
-                        <div id="notificationsMenu" class="dropdown-menu dropdown-menu-right" aria-labelledby="notifications">
-                            <p class="text-center">No Unread Notifications.</p>
-                            <!-- Notifications populated with JS -->
+                        <div class="dropdown-menu dropdown-menu-right pt-0" aria-labelledby="notifications">
+                            <div id="notificationsHeader">Notifications</div>
+                            <div id="notificationsMenu">
+                                <p class="text-center">No Unread Notifications.</p>
+                                <!-- Notifications populated with JS -->
+                            </div>
                         </div>
                     </div>
 
