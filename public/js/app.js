@@ -320,13 +320,11 @@ function reportEvent(reports) {
 					button.classList.remove('discrete');
 					var response = JSON.parse(this.responseText);
 					if (!response.is_banned) return;
-					if (response.type == 'question') {
-						window.location = "/";
-					} else {
+					if (!response.type == 'question') {
 						var element = findAncestor(button, response.type);
 						element.parentNode.removeChild(element);
 					}
-					errors.displaySuccess("A message you've reported has been removed. Thank you for keeping SegFault clean!");
+					errors.displaySuccess("The " + response.type + " you've reported has been removed. Thank you for keeping SegFault clean!");
 				}
 			});
 		});
@@ -2313,7 +2311,11 @@ function addEventListeners() {
 
 function editor(editor_element) {
     var simplemde = new SimpleMDE({
-        renderingConfig: { codeSyntaxHighlighting: true }, element: editor_element, forceSync: true, toolbar: ["bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list", "ordered-list", "link", "image", "table", "horizontal-rule", "preview", {
+        autoDownloadFontAwesome: false,
+        spellChecker: false,
+        renderingConfig: { codeSyntaxHighlighting: true },
+        element: editor_element, forceSync: true,
+        toolbar: ["bold", "italic", "strikethrough", "heading", "code", "quote", "unordered-list", "ordered-list", "link", "image", "table", "horizontal-rule", "preview", {
             name: "side-by-side",
             action: function customPreview(editor) {
                 var cm = editor.codemirror;
