@@ -22,19 +22,20 @@ function editAnswer(editTrigger) {
         return;
     }
 
-    let editor = document.getElementById("edit-editor");
-    editor.value = markdown.innerHTML;
+    let editor = $("#edit-editor");
+    let mde = editor.data("mde");    
+    mde.value(markdown.innerHTML);
 
     editBtn.addEventListener('click', function () {
-        editAnswerRequest(edit_id, contentParent.parentElement, editor);
+        editAnswerRequest(edit_id, contentParent.parentElement, mde.value());
     });
 }
 
-function editAnswerRequest(answer_id, answerPlaceholder, editor) {
+function editAnswerRequest(answer_id, answerPlaceholder, content) {
 
     let requestBody = {
         "answer": answer_id,
-        "content": editor.value
+        "content": content
     };
 
     ajax.sendAjaxRequest(

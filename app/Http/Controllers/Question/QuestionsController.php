@@ -77,12 +77,15 @@ class QuestionsController extends Controller
         $this->authorize('edit', $message);
         MessageController::editMessage($request, $message);
 
-        /*$question->categories() = "";
-        $tags = explode(',', $request->tags);
-        foreach ($tags as $tag) {
-            $tagModel = Category::where('name', $tag)->first();
-            $question->categories()->attach($tagModel->id);
-        }*/
+        /*DB::transaction(function() use (&$request, &$question) {
+            foreach ($question->categories() as $cat)
+                $question->categories()->detach();
+            $tags = explode(',', $request->tags);
+            foreach ($tags as $tag) {
+                $tagModel = Category::where('name', $tag)->first();
+                $question->categories()->attach($tagModel->id);
+            }
+        });*/
 
         $question->title = $request->title;
         $question->save();
