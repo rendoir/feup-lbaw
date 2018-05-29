@@ -69,13 +69,13 @@
     </div>
     <div class="row mx-0">
         {{#is_question_owner}}
-        <div class="mb-sm-n-100 mt-3">
+        <div class="col-1 mt-2">
             <button type="button" class="btn btn-outline-success ml-1 mark {{# correct}}marked{{/ correct}}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Mark answer as correct" data-message_id="{{id}}">
                 <i class="fas fa-check"></i>
             </button>
         </div>
         {{/is_question_owner}}
-        <div class="col-sm-11 ml-auto">
+        <div class="col-11 ml-auto">
             <div class="card-footer bg-transparent d-flex align-items-baseline justify-content-between">
                 <div class="text-center">
                     <small class="text-muted">Created by - </small>
