@@ -1,14 +1,14 @@
 var Mustache = require('mustache');
 
 function addTimedError(msg) {
-  let error = alerts.displayError(msg);
+  let error = displayError(msg);
   $(error).delay(4000).slideUp(500, function () {
     $(this).remove();
   });
 }
 
 function addTimedSuccess(msg) {
-  let success = alerts.displaySuccess(msg);
+  let success = displaySuccess(msg);
   $(success).delay(4000).slideUp(500, function () {
     $(this).remove();
   });
@@ -37,5 +37,7 @@ function displayMessage(message, isSuccess) {
 
 module.exports = {
     displayError,
-    displaySuccess
+    displaySuccess,
+    addTimedError,
+    addTimedSuccess
 };
