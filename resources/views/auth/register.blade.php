@@ -52,11 +52,13 @@
                             </form>
 
                             <div class="d-inline-flex flex-column mt-2 justify-center mx-auto">
-                                <button class="btn btn-social btn-github p-1 mb-1 mx-5" href="{{ url('/auth/google') }}">
+                                <button class="btn btn-social btn-github p-1 mb-1 mx-5" href="{{ url('/auth/github') }}"
+                                        onclick="window.location.href='{{ url('/auth/github') }}';">
                                     <i class="fab fa-github"></i>
                                     <div>Sign up with Github</div>
                                 </button>
-                                <button class="btn btn-social btn-google p-1 mx-5" href="{{ url('/auth/google') }}">
+                                <button class="btn btn-social btn-google p-1 mx-5" href="{{ url('/auth/google') }}"
+                                        onclick="window.location.href='{{ url('/auth/google') }}';">
                                     <i class="fab fa-google"></i>
                                     <div>Sign up with Google</div>
                                 </button>
