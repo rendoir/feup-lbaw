@@ -2926,15 +2926,19 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
 
         if (handler == null) handler = defaultHandler;
         $('div.loader-ellips').addClass('show');
-        ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
+        if (questionType == "nav-search") ajax.sendAjaxRequest('GET', url + "&page=" + pageNum, null, handler);else ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
     };
 
-    var pages_num = [0, 0, 0, 0];
-    var page_enum = { "nav-new": 0, "nav-hot": 1, "nav-voted": 2, "nav-active": 3 };
-    var urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions"];
+    var pages_num = [0, 0, 0, 0, 0];
+    var page_enum = { "nav-new": 0, "nav-hot": 1, "nav-voted": 2, "nav-active": 3, "nav-search": 4 };
+    var urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions", "/questions/search"];
     var endOfPage = false;
     var questionType = $('div.tab-pane.active.show')[0];
     if (questionType != null) questionType = questionType.id;
+    if (questionType == "nav-search") {
+        var search_param = window.location.search;
+        urls[page_enum[questionType]] += search_param;
+    }
     var url = urls[page_enum[questionType]];
 
     ajax.sendAjaxRequest('GET', "/min-profile", null, function (data) {
@@ -2970,6 +2974,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
     });
 
     $('a#nav-new-tab')[0].addEventListener("click", function () {
+        window.history.pushState("", "", '/questions/recent');
         if (questionType == "nav-new") return;
         questionType = "nav-new";
         url = urls[page_enum[questionType]];
@@ -2978,6 +2983,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
         }
     });
     $('a#nav-hot-tab')[0].addEventListener("click", function () {
+        window.history.pushState("", "", '/questions/hot');
         if (questionType == "nav-hot") return;
         questionType = "nav-hot";
         url = urls[page_enum[questionType]];
@@ -2986,6 +2992,7 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
         }
     });
     $('a#nav-voted-tab')[0].addEventListener("click", function () {
+        window.history.pushState("", "", '/questions/highly-voted');
         if (questionType == "nav-voted") return;
         questionType = "nav-voted";
         url = urls[page_enum[questionType]];
@@ -2994,12 +3001,25 @@ if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
         }
     });
     $('a#nav-active-tab')[0].addEventListener("click", function () {
+        window.history.pushState("", "", '/questions/active');
         if (questionType == "nav-active") return;
         questionType = "nav-active";
         url = urls[page_enum[questionType]];
         if (pages_num[3] == 0) {
             getQuestions(1);
         }
+    });
+    $('button#search-button-nav')[0].addEventListener("click", function (event) {
+        event.preventDefault();
+        $('a.nav-item.nav-link.active').removeClass("active").removeClass("show");
+        $('div.tab-pane.active.show').removeClass("active").removeClass("show");
+        $('div#nav-search').addClass("active").addClass("show");
+        questionType = "nav-search";
+        let search = $('input#search-input-nav').val();
+        url = "/questions/search?search=" + search;
+        window.history.pushState("", "", '/questions?search=' + search);
+        pages_num[4] = 0;
+        getQuestions(1);
     });
 
     $(window).scroll(function () {
@@ -8181,7 +8201,7 @@ module.exports = Echo;
 /* 33 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: spawn /home/bayard/Github/lbaw1763/node_modules/mozjpeg/vendor/cjpeg ENOENT\n    at exports._errnoException (util.js:1020:11)\n    at Process.ChildProcess._handle.onexit (internal/child_process.js:197:32)\n    at onErrorNT (internal/child_process.js:376:16)\n    at _combinedTickCallback (internal/process/next_tick.js:80:11)\n    at process._tickCallback (internal/process/next_tick.js:104:9)\n    at runLoaders (/home/bayard/Github/lbaw1763/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/home/bayard/Github/lbaw1763/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at /home/bayard/Github/lbaw1763/node_modules/img-loader/index.js:45:31\n    at process._tickCallback (internal/process/next_tick.js:109:7)");
 
 /***/ })
 /******/ ]);

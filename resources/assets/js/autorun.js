@@ -3,15 +3,18 @@ let Mustache = require('mustache');
 
 // GET side profile info
 if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
-    let pages_num = [0,0,0,0];
-    let page_enum = {"nav-new" : 0, "nav-hot" : 1, "nav-voted" : 2, "nav-active" : 3};
-    let urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions"];
+    let pages_num = [0,0,0,0,0];
+    let page_enum = {"nav-new" : 0, "nav-hot" : 1, "nav-voted" : 2, "nav-active" : 3, "nav-search" : 4};
+    let urls = ["/getRecentQuestions", "/getHotQuestions", "/getHighlyVotedQuestions", "/getActiveQuestions", "/questions/search"];
     let endOfPage = false;
     let questionType = $('div.tab-pane.active.show')[0];
     if (questionType != null)
         questionType = questionType.id;
+    if(questionType == "nav-search") {
+        let search_param = window.location.search;
+        urls[page_enum[questionType]] += search_param;
+    }
     let url = urls[page_enum[questionType]];
-
 
     // GET questions on certain page
     function getQuestions(pageNum, handler) {
@@ -42,7 +45,10 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         if(handler == null)
             handler = defaultHandler;
         $('div.loader-ellips').addClass('show');
-        ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
+        if(questionType == "nav-search")
+            ajax.sendAjaxRequest('GET', url + "&page=" + pageNum, null, handler);
+        else
+            ajax.sendAjaxRequest('GET', url + "?page=" + pageNum, null, handler);
     }
 
     ajax.sendAjaxRequest('GET', "/min-profile", null,(data) => {
@@ -79,7 +85,9 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         $('div#' + questionType)[0].innerHTML = mustacheRender;
     });
 
+
     $('a#nav-new-tab')[0].addEventListener("click", function () {
+        window.history.pushState("", "", '/questions/recent');
         if(questionType == "nav-new")
             return;
         questionType = "nav-new";
@@ -89,6 +97,7 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         }
     });
     $('a#nav-hot-tab')[0].addEventListener("click", function () {
+        window.history.pushState("", "", '/questions/hot');
         if(questionType == "nav-hot")
             return;
         questionType = "nav-hot";
@@ -98,6 +107,7 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         }
     });
     $('a#nav-voted-tab')[0].addEventListener("click", function () {
+        window.history.pushState("", "", '/questions/highly-voted');
         if(questionType == "nav-voted")
             return;
         questionType = "nav-voted";
@@ -107,6 +117,7 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         }
     });
     $('a#nav-active-tab')[0].addEventListener("click", function () {
+        window.history.pushState("", "", '/questions/active');
         if(questionType == "nav-active")
             return;
         questionType = "nav-active";
@@ -114,6 +125,18 @@ if(window.location.pathname.match( /questions\/\D|questions(?!\/)/ ) != null){
         if(pages_num[3] == 0){
             getQuestions(1);
         }
+    });
+    $('button#search-button-nav')[0].addEventListener("click", function (event) {
+        event.preventDefault();
+        $('a.nav-item.nav-link.active').removeClass("active").removeClass("show");
+        $('div.tab-pane.active.show').removeClass("active").removeClass("show");
+        $('div#nav-search').addClass("active").addClass("show");
+        questionType = "nav-search";
+        let search = $('input#search-input-nav').val();
+        url = "/questions/search?search=" + search;
+        window.history.pushState("", "", '/questions?search=' + search);
+        pages_num[4] = 0;
+        getQuestions(1);
     });
 
     $(window).scroll(function () {
@@ -219,3 +242,4 @@ if(window.location.pathname.match( /users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/ ) != 
         }
     });
 }
+

@@ -31,7 +31,7 @@ Route::get('min-profile', 'ProfileController@getMinProfile');
 
 // Search questions with string query
 Route::get('questions', 'Question\QuestionsController@showQueriedQuestions');
-
+Route::get('questions/search', 'Question\QuestionsController@getQueriedQuestions');
 Route::get('questions/recent', 'Question\QuestionsController@showRecentQuestions')->name('recent_questions'); // Most recent
 Route::get('getRecentQuestions', 'Question\QuestionsController@getRecentQuestions');
 Route::get('questions/hot', 'Question\QuestionsController@showHotQuestions')->name('hot_questions'); // Most answers

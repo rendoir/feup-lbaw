@@ -58,10 +58,12 @@
                     @endif
                 </div>
 
-                <div class="search-content">
-                @if (isset($type) && strcmp($type, 'search') == 0)
-                    @each('partials.question', $questions, 'question')
-                @endif
+                <div class="tab-pane fade @if (isset($type) && strcmp($type, 'search') == 0){{"show active"}}@endif" id="nav-search" role="tabpanel" aria-labelledby="nav-search-tab">
+                    @if (isset($type) && strcmp($type, 'search') == 0)
+                        @for ($i = 0; $i < 10; $i++)
+                            @include('templates.questionTemplate')
+                        @endfor
+                    @endif
                 </div>
 
                 <div class="loader-ellips">

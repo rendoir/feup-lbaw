@@ -35,6 +35,7 @@ class QuestionsController extends Controller
             'showHighlyVotedQuestions',
             'showActiveQuestions',
             'showQuestionPage',
+            'getQueriedQuestions',
             'getRecentQuestions',
             'getHotQuestions',
             'getHighlyVotedQuestions',
@@ -71,7 +72,7 @@ class QuestionsController extends Controller
         return view('pages.ask_question', ['title' => $title]);
     }
 
-    public function showQueriedQuestions(Request $request) {
+    public function getQueriedQuestions(Request $request) {
         $query_string = $request->get('search');
         $operator = $request->get('operator');
         preg_match_all('/(?<=\[).*?(?=\])/', $query_string, $tag_names);
@@ -99,11 +100,11 @@ class QuestionsController extends Controller
         else $questions = Question::search($query_string)->paginate(NUM_PER_PAGE);
         $questions->appends(['search' => $query_string]);
 
-        return view('pages.questions', [
-            'questions' => $questions,
-            'request' => $request,
-            'type' => 'search'
-        ]);
+        return QuestionsController::questionsJSON($questions);
+    }
+
+    public function showQueriedQuestions() {
+        return view('pages.questions', [ 'type' => 'search' ]);
     }
 
     public function showRecentQuestions() {
