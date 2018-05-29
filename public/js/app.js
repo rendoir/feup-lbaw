@@ -344,7 +344,8 @@ function removeQuestionEvent() {
 }
 
 function removeQuestion(delTrigger) {
-	var question_id = delTriger.getAttribute("data-message-id");
+
+	var question_id = delTrigger.getAttribute("data-message-id");
 	if (question_id == null) return;
 
 	var deleteBtn = document.getElementById('delete-question');
@@ -358,6 +359,8 @@ function removeQuestion(delTrigger) {
 		});
 	});
 }
+
+removeQuestionEvent();
 
 module.exports = {
 	addVoteEvent: addVoteEvent,

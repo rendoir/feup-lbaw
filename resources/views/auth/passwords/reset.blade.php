@@ -1,48 +1,70 @@
 @extends('layouts.app')
 
+@section('title', 'Reset Password ')
+
 @section('content')
-<div class="container">
-  <form class="form-horizontal" method="POST" action="{{ route('password.request') }}">
-      {{ csrf_field() }}
+    <section id="login-page">
+        <div class="limiter">
+            <div class="container-login100" style="min-height: {{'calc(100vh - 66px - 3.5em);'}}";>
 
-      <div class="pt-4 pb-3 pl-3">
-          <h2>
-              Reset Password
-          </h2>
-      </div>
+                <div class="wrap-login100">
+                    <form class="login100-form validate-form" method="POST" action="{{ route('password.request') }}">
+                        {{ csrf_field() }}
 
-      <input type="hidden" name="token" value="{{ $token }}">
+                        <input type="hidden" name="token" value="{{ $token }}">
 
-      <div class="form-group">
-          <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                        <span class="login100-form-title p-b-26">
+						    Reset Password
+					    </span>
+                        <span class="login100-form-title p-b-48">
+						    <i class="zmdi zmdi-font"></i>
+					    </span>
 
-          <div class="col-md-6">
-              <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
-          </div>
-      </div>
 
-      <div class="form-group">
-          <label for="password" class="col-md-4 control-label">Password</label>
+                        <div class="mt-4 wrap-input100 validate-input {{ $errors->has('email') ? ' has-error' : '' }}" data-validate = "Valid email is: a@b.c">
+                            <input id="email" type="text" class="input100" name="email" value="{{ old('email') }}" placeholder="Email" required>
+                            <span class="focus-input100" data-placeholder="Email"></span>
+                        </div>
 
-          <div class="col-md-6">
-              <input id="password" type="password" class="form-control" name="password" required>
-          </div>
-      </div>
+                        <div class="wrap-input100 validate-input {{ $errors->has('password') ? ' has-error' : '' }}" data-validate="Enter password">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+                            <input id="password" type="password" class="input100" name="password" placeholder="New Password" required>
+                            <span class="focus-input100" data-placeholder="New Password"></span>
+                        </div>
 
-      <div class="form-group">
-          <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-          <div class="col-md-6">
-              <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-          </div>
-      </div>
+                        <div class="wrap-input100 validate-input {{ $errors->has('password') ? ' has-error' : '' }}" data-validate="Enter password">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+                            <input id="password-confirm" type="password" class="input100" name="password_confirmation" placeholder="Confirm Password" required>
+                            <span class="focus-input100" data-placeholder="Confirm Password"></span>
+                        </div>
 
-      <div class="form-group">
-          <div class="col-md-6 col-md-offset-4">
-              <button type="submit" class="btn btn-primary">
-                  Reset Password
-              </button>
-          </div>
-      </div>
-  </form>
-</div>
+                        @if ($errors->has('email'))
+                            <div class="help-block">
+                                <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                            </div>
+                        @endif
+
+                        @if ($errors->has('password'))
+                            <div class="help-block">
+                                <strong class="text-danger">{{ $errors->first('password') }}</strong>
+                            </div>
+                        @endif
+
+                        <div class="container-login100-form-btn">
+                            <div class="wrap-login100-form-btn">
+                                <div class="login100-form-bgbtn"></div>
+                                <button class="login100-form-btn">
+                                    Send Reset Request
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection

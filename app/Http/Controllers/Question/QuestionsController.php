@@ -94,23 +94,28 @@ class QuestionsController extends Controller
         $query_string = preg_replace('/\[.*?\]/', "", $query_string);
         $tag_names = $tag_names[0];
 
-        $tags = Category::whereIn('name', $tag_names)->pluck('id')->toArray();
+        $tag_ids = array();
+        foreach ($tag_names as $tag) {
+            $id = Category::whereRaw('lower(name) ILIKE ?', [$tag])->pluck('id');
+            if ($id->isNotEmpty())
+                array_push($tag_ids, $id->first());
+        }
 
-        if(!empty($tags)) {
-          if($operator == 'and' || $operator == null) {
-            $query = Question::query();
-            foreach ($tags as $tag_id) {
-                $query->whereHas('categories', function($query) use($tag_id) {
-                    $query->where('id', $tag_id);
-                });
+        if(!empty($tag_ids)) {
+            if($operator == 'and' || $operator == null) {
+                $query = Question::query();
+                foreach ($tag_ids as $tag_id) {
+                    $query->whereHas('categories', function($query) use($tag_id) {
+                        $query->where('id', $tag_id);
+                    });
+                }
+                $questions = $query->search($query_string)->paginate($num_per_page);
             }
-            $questions = $query->search($query_string)->paginate($num_per_page);
-          }
-          else if($operator == 'or') {
-            $questions = Question::whereHas('categories', function($query) use($tags) {
-                          $query->whereIn('id', $tags);
-                      })->search($query_string)->paginate($num_per_page);
-          }
+            else if($operator == 'or') {
+                $questions = Question::whereHas('categories', function($query) use($tag_ids) {
+                    $query->whereIn('id', $tag_ids);
+                })->search($query_string)->paginate($num_per_page);
+            }
         }
         else $questions = Question::search($query_string)->paginate($num_per_page);
         $questions->appends(['search' => $query_string]);
@@ -154,8 +159,19 @@ class QuestionsController extends Controller
         return QuestionsController::questionsJSON($questions);
     }
 
-    public function getHotQuestions() { // TODO order by most answers
-        $questions = Question::paginate(NUM_PER_PAGE);
+    public function getHotQuestions() {
+        $questions_raw = DB::table('questions')
+            ->join('answers', 'questions.id', '=', 'answers.question_id')
+            ->select(DB::raw('
+                questions.id, count(answers.id) C
+                '))
+            ->groupBy('questions.id')
+            ->orderByRaw('C DESC')
+            ->paginate(NUM_PER_PAGE);
+
+        $questions = array();
+        foreach ($questions_raw as $q)
+            array_push($questions, Question::find($q->id));
 
         return QuestionsController::questionsJSON($questions);
     }
@@ -176,7 +192,7 @@ class QuestionsController extends Controller
         return QuestionsController::questionsJSON($questions);
     }
 
-    public static function questionsJSON($questions){
+    public static function questionsJSON($questions) {
         $questions_info = [];
         foreach ($questions as $question) {
             $message = $question->message;

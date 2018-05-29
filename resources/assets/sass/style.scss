@@ -22,6 +22,13 @@ body > header.sticky-top {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);
 }
 
+body > header.sticky-top > .container-messages{
+    position: absolute;
+    top: 3.5em;
+    width: 50%;
+    left: 25%;
+}
+
 body > footer {
     position: absolute;
     bottom: 0;
@@ -479,6 +486,11 @@ a.tag {
 }
 
 @media (max-width: 992px) {
+    body > header.sticky-top > .container-messages{
+        width: 80%;
+        left:10%;
+    }
+
     nav > a {
         margin-right: 0;
     }
@@ -508,6 +520,10 @@ a.tag {
 }
 
 @media (max-width: 768px) {
+    body > header.sticky-top > .container-messages{
+        width: 100%;
+        left:0;
+    }
 
     /* Account Page */
     #account-settings > .col-4.py-4,
