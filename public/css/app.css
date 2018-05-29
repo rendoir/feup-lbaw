@@ -1052,6 +1052,17 @@ a.tag {
   #question {
     top: 65px !important;
   }
+
+  #drop-notifications {
+    position: fixed;
+    width: calc(100% - 1.5em);
+    top: 3.5em;
+    left: .75em;
+  }
+
+  #notificationsHeader{
+    width: 100%;
+  }
 }
 
 .main-content :first-child {
