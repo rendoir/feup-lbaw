@@ -140,7 +140,9 @@ class QuestionsController extends Controller
 
     public function showQuestionPage($question_id) {
         $question = Question::find($question_id);
-        return view('pages.question', ['question' => $question]);
+        if($question != null)
+          return view('pages.question', ['question' => $question]);
+        return redirect()->route('404');
     }
 
     public function getRecentQuestions(){

@@ -94,6 +94,20 @@ module.exports = {
 
 var Mustache = __webpack_require__(3);
 
+function addTimedError(msg) {
+    var error = alerts.displayError(msg);
+    $(error).delay(4000).slideUp(500, function () {
+        $(this).remove();
+    });
+}
+
+function addTimedSuccess(msg) {
+    var success = alerts.displaySuccess(msg);
+    $(success).delay(4000).slideUp(500, function () {
+        $(this).remove();
+    });
+}
+
 function displayError(errorMessage) {
     return displayMessage(errorMessage, false);
 }
@@ -126,6 +140,11 @@ module.exports = {
 
 var ajax = __webpack_require__(0);
 var errors = __webpack_require__(1);
+
+function findAncestor(el, cls) {
+	while ((el = el.parentElement) && !el.classList.contains(cls)) {}
+	return el;
+}
 
 decodeHTML = function decodeHTML(html) {
 	var txt = document.createElement('textarea');
@@ -297,6 +316,15 @@ function reportEvent(reports) {
 			ajax.sendAjaxRequest('post', url, { message_id: message_id }, function () {
 				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 200) {
 					button.classList.remove('discrete');
+					var response = JSON.parse(this.responseText);
+					if (!response.is_banned) return;
+					if (response.type == 'question') {
+						document.getElementById('question').classList.add('banned');
+						document.getElementById('question-body').classList.add('banned');
+						return;
+					}
+					var element = findAncestor(button, response.type);
+					element.classList.add('banned');
 				}
 			});
 		});
@@ -2903,20 +2931,6 @@ tagSearchEvent();
 var ajax = __webpack_require__(0);
 var alerts = __webpack_require__(1);
 
-function addTimedError(msg) {
-  var error = alerts.displayError(msg);
-  $(error).delay(4000).slideUp(500, function () {
-    $(this).remove();
-  });
-}
-
-function addTimedSuccess(msg) {
-  var success = alerts.displaySuccess(msg);
-  $(success).delay(4000).slideUp(500, function () {
-    $(this).remove();
-  });
-}
-
 function changePasswordEvent() {
   var button = document.getElementById('update_password');
   if (button == null) return;
@@ -2926,12 +2940,12 @@ function changePasswordEvent() {
     var repeat_new_password = document.getElementById("repeat_new_password").value;
 
     if (new_password != repeat_new_password) {
-      addTimedError("The new passwords don't match.");
+      alerts.addTimedError("The new passwords don't match.");
       return;
     }
 
     ajax.sendAjaxRequest('POST', '/users/settings/change_password', { old_password: old_password, new_password: new_password, new_password_confirmation: repeat_new_password }, function () {
-      if (this.status == 200) addTimedSuccess('Password changed!');else addTimedError(this.responseText);
+      if (this.status == 200) alerts.addTimedSuccess('Password changed!');else alerts.addTimedError(this.responseText);
     });
   });
 }

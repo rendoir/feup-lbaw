@@ -69,18 +69,25 @@ class MessageController extends Controller
 
     if(!Auth::user()->hasReportOn($request->message_id))
       DB::table('reports')->insert(['message_id' => $request->message_id, 'user_id' => Auth::id()]);
+
+    $data = [
+      'type' => Message::getType($request->message_id),
+      'is_banned' => Message::find($request->message_id)->first()->is_banned
+    ];
+
+    return response()->json($data, 200);
   }
 
-    public static function editMessage(&$request,  &$message) {
+  public static function editMessage(&$request,  &$message) {
 
-        // Placeholder for the version of the comment that is going to be created
-        $version = null;
+      // Placeholder for the version of the comment that is going to be created
+      $version = null;
 
-        DB::transaction(function() use (&$version, &$request, &$message) {
-            $version = MessageVersion::create(['content' => $request->input('content'), 'message_id' => $message->id]);
-        });
+      DB::transaction(function() use (&$version, &$request, &$message) {
+          $version = MessageVersion::create(['content' => $request->input('content'), 'message_id' => $message->id]);
+      });
 
-        $message->latest_version = $version->id;
-        $message->save();
-    }
+      $message->latest_version = $version->id;
+      $message->save();
+  }
 }

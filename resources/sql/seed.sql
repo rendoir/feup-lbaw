@@ -238,7 +238,7 @@ CREATE FUNCTION check_categories() RETURNS TRIGGER AS $$
     ELSIF num_categories < 1 THEN
       RAISE EXCEPTION 'A question must have at least 1 category';
     END IF;
-    RETURN NEW;
+    RETURN current;
   END;
 $$ LANGUAGE plpgsql;
 
@@ -267,7 +267,7 @@ CREATE FUNCTION delete_category() RETURNS TRIGGER AS $$
     UPDATE categories
       SET num_posts = num_posts - 1
       WHERE OLD.category_id = categories.id;
-    RETURN NEW;
+    RETURN OLD;
   END;
 $$ LANGUAGE plpgsql;
 
@@ -491,8 +491,8 @@ CREATE FUNCTION delete_report() RETURNS TRIGGER AS $$
   BEGIN
     UPDATE messages
       SET num_reports = num_reports - 1
-      WHERE NEW.message_id = messages.id;
-    RETURN NEW;
+      WHERE OLD.message_id = messages.id;
+    RETURN OLD;
   END;
 $$ LANGUAGE plpgsql;
 

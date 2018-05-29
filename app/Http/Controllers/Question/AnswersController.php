@@ -51,6 +51,7 @@ class AnswersController extends Controller
             "discrete_n" => $positive === false ? '' : 'discrete',
             "discrete_r" => $has_report ? '' : 'discrete',
             'correct' => $correct,
+            'banned' => $message->is_banned ? 'banned' : '',
             'author_badge' => $author->getBadge(),
             "content" => array (
                 "version" => $content->content,

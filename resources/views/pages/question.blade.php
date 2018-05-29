@@ -14,7 +14,7 @@ $positive = $message->getVote();
 ?>
 
 @section('question-title')
-    <section id="question" class="sweet-grey" data-message-id="{{$question->id}}">
+    <section id="question" class="sweet-grey {{$message->is_banned ? 'banned' : ''}}" data-message-id="{{$question->id}}">
         <div class="container py-3">
             <header class="border-bottom sticky-top d-flex">
                 <h3>{{$question->title}}</h3>
@@ -35,7 +35,7 @@ $positive = $message->getVote();
 
 @section('content')
 
-<section id="question-body" class="sweet-grey">
+<section id="question-body" class="sweet-grey {{$message->is_banned ? 'banned' : ''}}">
     <div class="container">
         <main  class="row" style="overflow-y:auto">
             <div class="col-md-9 p-3">
@@ -63,7 +63,7 @@ $positive = $message->getVote();
                 </div>
                 <div class="collapse message-comments" id="MessageComments{{$id}}" data-message-id="{{$id}}">
                 @if (Auth::check())
-                    <div class="comment-creator card-footer comments-card px-0 px-sm-4">
+                    <div class="comment-creator card-footer comments-card px-0 px-sm-4 comment">
                         <div class="d-flex list-group list-group-flush">
                             <div class="list-group-item bg-transparent">
                                 <div class="input-group mt-3">

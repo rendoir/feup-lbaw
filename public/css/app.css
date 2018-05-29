@@ -822,6 +822,10 @@ a.tag {
   display: none;
 }
 
+.banned {
+  background-color: #ffc8c8 !important;
+}
+
 /*************************************************/
 
 /************** Responsive Design ****************/

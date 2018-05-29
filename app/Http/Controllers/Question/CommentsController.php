@@ -47,6 +47,7 @@ class CommentsController extends Controller
             "discrete_p" => $positive === true ? '' : 'discrete',
             "discrete_n" => $positive === false ? '' : 'discrete',
             "discrete_r" => $has_report ? '' : 'discrete',
+            'banned' => $message->is_banned ? 'banned' : '',
             "content" => array (
                 "version" => $content->content,
                 "creation_time" => $content->creation_time,

@@ -1,6 +1,11 @@
 var ajax = require('./ajax.js');
 var errors = require('./alerts.js');
 
+function findAncestor (el, cls) {
+    while ((el = el.parentElement) && !el.classList.contains(cls));
+    return el;
+}
+
 decodeHTML = function (html) {
 	var txt = document.createElement('textarea');
 	txt.innerHTML = html;
@@ -159,6 +164,15 @@ function reportEvent(reports) {
 					window.location = "/404";
 				else if (this.status == 200) {
 					button.classList.remove('discrete');
+					let response = JSON.parse(this.responseText);
+					if(!response.is_banned) return;
+					if(response.type == 'question') {
+						document.getElementById('question').classList.add('banned');
+						document.getElementById('question-body').classList.add('banned');
+						return;
+					}
+					let element = findAncestor(button, response.type);
+					element.classList.add('banned');
 				}
 			});
 		});
