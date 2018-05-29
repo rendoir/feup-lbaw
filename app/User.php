@@ -76,4 +76,15 @@ class User extends Authenticatable
     public function isRegisteredByAPI() {
       return $this->provider !== null;
     }
+
+    public function isModerator() {
+      $moderator = Badge::where('name', 'moderator')->first();
+      if ($moderator == null)
+        return false;
+      
+      if (BadgeAttainment::where([['user_id', $this->id], ['badge_id', $moderator->id]])->first() != null)
+        return true;
+      else
+        return false;
+    }
 }

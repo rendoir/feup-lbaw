@@ -2171,8 +2171,7 @@ function addTags() {
     });
 }
 
-if(window.location.pathname.match( /ask_question/ ) != null)
-    addTags();
+if (window.location.pathname.match(/ask_question/) != null) addTags();
 
 /***/ }),
 /* 15 */
