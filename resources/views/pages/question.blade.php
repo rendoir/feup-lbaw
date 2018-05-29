@@ -161,7 +161,7 @@ $positive = $message->getVote();
         <aside class="col-md-3 mt-3">
             <div class="aside-content" style="top: 150px">
                 <div class="text-center">
-                    <h4>Related Questions</h4>
+                    <h4 class="border-bottom">Related Questions</h4>
                 </div>
                 <div id="related-questions">
                     @include('templates.related_template')
