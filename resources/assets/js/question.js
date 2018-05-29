@@ -166,13 +166,11 @@ function reportEvent(reports) {
 					button.classList.remove('discrete');
 					let response = JSON.parse(this.responseText);
 					if(!response.is_banned) return;
-					if(response.type == 'question') {
-            window.location = "/";
-					} else {
+					if(!response.type == 'question') {
             let element = findAncestor(button, response.type);
   					element.parentNode.removeChild(element);
           }
-          errors.displaySuccess("A message you've reported has been removed. Thank you for keeping SegFault clean!");
+          errors.displaySuccess("The " + response.type + " you've reported has been removed. Thank you for keeping SegFault clean!");
 				}
 			});
 		});

@@ -1,7 +1,6 @@
 @verbatim
-{{^banned}}
 {{^is_authenticated}}
-<div class="list-group-item px-0 bg-transparent comment">
+<div class="list-group-item px-0 bg-transparent comment {{#banned}}banned{{/banned}}">
     <div class="mx-sm-0 row">
         <div class="col-1 my-auto text-center">
             <p class="text-center mb-0 w-100">{{score}}</p>
@@ -20,7 +19,7 @@
 
 {{#is_authenticated}}
     {{#is_owner}}
-    <div class="list-group-item pr-3 bg-transparent comment">
+    <div class="list-group-item pr-3 bg-transparent comment {{#banned}}banned{{/banned}}">
         <div class="mx-sm-0">
             <p class="editable-content" data-message-id='{{id}}'>
                 {{content.version}}
@@ -46,7 +45,7 @@
     {{/is_owner}}
 
     {{^is_owner}}
-    <div class="list-group-item bg-transparent comment">
+    <div class="list-group-item bg-transparent comment {{#banned}}banned{{/banned}}">
         <p>
             {{content.version}}
         </p>
@@ -65,5 +64,4 @@
     </div>
     {{/is_owner}}
 {{/is_authenticated}}
-{{/banned}}
 @endverbatim

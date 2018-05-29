@@ -64,6 +64,7 @@ function showNotifications(notifications) {
     if (notifications.length > 0) {
         let htmlElements = notifications.map(notification => makeNotification(notification));
         document.querySelector('#notificationsMenu').innerHTML = htmlElements.join('');
+        document.querySelector('#unread-notification').classList.add("show");
     }
 }
 
