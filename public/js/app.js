@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -942,68 +942,29 @@ module.exports = {
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var Mustache = __webpack_require__(3);
-
-function createComments(response, message_id) {
-
-    if (response.comments.length == 0) return;
-
-    var template = document.querySelector("template.comments").innerHTML;
-    var placeholder = document.createElement("span");
-
-    placeholder.innerHTML = Mustache.render(template, response);
-
-    var final = getCommentsDropDown(message_id);
-    var child = final.firstElementChild;
-
-    // child can either be a comment or the comment-adder or null,
-    // if there are no comments and the user is not authenticated
-    if (child == null || child.classList.contains('comment-creator')) {
-        final.insertBefore(placeholder, child);
-    } else final.replaceChild(placeholder, child);
-
-    toggleShowMsg(message_id, false);
+function getAnswerCommentsURL(message_id) {
+    return window.location.pathname + '/answers/' + message_id + '/comments';
 }
 
-function createCommentHTML(comment) {
-
-    var template = document.querySelector("template.comment").innerHTML;
-
-    return Mustache.render(template, comment);
+function getUniqueAnswerCommentURL(commentable_id, comment_id) {
+    return getAnswerCommentsURL(commentable_id) + '/' + comment_id;
 }
 
-function getCommentsDropDown(message_id) {
-    var commentSelector = ".message-comments[data-message-id='" + message_id + "']";
-    return document.querySelector(commentSelector);
+function getQuestionCommentsURL() {
+    return window.location.pathname + '/comments';
 }
 
-/**
- * 
- * @param {String} message_id 
- * @param {boolean} show - If true, it's supposed to to 'Show Comments' , if false it's supposed to 'Hide Comments'
- */
-function toggleShowMsg(message_id, show) {
-
-    var toggler = document.querySelector("a[aria-controls='MessageComments" + message_id + "']");
-
-    if (!show) {
-        toggler.innerHTML = "Hide Comments";
-        return;
-    }
-
-    var numComments = toggler.parentNode.nextElementSibling.firstElementChild;
-    var value = numComments.innerText.split(" ")[0];
-
-    toggler.innerHTML = isNaN(value) && value > 0 ? "Show Comments" : "Add Comment";
+function getUniqueQuestionCommentURL() {
+    return window.location.pathname + '/comments';
 }
 
 module.exports = {
-    createComments: createComments,
-    createCommentHTML: createCommentHTML,
-    getCommentsDropDown: getCommentsDropDown,
-    toggleShowMsg: toggleShowMsg
+    getAnswerCommentsURL: getAnswerCommentsURL,
+    getUniqueAnswerCommentURL: getUniqueAnswerCommentURL,
+    getQuestionCommentsURL: getQuestionCommentsURL,
+    getUniqueQuestionCommentURL: getUniqueQuestionCommentURL
 };
 
 /***/ }),
@@ -1011,10 +972,10 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var messages = __webpack_require__(8);
-var commentsViewer = __webpack_require__(20);
-var commentsCreator = __webpack_require__(21);
+var commentsViewer = __webpack_require__(21);
+var commentsCreator = __webpack_require__(22);
 var commentsEditor = __webpack_require__(7);
-var commentsRemover = __webpack_require__(22);
+var commentsRemover = __webpack_require__(23);
 
 function addEventListeners() {
 
@@ -1058,7 +1019,6 @@ function removeCommentsEventListener() {
 function addQuestionCommentsListeners() {
     // For getting the comments
     messages.genericClickListener('.show-question-comments', commentsViewer.viewQuestionComments);
-    // For adding new comments
 }
 
 window.addEventListener('load', addQuestionCommentsListeners);
@@ -1072,7 +1032,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
-var url = __webpack_require__(44);
+var url = __webpack_require__(5);
 
 // Adding edit capability to freshly added comment
 function enableEditMode(message_id) {
@@ -1393,31 +1353,97 @@ module.exports = {
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(11);
-module.exports = __webpack_require__(33);
+var Mustache = __webpack_require__(3);
 
+function createComments(response, message_id) {
+
+    if (response.comments.length == 0) return;
+
+    var template = document.querySelector("template.comments").innerHTML;
+    var placeholder = document.createElement("span");
+
+    placeholder.innerHTML = Mustache.render(template, response);
+
+    var final = getCommentsDropDown(message_id);
+    var child = final.firstElementChild;
+
+    // child can either be a comment or the comment-adder or null,
+    // if there are no comments and the user is not authenticated
+    if (child == null || child.classList.contains('comment-creator')) {
+        final.insertBefore(placeholder, child);
+    } else final.replaceChild(placeholder, child);
+
+    toggleShowMsg(message_id, false);
+}
+
+function createCommentHTML(comment) {
+
+    var template = document.querySelector("template.comment").innerHTML;
+
+    return Mustache.render(template, comment);
+}
+
+function getCommentsDropDown(message_id) {
+    var commentSelector = ".message-comments[data-message-id='" + message_id + "']";
+    return document.querySelector(commentSelector);
+}
+
+/**
+ * 
+ * @param {String} message_id 
+ * @param {boolean} show - If true, it's supposed to to 'Show Comments' , if false it's supposed to 'Hide Comments'
+ */
+function toggleShowMsg(message_id, show) {
+
+    var toggler = document.querySelector("a[aria-controls='MessageComments" + message_id + "']");
+
+    if (!show) {
+        toggler.innerHTML = "Hide Comments";
+        return;
+    }
+
+    var numComments = toggler.parentNode.nextElementSibling.firstElementChild;
+    var value = numComments.innerText.split(" ")[0];
+
+    toggler.innerHTML = isNaN(value) && value > 0 ? "Show Comments" : "Add Comment";
+}
+
+module.exports = {
+    createComments: createComments,
+    createCommentHTML: createCommentHTML,
+    getCommentsDropDown: getCommentsDropDown,
+    toggleShowMsg: toggleShowMsg
+};
 
 /***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(12);
+module.exports = __webpack_require__(34);
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
 __webpack_require__(0);
 __webpack_require__(2);
-__webpack_require__(12);
 __webpack_require__(13);
 __webpack_require__(14);
 __webpack_require__(15);
 __webpack_require__(16);
 __webpack_require__(17);
 __webpack_require__(18);
+__webpack_require__(19);
 __webpack_require__(6);
-__webpack_require__(27);
 __webpack_require__(28);
 __webpack_require__(29);
 __webpack_require__(30);
+__webpack_require__(31);
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 $(window).scroll(function () {
@@ -1431,7 +1457,7 @@ $(window).scroll(function () {
 });
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2057,7 +2083,7 @@ function addTags() {
 addTags();
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 $(function () {
@@ -2065,7 +2091,7 @@ $(function () {
 });
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2143,7 +2169,7 @@ function editBiographyHandler(e) {
 editBiography();
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 addEventListeners();
@@ -2194,7 +2220,7 @@ function addEventListeners() {
 }
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 function editor(editor_element) {
@@ -2272,12 +2298,12 @@ createEditor("editor");
 createEditor("edit-editor");
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var messages = __webpack_require__(8);
-var answersGetter = __webpack_require__(19);
-var answersAdder = __webpack_require__(26);
+var answersGetter = __webpack_require__(20);
+var answersAdder = __webpack_require__(27);
 
 function addAnswerEventListeners() {
 
@@ -2293,7 +2319,7 @@ function addAnswerEventListener() {
 window.addEventListener('load', addAnswerEventListeners);
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2302,9 +2328,9 @@ var utils = __webpack_require__(9);
 var url = __webpack_require__(4);
 var comments = __webpack_require__(6);
 var question = __webpack_require__(2);
-var common = __webpack_require__(23);
-var answerEditor = __webpack_require__(24);
-var answerRemover = __webpack_require__(25);
+var common = __webpack_require__(24);
+var answerEditor = __webpack_require__(25);
+var answerRemover = __webpack_require__(26);
 
 function getAnswersRequest() {
 
@@ -2371,13 +2397,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(5);
-var url = __webpack_require__(44);;
+var utils = __webpack_require__(10);
+var url = __webpack_require__(5);;
 var editor = __webpack_require__(7);
 var questionPage = __webpack_require__(2);
 
@@ -2451,13 +2477,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var utils = __webpack_require__(5);
-var url = __webpack_require__(44);
+var utils = __webpack_require__(10);
+var url = __webpack_require__(5);
 var editor = __webpack_require__(7);
 
 function addCommentRequest(message_id) {
@@ -2510,12 +2536,12 @@ module.exports = {
 };
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
 var alert = __webpack_require__(1);
-var url = __webpack_require__(44);
+var url = __webpack_require__(5);
 
 function removeComment(commentTrashBtn) {
 
@@ -2569,7 +2595,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 function sortAnswers() {
@@ -2597,7 +2623,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2678,7 +2704,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2729,7 +2755,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2784,7 +2810,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 function tagSearchEvent() {
@@ -2807,7 +2833,7 @@ function tagSearchEvent() {
 tagSearchEvent();
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2849,7 +2875,7 @@ function changePasswordEvent() {
 changePasswordEvent();
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -3054,14 +3080,14 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
 }
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
-window.Pusher = __webpack_require__(31);
+window.Pusher = __webpack_require__(32);
 
 
 var ajax = __webpack_require__(0);
@@ -3145,7 +3171,7 @@ function makeNotificationText(notification) {
 }
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -7333,7 +7359,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -8131,47 +8157,10 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */
-/***/ (function(module, exports) {
-
-function getAnswerCommentsURL(message_id) {
-    return window.location.pathname + '/answers/' + message_id + '/comments';
-}
-
-function getUniqueAnswerCommentURL(commentable_id, comment_id) {
-    return getAnswerCommentsURL(commentable_id) + '/' + comment_id;
-}
-
-function getQuestionCommentsURL() {
-    return window.location.pathname + '/comments';
-}
-
-function getUniqueQuestionCommentURL() {
-    return window.location.pathname + '/comments';
-}
-
-module.exports = {
-    getAnswerCommentsURL: getAnswerCommentsURL,
-    getUniqueAnswerCommentURL: getUniqueAnswerCommentURL,
-    getQuestionCommentsURL: getQuestionCommentsURL,
-    getUniqueQuestionCommentURL: getUniqueQuestionCommentURL
-};
 
 /***/ })
 /******/ ]);

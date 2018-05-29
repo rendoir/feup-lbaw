@@ -44,9 +44,7 @@ function removeCommentsEventListener() {
 }
 
 function addQuestionCommentsListeners() {
-    // For getting the comments
     messages.genericClickListener('.show-question-comments', commentsViewer.viewQuestionComments);
-    // For adding new comments
 }
 
 window.addEventListener('load', addQuestionCommentsListeners);
