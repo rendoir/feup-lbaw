@@ -355,7 +355,7 @@ function removeQuestion(delTrigger) {
 		var _this = this;
 
 		ajax.sendAjaxRequest('delete', window.location + '/delete', { "question": question_id }, function () {
-			if (_this.status == 401) window.location = "/login";else if (_this.status == 404) window.location = "/404";else if (_this.status != 200) errors.displayError("Failed to delete the question");
+			if (_this.status == 401) window.location = "/login";else if (_this.status == 404) window.location = "/404";else if (_this.status != 200) window.location = '/questions/recent';else errors.displayError("Failed to delete the question");
 		});
 	});
 }
