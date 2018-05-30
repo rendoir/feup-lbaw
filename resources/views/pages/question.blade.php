@@ -14,9 +14,9 @@ $positive = $message->getVote();
 ?>
 
 @section('question-title')
-    <section id="question" class="sweet-grey" data-message-id="{{$id}}">
+    <div id="question" class="sweet-grey" data-message-id="{{$id}}">
         <div class="container py-3">
-            <header class="border-bottom sticky-top d-flex">
+            <section class="border-bottom sticky-top d-flex">
                 @if ($message->is_banned)
                 <div class="container-messages">
                   <div>
@@ -50,16 +50,16 @@ $positive = $message->getVote();
                     </button>
                 </div>
                 @endif
-            </header>
+            </section>
         </div>
-    </section>
+    </div>
 @endsection
 
 @section('content')
 
-<section id="question-body" class="sweet-grey">
+<div id="question-body" class="sweet-grey">
     <div class="container">
-        <main  class="row" style="overflow-y:auto">
+        <div  class="row" style="overflow-y:auto">
             <div class="col-md-9 p-3">
                 <div class="markdown main-content display-content" style="visibility: hidden;">{{$content->content}}</div>
 
@@ -89,7 +89,7 @@ $positive = $message->getVote();
                         <div class="d-flex list-group list-group-flush">
                             <div class="list-group-item bg-transparent">
                                 <div class="input-group mt-3">
-                                    <input class="form-control new-comment-content" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2" type="text" data-message-id="{{$id}}">
+                                    <input class="form-control new-comment-content" placeholder="New Comment" aria-label="New Comment" type="text" data-message-id="{{$id}}">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-success new-comment-submit" type="button" data-message-id="{{$id}}">Add Comment</button>
                                     </div>
@@ -153,11 +153,11 @@ $positive = $message->getVote();
                 </div>
 
             </div>
-        </main>
+        </div>
     </div>
-</section>
+</div>
 
-<section class="container">
+<div class="container">
     <div class="row">
         <div class="col-md-9">
             @if (Auth::check())
@@ -194,7 +194,7 @@ $positive = $message->getVote();
             </div>
         </aside>
     </div>
-</section>
+</div>
 
 <!-- Question deletion modal -->
 <div class="modal fade" id="deleteQuestionModal" tabindex="-1" role="dialog" aria-labelledby="deleteQuestionModalLabel">
@@ -223,16 +223,16 @@ $positive = $message->getVote();
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="deleteAnswerModalLabel">Edit Answer</h4>
+                <h4 class="modal-title" id="editAnswerModalLabel">Edit Answer</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                <section class="main-content question-editor">
+                <div class="main-content question-editor">
                     <textarea id="edit-editor" name="messageContent">
                     </textarea>
-                </section>
+                </div>
             </div>
             <div class="modal-footer">
                 <button id="edit-answer" type="button" class="btn btn-outline-danger" data-dismiss="modal">Edit</button>
@@ -247,7 +247,7 @@ $positive = $message->getVote();
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="deleteCommentModalLabel">Delete Answer</h4>
+                <h4 class="modal-title" id="deleteAnswerModalLabel">Delete Answer</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
