@@ -61,6 +61,8 @@ function editAnswerHandler(response, answer_id, answerPlaceholder) {
     }
 
     let children = answerPlaceholder.children;
+    console.log(answerPlaceholder);
+    console.log(children);
     for (let i = 1; !children[i].classList.contains("badge") && i < children.length - 1; ++i) {
         answerPlaceholder.removeChild(children[i]);
         i--;

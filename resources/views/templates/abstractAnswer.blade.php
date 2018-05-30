@@ -56,9 +56,9 @@
         </div>
         <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
             <div class="card-body p-1 p-sm-4">
-                {{#is_mod}}<p class="card-text answer-content" data-message-id="{{id}}">{{/is_mod}}
-                {{#is_owner}}{{^is_mod}}<p class="card-text answer-content" data-message-id="{{id}}">{{/is_mod}}{{/is_owner}}
-                {{^is_owner}}{{^is_mod}}<p class="card-text">{{/is_mod}}{{/is_owner}}
+                {{#is_mod}}<div class="card-text answer-content" data-message-id="{{id}}">{{/is_mod}}
+                {{#is_owner}}{{^is_mod}}<div class="card-text answer-content" data-message-id="{{id}}">{{/is_mod}}{{/is_owner}}
+                {{^is_owner}}{{^is_mod}}<div class="card-text">{{/is_mod}}{{/is_owner}}
 
                     <span class="answer-hidden-markdown">{{content.version}}</span>
                     {{#markdown}}{{content.version}}{{/markdown}}
@@ -66,7 +66,7 @@
                     {{#was_edited}}
                         <span class="badge badge-light float-right mr-2 mt-1">Edited</span>
                     {{/was_edited}}
-                </p>
+                </div>
             </div>
         </div>
     </div>
