@@ -55,9 +55,17 @@
             <i class="vote fas fa-arrow-down p-0 {{discrete_n}}" data-positive="false" data-message_id="{{id}}"></i>
             <span class="ml-1 mr-2 discrete">│</span>
             <small class="my-auto">
-                <btn class="btn btn-link p-0 report {{discrete_r}}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Report" data-message_id='{{id}}'>
+                <button class="btn btn-link p-0 report {{discrete_r}}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Report" data-message_id='{{id}}'>
                     <i class="fas fa-exclamation-triangle"></i>
-                </btn>
+                </button>
+                {{#is_mod}}
+                <button class="btn btn-link discrete ml-2 mr-1 p-0 edit-comments" data-toggle="tooltip" data-placement="top" title=" " data-original-title="Edit" data-message-id='{{id}}'>
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="btn btn-link discrete mx-1 p-0" data-toggle="modal" href="#deleteCommentModal" data-message-id='{{id}}'>
+                    <i class="far fa-trash-alt" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i>
+                </button>
+                {{/is_mod}}
             </small>
             <a class="ml-auto discrete" href="/users/{{author}}">{{author}}</a>
         </div>

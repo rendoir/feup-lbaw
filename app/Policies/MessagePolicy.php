@@ -38,6 +38,17 @@ class MessagePolicy
     }*/
 
     /**
+     * Generic Checker, checks if the given user is the message owner
+     * 
+     * @param  \App\User  $user
+     * @param  \App\Message  $message
+     * @return bool
+     */
+    private function genericCheck(User &$user, Message &$message) {
+        return $user->id === $message->get_author()->id;
+    }
+
+    /**
      * Determines if a given user can edit the given message
      * 
      * @param  \App\User  $user
@@ -46,7 +57,7 @@ class MessagePolicy
      */
     public function edit(User $user, Message $message)
     {
-        return $user->id === $message->get_author()->id;
+        return $this->genericCheck($user, $message);
     }
 
     /**
@@ -58,6 +69,18 @@ class MessagePolicy
      */
     public function delete(User $user, Message $message)
     {
-        return $user->id === $message->get_author()->id;
+        return $this->genericCheck($user, $message);
+    }
+
+    /**
+     * Determines if a given user can mark as correct the given message
+     * 
+     * @param  \App\User  $user
+     * @param  \App\Message  $message
+     * @return bool
+     */
+    public function markCorrect(User $user, Message $message)
+    {
+        return $this->genericCheck($user, $message);
     }
 }

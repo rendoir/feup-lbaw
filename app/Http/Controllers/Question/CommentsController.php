@@ -36,6 +36,7 @@ class CommentsController extends Controller
         $content = $message->message_version;
         $author = $message->get_author();
         $positive = $message->getVote();
+        $isMod = Auth::user()->isModerator();
         $has_report = Auth::check() ? Auth::user()->hasReportOn($message->id) : false;
 
         return array(
@@ -44,6 +45,7 @@ class CommentsController extends Controller
             "score" => $message->score,
             "was_edited" => $message->was_edited(),
             "is_owner" => ($author->id == Auth::id()),
+            "is_mod" => $isMod,
             "discrete_p" => $positive === true ? '' : 'discrete',
             "discrete_n" => $positive === false ? '' : 'discrete',
             "discrete_r" => $has_report ? '' : 'discrete',
