@@ -46,7 +46,8 @@
 
     {{^is_owner}}
     <div class="list-group-item bg-transparent comment {{#banned}}banned{{/banned}}">
-        <p {{#is_mod}} class="editable-content" data-message-id='{{id}}' {{/is_mod}} >
+        {{#is_mod}}<p class="editable-content" data-message-id='{{id}}'>{{/is_mod}}
+        {{^is_mod}}<p>{{/is_mod}}
             {{content.version}}
         </p>
         <div class="d-flex flex-wrap mt-3">
