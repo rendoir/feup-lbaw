@@ -48,7 +48,7 @@
                 <p class="text-center mb-0 w-100 score">{{score}}</p>
             </div>
             {{^is_owner}}
-            <div class="d-flex flex-column justify-content-around mb-sm-n-100">
+            <div class="d-flex flex-column justify-content-around {{^is_mod}}mb-sm-n-100{{/is_mod}}">
                 <i class="vote fas fa-arrow-up {{discrete_p}}" data-positive="true" data-message_id="{{id}}"></i>
                 <i class="vote fas fa-arrow-down {{discrete_n}}" data-positive="false" data-message_id="{{id}}"></i>
             </div>
@@ -56,7 +56,9 @@
         </div>
         <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
             <div class="card-body p-1 p-sm-4">
-                <p class="card-text {{#is_owner}}answer-content" data-message-id="{{id}}{{/is_owner}}">
+                {{^is_owner}}<p class="card-text">{{/is_owner}}
+                {{#is_owner}}<p class="card-text answer-content" data-message-id="{{id}}">{{/is_owner}}
+                {{#is_mod}}<p class="card-text answer-content" data-message-id="{{id}}">{{/is_mod}}
                     <span class="answer-hidden-markdown">{{content.version}}</span>
                     {{#markdown}}{{content.version}}{{/markdown}}
 
@@ -104,6 +106,14 @@
                     {{/is_owner}}
 
                     {{^is_owner}}
+                        {{#is_mod}}
+                        <button class="btn btn-link discrete" data-toggle="modal" href="#editAnswerModal" data-message-id='{{id}}'>
+                            <i class="fas fa-pencil-alt" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"></i>
+                        </button>
+                        <button class="btn btn-link discrete" data-toggle="modal" href="#deleteAnswerModal" data-message-id='{{id}}'>
+                            <i class="far fa-trash-alt" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i>
+                        </button>
+                        {{/is_mod}}
                     <button class="btn btn-link report {{discrete_r}}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Report" data-message_id='{{id}}'>
                         <i class="fas fa-exclamation-triangle"></i>
                     </button>

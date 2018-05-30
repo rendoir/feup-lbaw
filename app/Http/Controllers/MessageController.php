@@ -56,7 +56,7 @@ class MessageController extends Controller
       return response('You must login to vote a message', 401);
     /*if($answer->question->message->author != Auth::id() && Auth::user()->getBadge() != 'moderator')
       return response('You cannot mark this answer as correct', 403);*/
-    $this->authorize('markCorrect', $message);
+    $this->authorize('markCorrect', $answer->question->message);
 
     if($answer->question->correct_answer == $answer->id)
       $answer->question->correct_answer = null;

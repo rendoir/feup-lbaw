@@ -36,7 +36,7 @@ class AnswersController extends Controller
         $author = $message->get_author();
         $positive = $message->getVote();
         $correct = $answer->question->correct_answer == $answer->id;
-        $logged_user_badge = Auth::check() ? Auth::user()->isModerator() : false;
+        $is_mod = Auth::check() ? Auth::user()->isModerator() : false;
         $has_report = Auth::check() ? Auth::user()->hasReportOn($message->id) : false;
 
         return array(
@@ -44,8 +44,9 @@ class AnswersController extends Controller
             "author" => $author->username,
             "score" => $message->score,
             "was_edited" => $message->was_edited(),
-            "is_owner" => ($author->id == Auth::id() || $logged_user_badge),
-            "is_question_owner" => ($answer->question->message->author == Auth::id() || $logged_user_badge),
+            "is_owner" => $author->id == Auth::id(),
+            "is_mod" => $is_mod,
+            "is_question_owner" => ($answer->question->message->author == Auth::id() || $is_mod),
             "num_comments" => $answer->num_comments(),
             "discrete_p" => $positive === true ? '' : 'discrete',
             "discrete_n" => $positive === false ? '' : 'discrete',
