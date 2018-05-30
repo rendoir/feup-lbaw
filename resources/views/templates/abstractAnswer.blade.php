@@ -45,7 +45,7 @@
         <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
             <div class="p-2">
                 <i class="fas fa-trophy"></i>
-                <p class="text-center mb-0 w-100 score">{{score}}</p>
+                <p class="text-center mb-0 w-100 {{^is_owner}}score{{/is_owner}}">{{score}}</p>
             </div>
             {{^is_owner}}
             <div class="d-flex flex-column justify-content-around {{^is_mod}}mb-sm-n-100{{/is_mod}}">
@@ -59,7 +59,7 @@
                 {{#is_mod}}<p class="card-text answer-content" data-message-id="{{id}}">{{/is_mod}}
                 {{#is_owner}}{{^is_mod}}<p class="card-text answer-content" data-message-id="{{id}}">{{/is_mod}}{{/is_owner}}
                 {{^is_owner}}{{^is_mod}}<p class="card-text">{{/is_mod}}{{/is_owner}}
-                
+
                     <span class="answer-hidden-markdown">{{content.version}}</span>
                     {{#markdown}}{{content.version}}{{/markdown}}
 
