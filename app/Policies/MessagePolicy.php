@@ -22,9 +22,8 @@ class MessagePolicy
 
     public function before($user, $ability)
     {
-        // TODO: criar metodo is Moderator
-        /*if ($user->isModerator())
-            return true;*/
+        if ($user->isModerator())
+            return true;
     }
 
     /**

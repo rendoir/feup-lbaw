@@ -14,7 +14,7 @@
                 </div>
                 <div>
                     {{#categories}}
-                    <a class="badge badge-dark tag" href="/questions?search=[{{name}}]">{{name}}</a>
+                    <a class="badge badge-dark tag" href="/questions?search=%5B{{name}}%5D">{{name}}</a>
                     {{/categories}}
                 </div>
             </div>

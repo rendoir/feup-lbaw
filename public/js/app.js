@@ -1494,7 +1494,7 @@ function toggleShowMsg(message_id, show) {
     }
 
     var numComments = toggler.parentNode.nextElementSibling.firstElementChild;
-    var value = numComments.innerText.split(" ")[0];
+    var value = numComments != null ? numComments.innerText.split(" ")[0] : 0;
 
     toggler.innerHTML = isNaN(value) && value > 0 ? "Show Comments" : "Add Comment";
 }
@@ -3391,7 +3391,7 @@ function showNotifications(notifications) {
 function makeNotification(notification) {
     var to = routeNotification(notification);
     var notificationText = makeNotificationText(notification);
-    return '<li><a href="' + to + '">' + notificationText + '</a></li>';
+    return '<div><a href="' + to + '">' + notificationText + '</a></div>';
 }
 
 function makeNotificationText(notification) {
