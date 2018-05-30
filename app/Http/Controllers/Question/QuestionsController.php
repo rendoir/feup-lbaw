@@ -49,8 +49,9 @@ class QuestionsController extends Controller
             $question = null;
 
             $tags = explode(',', $request->tags);
-            if (count($tags) > 0 && count($tags) < 6)
-                return response('You must have more than 0 and less than 6 tags on your question', 400);
+            $valid = $this->validateRequest($request->title, $request->content, $tags);
+            if($valid !== true)
+              return response($valid, 400);
 
             DB::transaction(function() use (&$request, &$question, &$tags) {
                 $user = User::find(Auth::id());
@@ -67,16 +68,17 @@ class QuestionsController extends Controller
                 }
             });
 
-            return redirect()->route('questions', ['id' => $question->id]);
+            return response()->json(['question' => $question->id], 200);
         }
-        return redirect('\ask_question');
+        return response('You must be logged in to submit a question!', 401);
     }
 
     public function editQuestion(Request $request)
     {
         $tags = explode(',', $request->tags);
-        if (count($tags) > 0 && count($tags) < 6)
-            return response('You must have more than 0 and less than 6 tags on your question', 400);
+        $valid = $this->validateRequest($request->title, $request->content, $tags);
+        if($valid !== true)
+          return response($valid, 400);
 
         $question = Question::find($request->question);
         $message = $question->message;
@@ -88,17 +90,39 @@ class QuestionsController extends Controller
         DB::transaction(function() use (&$tags, &$question) {
             foreach ($question->categories() as $cat)
                 $question->categories()->detach();
-            $tags = explode(',', $request->tags);
             foreach ($tags as $tag) {
-                $tagModel = Category::where('name', $tag)->first();
-                $question->categories()->attach($tagModel->id);
+              $tagModel = Category::where('name', $tag)->first();
+              if($tagModel != null)
+                  $question->categories()->attach($tagModel->id);
             }
         });
 
         $question->title = $request->title;
         $question->save();
 
-        return redirect()->route('questions', ['id' => $question->id]);
+        return response()->json(['question' => $question->id], 200);
+    }
+
+    private function validateRequest($title, $content, $tags) {
+      if(preg_match('/^(.){5,}$/', $title) !== 1)
+        return 'Your title must have at least 5 caracters!';
+      if(preg_match('/^(.){5,100}$/', $title) !== 1)
+        return 'Your title must have a maximum of 100 caracters!';
+      $tag_ids = array();
+      foreach ($tags as $tag) {
+          $id = Category::whereRaw('lower(name) ILIKE ?', [$tag])->pluck('id');
+          if ($id->isNotEmpty())
+              array_push($tag_ids, $id->first());
+      }
+      if (count($tag_ids) < 1)
+        return 'Your question must have at least 1 tag!';
+      if (count($tag_ids) > 5)
+        return 'Your question must have a maximum of 5 tags!';
+      if(preg_match('/^(.){5,}$/', $content) !== 1)
+        return 'Your content must have at least 5 caracters!';
+      if(preg_match('/^(.){5,1000}$/', $content) !== 1)
+        return 'Your content must have a maximum of 1000 caracters!';
+      return true;
     }
 
     public function deleteQuestion(Request $request)

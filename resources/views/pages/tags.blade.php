@@ -29,7 +29,7 @@
 
                 @foreach($tags as $tag)
                     <li>
-                        <a href="/questions?search=[{{$tag->name}}]">{{$tag->name}}</a>
+                        <a href="/questions?search=%5B{{$tag->name}}%5D">{{$tag->name}}</a>
                         <span>{{$tag->num_posts}}</span>
                     </li>
                 @endforeach

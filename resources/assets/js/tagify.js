@@ -617,6 +617,7 @@ Tagify.prototype = {
 }
 
 function addTags() {
+    console.log("Adding tags");
     let input = document.querySelector('input[name=tags]');
     if (input == null) return;
     ajax.sendAjaxRequest("get", "/tag_list", {}, function (event) {
@@ -630,5 +631,6 @@ function addTags() {
     });
 }
 
-if(window.location.pathname.match( /ask_question/ ) != null)
+if(window.location.pathname.match( /ask_question/ ) != null ||
+   window.location.pathname.match( /edit_question/) != null)
     addTags();
