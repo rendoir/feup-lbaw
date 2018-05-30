@@ -118,9 +118,9 @@ class QuestionsController extends Controller
         return 'Your question must have at least 1 tag!';
       if (count($tag_ids) > 5)
         return 'Your question must have a maximum of 5 tags!';
-      if(preg_match('/^(.){5,}$/', $content) !== 1)
+      if(preg_match('/^([\s\S]){5,}$/', $content) !== 1)
         return 'Your content must have at least 5 caracters!';
-      if(preg_match('/^(.){5,1000}$/', $content) !== 1)
+      if(preg_match('/^([\s\S]){5,1000}$/', $content) !== 1)
         return 'Your content must have a maximum of 1000 caracters!';
       return true;
     }

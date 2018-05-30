@@ -34,7 +34,7 @@ $positive = $message->getVote();
                 </div>
                 @endif
                 <h3>{{$question->title}}</h3>
-                @if (Auth::id() == $author->id)
+                @if (Auth::id() == $author->id || Auth::user()->isModerator())
                 <div class="discrete ml-auto mr-1 text-center mt-auto mb-auto d-flex">
                     <form id="form_edit_question" name="edit_question" action="{{ url('edit_question') }}">
                         <input type="hidden" class="form-control" name="question_id" value="{{$id}}"></span>
