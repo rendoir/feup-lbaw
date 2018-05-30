@@ -56,9 +56,10 @@
         </div>
         <div class="col-10 col-sm-11 pl-0 pl-sm-3 ">
             <div class="card-body p-1 p-sm-4">
-                {{^is_owner}}<p class="card-text">{{/is_owner}}
-                {{#is_owner}}<p class="card-text answer-content" data-message-id="{{id}}">{{/is_owner}}
                 {{#is_mod}}<p class="card-text answer-content" data-message-id="{{id}}">{{/is_mod}}
+                {{#is_owner}}{{^is_mod}}<p class="card-text answer-content" data-message-id="{{id}}">{{/is_mod}}{{/is_owner}}
+                {{^is_owner}}{{^is_mod}}<p class="card-text">{{/is_mod}}{{/is_owner}}
+                
                     <span class="answer-hidden-markdown">{{content.version}}</span>
                     {{#markdown}}{{content.version}}{{/markdown}}
 

@@ -92,7 +92,7 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mustache = __webpack_require__(3);
+var Mustache = __webpack_require__(2);
 
 function addTimedError(msg) {
     var error = displayError(msg);
@@ -138,246 +138,6 @@ module.exports = {
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ajax = __webpack_require__(0);
-var errors = __webpack_require__(1);
-
-function findAncestor(el, cls) {
-	while ((el = el.parentElement) && !el.classList.contains(cls)) {}
-	return el;
-}
-
-decodeHTML = function decodeHTML(html) {
-	var txt = document.createElement('textarea');
-	txt.innerHTML = html;
-	return txt.value;
-};
-
-function applyMarkdown() {
-	document.addEventListener("DOMContentLoaded", function () {
-		var markdown_content = document.querySelectorAll(".markdown");
-
-		var instance = new Object();
-		instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
-
-		for (var i = 0; i < markdown_content.length; i++) {
-			markdown_content[i].style.visibility = "visible";
-			var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown_content[i].innerHTML));
-			markdown_content[i].innerHTML = bound();
-		}
-	});
-}
-
-applyMarkdown();
-
-function bookmarkEvent() {
-	var bookmark = document.querySelector("#bookmark");
-	if (bookmark == null) return;
-	var i = bookmark.querySelector("i");
-	bookmark.addEventListener("click", function () {
-		$(bookmark).tooltip('hide');
-		var message_id = bookmark.getAttribute('data-message-id');
-		var is_active = bookmark.classList.contains('active');
-		var url = '/users/bookmarks/' + message_id;
-		var data = { question_id: message_id };
-		ajax.sendAjaxRequest('post', url, data, function () {
-			if (this.status == 200) {
-				if (is_active) {
-					bookmark.classList.add('inactive');
-					bookmark.classList.remove('active');
-					i.className = i.className.replace('fas', 'far');
-				} else {
-					bookmark.classList.add('active');
-					bookmark.classList.remove('inactive');
-					i.className = i.className.replace('far', 'fas');
-				}
-			}
-		});
-	});
-}
-
-bookmarkEvent();
-
-function addVoteEvent(container) {
-	var vote_buttons = document.querySelectorAll(container + ' .vote');
-	var scores = document.querySelectorAll(container + ' .score');
-	voteEvent(vote_buttons, scores);
-}
-
-function voteEvent(vote_buttons, scores) {
-	if (vote_buttons == null) return;
-
-	var _loop = function _loop(i) {
-		var button = vote_buttons[i];
-		button.addEventListener('click', function () {
-			var message_id = button.dataset.message_id;
-			var positive = button.dataset.positive;
-			var url = '/messages/' + message_id + '/vote';
-			var data = { positive: positive };
-			ajax.sendAjaxRequest('post', url, data, function () {
-				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
-					var alert_elem = errors.displayError("You cannot vote your messages.");
-					$(alert_elem).delay(4000).slideUp(500, function () {
-						$(this).remove();
-					});
-				} else if (this.status == 200) {
-					if (button.classList.contains('discrete')) {
-						button.classList.remove('discrete');
-						var pair_i = positive === 'true' ? i + 1 : i - 1;
-						if (!vote_buttons[pair_i].classList.contains('discrete')) vote_buttons[pair_i].classList.add('discrete');
-					} else button.classList.add('discrete');
-					var score = scores[Math.floor(i / 2)];
-					score.innerHTML = JSON.parse(this.responseText).score;
-				}
-			});
-		});
-	};
-
-	for (var i = 0; i < vote_buttons.length; i++) {
-		_loop(i);
-	}
-}
-
-addVoteEvent('#question-body');
-
-function addMarkCorrectEvent() {
-	var answers = document.querySelectorAll(".answer");
-	var _iteratorNormalCompletion = true;
-	var _didIteratorError = false;
-	var _iteratorError = undefined;
-
-	try {
-		for (var _iterator = answers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-			var answer = _step.value;
-
-			markCorrectEvent(answer);
-		}
-	} catch (err) {
-		_didIteratorError = true;
-		_iteratorError = err;
-	} finally {
-		try {
-			if (!_iteratorNormalCompletion && _iterator.return) {
-				_iterator.return();
-			}
-		} finally {
-			if (_didIteratorError) {
-				throw _iteratorError;
-			}
-		}
-	}
-}
-
-function markCorrectEvent(answer) {
-	var button = answer.querySelector(".mark");
-	if (button == null) return;
-	button.addEventListener('click', function () {
-		var answer_id = button.dataset.message_id;
-		var url = '/messages/' + answer_id + '/mark_correct';
-		ajax.sendAjaxRequest('post', url, null, function () {
-			if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
-				var alert_elem = errors.displayError("You cannot mark this answer as correct.");
-				$(alert_elem).delay(4000).slideUp(500, function () {
-					$(this).remove();
-				});
-			} else if (this.status == 200) {
-				if (button.classList.contains('marked')) {
-					button.classList.remove('marked');
-					answer.classList.remove('border-success');
-				} else {
-					var old_correct = document.querySelector(".answer.border-success");
-					if (old_correct != null) {
-						old_correct.classList.remove('border-success');
-						var old_correct_button = old_correct.querySelector(".mark.marked");
-						if (old_correct_button != null) old_correct_button.classList.remove('marked');
-					}
-					button.classList.add('marked');
-					answer.classList.add('border-success');
-				}
-			}
-		});
-	});
-}
-
-function addReportEvent(container) {
-	var reports = document.querySelectorAll(container + ' .report');
-	reportEvent(reports);
-}
-
-function reportEvent(reports) {
-	if (reports == null) return;
-
-	var _loop2 = function _loop2(i) {
-		var button = reports[i];
-		button.addEventListener('click', function () {
-			$(bookmark).tooltip('hide');
-			if (!button.classList.contains('discrete')) return;
-			var message_id = button.dataset.message_id;
-			var url = '/messages/' + message_id + '/report';
-			ajax.sendAjaxRequest('post', url, { message_id: message_id }, function () {
-				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 200) {
-					button.classList.remove('discrete');
-					var response = JSON.parse(this.responseText);
-					if (!response.is_banned) return;
-					if (!response.type == 'question') {
-						var element = findAncestor(button, response.type);
-						element.parentNode.removeChild(element);
-					}
-					errors.displaySuccess("The " + response.type + " you've reported has been removed. Thank you for keeping SegFault clean!");
-				}
-			});
-		});
-	};
-
-	for (var i = 0; i < reports.length; i++) {
-		_loop2(i);
-	}
-}
-
-addReportEvent("#question-body");
-
-function removeQuestionEvent() {
-	$('#deleteQuestionModal').on('show.bs.modal', function (e) {
-		removeQuestion($(e.relatedTarget)[0]);
-	});
-}
-
-function removeQuestion(delTrigger) {
-
-	var question_id = delTrigger.getAttribute("data-message-id");
-	if (question_id == null) return;
-
-	var deleteBtn = document.getElementById('delete-question');
-	if (deleteBtn == null) return;
-
-	var callFunction = function callFunction() {
-		var _this = this;
-
-		ajax.sendAjaxRequest('delete', window.location + '/delete', { "question": question_id }, function () {
-			if (_this.status == 401) window.location = "/login";else if (_this.status == 404) window.location = "/404";else if (_this.status != 200) window.location = '/questions/recent';else errors.displayError("Failed to delete the question");
-		});
-	};
-	deleteBtn.addEventListener('click', callFunction);
-
-	$('#deleteQuestionModal').on('hide.bs.modal', function (e) {
-		deleteBtn.removeEventListener('click', callFunction);
-	});
-}
-
-removeQuestionEvent();
-
-module.exports = {
-	addVoteEvent: addVoteEvent,
-	addMarkCorrectEvent: addMarkCorrectEvent,
-	markCorrectEvent: markCorrectEvent,
-	voteEvent: voteEvent,
-	addReportEvent: addReportEvent,
-	reportEvent: reportEvent
-};
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -1016,6 +776,246 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var errors = __webpack_require__(1);
+
+function findAncestor(el, cls) {
+	while ((el = el.parentElement) && !el.classList.contains(cls)) {}
+	return el;
+}
+
+decodeHTML = function decodeHTML(html) {
+	var txt = document.createElement('textarea');
+	txt.innerHTML = html;
+	return txt.value;
+};
+
+function applyMarkdown() {
+	document.addEventListener("DOMContentLoaded", function () {
+		var markdown_content = document.querySelectorAll(".markdown");
+
+		var instance = new Object();
+		instance.options = { renderingConfig: { codeSyntaxHighlighting: true } };
+
+		for (var i = 0; i < markdown_content.length; i++) {
+			markdown_content[i].style.visibility = "visible";
+			var bound = SimpleMDE.prototype.markdown.bind(instance, decodeHTML(markdown_content[i].innerHTML));
+			markdown_content[i].innerHTML = bound();
+		}
+	});
+}
+
+applyMarkdown();
+
+function bookmarkEvent() {
+	var bookmark = document.querySelector("#bookmark");
+	if (bookmark == null) return;
+	var i = bookmark.querySelector("i");
+	bookmark.addEventListener("click", function () {
+		$(bookmark).tooltip('hide');
+		var message_id = bookmark.getAttribute('data-message-id');
+		var is_active = bookmark.classList.contains('active');
+		var url = '/users/bookmarks/' + message_id;
+		var data = { question_id: message_id };
+		ajax.sendAjaxRequest('post', url, data, function () {
+			if (this.status == 200) {
+				if (is_active) {
+					bookmark.classList.add('inactive');
+					bookmark.classList.remove('active');
+					i.className = i.className.replace('fas', 'far');
+				} else {
+					bookmark.classList.add('active');
+					bookmark.classList.remove('inactive');
+					i.className = i.className.replace('far', 'fas');
+				}
+			}
+		});
+	});
+}
+
+bookmarkEvent();
+
+function addVoteEvent(container) {
+	var vote_buttons = document.querySelectorAll(container + ' .vote');
+	var scores = document.querySelectorAll(container + ' .score');
+	voteEvent(vote_buttons, scores);
+}
+
+function voteEvent(vote_buttons, scores) {
+	if (vote_buttons == null) return;
+
+	var _loop = function _loop(i) {
+		var button = vote_buttons[i];
+		button.addEventListener('click', function () {
+			var message_id = button.dataset.message_id;
+			var positive = button.dataset.positive;
+			var url = '/messages/' + message_id + '/vote';
+			var data = { positive: positive };
+			ajax.sendAjaxRequest('post', url, data, function () {
+				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
+					var alert_elem = errors.displayError("You cannot vote your messages.");
+					$(alert_elem).delay(4000).slideUp(500, function () {
+						$(this).remove();
+					});
+				} else if (this.status == 200) {
+					if (button.classList.contains('discrete')) {
+						button.classList.remove('discrete');
+						var pair_i = positive === 'true' ? i + 1 : i - 1;
+						if (!vote_buttons[pair_i].classList.contains('discrete')) vote_buttons[pair_i].classList.add('discrete');
+					} else button.classList.add('discrete');
+					var score = scores[Math.floor(i / 2)];
+					score.innerHTML = JSON.parse(this.responseText).score;
+				}
+			});
+		});
+	};
+
+	for (var i = 0; i < vote_buttons.length; i++) {
+		_loop(i);
+	}
+}
+
+addVoteEvent('#question-body');
+
+function addMarkCorrectEvent() {
+	var answers = document.querySelectorAll(".answer");
+	var _iteratorNormalCompletion = true;
+	var _didIteratorError = false;
+	var _iteratorError = undefined;
+
+	try {
+		for (var _iterator = answers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var answer = _step.value;
+
+			markCorrectEvent(answer);
+		}
+	} catch (err) {
+		_didIteratorError = true;
+		_iteratorError = err;
+	} finally {
+		try {
+			if (!_iteratorNormalCompletion && _iterator.return) {
+				_iterator.return();
+			}
+		} finally {
+			if (_didIteratorError) {
+				throw _iteratorError;
+			}
+		}
+	}
+}
+
+function markCorrectEvent(answer) {
+	var button = answer.querySelector(".mark");
+	if (button == null) return;
+	button.addEventListener('click', function () {
+		var answer_id = button.dataset.message_id;
+		var url = '/messages/' + answer_id + '/mark_correct';
+		ajax.sendAjaxRequest('post', url, null, function () {
+			if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 403) {
+				var alert_elem = errors.displayError("You cannot mark this answer as correct.");
+				$(alert_elem).delay(4000).slideUp(500, function () {
+					$(this).remove();
+				});
+			} else if (this.status == 200) {
+				if (button.classList.contains('marked')) {
+					button.classList.remove('marked');
+					answer.classList.remove('border-success');
+				} else {
+					var old_correct = document.querySelector(".answer.border-success");
+					if (old_correct != null) {
+						old_correct.classList.remove('border-success');
+						var old_correct_button = old_correct.querySelector(".mark.marked");
+						if (old_correct_button != null) old_correct_button.classList.remove('marked');
+					}
+					button.classList.add('marked');
+					answer.classList.add('border-success');
+				}
+			}
+		});
+	});
+}
+
+function addReportEvent(container) {
+	var reports = document.querySelectorAll(container + ' .report');
+	reportEvent(reports);
+}
+
+function reportEvent(reports) {
+	if (reports == null) return;
+
+	var _loop2 = function _loop2(i) {
+		var button = reports[i];
+		button.addEventListener('click', function () {
+			$(bookmark).tooltip('hide');
+			if (!button.classList.contains('discrete')) return;
+			var message_id = button.dataset.message_id;
+			var url = '/messages/' + message_id + '/report';
+			ajax.sendAjaxRequest('post', url, { message_id: message_id }, function () {
+				if (this.status == 401) window.location = "/login";else if (this.status == 404) window.location = "/404";else if (this.status == 200) {
+					button.classList.remove('discrete');
+					var response = JSON.parse(this.responseText);
+					if (!response.is_banned) return;
+					if (!response.type == 'question') {
+						var element = findAncestor(button, response.type);
+						element.parentNode.removeChild(element);
+					}
+					errors.displaySuccess("The " + response.type + " you've reported has been removed. Thank you for keeping SegFault clean!");
+				}
+			});
+		});
+	};
+
+	for (var i = 0; i < reports.length; i++) {
+		_loop2(i);
+	}
+}
+
+addReportEvent("#question-body");
+
+function removeQuestionEvent() {
+	$('#deleteQuestionModal').on('show.bs.modal', function (e) {
+		removeQuestion($(e.relatedTarget)[0]);
+	});
+}
+
+function removeQuestion(delTrigger) {
+
+	var question_id = delTrigger.getAttribute("data-message-id");
+	if (question_id == null) return;
+
+	var deleteBtn = document.getElementById('delete-question');
+	if (deleteBtn == null) return;
+
+	var callFunction = function callFunction() {
+		var _this = this;
+
+		ajax.sendAjaxRequest('delete', window.location + '/delete', { "question": question_id }, function () {
+			if (_this.status == 401) window.location = "/login";else if (_this.status == 404) window.location = "/404";else if (_this.status != 200) window.location = '/questions/recent';else errors.displayError("Failed to delete the question");
+		});
+	};
+	deleteBtn.addEventListener('click', callFunction);
+
+	$('#deleteQuestionModal').on('hide.bs.modal', function (e) {
+		deleteBtn.removeEventListener('click', callFunction);
+	});
+}
+
+removeQuestionEvent();
+
+module.exports = {
+	addVoteEvent: addVoteEvent,
+	addMarkCorrectEvent: addMarkCorrectEvent,
+	markCorrectEvent: markCorrectEvent,
+	voteEvent: voteEvent,
+	addReportEvent: addReportEvent,
+	reportEvent: reportEvent
+};
+
+/***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
@@ -1347,8 +1347,8 @@ module.exports = {
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mustache = __webpack_require__(3);
-var questionPage = __webpack_require__(2);
+var Mustache = __webpack_require__(2);
+var questionPage = __webpack_require__(3);
 
 function createAnswer(answer_info) {
 
@@ -1444,7 +1444,7 @@ module.exports = {
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mustache = __webpack_require__(3);
+var Mustache = __webpack_require__(2);
 
 function createComments(response, message_id) {
 
@@ -1520,7 +1520,7 @@ module.exports = __webpack_require__(35);
 
 __webpack_require__(0);
 __webpack_require__(13);
-__webpack_require__(2);
+__webpack_require__(3);
 __webpack_require__(14);
 __webpack_require__(15);
 __webpack_require__(16);
@@ -2470,7 +2470,7 @@ var alert = __webpack_require__(1);
 var utils = __webpack_require__(9);
 var url = __webpack_require__(4);
 var comments = __webpack_require__(6);
-var question = __webpack_require__(2);
+var question = __webpack_require__(3);
 var common = __webpack_require__(25);
 var answerEditor = __webpack_require__(26);
 var answerRemover = __webpack_require__(27);
@@ -2549,7 +2549,7 @@ var alert = __webpack_require__(1);
 var utils = __webpack_require__(10);
 var url = __webpack_require__(5);;
 var editor = __webpack_require__(7);
-var questionPage = __webpack_require__(2);
+var questionPage = __webpack_require__(3);
 
 function viewQuestionComments(message_id) {
     viewCommentsRequest(message_id, url.getQuestionCommentsURL());
@@ -2839,6 +2839,7 @@ function editAnswerHandler(response, answer_id, answerPlaceholder) {
         return;
     }
 
+    console.log(answerPlaceholder);
     var children = answerPlaceholder.children;
     for (var i = 1; !children[i].classList.contains("badge") && i < children.length - 1; ++i) {
         answerPlaceholder.removeChild(children[i]);
@@ -2847,6 +2848,7 @@ function editAnswerHandler(response, answer_id, answerPlaceholder) {
 
     var answer = JSON.parse(response.responseText).answer;
     var markdown = answer.content.version;
+    console.log(children[0]);
     children[0].children[0].innerHTML = markdown;
 
     var js = document.createElement("p");
@@ -3030,7 +3032,7 @@ changePasswordEvent();
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
-var Mustache = __webpack_require__(3);
+var Mustache = __webpack_require__(2);
 
 // GET side profile info
 if (window.location.pathname.match(/questions\/\D|questions(?!\/)/) != null) {
@@ -8125,88 +8127,6 @@ var SocketIoPresenceChannel = function (_SocketIoPrivateChann) {
     return SocketIoPresenceChannel;
 }(SocketIoPrivateChannel);
 
-var NullChannel = function (_Channel) {
-    inherits(NullChannel, _Channel);
-
-    function NullChannel() {
-        classCallCheck(this, NullChannel);
-        return possibleConstructorReturn(this, (NullChannel.__proto__ || Object.getPrototypeOf(NullChannel)).apply(this, arguments));
-    }
-
-    createClass(NullChannel, [{
-        key: 'subscribe',
-        value: function subscribe() {}
-    }, {
-        key: 'unsubscribe',
-        value: function unsubscribe() {}
-    }, {
-        key: 'listen',
-        value: function listen(event, callback) {
-            return this;
-        }
-    }, {
-        key: 'stopListening',
-        value: function stopListening(event) {
-            return this;
-        }
-    }, {
-        key: 'on',
-        value: function on(event, callback) {
-            return this;
-        }
-    }]);
-    return NullChannel;
-}(Channel);
-
-var NullPrivateChannel = function (_NullChannel) {
-    inherits(NullPrivateChannel, _NullChannel);
-
-    function NullPrivateChannel() {
-        classCallCheck(this, NullPrivateChannel);
-        return possibleConstructorReturn(this, (NullPrivateChannel.__proto__ || Object.getPrototypeOf(NullPrivateChannel)).apply(this, arguments));
-    }
-
-    createClass(NullPrivateChannel, [{
-        key: 'whisper',
-        value: function whisper(eventName, data) {
-            return this;
-        }
-    }]);
-    return NullPrivateChannel;
-}(NullChannel);
-
-var NullPresenceChannel = function (_NullChannel) {
-    inherits(NullPresenceChannel, _NullChannel);
-
-    function NullPresenceChannel() {
-        classCallCheck(this, NullPresenceChannel);
-        return possibleConstructorReturn(this, (NullPresenceChannel.__proto__ || Object.getPrototypeOf(NullPresenceChannel)).apply(this, arguments));
-    }
-
-    createClass(NullPresenceChannel, [{
-        key: 'here',
-        value: function here(callback) {
-            return this;
-        }
-    }, {
-        key: 'joining',
-        value: function joining(callback) {
-            return this;
-        }
-    }, {
-        key: 'leaving',
-        value: function leaving(callback) {
-            return this;
-        }
-    }, {
-        key: 'whisper',
-        value: function whisper(eventName, data) {
-            return this;
-        }
-    }]);
-    return NullPresenceChannel;
-}(NullChannel);
-
 var PusherConnector = function (_Connector) {
     inherits(PusherConnector, _Connector);
 
@@ -8378,62 +8298,6 @@ var SocketIoConnector = function (_Connector) {
     return SocketIoConnector;
 }(Connector);
 
-var NullConnector = function (_Connector) {
-    inherits(NullConnector, _Connector);
-
-    function NullConnector() {
-        var _ref;
-
-        classCallCheck(this, NullConnector);
-
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        var _this = possibleConstructorReturn(this, (_ref = NullConnector.__proto__ || Object.getPrototypeOf(NullConnector)).call.apply(_ref, [this].concat(args)));
-
-        _this.channels = {};
-        return _this;
-    }
-
-    createClass(NullConnector, [{
-        key: 'connect',
-        value: function connect() {}
-    }, {
-        key: 'listen',
-        value: function listen(name, event, callback) {
-            return new NullChannel();
-        }
-    }, {
-        key: 'channel',
-        value: function channel(name) {
-            return new NullChannel();
-        }
-    }, {
-        key: 'privateChannel',
-        value: function privateChannel(name) {
-            return new NullPrivateChannel();
-        }
-    }, {
-        key: 'presenceChannel',
-        value: function presenceChannel(name) {
-            return new NullPresenceChannel();
-        }
-    }, {
-        key: 'leave',
-        value: function leave(name) {}
-    }, {
-        key: 'socketId',
-        value: function socketId() {
-            return 'fake-socket-id';
-        }
-    }, {
-        key: 'disconnect',
-        value: function disconnect() {}
-    }]);
-    return NullConnector;
-}(Connector);
-
 var Echo = function () {
     function Echo(options) {
         classCallCheck(this, Echo);
@@ -8452,8 +8316,6 @@ var Echo = function () {
             this.connector = new PusherConnector(this.options);
         } else if (this.options.broadcaster == 'socket.io') {
             this.connector = new SocketIoConnector(this.options);
-        } else if (this.options.broadcaster == 'null') {
-            this.connector = new NullConnector(this.options);
         }
     }
 
