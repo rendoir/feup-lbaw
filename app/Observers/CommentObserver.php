@@ -23,7 +23,7 @@ class CommentObserver
         // Notify all users taking part in the discussion
         foreach ($commentable->get_followers() as $follower) {
             if ($user->id != $follower->id)
-                $follower->notify(new NewAnswer($user, $comment, false));
+                $follower->notify(new NewComment($user, $comment, false));
         }
     }
 }
