@@ -36,7 +36,7 @@ class CommentsController extends Controller
         $content = $message->message_version;
         $author = $message->get_author();
         $positive = $message->getVote();
-        $isMod = Auth::user()->isModerator();
+        $isMod = Auth::check() ? Auth::user()->isModerator() : false;
         $has_report = Auth::check() ? Auth::user()->hasReportOn($message->id) : false;
 
         return array(

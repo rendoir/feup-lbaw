@@ -79,11 +79,14 @@ $positive = $message->getVote();
                 </div>
 
                 <!-- Question Comments -->
+
                 <div class="text-center">
+                    @if (Auth::check() || $question->commentable->get_num_comments() > 0)
                     <a class="btn btn-outline-secondary my-4 show-question-comments" role="button" data-toggle="collapse" href="#MessageComments{{$id}}"
                     aria-expanded="false" aria-controls="MessageComments{{$id}}" data-message-id="{{$id}}">
                         Show Comments
                     </a>
+                    @endif
                 </div>
                 <div class="collapse message-comments" id="MessageComments{{$id}}" data-message-id="{{$id}}">
                 @if (Auth::check())
