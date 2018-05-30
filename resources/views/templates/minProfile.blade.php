@@ -3,7 +3,7 @@
     <a href="/users/{{username}}" class="card unnoticed-a hover-box-shadow mb-3">
         <div class="card-img-top-container" style="background-image: url({{bg-profile-img}}); background-size: cover; background-position: center;"></div>
         <div class="card-body text-center" style="z-index: 1">
-            <div class="rounded-circle img-profile-aside mx-auto" style="background-image: url({{profile-img}})" alt="UserImage" height="100px" width="100px"></div>
+            <div class="rounded-circle img-profile-aside mx-auto" style="background-image: url({{profile-img}})"></div>
             <h3 class="card-text mb-0">{{username}}</h3>
             {{#have_badge}}
             <span class="badge badge-success mb-3">{{badge}}</span>

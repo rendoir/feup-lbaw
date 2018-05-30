@@ -51,19 +51,19 @@ body > footer {
     padding: 0 1em;
 }
 
-#notificationsMenu > li:not(:last-child) {
+#notificationsMenu div:not(:last-child) {
     border-bottom: 1px solid rgba(0,0,0,.15);
 }
 
-#notificationsMenu > li {
+#notificationsMenu div {
     padding: .25em 0;
 }
 
-#notificationsMenu > li > a {
+#notificationsMenu div > a {
     color: #555;
 }
 
-#notificationsMenu > li > a:hover {
+#notificationsMenu div > a:hover {
     color: #151515;
 }
 

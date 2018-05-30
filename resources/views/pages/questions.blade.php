@@ -58,7 +58,7 @@
                     @endif
                 </div>
 
-                <div class="tab-pane fade @if (isset($type) && strcmp($type, 'search') == 0){{"show active"}}@endif" id="nav-search" role="tabpanel" aria-labelledby="nav-search-tab">
+                <div class="tab-pane fade @if (isset($type) && strcmp($type, 'search') == 0){{"show active"}}@endif" id="nav-search" role="tabpanel">
                     @if (isset($type) && strcmp($type, 'search') == 0)
                         @for ($i = 0; $i < 10; $i++)
                             @include('templates.questionTemplate')
@@ -113,7 +113,7 @@
                             <h5 class="card-title">Have a Question?</h5>
                             <form id="form_ask_question" name="ask_question" action="{{ url('ask_question') }}">
                                 <div class="input-group mb-3">
-                                    <input name="title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                    <input name="title" type="text" class="form-control" aria-label="Default">
                                 </div>
                                 <button type="submit" class="btn btn-outline-info w-100">Ask!</button>
                             </form>

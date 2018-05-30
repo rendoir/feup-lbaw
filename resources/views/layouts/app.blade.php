@@ -38,7 +38,7 @@
             @if (Auth::check())
                 <!-- Notifications Dropdown -->
                     <div class="dropdown mx-2">
-                        <span class="big-icon" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="big-icon" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
                             <div class="pt-1">
                                 <i class="fa fa-bell"></i>
                             </div>
@@ -46,13 +46,11 @@
                                 <span class="heartbit"></span>
                                 <span class="point"></span>
                             </div>
-                        </span>
+                        </div>
                         <div id="drop-notifications" class="dropdown-menu dropdown-menu-right pt-0" aria-labelledby="notifications">
                             <div id="notificationsHeader">Notifications</div>
                             <div id="notificationsMenu">
-                                <li>
-                                    <span class="text-center">No Unread Notifications.</span>
-                                </li>
+                                <span class="text-center">No Unread Notifications.</span>
                                 <!-- Notifications populated with JS -->
                             </div>
                         </div>
@@ -60,7 +58,7 @@
 
                     <!-- Options Dropdown-->
                     <div class="dropdown px-1">
-                    <span class="big-icon mx-2" id="profile-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="big-icon mx-2" id="profile-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
                         <img class="rounded-circle" src="<?=Auth::user()->getImage('profile')?>" alt="profile picture">
                     </span>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-options">
