@@ -2238,6 +2238,8 @@ function changeImage(abbr, type) {
   var select_image = document.querySelector("#" + abbr + "-input");
   var label = document.querySelector("#" + abbr + "-label");
 
+  if (select_image == null || label == null) return;
+
   select_image.addEventListener("change", function (e) {
     if (select_image.files.length == 0) label.innerHTML = "Choose a file";else {
       var image = select_image.files[0];

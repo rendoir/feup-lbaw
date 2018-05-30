@@ -5,6 +5,9 @@ function changeImage(abbr, type) {
   let select_image = document.querySelector("#" + abbr + "-input");
   let label = document.querySelector("#" + abbr + "-label");
 
+  if (select_image == null || label == null)
+    return;
+
   select_image.addEventListener("change", function (e) {
     if (select_image.files.length == 0)
       label.innerHTML = "Choose a file";
