@@ -2787,8 +2787,8 @@ function sortAnswers() {
         var aCorrect = a.classList.contains('border-success');
         var bCorrect = b.classList.contains('border-success');
         if (aCorrect || bCorrect) return aCorrect < bCorrect;
-        var aValue = parseInt(a.querySelector('.score').innerHTML);
-        var bValue = parseInt(b.querySelector('.score').innerHTML);
+        var aValue = parseInt(a.querySelector('.sort_score ').innerHTML);
+        var bValue = parseInt(b.querySelector('.sort_score ').innerHTML);
         return aValue < bValue;
     });
 

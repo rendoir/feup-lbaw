@@ -5,7 +5,7 @@
         <div class="col-1 d-flex flex-column align-items-start">
             <div class="p-2 mt-3 mb-auto">
                 <i class="fas fa-trophy"></i>
-                <p class="text-center mb-0 w-100 score">{{score}}</p>
+                <p class="text-center mb-0 w-100 sort_score score">{{score}}</p>
             </div>
         </div>
         <div class="col-11">
@@ -45,7 +45,7 @@
         <div class="col-2 col-sm-1 py-3 d-flex flex-column align-items-center justify-content-between">
             <div class="p-2">
                 <i class="fas fa-trophy"></i>
-                <p class="text-center mb-0 w-100 {{^is_owner}}score{{/is_owner}}">{{score}}</p>
+                <p class="text-center mb-0 w-100 sort_score {{^is_owner}}score{{/is_owner}}">{{score}}</p>
             </div>
             {{^is_owner}}
             <div class="d-flex flex-column justify-content-around {{^is_mod}}mb-sm-n-100{{/is_mod}}">

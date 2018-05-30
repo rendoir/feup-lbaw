@@ -23,7 +23,7 @@ function editAnswer(editTrigger) {
     }
 
     let editor = $("#edit-editor");
-    let mde = editor.data("mde");    
+    let mde = editor.data("mde");
     mde.value(markdown.innerHTML);
 
     let callFunction = function () {
