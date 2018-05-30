@@ -27,8 +27,10 @@ function createComments(response, message_id) {
 function createCommentHTML(comment) {
     
     let template = document.querySelector("template.comment").innerHTML;
+    let placeholder = document.createElement("span");
 
-    return Mustache.render(template, comment);
+    placeholder.innerHTML = Mustache.render(template, comment);
+    return placeholder.children[0];
 }
 
 function getCommentsDropDown(message_id) {

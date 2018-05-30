@@ -1131,13 +1131,15 @@ function enableEditMode(message_id) {
     var comment = document.querySelector(".edit-comments[data-message-id='" + message_id + "']");
     if (comment == null) return; // Comment without edit functionality
 
+    console.log("Adding listener");
     comment.addEventListener('click', function () {
+        console.log("bomba com o edit");
         setEditMode(message_id);
     });
 }
 
 function setEditMode(comment_id) {
-
+    console.log("fui bem usado");
     var contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
 
     var contentNode = document.querySelector(contentSelector);
@@ -1470,8 +1472,10 @@ function createComments(response, message_id) {
 function createCommentHTML(comment) {
 
     var template = document.querySelector("template.comment").innerHTML;
+    var placeholder = document.createElement("span");
 
-    return Mustache.render(template, comment);
+    placeholder.innerHTML = Mustache.render(template, comment);
+    return placeholder.children[0];
 }
 
 function getCommentsDropDown(message_id) {
@@ -2672,7 +2676,7 @@ function addCommentHandler(response, message_id) {
     var commentsSection = comments.firstElementChild;
 
     if (!commentsSection.classList.contains('comment-creator')) {
-        commentsSection.firstElementChild.firstElementChild.innerHTML += utils.createCommentHTML(responseJSON);
+        commentsSection.firstElementChild.firstElementChild.appendChild(utils.createCommentHTML(responseJSON));
     } else utils.createComments({ 'comments': [newComment], 'is_authenticated': responseJSON.is_authenticated }, message_id);
 
     // Enabling edition of freshly added comments
@@ -2839,7 +2843,6 @@ function editAnswerHandler(response, answer_id, answerPlaceholder) {
         return;
     }
 
-    console.log(answerPlaceholder);
     var children = answerPlaceholder.children;
     for (var i = 1; !children[i].classList.contains("badge") && i < children.length - 1; ++i) {
         answerPlaceholder.removeChild(children[i]);
@@ -2848,7 +2851,6 @@ function editAnswerHandler(response, answer_id, answerPlaceholder) {
 
     var answer = JSON.parse(response.responseText).answer;
     var markdown = answer.content.version;
-    console.log(children[0]);
     children[0].children[0].innerHTML = markdown;
 
     var js = document.createElement("p");

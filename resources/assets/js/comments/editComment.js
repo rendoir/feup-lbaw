@@ -8,13 +8,15 @@ function enableEditMode(message_id) {
     if (comment == null)
         return; // Comment without edit functionality
     
+        console.log("Adding listener");
     comment.addEventListener('click', function () {
+        console.log("bomba com o edit");
         setEditMode(message_id);
     });
 }
 
 function setEditMode(comment_id) {
-
+    console.log("fui bem usado");
     let contentSelector = ".editable-content[data-message-id='" + comment_id + "']";
 
     let contentNode = document.querySelector(contentSelector);

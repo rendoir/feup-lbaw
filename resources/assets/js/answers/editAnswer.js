@@ -60,7 +60,6 @@ function editAnswerHandler(response, answer_id, answerPlaceholder) {
         return;
     }
 
-    console.log(answerPlaceholder);
     let children = answerPlaceholder.children;
     for (let i = 1; !children[i].classList.contains("badge") && i < children.length - 1; ++i) {
         answerPlaceholder.removeChild(children[i]);
@@ -69,7 +68,6 @@ function editAnswerHandler(response, answer_id, answerPlaceholder) {
 
     let answer = JSON.parse(response.responseText).answer;
     let markdown = answer.content.version;
-    console.log(children[0]);
     children[0].children[0].innerHTML = markdown;
 
     let js = document.createElement("p");

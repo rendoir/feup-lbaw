@@ -34,6 +34,7 @@ $positive = $message->getVote();
                 </div>
                 @endif
                 <h3>{{$question->title}}</h3>
+                @if (Auth::check())
                 @if (Auth::id() == $author->id || Auth::user()->isModerator())
                 <div class="discrete ml-auto mr-1 text-center mt-auto mb-auto d-flex">
                     <form id="form_edit_question" name="edit_question" action="{{ url('edit_question') }}">
@@ -49,6 +50,7 @@ $positive = $message->getVote();
                         <i class="far fa-trash-alt p-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i>
                     </button>
                 </div>
+                @endif
                 @endif
             </section>
         </div>

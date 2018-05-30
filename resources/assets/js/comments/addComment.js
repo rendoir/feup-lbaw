@@ -43,8 +43,7 @@ function addCommentHandler(response, message_id) {
 
     if (!commentsSection.classList.contains('comment-creator')) {
         commentsSection.firstElementChild
-            .firstElementChild
-            .innerHTML += utils.createCommentHTML(responseJSON);
+            .firstElementChild.appendChild(utils.createCommentHTML(responseJSON));
     }
     else
         utils.createComments({ 'comments': [newComment], 'is_authenticated': responseJSON.is_authenticated }, message_id);
