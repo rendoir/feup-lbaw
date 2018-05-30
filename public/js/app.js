@@ -1064,10 +1064,10 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var messages = __webpack_require__(8);
-var commentsViewer = __webpack_require__(21);
-var commentsCreator = __webpack_require__(22);
+var commentsViewer = __webpack_require__(22);
+var commentsCreator = __webpack_require__(23);
 var commentsEditor = __webpack_require__(7);
-var commentsRemover = __webpack_require__(23);
+var commentsRemover = __webpack_require__(24);
 
 function addEventListeners() {
 
@@ -1511,7 +1511,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(12);
-module.exports = __webpack_require__(34);
+module.exports = __webpack_require__(35);
 
 
 /***/ }),
@@ -1519,22 +1519,63 @@ module.exports = __webpack_require__(34);
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(0);
-__webpack_require__(2);
 __webpack_require__(13);
+__webpack_require__(2);
 __webpack_require__(14);
 __webpack_require__(15);
 __webpack_require__(16);
 __webpack_require__(17);
 __webpack_require__(18);
 __webpack_require__(19);
+__webpack_require__(20);
 __webpack_require__(6);
-__webpack_require__(28);
 __webpack_require__(29);
 __webpack_require__(30);
 __webpack_require__(31);
+__webpack_require__(32);
 
 /***/ }),
 /* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ajax = __webpack_require__(0);
+var alerts = __webpack_require__(1);
+
+function addSubmitEvent() {
+  var button = document.getElementById('submit_question');
+  if (button == null) return;
+  button.addEventListener('click', function () {
+    var form = document.getElementById('submit_question_form');
+    var url = form.dataset.redirect;
+
+    var question = document.querySelector('input[name="question"]');
+    var question_id = question == null ? null : question.value;
+    var title = document.querySelector('input[name="title"]').value;
+    var content = document.querySelector('textarea[name="content"]').value;
+    var tags = document.querySelector('input[name="tags"]').value;
+
+    var data = {
+      question: question_id,
+      title: title,
+      content: content,
+      tags: tags
+    };
+
+    ajax.sendAjaxRequest('post', url, data, function () {
+      if (this.status == 400) {
+        alerts.displayError(this.responseText);
+      } else {
+        var response = JSON.parse(this.responseText);
+        window.location = '/questions/' + response.question;
+      }
+    });
+  });
+}
+
+addSubmitEvent();
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports) {
 
 $(window).scroll(function () {
@@ -1548,7 +1589,7 @@ $(window).scroll(function () {
 });
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2158,6 +2199,7 @@ Tagify.prototype = {
 };
 
 function addTags() {
+    console.log("Adding tags");
     var input = document.querySelector('input[name=tags]');
     if (input == null) return;
     ajax.sendAjaxRequest("get", "/tag_list", {}, function (event) {
@@ -2171,11 +2213,10 @@ function addTags() {
     });
 }
 
-if(window.location.pathname.match( /ask_question/ ) != null)
-    addTags();
+if (window.location.pathname.match(/ask_question/) != null || window.location.pathname.match(/edit_question/) != null) addTags();
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 $(function () {
@@ -2183,7 +2224,7 @@ $(function () {
 });
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2261,7 +2302,7 @@ function editBiographyHandler(e) {
 editBiography();
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 addEventListeners();
@@ -2312,7 +2353,7 @@ function addEventListeners() {
 }
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 function editor(editor_element) {
@@ -2400,12 +2441,12 @@ createEditor("editor");
 createEditor("edit-editor");
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var messages = __webpack_require__(8);
-var answersGetter = __webpack_require__(20);
-var answersAdder = __webpack_require__(27);
+var answersGetter = __webpack_require__(21);
+var answersAdder = __webpack_require__(28);
 
 function addAnswerEventListeners() {
 
@@ -2421,7 +2462,7 @@ function addAnswerEventListener() {
 window.addEventListener('load', addAnswerEventListeners);
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2430,9 +2471,9 @@ var utils = __webpack_require__(9);
 var url = __webpack_require__(4);
 var comments = __webpack_require__(6);
 var question = __webpack_require__(2);
-var common = __webpack_require__(24);
-var answerEditor = __webpack_require__(25);
-var answerRemover = __webpack_require__(26);
+var common = __webpack_require__(25);
+var answerEditor = __webpack_require__(26);
+var answerRemover = __webpack_require__(27);
 
 function getAnswersRequest() {
 
@@ -2500,7 +2541,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2588,7 +2629,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2647,7 +2688,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2711,7 +2752,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 function sortAnswers() {
@@ -2739,7 +2780,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2826,7 +2867,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2882,7 +2923,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2934,7 +2975,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 function tagSearchEvent() {
@@ -2957,7 +2998,7 @@ function tagSearchEvent() {
 tagSearchEvent();
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -2985,7 +3026,7 @@ function changePasswordEvent() {
 changePasswordEvent();
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ajax = __webpack_require__(0);
@@ -3269,14 +3310,14 @@ if (window.location.pathname.match(/users\/[^\/]*(?!\/)$|users\/[^\/]*\/$/) != n
 }
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
-window.Pusher = __webpack_require__(32);
+window.Pusher = __webpack_require__(33);
 
 
 var ajax = __webpack_require__(0);
@@ -3371,7 +3412,7 @@ function makeNotificationText(notification) {
 }
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -7559,7 +7600,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -8084,6 +8125,88 @@ var SocketIoPresenceChannel = function (_SocketIoPrivateChann) {
     return SocketIoPresenceChannel;
 }(SocketIoPrivateChannel);
 
+var NullChannel = function (_Channel) {
+    inherits(NullChannel, _Channel);
+
+    function NullChannel() {
+        classCallCheck(this, NullChannel);
+        return possibleConstructorReturn(this, (NullChannel.__proto__ || Object.getPrototypeOf(NullChannel)).apply(this, arguments));
+    }
+
+    createClass(NullChannel, [{
+        key: 'subscribe',
+        value: function subscribe() {}
+    }, {
+        key: 'unsubscribe',
+        value: function unsubscribe() {}
+    }, {
+        key: 'listen',
+        value: function listen(event, callback) {
+            return this;
+        }
+    }, {
+        key: 'stopListening',
+        value: function stopListening(event) {
+            return this;
+        }
+    }, {
+        key: 'on',
+        value: function on(event, callback) {
+            return this;
+        }
+    }]);
+    return NullChannel;
+}(Channel);
+
+var NullPrivateChannel = function (_NullChannel) {
+    inherits(NullPrivateChannel, _NullChannel);
+
+    function NullPrivateChannel() {
+        classCallCheck(this, NullPrivateChannel);
+        return possibleConstructorReturn(this, (NullPrivateChannel.__proto__ || Object.getPrototypeOf(NullPrivateChannel)).apply(this, arguments));
+    }
+
+    createClass(NullPrivateChannel, [{
+        key: 'whisper',
+        value: function whisper(eventName, data) {
+            return this;
+        }
+    }]);
+    return NullPrivateChannel;
+}(NullChannel);
+
+var NullPresenceChannel = function (_NullChannel) {
+    inherits(NullPresenceChannel, _NullChannel);
+
+    function NullPresenceChannel() {
+        classCallCheck(this, NullPresenceChannel);
+        return possibleConstructorReturn(this, (NullPresenceChannel.__proto__ || Object.getPrototypeOf(NullPresenceChannel)).apply(this, arguments));
+    }
+
+    createClass(NullPresenceChannel, [{
+        key: 'here',
+        value: function here(callback) {
+            return this;
+        }
+    }, {
+        key: 'joining',
+        value: function joining(callback) {
+            return this;
+        }
+    }, {
+        key: 'leaving',
+        value: function leaving(callback) {
+            return this;
+        }
+    }, {
+        key: 'whisper',
+        value: function whisper(eventName, data) {
+            return this;
+        }
+    }]);
+    return NullPresenceChannel;
+}(NullChannel);
+
 var PusherConnector = function (_Connector) {
     inherits(PusherConnector, _Connector);
 
@@ -8255,6 +8378,62 @@ var SocketIoConnector = function (_Connector) {
     return SocketIoConnector;
 }(Connector);
 
+var NullConnector = function (_Connector) {
+    inherits(NullConnector, _Connector);
+
+    function NullConnector() {
+        var _ref;
+
+        classCallCheck(this, NullConnector);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        var _this = possibleConstructorReturn(this, (_ref = NullConnector.__proto__ || Object.getPrototypeOf(NullConnector)).call.apply(_ref, [this].concat(args)));
+
+        _this.channels = {};
+        return _this;
+    }
+
+    createClass(NullConnector, [{
+        key: 'connect',
+        value: function connect() {}
+    }, {
+        key: 'listen',
+        value: function listen(name, event, callback) {
+            return new NullChannel();
+        }
+    }, {
+        key: 'channel',
+        value: function channel(name) {
+            return new NullChannel();
+        }
+    }, {
+        key: 'privateChannel',
+        value: function privateChannel(name) {
+            return new NullPrivateChannel();
+        }
+    }, {
+        key: 'presenceChannel',
+        value: function presenceChannel(name) {
+            return new NullPresenceChannel();
+        }
+    }, {
+        key: 'leave',
+        value: function leave(name) {}
+    }, {
+        key: 'socketId',
+        value: function socketId() {
+            return 'fake-socket-id';
+        }
+    }, {
+        key: 'disconnect',
+        value: function disconnect() {}
+    }]);
+    return NullConnector;
+}(Connector);
+
 var Echo = function () {
     function Echo(options) {
         classCallCheck(this, Echo);
@@ -8273,6 +8452,8 @@ var Echo = function () {
             this.connector = new PusherConnector(this.options);
         } else if (this.options.broadcaster == 'socket.io') {
             this.connector = new SocketIoConnector(this.options);
+        } else if (this.options.broadcaster == 'null') {
+            this.connector = new NullConnector(this.options);
         }
     }
 
@@ -8357,7 +8538,7 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

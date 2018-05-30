@@ -3,10 +3,9 @@
 @section('title', 'AskQuestion')
 
 @section('content')
-
     <section class="container">
 
-      <form method="post" action="@if ($isEdition) /edit_question @else /ask_question @endif">
+      <div id="submit_question_form" data-redirect="@if ($isEdition) /edit_question @else /ask_question @endif">
          {{ csrf_field() }}
 
         @if (($isEdition))
@@ -38,7 +37,7 @@
         <!-- Add tags and post buttons -->
         <div class="pt-4 pb-1 pl-3 ">
             <h5>
-                Identify your tags with # and separate them using spaces!
+                Choose a maximum of 5 tags that suit your question!
             </h5>
         </div>
         <div class="input-group mb-3" style="height: 50px;">
@@ -49,11 +48,12 @@
         </div>
 
         <div class="text-right">
-            <input type="submit" class="btn btn-lg btn-info my-4 mr-5" role="button">
+            <input id="submit_question" type="button" class="btn btn-lg btn-info my-4 mr-5" role="button" value="Submit">
         </div>
 
-      </form>
+      </div>
 
     </section>
+    @include('templates.alerts')
 
 @endsection

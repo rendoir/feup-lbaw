@@ -1,4 +1,5 @@
 require('./ajax.js');
+require('./submit_question');
 require('./question.js');
 require('./scroll.js');
 require('./tagify.js');

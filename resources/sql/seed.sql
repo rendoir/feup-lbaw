@@ -146,7 +146,6 @@ CREATE INDEX unique_lowercase_category ON categories (lower(name));
 
 DROP FUNCTION IF EXISTS ban_message();
 DROP FUNCTION IF EXISTS check_correct();
-DROP FUNCTION IF EXISTS check_categories();
 DROP FUNCTION IF EXISTS insert_category();
 DROP FUNCTION IF EXISTS delete_category();
 DROP FUNCTION IF EXISTS update_score_vote();
@@ -167,7 +166,6 @@ DROP FUNCTION IF EXISTS update_question_content_search();
 
 DROP TRIGGER IF EXISTS ban_message ON messages;
 DROP TRIGGER IF EXISTS check_correct ON questions;
-DROP TRIGGER IF EXISTS check_categories ON questions_categories;
 DROP TRIGGER IF EXISTS insert_category ON questions_categories;
 DROP TRIGGER IF EXISTS delete_category ON questions_categories;
 DROP TRIGGER IF EXISTS update_score_vote ON votes;
@@ -217,39 +215,6 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER check_correct
   BEFORE UPDATE OF correct_answer ON questions
   FOR EACH ROW EXECUTE PROCEDURE check_correct();
-
-
--- Ensure questions have one to five categories
-CREATE FUNCTION check_categories() RETURNS TRIGGER AS $$
-  DECLARE num_categories SMALLINT;
-  DECLARE current RECORD;
-  BEGIN
-    IF TG_OP = 'INSERT' THEN
-      current = NEW;
-    ELSE
-      current = OLD;
-    END IF;
-
-    IF NOT EXISTS (SELECT 1 FROM questions WHERE id = current.question_id) THEN
-      RETURN current;
-    END IF;
-
-    SELECT INTO num_categories count(*)
-    FROM questions_categories
-    WHERE current.question_id = questions_categories.question_id;
-
-    IF num_categories > 5 THEN
-      RAISE EXCEPTION 'A question can only have a maximum of 5 categories';
-    ELSIF num_categories < 1 THEN
-      RAISE EXCEPTION 'A question must have at least 1 category';
-    END IF;
-    RETURN current;
-  END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER check_categories
-  AFTER INSERT OR DELETE ON questions_categories
-  FOR EACH ROW EXECUTE PROCEDURE check_categories();
 
 
 -- Ensure number of posts per category is always updated

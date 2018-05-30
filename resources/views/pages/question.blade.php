@@ -40,7 +40,7 @@ $positive = $message->getVote();
                         <input type="hidden" class="form-control" name="question_id" value="{{$id}}"></span>
                         <input type="hidden" class="form-control" name="title" value="{{$question->title}}"></span>
                         <input type="hidden" class="form-control" name="content" value="{{$content->content}}"></span>
-                        <input type="hidden" class="form-control" name="tags" value="@foreach ($question->categories as $tag) {{$tag->name}} @endforeach"></span>
+                        <input type="hidden" class="form-control" name="tags" value="@foreach ($question->categories as $tag) {{$tag->name}}, @endforeach"></span>
                         <button type="submit" class="discrete btn btn-link" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                             <i class="fas fa-pencil-alt m-0"></i>
                         </button>
