@@ -120,7 +120,7 @@
                 <div class="d-flex list-group list-group-flush">
                     <div class="list-group-item bg-transparent">
                         <div class="input-group mt-3">
-                            <input class="form-control new-comment-content" placeholder="New Comment" aria-label="New Comment" aria-describedby="basic-addon2" type="text" data-message-id="{{id}}">
+                            <input class="form-control new-comment-content" placeholder="New Comment" aria-label="New Comment" type="text" data-message-id="{{id}}">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-success new-comment-submit" type="button" data-message-id="{{id}}">Add Comment</button>
                             </div>

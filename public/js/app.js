@@ -3349,7 +3349,7 @@ function showNotifications(notifications) {
 function makeNotification(notification) {
     var to = routeNotification(notification);
     var notificationText = makeNotificationText(notification);
-    return '<li><a href="' + to + '">' + notificationText + '</a></li>';
+    return '<div><a href="' + to + '">' + notificationText + '</a></div>';
 }
 
 function makeNotificationText(notification) {
