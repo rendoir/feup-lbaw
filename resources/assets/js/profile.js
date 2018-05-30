@@ -1,10 +1,28 @@
 var ajax = require('./ajax.js');
 var errors = require('./alerts.js');
 
+function changeImage(abbr, type) {
+  let select_image = document.querySelector("#" + abbr + "-input");
+  let label = document.querySelector("#" + abbr + "-label");
+
+  select_image.addEventListener("change", function (e) {
+    if (select_image.files.length == 0)
+      label.innerHTML = "Choose a file";
+    else {
+      let image = select_image.files[0];
+      label.innerHTML = image.name;
+    }
+  });
+}
+
+changeImage('bg', 'background');
+changeImage('p', 'profile');
+
 function uploadImage(abbr, type) {
   let save_changes = document.querySelector("#" + abbr + "-save");
   let select_image = document.querySelector("#" + abbr + "-input");
   let profile_img = document.querySelector("#" + abbr + "-img");
+  let label = document.querySelector("#" + abbr + "-label");
 
   if (save_changes == null || select_image == null)
     return;
@@ -17,6 +35,7 @@ function uploadImage(abbr, type) {
       return;
 
     let image = select_image.files[0];
+    label.innerHTML = image.name;
 
     let form_data = new FormData();
 
