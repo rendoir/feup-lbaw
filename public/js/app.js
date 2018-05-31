@@ -2234,10 +2234,28 @@ $(function () {
 var ajax = __webpack_require__(0);
 var errors = __webpack_require__(1);
 
+function changeImage(abbr, type) {
+  var select_image = document.querySelector("#" + abbr + "-input");
+  var label = document.querySelector("#" + abbr + "-label");
+
+  if (select_image == null || label == null) return;
+
+  select_image.addEventListener("change", function (e) {
+    if (select_image.files.length == 0) label.innerHTML = "Choose a file";else {
+      var image = select_image.files[0];
+      label.innerHTML = image.name;
+    }
+  });
+}
+
+changeImage('bg', 'background');
+changeImage('p', 'profile');
+
 function uploadImage(abbr, type) {
   var save_changes = document.querySelector("#" + abbr + "-save");
   var select_image = document.querySelector("#" + abbr + "-input");
   var profile_img = document.querySelector("#" + abbr + "-img");
+  var label = document.querySelector("#" + abbr + "-label");
 
   if (save_changes == null || select_image == null) return;
 
@@ -2248,6 +2266,7 @@ function uploadImage(abbr, type) {
     if (select_image.files.length == 0) return;
 
     var image = select_image.files[0];
+    label.innerHTML = image.name;
 
     var form_data = new FormData();
 
@@ -2768,8 +2787,8 @@ function sortAnswers() {
         var aCorrect = a.classList.contains('border-success');
         var bCorrect = b.classList.contains('border-success');
         if (aCorrect || bCorrect) return aCorrect < bCorrect;
-        var aValue = parseInt(a.querySelector('.score').innerHTML);
-        var bValue = parseInt(b.querySelector('.score').innerHTML);
+        var aValue = parseInt(a.querySelector('.sort_score ').innerHTML);
+        var bValue = parseInt(b.querySelector('.sort_score ').innerHTML);
         return aValue < bValue;
     });
 
@@ -2843,21 +2862,23 @@ function editAnswerHandler(response, answer_id, answerPlaceholder) {
         return;
     }
 
-    var children = answerPlaceholder.children;
     console.log(answerPlaceholder);
+    var children = answerPlaceholder.children[0].children;
+    answerPlaceholder = answerPlaceholder.children[0];
     console.log(children);
-    for (var i = 1; !children[i].classList.contains("badge") && i < children.length - 1; ++i) {
+    for (var i = 1; i < children.length && !children[i].classList.contains("badge"); ++i) {
         answerPlaceholder.removeChild(children[i]);
         i--;
     }
+    console.log(answerPlaceholder);
 
     var answer = JSON.parse(response.responseText).answer;
     var markdown = answer.content.version;
-    children[0].children[0].innerHTML = markdown;
+    children[0].innerHTML = markdown;
 
     var js = document.createElement("p");
     js.innerHTML = markdownToJs(markdown);
-    answerPlaceholder.insertBefore(js, children[2]);
+    answerPlaceholder.insertBefore(js, children[1]);
 }
 
 function markdownToJs(markdown) {

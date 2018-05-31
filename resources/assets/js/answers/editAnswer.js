@@ -60,21 +60,23 @@ function editAnswerHandler(response, answer_id, answerPlaceholder) {
         return;
     }
 
-    let children = answerPlaceholder.children;
     console.log(answerPlaceholder);
+    let children = answerPlaceholder.children[0].children;
+    answerPlaceholder = answerPlaceholder.children[0];
     console.log(children);
-    for (let i = 1; !children[i].classList.contains("badge") && i < children.length - 1; ++i) {
+    for (let i = 1; i < children.length && !children[i].classList.contains("badge"); ++i) {
         answerPlaceholder.removeChild(children[i]);
         i--;
     }
+    console.log(answerPlaceholder);
 
     let answer = JSON.parse(response.responseText).answer;
     let markdown = answer.content.version;
-    children[0].children[0].innerHTML = markdown;
+    children[0].innerHTML = markdown;
 
     let js = document.createElement("p");
     js.innerHTML = markdownToJs(markdown);
-    answerPlaceholder.insertBefore(js, children[2]);
+    answerPlaceholder.insertBefore(js, children[1]);
 
 }
 

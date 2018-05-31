@@ -162,7 +162,7 @@
             © 2018 SegFault
         </div>
         <div class="col text-center">
-            <a class="" href="{{ route('about') }}">
+            <a class="" href="{{ url('/') }}">
                 <img src="{{ asset('img/logo.png') }}" width="50" height="50" class="d-inline-block align-center" alt="Segfault Logo">
             </a>
         </div>

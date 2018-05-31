@@ -8,8 +8,8 @@ function sortAnswers() {
       let bCorrect = b.classList.contains('border-success');
       if(aCorrect || bCorrect)
         return aCorrect < bCorrect;
-      let aValue = parseInt(a.querySelector('.score').innerHTML);
-  		let bValue = parseInt(b.querySelector('.score').innerHTML);
+      let aValue = parseInt(a.querySelector('.sort_score ').innerHTML);
+  		let bValue = parseInt(b.querySelector('.sort_score ').innerHTML);
   		return aValue < bValue;
     });
 
