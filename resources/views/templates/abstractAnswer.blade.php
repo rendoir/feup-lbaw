@@ -48,7 +48,7 @@
                 <p class="text-center mb-0 w-100 sort_score {{^is_owner}}score{{/is_owner}}">{{score}}</p>
             </div>
             {{^is_owner}}
-            <div class="d-flex flex-column justify-content-around {{^is_mod}}mb-sm-n-100{{/is_mod}}">
+            <div class="d-flex flex-column justify-content-around {{^is_question_owner}}mb-sm-n-100{{/is_question_owner}}">
                 <i class="vote fas fa-arrow-up {{discrete_p}}" data-positive="true" data-message_id="{{id}}"></i>
                 <i class="vote fas fa-arrow-down {{discrete_n}}" data-positive="false" data-message_id="{{id}}"></i>
             </div>

@@ -60,15 +60,13 @@ function editAnswerHandler(response, answer_id, answerPlaceholder) {
         return;
     }
 
-    console.log(answerPlaceholder);
     let children = answerPlaceholder.children[0].children;
     answerPlaceholder = answerPlaceholder.children[0];
-    console.log(children);
+
     for (let i = 1; i < children.length && !children[i].classList.contains("badge"); ++i) {
         answerPlaceholder.removeChild(children[i]);
         i--;
     }
-    console.log(answerPlaceholder);
 
     let answer = JSON.parse(response.responseText).answer;
     let markdown = answer.content.version;
