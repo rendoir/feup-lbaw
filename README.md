@@ -18,6 +18,11 @@ Each user has an associated reputation, calculated by considering the votes on i
 
  
  ### Gallery
+ | | |
+ |:-:|:-:|
+ |![Main Feed](https://user-images.githubusercontent.com/13498941/41856867-05d03bb2-788e-11e8-83e4-41720866a878.png)|![Ask a Question](https://user-images.githubusercontent.com/13498941/41856864-057694d6-788e-11e8-9a96-1c391e04d05b.png)|
+ |![Sign Up](https://user-images.githubusercontent.com/13498941/41856859-02f9fe82-788e-11e8-94aa-c204bbb645ff.png)|![Profile, scrolled down](https://user-images.githubusercontent.com/13498941/41856858-02d4a826-788e-11e8-87eb-57ee36c590c6.png)|
+ |![Search by Categories](https://user-images.githubusercontent.com/13498941/41856857-02afbc1e-788e-11e8-8a84-85ec1e297603.png)|![Client-side rendering](https://user-images.githubusercontent.com/13498941/41856854-025a2614-788e-11e8-80c0-c651c88ce1e6.png)|
 
  
  ### Frameworks and Libraries
