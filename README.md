@@ -1,6 +1,8 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/jflcarvalho/lbaw1763/badge)](https://www.codefactor.io/repository/github/jflcarvalho/lbaw1763)
 
 # GROUP1763
+Repository to host the project developed for 'Database and Web Applications Laboratory', a third year subject at FEUP. Developed by [@AndreFCruz](https://github.com/AndreFCruz), [@rendoir](https://github.com/rendoir), [@EdgarACarneiro](https://github.com/EdgarACarneiro), and [@jflcarvalho](https://github.com/jflcarvalho).
+
  ### Theme: 5. Collaborative Q&A
 SegFault is an online discussion forum, for professionals developers and novices alike, where users can easily share expertise on all programming related topics.
 
