@@ -8,10 +8,17 @@ Users can post detailed questions on the site, associating each question with a 
 
 Each user has an associated reputation, calculated by considering the votes on its questions and answers. Users trusted by the community (measured by their reputation points) automatically gain the moderator status, gaining owner-like permissions over all messages (delete and edit other's messages, appropriately marked). The website also provides advanced search options, with fuzzy matching against the question's title and content, as well as filtering search queries by categories.
  
+ ### Repository organization
+ * The **source code** is in the [master branch](https://github.com/jflcarvalho/lbaw1763/tree/master).
+ * The artifacts are in [the current branch](https://github.com/jflcarvalho/lbaw1763/tree/artifacts) (the default one), and are explained in further detail in the [artifacts](#artifacts) section.
+ * The horizontal prototype is in the [gh-pages branch](https://github.com/jflcarvalho/lbaw1763/tree/gh-pages), and the resulting mockup is live [here](https://jflcarvalho.github.io/lbaw1763/).
+ * The first vertical prototype is in the [proto branch](https://github.com/jflcarvalho/lbaw1763/tree/proto).
+ 
+ You can also check the promotional video [here](https://youtu.be/x8E8NRYciYI).
+
  
  ### Gallery
 
- You can also check the promotional video [here](https://youtu.be/x8E8NRYciYI).
  
  ### Frameworks and Libraries
  * [Laravel](https://github.com/laravel/laravel)
