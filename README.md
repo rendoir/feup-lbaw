@@ -8,14 +8,24 @@ Users can post detailed questions on the site, associating each question with a 
 
 Each user has an associated reputation, calculated by considering the votes on its questions and answers. Users trusted by the community (measured by their reputation points) automatically gain the moderator status, gaining owner-like permissions over all messages (delete and edit other's messages, appropriately marked). The website also provides advanced search options, with fuzzy matching against the question's title and content, as well as filtering search queries by categories.
  
- ### Developers:
-  * André Cruz [@AndreFCruz](https://github.com/AndreFCruz) - up201503776@fe.up.pt
-  * Daniel Marques [@rendoir](https://github.com/rendoir) - up201503822@fe.up.pt
-  * Edgar Carneiro [@EdgarACarneiro](https://github.com/EdgarACarneiro) - up201503784@fe.up.pt
-  * João Carvalho [@jflcarvalho](https://github.com/jflcarvalho) - up201504875@fe.up.pt
+ 
+ ### Gallery
 
+ You can also check the promotional video [here](https://youtu.be/x8E8NRYciYI).
+ 
+ ### Frameworks and Libraries
+ * [Laravel](https://github.com/laravel/laravel)
+ * [Pusher](https://pusher.com)
+ * [Socialite](https://laravel.com/docs/5.5/socialite)
+ * [Mustache](https://github.com/janl/mustache.js/)
 
-### Artefacts
+### Technologies
+ * PHP
+ * PostgreSQL
+ * Javascript
+ * HTML + CSS
+ 
+### Artifacts
 #### Requirements Specification and User Interfaces
 * A1: [Project presentation](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a1.md)
 * A2: [Actors and User Stories](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a2.md)
@@ -31,3 +41,9 @@ Each user has an associated reputation, calculated by considering the votes on i
 #### Product and Presentation
 * A10: [Product](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a10.md)
 * A11: [Presentation](https://github.com/jflcarvalho/lbaw1763/blob/artifacts/Artifacts/lbaw1763_a11.md)
+
+ ### Developers:
+  * André Cruz [@AndreFCruz](https://github.com/AndreFCruz) - up201503776@fe.up.pt
+  * Daniel Marques [@rendoir](https://github.com/rendoir) - up201503822@fe.up.pt
+  * Edgar Carneiro [@EdgarACarneiro](https://github.com/EdgarACarneiro) - up201503784@fe.up.pt
+  * João Carvalho [@jflcarvalho](https://github.com/jflcarvalho) - up201504875@fe.up.pt
