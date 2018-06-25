@@ -14,6 +14,8 @@ Each user has an associated reputation, calculated by considering the votes on i
  * The horizontal prototype is in the [gh-pages branch](https://github.com/jflcarvalho/lbaw1763/tree/gh-pages), and the resulting mockup is live [here](https://jflcarvalho.github.io/lbaw1763/).
  * The first vertical prototype is in the [proto branch](https://github.com/jflcarvalho/lbaw1763/tree/proto).
  
+ The final version of this site is live [here](http://lbaw1763.lbaw-prod.fe.up.pt), but access is restricted to the FEUP network (or FEUP VPN).
+ 
  You can also check the promotional video [here](https://youtu.be/x8E8NRYciYI).
 
  
