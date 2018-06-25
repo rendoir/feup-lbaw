@@ -2,8 +2,11 @@
 
 # GROUP1763
  ### Theme: 5. Collaborative Q&A
- It is intended to develop an information system with a web interface to manage a community of collaborative questions and answers. Any registered user can submit questions or answers. The questions and answers can be voted on by the rest of the community. It is also possible to associate brief comments to the questions or the answers. Each user has an associated score that is calculated considering the votes on its questions and answers.
- 
+SegFault is an online discussion forum, for professionals developers and novices alike, where users can easily share expertise on all programming related topics.
+
+Users can post detailed questions on the site, associating each question with a given set of categories. Additionally, users can answer questions on the site, as well as commenting other questions or answers. In order to keep the community self-moderated, users can also upvote/downvote questions/answers/comments, as well as reporting inappropriate messages.
+
+Each user has an associated reputation, calculated by considering the votes on its questions and answers. Users trusted by the community (measured by their reputation points) automatically gain the moderator status, gaining owner-like permissions over all messages (delete and edit other's messages, appropriately marked). The website also provides advanced search options, with fuzzy matching against the question's title and content, as well as filtering search queries by categories.
  
  ### Developers:
   * André Cruz [@AndreFCruz](https://github.com/AndreFCruz) - up201503776@fe.up.pt
